@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String create_time;
-    private String update_time;
+    private String createTime;
+    private String updateTime;
     private String status;
     /** 搜索值 */
     private String searchValue;
