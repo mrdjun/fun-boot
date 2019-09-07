@@ -10,7 +10,7 @@
 			 xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="C:\Users\DJun\Desktop\u-fun\fun-boot\target\classes">
+		<dir name="C:\personal-work\u-fun\fun-boot\target\classes">
 		</dir>
 	</classpath>
 
