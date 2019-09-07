@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.system.mapper.UserMapper">
+
+    <resultMap id="UserResult" type="User">
+        <result property="userId"       column="user_id"/>
+        <result property="loginName"    column="login_name"/>
+        <result property="userName"     column="user_name"/>
+        <result property="userType"     column="user_type"/>
+        <result property="userLevel"    column="user_level"/>
+        <result property="email"        column="email"/>
+        <result property="sex"          column="sex"/>
+        <result property="password"     column="password"/>
+        <result property="salt"         column="salt"/>
+        <result property="avatar"       column="avatar"/>
+        <result property="telephone"    column="telephone"/>
+        <result property="delFlag"      column="del_flag"/>
+        <result property="loginIp"      column="login_ip"/>
+        <result property="loginDate"    column="login_date"/>
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select
+            user_id, login_name, username, user_type,
+            user_level, email, sex, password, salt, avatar,
+            telephone, del_flag, login_ip, login_date,
+            create_time, update_time, status, remark
+        from ums_user
+    </sql>
+
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where del_flag = '0'
+        <if test="loginName != null and loginName != ''">
+            AND login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="telephone != null and telephone != ''">
+            AND telephone like concat('%', #{telephone}, '%')
+        </if>
+        <if test="email != null and email != ''">
+            AND email like concat('%', #{email}, '%')
+        </if>
+
+    </select>
+
+
+</mapper>
