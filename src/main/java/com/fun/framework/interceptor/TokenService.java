@@ -14,7 +14,7 @@ import java.util.Date;
 
 /**
  * created by DJun on 2019/9/8 14:53
- * desc: token 下发
+ * desc: 颁发令牌 ： 下发token
  */
 @Service("TokenService")
 @Slf4j
