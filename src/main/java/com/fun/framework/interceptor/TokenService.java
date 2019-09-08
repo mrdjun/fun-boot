@@ -1,15 +1,21 @@
 package com.fun.framework.interceptor;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.fun.common.utils.StringUtils;
+import com.auth0.jwt.interfaces.Verification;
 import com.fun.framework.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
 import com.fun.project.system.entity.User;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 /**
@@ -17,10 +23,43 @@ import java.util.Date;
  * desc: 颁发令牌 ： 下发token
  */
 @Service("TokenService")
-@Slf4j
 public class TokenService {
     @Autowired
     private IRedisService iRedisService;
+
+    /**  加密算法 可以抽象到环境变量中配置 */
+    private String MAC_NAME = "HMacSHA256";
+
+    /**
+     * 秘钥生成器
+     */
+    private KeyGenerator keyGenerator;
+
+    /**
+     * JWT 校验
+     */
+    public static JWTVerifier jwtVerifier;
+
+    /**
+     * 校验器 用于生成 JWTVerifier 校验器
+     */
+    public static Verification verification;
+
+    @PostConstruct
+    @Scheduled(cron = "0 5 * * *  ?")
+    public void initAndRefresh() throws NoSuchAlgorithmException {
+
+        if (null == keyGenerator) {
+            keyGenerator = KeyGenerator.getInstance(MAC_NAME);
+        }
+
+        SecretKey secretKey = keyGenerator.generateKey();
+
+        Algorithm algorithm = Algorithm.HMAC256(secretKey.getEncoded());
+        verification = JWT.require(algorithm);
+        jwtVerifier = verification.build();
+    }
+
 
     /**
      * 生成 JWT-Token
@@ -30,15 +69,6 @@ public class TokenService {
      */
     public String getToken(User user) {
         String token;
-        String isGetNull = null;
-        try {
-            isGetNull = iRedisService.get(user.getLoginName());
-        } catch (RedisConnectException e) {
-            e.printStackTrace();
-        }
-        // 不为空则直接返回，下面就不执行了
-        if (StringUtils.isNotEmpty(isGetNull))
-            return isGetNull;
 
         Date start = new Date();
         long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;//一小时有效时间
@@ -50,7 +80,7 @@ public class TokenService {
                 .sign(Algorithm.HMAC256(user.getPassword()));
 
         try {
-            log.info(iRedisService.set(user.getLoginName(), token));
+            iRedisService.set(user.getLoginName(), token, 3600000L);
         } catch (RedisConnectException e) {
             e.printStackTrace();
         }
