@@ -54,6 +54,7 @@ public class UserController {
     public CommonResult login(@RequestParam("loginName") String loginName,
                               @RequestParam("password") String password,
                               HttpServletResponse response) {
+
         User userInfo = userService.login(loginName, password);
         if (StringUtils.isNull(userInfo))
             return CommonResult.failed("账号或密码不正确");
@@ -62,6 +63,8 @@ public class UserController {
         userForBase.setUserId(userInfo.getUserId());
         userForBase.setLoginName(loginName);
         userForBase.setPassword(password);
+
+        // TODO: 生成的Token去哪了？
         String token = tokenService.getToken(userInfo);
 
         Cookie cookie = new Cookie("token", token);
