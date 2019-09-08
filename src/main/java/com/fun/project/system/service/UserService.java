@@ -4,12 +4,7 @@ import com.fun.project.system.entity.User;
 
 import java.util.List;
 
-/**
- * 用户Service接口
- *
- * @author cqjava
- * @date 2019-09-07
- */
+
 public interface UserService {
     /**
      * 查询用户
@@ -58,4 +53,6 @@ public interface UserService {
      * @return 结果
      */
      int deleteUserById(Long userId);
+
+     User login(String loginName,String pwd);
 }

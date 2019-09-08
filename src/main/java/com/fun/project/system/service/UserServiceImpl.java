@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserMapper userMapper ;
 
     @Override
     public User selectUserById(Long userId) {
@@ -40,5 +40,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteUserById(Long userId) {
         return userMapper.deleteUserById(userId);
+    }
+
+    @Override
+    public User login(String loginName, String password) {
+        return userMapper.login(loginName,password);
     }
 }

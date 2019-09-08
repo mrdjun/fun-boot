@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * created by DJun on 2019/9/7 17:57
- * desc:
+ * desc: 接口限流
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -18,24 +18,16 @@ public @interface Limit {
      */
     String name() default "";
 
-    /**
-     * 资源 key
-     */
+    /**  资源 key */
     String key() default "";
 
-    /**
-     * key prefix
-     */
+    /**  key prefix */
     String prefix() default "";
 
-    /**
-     * 时间范围，单位秒
-     */
+    /**  时间范围，单位秒 */
     int period();
 
-    /**
-     * 限制访问次数
-     */
+    /**  限制访问次数 */
     int count();
 
     /**

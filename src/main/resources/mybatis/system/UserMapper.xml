@@ -167,4 +167,8 @@
         </foreach>
     </delete>
 
+    <select id="login" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where login_name = #{loginName} and password = #{password}
+    </select>
 </mapper>

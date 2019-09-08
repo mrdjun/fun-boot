@@ -74,7 +74,9 @@ public class LimitAspect {
         String luaScript = buildLuaScript();
         RedisScript<Number> redisScript = new DefaultRedisScript<>(luaScript, Number.class);
         Number count = limitRedisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
+
         log.info("IP:{} 第 {} 次访问key为 {}，描述为 [{}] 的接口", ip, count, keys, name);
+
         if (count != null && count.intValue() <= limitCount) {
             return point.proceed();
         } else {
