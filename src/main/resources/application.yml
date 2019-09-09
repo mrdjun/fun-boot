@@ -29,3 +29,5 @@ jwt:
   tokenHead: Bearer
   # 加密算法
   encodeMethod: HMacSHA256
+
+

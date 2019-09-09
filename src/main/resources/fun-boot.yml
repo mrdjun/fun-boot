@@ -12,6 +12,8 @@ fun:
   profile: D:/fun/uploadPath
   # 获取ip地址开关
   addressEnabled: true
+  # 日志开关
+  openLog: true
 
 jwt:
   # JWT存储的请求头

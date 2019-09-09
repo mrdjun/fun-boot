@@ -1,5 +1,7 @@
 package com.fun.framework.annotaion;
 
+import com.fun.framework.annotaion.enums.LimitType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,13 +1,12 @@
 package com.fun.project.system.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotaion.Limit;
-import com.fun.framework.annotaion.LimitType;
+import com.fun.framework.annotaion.Log;
+import com.fun.framework.annotaion.enums.LimitType;
 import com.fun.framework.annotaion.NeedLoginToken;
 import com.fun.framework.interceptor.TokenService;
-import com.fun.framework.redis.IRedisService;
 import com.fun.project.system.entity.User;
 import com.fun.project.system.service.UserService;
 import io.swagger.annotations.Api;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
 
 /**
  * created by DJun on 2019/9/7 16:11
@@ -49,10 +49,11 @@ public class UserController {
 
     @ApiOperation("登录")
     @ResponseBody
-    @Limit(count = 5, limitType = LimitType.IP, period = 2,name="登录")
+    @Log("登录")
+    @Limit(limitType = LimitType.IP, period = 60, count = 20, name = "登录", prefix = "limit")
     @PostMapping("/login")
-    public CommonResult login(@RequestParam("loginName") String loginName,
-                              @RequestParam("password") String password,
+    public CommonResult login(@NotBlank String loginName,
+                              @NotBlank String password,
                               HttpServletResponse response) {
 
         User userInfo = userService.login(loginName, password);
@@ -64,8 +65,7 @@ public class UserController {
         Cookie cookie = new Cookie("token", token);
         response.addCookie(cookie);
 
-
-        return CommonResult.success(loginName);
+        return CommonResult.success(loginName,"登录成功");
     }
 
 

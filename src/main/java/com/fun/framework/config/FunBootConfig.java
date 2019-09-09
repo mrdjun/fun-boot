@@ -1,6 +1,7 @@
 package com.fun.framework.config;
 
 
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Component;
  * desc: 系统信息
  */
 @Component
-@PropertySource(value = {"classpath:fun-boot.yml"})
+@SpringBootConfiguration
+@PropertySource(value = {"classpath:fun-boot.properties"})
 @ConfigurationProperties(prefix = "fun")
 public class FunBootConfig {
     /**
@@ -42,6 +44,17 @@ public class FunBootConfig {
      * 获取地址开关
      */
     private static boolean addressEnabled;
+
+    /** 日志开关 */
+    private boolean openLog;
+
+    public boolean isOpenLog() {
+        return openLog;
+    }
+
+    public void setOpenLog(boolean openLog) {
+        this.openLog = openLog;
+    }
 
     public String getName() {
         return name;
