@@ -55,8 +55,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             if (userLoginToken.required()) {
                 // 执行认证
                 if (token == null) {
-                    CommonResult commonResult = CommonResult.failed("无token，请重新登录");
-                    commonResult.setCode(401);
+                    CommonResult commonResult = CommonResult.unauthorized("无token，请重新登录");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -65,9 +64,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 String userId;
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
+
                 } catch (JWTDecodeException j) {
-                    CommonResult commonResult = CommonResult.failed("Token已失效");
-                    commonResult.setCode(401);
+                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -75,7 +74,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 User user = userService.selectUserById(Long.parseLong(userId));
 
                 if (StringUtils.isNull(user)) {
-                    CommonResult commonResult = CommonResult.failed("用户不存在");
+                    CommonResult commonResult = CommonResult.unauthorized("用户不存在");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -83,8 +82,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 // 第二次生成token后，使上一次的token 过期
                 String currToken = iRedisService.get(user.getLoginName());
                 if (!currToken.equals(token)) {
-                    CommonResult commonResult = CommonResult.failed("Token已失效");
-                    commonResult.setCode(401);
+                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -95,8 +93,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    CommonResult commonResult = CommonResult.failed("Token已失效");
-                    commonResult.setCode(401);
+                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
