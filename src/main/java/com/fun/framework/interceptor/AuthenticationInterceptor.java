@@ -30,7 +30,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private IRedisService iRedisService;
 
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object)
+    public boolean preHandle(HttpServletRequest httpServletRequest,
+                             HttpServletResponse httpServletResponse,
+                             Object object)
             throws Exception {
         // 从 http 请求头中取出 token
         String token = httpServletRequest.getHeader("token");
@@ -54,8 +56,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             NeedLoginToken userLoginToken = method.getAnnotation(NeedLoginToken.class);
             if (userLoginToken.required()) {
                 // 执行认证
-                if (token == null) {
-                    CommonResult commonResult = CommonResult.unauthorized("无token，请重新登录");
+                if (StringUtils.isNull(token)) {
+                    CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -64,9 +66,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 String userId;
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
-
                 } catch (JWTDecodeException j) {
-                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
+                    CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -74,15 +75,17 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 User user = userService.selectUserById(Long.parseLong(userId));
 
                 if (StringUtils.isNull(user)) {
-                    CommonResult commonResult = CommonResult.unauthorized("用户不存在");
+                    CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
 
-                // 第二次生成token后，使上一次的token 过期
+                // 缓存中是否有当前用户登陆的token
                 String currToken = iRedisService.get(user.getLoginName());
-                if (!currToken.equals(token)) {
-                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
+
+                // 第二次生成token后，使上一次的token 过期
+                if (StringUtils.isNull(currToken) || !currToken.equals(token)) {
+                    CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
@@ -93,7 +96,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-                    CommonResult commonResult = CommonResult.unauthorized("Token已失效");
+                    CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }

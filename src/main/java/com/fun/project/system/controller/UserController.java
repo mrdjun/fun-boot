@@ -49,7 +49,7 @@ public class UserController {
 
     @ApiOperation("登录")
     @ResponseBody
-    @Limit(count = 5, limitType = LimitType.IP, period = 2)
+    @Limit(count = 5, limitType = LimitType.IP, period = 2,name="登录")
     @PostMapping("/login")
     public CommonResult login(@RequestParam("loginName") String loginName,
                               @RequestParam("password") String password,
