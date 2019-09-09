@@ -59,21 +59,13 @@ public class UserController {
         if (StringUtils.isNull(userInfo))
             return CommonResult.failed("账号或密码不正确");
 
-        User userForBase = new User();
-        userForBase.setUserId(userInfo.getUserId());
-        userForBase.setLoginName(loginName);
-        userForBase.setPassword(password);
-
-        // TODO: 生成的Token去哪了？
         String token = tokenService.getToken(userInfo);
 
         Cookie cookie = new Cookie("token", token);
         response.addCookie(cookie);
 
-        JSONObject resp = new JSONObject();
-        resp.put("loginName", loginName);
 
-        return CommonResult.success(resp);
+        return CommonResult.success(loginName);
     }
 
 
