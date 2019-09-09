@@ -1,0 +1,26 @@
+# 项目相关配置
+fun:
+  # 名称
+  name: FunBoot
+  # 版本
+  version: 1.0.0
+  # 版权年份
+  copyrightYear: 2019
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/fun/uploadPath，Linux配置 /home/fun/uploadPath）
+  profile: D:/fun/uploadPath
+  # 获取ip地址开关
+  addressEnabled: true
+
+jwt:
+  # JWT存储的请求头
+  tokenHeader: Authorization
+  # JWT加解密使用的密钥
+  secret: mySecret
+  # JWT的超期限时间(24h 毫秒：60*60*1000)
+  expiration: 3600000
+  # JWT负载中拿到开头
+  tokenHead: Bearer
+  # 加密算法
+  encodeMethod: HMacSHA256

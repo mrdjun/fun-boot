@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * desc: 系统信息
  */
 @Component
-@PropertySource(value = {"classpath:fun-boot.properties"})
+@PropertySource(value = {"classpath:fun-boot.yml"})
 @ConfigurationProperties(prefix = "fun")
 public class FunBootConfig {
     /**

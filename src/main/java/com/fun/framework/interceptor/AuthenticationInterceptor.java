@@ -65,9 +65,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 String userId;
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
-
                 } catch (JWTDecodeException j) {
-//                    throw new RuntimeException("Token已失效");
                     CommonResult commonResult = CommonResult.failed("Token已失效");
                     commonResult.setCode(401);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
@@ -77,7 +75,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 User user = userService.selectUserById(Long.parseLong(userId));
 
                 if (StringUtils.isNull(user)) {
-//                    throw new RuntimeException("用户不存在，请重新登录");
                     CommonResult commonResult = CommonResult.failed("用户不存在");
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
@@ -86,7 +83,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 // 第二次生成token后，使上一次的token 过期
                 String currToken = iRedisService.get(user.getLoginName());
                 if (!currToken.equals(token)) {
-//                    throw new RuntimeException("Token已失效");
                     CommonResult commonResult = CommonResult.failed("Token已失效");
                     commonResult.setCode(401);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
@@ -99,7 +95,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e) {
-//                    throw new RuntimeException("Token已失效");
                     CommonResult commonResult = CommonResult.failed("Token已失效");
                     commonResult.setCode(401);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));

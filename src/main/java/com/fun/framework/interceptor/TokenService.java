@@ -1,14 +1,13 @@
 package com.fun.framework.interceptor;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTCreator;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Verification;
 import com.fun.framework.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
 import com.fun.project.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -27,23 +26,12 @@ public class TokenService {
     @Autowired
     private IRedisService iRedisService;
 
-    /**  加密算法 可以抽象到环境变量中配置 */
-    private String MAC_NAME = "HMacSHA256";
-
-    /**
-     * 秘钥生成器
-     */
+    @Value("${jwt.encodeMethod}")
+    private String MAC_NAME;
+    @Value("${jwt.expiration}")
+    private long expiration;
+    /**  秘钥生成器 */
     private KeyGenerator keyGenerator;
-
-    /**
-     * JWT 校验
-     */
-    public static JWTVerifier jwtVerifier;
-
-    /**
-     * 校验器 用于生成 JWTVerifier 校验器
-     */
-    public static Verification verification;
 
     @PostConstruct
     @Scheduled(cron = "0 5 * * *  ?")
@@ -56,8 +44,8 @@ public class TokenService {
         SecretKey secretKey = keyGenerator.generateKey();
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey.getEncoded());
-        verification = JWT.require(algorithm);
-        jwtVerifier = verification.build();
+        Verification verification = JWT.require(algorithm);
+        verification.build();
     }
 
 
@@ -71,16 +59,17 @@ public class TokenService {
         String token;
 
         Date start = new Date();
-        long currentTime = System.currentTimeMillis() + 60 * 60 * 1000;//一小时有效时间
+        long currentTime = System.currentTimeMillis() + expiration;//一小时有效时间
         Date end = new Date(currentTime);
 
         token = JWT.create().withAudience(user.getUserId().toString())
                 .withIssuedAt(start)
+                .withSubject(user.getLoginName())
                 .withExpiresAt(end)
                 .sign(Algorithm.HMAC256(user.getPassword()));
 
         try {
-            iRedisService.set(user.getLoginName(), token, 3600000L);
+            iRedisService.set(user.getLoginName(), token, expiration);
         } catch (RedisConnectException e) {
             e.printStackTrace();
         }
