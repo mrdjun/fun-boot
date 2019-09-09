@@ -20,8 +20,6 @@ public class OperLog extends BaseEntity {
     private String operIp;
     /** 操作者地点*/
     private String operLocation;
-    /** 状态0正常 1异常 */
-    private Integer status;
     /** 错误消息 */
     private String errorMsg;
     /** 操作用户 */

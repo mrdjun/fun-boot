@@ -3,7 +3,6 @@ package com.fun.project.monitor;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +21,12 @@ public class RedisController {
     @Autowired
     private IRedisService redisService;
 
-    @RequestMapping("keysSize")
-    @RequiresPermissions("redis:view")
+    @GetMapping("keysSize")
     public Map<String, Object> getKeysSize() throws RedisConnectException {
         return redisService.getKeysSize();
     }
 
-    @RequestMapping("memoryInfo")
-    @RequiresPermissions("redis:view")
+    @GetMapping("memoryInfo")
     public Map<String, Object> getMemoryInfo() throws RedisConnectException {
         return redisService.getMemoryInfo();
     }
