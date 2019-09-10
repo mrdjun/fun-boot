@@ -9,24 +9,47 @@ import java.util.Date;
  */
 public class TimestampUtil {
 
-    /**  时间戳 转 日期 (10位秒级) */
+    /**
+     * 时间戳 转 日期 (10位秒级)
+     */
     public static Date TimestampToDate10(String timestamp) {
         return new Date(Long.parseLong(timestamp) * 1000);
     }
 
-    /**  时间戳 转 日期 (13位毫秒级) */
-    public static String TimestampToDate13(String timestamp){
+    /**
+     * 时间戳 转 日期 (13位毫秒级)
+     */
+    public static String TimestampToDate13(String timestamp) {
         // 13位的秒级别的时间戳
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
     }
 
-    /**  日期 转 时间戳 */
-    public static String DateToTimestamp(Date date) {
-        return String.valueOf(date.getTime() / 1000);
+    /**
+     * 日期 转 时间戳 (10位秒级)
+     */
+    public static long DateToTimestamp10(Date date) {
+        return date.getTime() / 1000;
     }
 
-    /** 获取当前时间的时间戳 */
-    public static String getCurrentTimestamp() {
-        return String.valueOf(new Date().getTime() / 1000);
+    /**
+     * 日期 转 时间戳 (13位毫秒级)
+     */
+    public static long DateToTimestamp13(Date date) {
+        return date.getTime();
     }
+
+    /**
+     * 获取当前时间的时间戳（10位秒级）
+     */
+    public static long getCurrentTimestamp10() {
+        return new Date().getTime() / 1000;
+    }
+
+    /**
+     * 获取当前时间的时间戳（13位毫秒级）
+     */
+    public static long getCurrentTimestamp13() {
+        return System.currentTimeMillis();
+    }
+
 }

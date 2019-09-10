@@ -15,7 +15,7 @@ import java.util.TimerTask;
 @Slf4j
 public class AsyncFactory {
 
-     // 异步操作任务调度线程池
+    // 异步操作任务调度线程池
 
     /**
      * 操作日志记录
@@ -23,15 +23,14 @@ public class AsyncFactory {
      * @param operLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOper(final OperLog operLog)
-    {
-        return new TimerTask()
-        {
+    public static TimerTask recordOper(final OperLog operLog, long beginTime) {
+        return new TimerTask() {
             @Override
-            public void run()
-            {
+            public void run() {
                 // 获取远程查询操作地点
                 operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
+                long time = System.currentTimeMillis() - beginTime;
+                operLog.setTime(time);
                 SpringUtils.getBean(IOperLogService.class).insertOperlog(operLog);
             }
         };

@@ -1,10 +1,7 @@
 package com.fun.framework.annotaion.aspect;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fun.common.utils.IPUtil;
-import com.fun.common.utils.ServletUtils;
-import com.fun.common.utils.StringUtils;
-import com.fun.common.utils.TokenUtil;
+import com.fun.common.utils.*;
 import com.fun.framework.annotaion.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
@@ -12,7 +9,6 @@ import com.fun.framework.manager.AsyncManager;
 import com.fun.project.monitor.entity.OperLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -22,6 +18,7 @@ import com.fun.framework.annotaion.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+
 import java.util.Map;
 
 /**
@@ -35,9 +32,11 @@ public class LogAspect {
     @Autowired
     private FunBootConfig funBootConfig;
 
+
     // 配置织入点
     @Pointcut("@annotation(com.fun.framework.annotaion.Log)")
-    public void logPointCut() {}
+    public void logPointCut() {
+    }
 
     /**
      * 处理完请求后执行
@@ -46,7 +45,7 @@ public class LogAspect {
      */
     @AfterReturning(pointcut = "logPointCut()")
     public void doAfterReturning(JoinPoint joinPoint) {
-        handleLog(joinPoint,null);
+        handleLog(joinPoint, null);
     }
 
     /**
@@ -57,7 +56,7 @@ public class LogAspect {
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint,e);
+        handleLog(joinPoint, e);
     }
 
 
@@ -65,9 +64,8 @@ public class LogAspect {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog())
             return;
+        // 获取当前时间的时间戳
         long beginTime = System.currentTimeMillis();
-        // 执行时长(毫秒)
-        long time = System.currentTimeMillis() - beginTime;
         try {
             // 获得注解
             Log controllerLog = getAnnotationLog(joinPoint);
@@ -92,7 +90,6 @@ public class LogAspect {
             operLog.setOperIp(ip);
             operLog.setOperName(operName);
             operLog.setLoginName(currUserLoginName);
-            operLog.setTime(time);
             operLog.setCreateTime(beginTime);
             if (e != null) {
                 operLog.setStatus(String.valueOf(BusinessStatus.FAIL.ordinal()));
@@ -100,7 +97,7 @@ public class LogAspect {
             }
             operLog.setMethod(className + "." + methodName + "()");
             setRequestValue(operLog);
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+            AsyncManager.me().execute(AsyncFactory.recordOper(operLog,beginTime));
 
         } catch (Exception exp) {
             // 记录本地异常日志
@@ -110,38 +107,6 @@ public class LogAspect {
         }
 
     }
-
-//    @Around("logPointCut()")
-//    public Object around(ProceedingJoinPoint point) throws Throwable {
-//
-//        if (!funBootConfig.isOpenLog())
-//            return null;
-//
-//        Object result;
-//        long beginTime = System.currentTimeMillis();
-//        // 执行时长(毫秒)
-//        long time = System.currentTimeMillis() - beginTime;
-//        OperLog operLog = new OperLog();
-//
-//        // 执行方法
-//        result = point.proceed();
-//        HttpServletRequest request = ServletUtils.getRequest();
-//        String ip = IPUtil.getIpAddr(request);
-//
-//        // 获取注解上的描述
-//        MethodSignature signature = (MethodSignature) point.getSignature();
-//        Method method = signature.getMethod();
-//        Log logAnnotation = method.getAnnotation(Log.class);
-//
-//        operLog.setOperation(logAnnotation.operation());
-//        operLog.setOperIp(ip);
-//        operLog.setTime(time);
-//        operLog.setCreateTime(beginTime);
-//
-//
-////  log.info("当前时间[{}]，IP为：[{}]，操作[{}]，执行时长{}ms", beginTime, ip, operation, time);
-//        return result;
-//    }
 
     /**
      * 是否存在 @Log，存在就获取
