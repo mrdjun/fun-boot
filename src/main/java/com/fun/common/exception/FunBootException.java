@@ -1,4 +1,4 @@
-package com.fun.framework.exception;
+package com.fun.common.exception;
 
 /**
  * created by DJun on 2019/9/7 17:53

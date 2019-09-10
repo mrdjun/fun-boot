@@ -1,4 +1,4 @@
-package com.fun.framework.exception;
+package com.fun.common.exception;
 
 /**
  * 限流异常

@@ -1,6 +1,6 @@
 package com.fun.framework.redis;
 
-import com.fun.framework.exception.RedisConnectException;
+import com.fun.common.exception.RedisConnectException;
 
 import java.util.List;
 import java.util.Map;

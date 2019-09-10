@@ -4,7 +4,7 @@ package com.fun.framework.aspect;
 import com.fun.common.utils.IPUtil;
 import com.fun.framework.annotaion.Limit;
 import com.fun.framework.annotaion.enums.LimitType;
-import com.fun.framework.exception.LimitAccessException;
+import com.fun.common.exception.LimitAccessException;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

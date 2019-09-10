@@ -1,6 +1,6 @@
 package com.fun.framework.redis;
 
-import com.fun.framework.exception.RedisConnectException;
+import com.fun.common.exception.RedisConnectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Client;

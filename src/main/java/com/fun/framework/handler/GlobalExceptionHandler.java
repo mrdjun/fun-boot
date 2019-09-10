@@ -1,8 +1,8 @@
 package com.fun.framework.handler;
 
-import com.fun.framework.exception.FileDownloadException;
-import com.fun.framework.exception.FunBootException;
-import com.fun.framework.exception.LimitAccessException;
+import com.fun.common.exception.FileDownloadException;
+import com.fun.common.exception.FunBootException;
+import com.fun.common.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;

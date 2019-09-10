@@ -1,7 +1,7 @@
 package com.fun.project.monitor;
 
+import com.fun.common.exception.RedisConnectException;
 import com.fun.common.result.CommonResult;
-import com.fun.framework.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

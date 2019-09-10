@@ -3,7 +3,7 @@ package com.fun.framework.interceptor;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Verification;
-import com.fun.framework.exception.RedisConnectException;
+import com.fun.common.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
 import com.fun.project.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
