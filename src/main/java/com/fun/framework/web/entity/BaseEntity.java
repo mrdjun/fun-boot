@@ -1,9 +1,11 @@
-package com.fun.framework.web;
+package com.fun.framework.web.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * created by DJun on 2019/9/7 15:46
@@ -14,11 +16,13 @@ import java.io.Serializable;
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String createTime;
-    private String updateTime;
+    private Long createTime;
+    private Long updateTime;
     private String status;
     /** 搜索值 */
     private String searchValue;
     /** 备注 */
     private String remark;
+    /** 请求参数 */
+    private Map<String, Object> params;
 }

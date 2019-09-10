@@ -53,8 +53,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(NeedLoginToken.class)) {
-            NeedLoginToken userLoginToken = method.getAnnotation(NeedLoginToken.class);
-            if (userLoginToken.required()) {
+            NeedLoginToken needLoginToken = method.getAnnotation(NeedLoginToken.class);
+            if (needLoginToken.required()) {
                 // 执行认证
                 if (StringUtils.isNull(token)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);
@@ -64,9 +64,20 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
                 // 获取 token 中的 userId
                 String userId;
+                String loginName;
                 try {
                     userId = JWT.decode(token).getAudience().get(0);
+                    loginName = JWT.decode(token).getSubject();
                 } catch (JWTDecodeException j) {
+                    CommonResult commonResult = CommonResult.unauthorized(false);
+                    ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
+                    return false;
+                }
+
+                // 缓存中是否有当前用户登陆的token
+                String currToken = iRedisService.get(loginName);
+                // 第二次生成token后，使上一次的token 过期
+                if (StringUtils.isNull(currToken) || !currToken.equals(token)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
@@ -80,15 +91,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     return false;
                 }
 
-                // 缓存中是否有当前用户登陆的token
-                String currToken = iRedisService.get(user.getLoginName());
-
-                // 第二次生成token后，使上一次的token 过期
-                if (StringUtils.isNull(currToken) || !currToken.equals(token)) {
-                    CommonResult commonResult = CommonResult.unauthorized(false);
-                    ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
-                    return false;
-                }
 
                 // 验证 token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();

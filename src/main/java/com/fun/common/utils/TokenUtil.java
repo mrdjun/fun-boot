@@ -5,17 +5,25 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * created by DJun on 2019/9/8 14:54
  * desc:
  */
 public class TokenUtil {
-
+    /**
+     * 获取Token中的userId
+     */
     public static String getTokenUserId() {
-        String token = getRequest().getHeader("token");// 从 http 请求头中取出 token
-        String userId = JWT.decode(token).getAudience().get(0);
-        return userId;
+        return JWT.decode(Objects.requireNonNull(getRequest()).getHeader("token")).getAudience().get(0);
+    }
+
+    /**
+     * 获取Token中的loginName
+     */
+    public static String getTokenLoginName() {
+        return JWT.decode(Objects.requireNonNull(getRequest()).getHeader("token")).getSubject();
     }
 
     /**

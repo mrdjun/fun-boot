@@ -1,6 +1,6 @@
 package com.fun.project.system.entity;
 
-import com.fun.framework.web.BaseEntity;
+import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;
 
 /**
@@ -84,7 +84,7 @@ public class User extends BaseEntity {
     private Integer health;
 
     /** 禁用账号到期时间 */
-    private String banTime;
+    private Long banTime;
 
     /** 1-已认证，0-未认证 */
     private String isVerify;

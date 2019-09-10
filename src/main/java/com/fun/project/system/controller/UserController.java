@@ -34,6 +34,7 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @NeedLoginToken
+    @Log("获取用户列表")
     @GetMapping("/list")
     @ResponseBody
     public CommonResult getUserList(User user) {
@@ -49,7 +50,6 @@ public class UserController {
 
     @ApiOperation("登录")
     @ResponseBody
-    @Log("登录")
     @Limit(limitType = LimitType.IP, period = 60, count = 20, name = "登录", prefix = "limit")
     @PostMapping("/login")
     public CommonResult login(@NotBlank String loginName,

@@ -1,4 +1,4 @@
-package com.fun.common.result;
+package com.fun.common.pageHelper;
 
 import com.github.pagehelper.PageInfo;
 import org.springframework.data.domain.Page;

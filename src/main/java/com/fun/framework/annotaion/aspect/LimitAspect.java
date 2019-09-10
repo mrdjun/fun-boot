@@ -1,4 +1,4 @@
-package com.fun.framework.aspect;
+package com.fun.framework.annotaion.aspect;
 
 
 import com.fun.common.utils.IPUtil;
