@@ -13,15 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 拦截api下所有请求，通过判断是否有 @LoginRequired 注解 决定是否需要登录
+        // 默认登录拦截全部接口
         registry.addInterceptor(authenticationInterceptor())
                 .addPathPatterns("/**");
     }
+
     @Bean
     public AuthenticationInterceptor authenticationInterceptor() {
-        return new AuthenticationInterceptor();// 自己写的拦截器
+        // 登录拦截
+        return new AuthenticationInterceptor();
     }
-
-    //省略其他重写方法
 
 }

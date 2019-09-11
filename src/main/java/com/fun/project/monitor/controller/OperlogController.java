@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/monitor/operlog")
+@RequestMapping("/admin/operlog")
 public class OperlogController {
 
     @Autowired

@@ -78,7 +78,7 @@
         onCellData:        null,
         onCellHtmlData:    null,
         onIgnoreRow:       null,          // onIgnoreRow($tr, rowIndex): function should return true to not export a row
-        onMsoNumberFormat: null,          // Excel 2000 html format only. See readme.md for more information about msonumberformat
+        onMsoNumberFormat: null,          // Excel 2000 html format only. See README.md for more information about msonumberformat
         outputMode:        'file',        // 'file', 'string', 'base64' or 'window' (experimental)
         pdfmake: {
           enabled: false,                 // true: use pdfmake instead of jspdf and jspdf-autotable (experimental)

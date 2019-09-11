@@ -59,7 +59,7 @@ public class UserController {
         User userInfo = userService.login(loginName, password);
         if (StringUtils.isNull(userInfo))
             return CommonResult.failed("账号或密码不正确");
-
+    
         String token = tokenService.getToken(userInfo);
 
         Cookie cookie = new Cookie("token", token);

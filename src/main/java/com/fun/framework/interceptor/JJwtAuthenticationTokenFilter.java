@@ -12,9 +12,9 @@
 //
 ///**
 // * created by DJun on 2019/9/9 11:31
-// * desc: JWT登录授权过滤器
+// * desc: JJWT登录授权过滤器
 // */
-//public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+//public class JJwtAuthenticationTokenFilter extends OncePerRequestFilter {
 //
 //    @Value("${jwt.tokenHeader}")
 //    private String tokenHeader;

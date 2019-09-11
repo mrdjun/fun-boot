@@ -15,7 +15,7 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("redis")
+@RequestMapping("/admin/redis")
 public class RedisController {
 
     private static final String INTEGER_PREFIX = "(integer) ";
@@ -25,21 +25,21 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行 Redis keysSize 命令")
-    @GetMapping("keysSize")
+    @GetMapping("/keysSize")
     public Map<String, Object> getKeysSize() throws RedisConnectException {
         return redisService.getKeysSize();
     }
 
     @NeedLoginToken
     @Log("执行 Redis memoryInfo 命令")
-    @GetMapping("memoryInfo")
+    @GetMapping("/memoryInfo")
     public Map<String, Object> getMemoryInfo() throws RedisConnectException {
         return redisService.getMemoryInfo();
     }
 
     @NeedLoginToken
     @Log("执行 Redis keys 命令")
-    @GetMapping("keys")
+    @GetMapping("/keys")
     public CommonResult keys(String arg) throws RedisConnectException {
         Set<String> set = this.redisService.getKeys(arg);
         return CommonResult.success(set);
@@ -47,7 +47,7 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行Redis get命令")
-    @GetMapping("get")
+    @GetMapping("/get")
     public CommonResult get(String arg) throws RedisConnectException {
         String result = this.redisService.get(arg);
         return CommonResult.success(result == null ? "" : result);
@@ -55,7 +55,7 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行Redis set命令")
-    @GetMapping("set")
+    @GetMapping("/set")
     public CommonResult set(String arg) throws RedisConnectException {
         String[] args = arg.split(",");
         if (args.length == 1)
@@ -68,7 +68,7 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行Redis del命令")
-    @GetMapping("del")
+    @GetMapping("/del")
     public CommonResult del(String arg) throws RedisConnectException {
         String[] args = arg.split(",");
         Long result = this.redisService.del(args);
@@ -77,7 +77,7 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行Redis exists命令")
-    @GetMapping("exists")
+    @GetMapping("/exists")
     public CommonResult exists(String arg) throws RedisConnectException {
         int count = 0;
         String[] arr = arg.split(",");
@@ -90,14 +90,14 @@ public class RedisController {
 
     @NeedLoginToken
     @Log("执行Redis pttl命令")
-    @GetMapping("pttl")
+    @GetMapping("/pttl")
     public CommonResult pttl(String arg) throws RedisConnectException {
         return CommonResult.success(INTEGER_PREFIX + this.redisService.pttl(arg));
     }
 
     @NeedLoginToken
     @Log("执行Redis pexpire命令")
-    @GetMapping("pexpire")
+    @GetMapping("/pexpire")
     public CommonResult pexpire(String arg) throws RedisConnectException {
         String[] arr = arg.split(",");
         if (arr.length != 2 || !isValidLong(arr[1])) {
