@@ -63,6 +63,7 @@ public class LogAspect {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog())
             return;
+        // 获取当前登录用户账号
         String currUserLoginName = TokenUtil.getTokenLoginName();
 
         // 获取当前时间的时间戳
@@ -72,7 +73,7 @@ public class LogAspect {
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null)
                 return;
-            // 获取当前登录用户账号
+
 
             // 获取用户ip
             HttpServletRequest request = ServletUtils.getRequest();
