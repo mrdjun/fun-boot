@@ -41,4 +41,4 @@
 - [QQ交流群](https://jq.qq.com/?_wv=1027&k=57LIuZr) 
 - [Github](https://github.com/mrdjun)
 - [开源组织](https://github.com/mrdjun) 
-- [联系邮箱：](https://github.com/mrdjun/fun-boot)mrdjun@qq.com
+- [联系邮箱：](https://github.com/mrdjun/fun-boot)mr.djun@qq.com
