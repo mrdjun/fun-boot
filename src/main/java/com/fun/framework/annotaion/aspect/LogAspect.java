@@ -59,11 +59,12 @@ public class LogAspect {
         handleLog(joinPoint, e);
     }
 
-
     private void handleLog(final JoinPoint joinPoint, final Exception e) {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog())
             return;
+        String currUserLoginName = TokenUtil.getTokenLoginName();
+
         // 获取当前时间的时间戳
         long beginTime = System.currentTimeMillis();
         try {
@@ -72,7 +73,7 @@ public class LogAspect {
             if (controllerLog == null)
                 return;
             // 获取当前登录用户账号
-            String currUserLoginName = TokenUtil.getTokenLoginName();
+
             // 获取用户ip
             HttpServletRequest request = ServletUtils.getRequest();
             String ip = IPUtil.getIpAddr(request);
