@@ -73,11 +73,9 @@ public class LogAspect {
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null)
                 return;
-
-
             // 获取用户ip
             HttpServletRequest request = ServletUtils.getRequest();
-            String ip = IPUtil.getIpAddr(request);
+            String ip = IpUtils.getIpAddr(request);
             // 获取注解上的操作描述
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Method method = signature.getMethod();

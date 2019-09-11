@@ -3,14 +3,11 @@ package com.fun.framework.annotaion.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.result.CommonResult;
-import com.fun.common.utils.IPUtil;
+import com.fun.common.utils.IpUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotaion.Limit;
 import com.fun.framework.annotaion.enums.LimitType;
-import com.fun.common.exception.LimitAccessException;
 import com.google.common.collect.ImmutableList;
-import com.sun.xml.internal.ws.client.ResponseContext;
-import com.sun.xml.internal.ws.client.ResponseContextReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,14 +20,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 
 /**
@@ -63,7 +57,7 @@ public class LimitAspect {
         LimitType limitType = limitAnnotation.limitType();
         String name = limitAnnotation.name();
         String key;
-        String ip = IPUtil.getIpAddr(request);
+        String ip = IpUtils.getIpAddr(request);
         int limitPeriod = limitAnnotation.period();
         int limitCount = limitAnnotation.count();
         switch (limitType) {
