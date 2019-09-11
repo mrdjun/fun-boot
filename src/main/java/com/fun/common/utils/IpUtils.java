@@ -6,52 +6,43 @@ import java.net.UnknownHostException;
 
 /**
  * 获取IP方法
- * 
+ * 使用 Nginx等反向代理软件， 则不能通过 request.getRemoteAddr()获取 IP地址
+ * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，
+ * X-Forwarded-For中第一个非 unknown的有效IP字符串，则为真实IP地址
  */
-public class IpUtils
-{
-    public static String getIpAddr(HttpServletRequest request)
-    {
-        if (request == null)
-        {
+public class IpUtils {
+    public static String getIpAddr(HttpServletRequest request) {
+        if (request == null) {
             return "unknown";
         }
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-        {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-        {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Forwarded-For");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-        {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-        {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
 
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-        {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
 
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 
-    public static boolean internalIp(String ip)
-    {
+    public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
         return internalIp(addr) || "127.0.0.1".equals(ip);
     }
 
-    private static boolean internalIp(byte[] addr)
-    {
-        if (StringUtils.isNull(addr) || addr.length < 2)
-        {
+    private static boolean internalIp(byte[] addr) {
+        if (StringUtils.isNull(addr) || addr.length < 2) {
             return true;
         }
         final byte b0 = addr[0];
@@ -65,18 +56,15 @@ public class IpUtils
         // 192.168.x.x/16
         final byte SECTION_5 = (byte) 0xC0;
         final byte SECTION_6 = (byte) 0xA8;
-        switch (b0)
-        {
+        switch (b0) {
             case SECTION_1:
                 return true;
             case SECTION_2:
-                if (b1 >= SECTION_3 && b1 <= SECTION_4)
-                {
+                if (b1 >= SECTION_3 && b1 <= SECTION_4) {
                     return true;
                 }
             case SECTION_5:
-                switch (b1)
-                {
+                switch (b1) {
                     case SECTION_6:
                         return true;
                 }
@@ -87,25 +75,21 @@ public class IpUtils
 
     /**
      * 将IPv4地址转换成字节
-     * 
+     *
      * @param text IPv4地址
      * @return byte 字节
      */
-    public static byte[] textToNumericFormatV4(String text)
-    {
-        if (text.length() == 0)
-        {
+    public static byte[] textToNumericFormatV4(String text) {
+        if (text.length() == 0) {
             return null;
         }
 
         byte[] bytes = new byte[4];
         String[] elements = text.split("\\.", -1);
-        try
-        {
+        try {
             long l;
             int i;
-            switch (elements.length)
-            {
+            switch (elements.length) {
                 case 1:
                     l = Long.parseLong(elements[0]);
                     if ((l < 0L) || (l > 4294967295L))
@@ -128,8 +112,7 @@ public class IpUtils
                     bytes[3] = (byte) (int) (l & 0xFF);
                     break;
                 case 3:
-                    for (i = 0; i < 2; ++i)
-                    {
+                    for (i = 0; i < 2; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L))
                             return null;
@@ -142,8 +125,7 @@ public class IpUtils
                     bytes[3] = (byte) (int) (l & 0xFF);
                     break;
                 case 4:
-                    for (i = 0; i < 4; ++i)
-                    {
+                    for (i = 0; i < 4; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L))
                             return null;
@@ -153,34 +135,24 @@ public class IpUtils
                 default:
                     return null;
             }
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             return null;
         }
         return bytes;
     }
 
-    public static String getHostIp()
-    {
-        try
-        {
+    public static String getHostIp() {
+        try {
             return InetAddress.getLocalHost().getHostAddress();
-        }
-        catch (UnknownHostException e)
-        {
+        } catch (UnknownHostException e) {
         }
         return "127.0.0.1";
     }
 
-    public static String getHostName()
-    {
-        try
-        {
+    public static String getHostName() {
+        try {
             return InetAddress.getLocalHost().getHostName();
-        }
-        catch (UnknownHostException e)
-        {
+        } catch (UnknownHostException e) {
         }
         return "未知";
     }
