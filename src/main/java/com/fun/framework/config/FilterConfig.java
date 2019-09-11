@@ -19,21 +19,19 @@ import java.util.Map;
  */
 @Configuration
 @PropertySource(value = {"classpath:fun-boot.properties"})
-public class FilterConfig
-    {
-        @Value("${xss.enabled}")
-        private String enabled;
+public class FilterConfig {
+    @Value("${xss.enabled}")
+    private String enabled;
 
-        @Value("${xss.excludes}")
-        private String excludes;
+    @Value("${xss.excludes}")
+    private String excludes;
 
-        @Value("${xss.urlPatterns}")
-        private String urlPatterns;
+    @Value("${xss.urlPatterns}")
+    private String urlPatterns;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
-    public FilterRegistrationBean xssFilterRegistration()
-    {
+    public FilterRegistrationBean xssFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.setFilter(new XssFilter());

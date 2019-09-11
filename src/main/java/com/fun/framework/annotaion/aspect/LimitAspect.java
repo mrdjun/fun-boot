@@ -1,11 +1,16 @@
 package com.fun.framework.annotaion.aspect;
 
 
+import com.alibaba.fastjson.JSONObject;
+import com.fun.common.result.CommonResult;
 import com.fun.common.utils.IPUtil;
+import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotaion.Limit;
 import com.fun.framework.annotaion.enums.LimitType;
 import com.fun.common.exception.LimitAccessException;
 import com.google.common.collect.ImmutableList;
+import com.sun.xml.internal.ws.client.ResponseContext;
+import com.sun.xml.internal.ws.client.ResponseContextReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -22,6 +27,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -49,8 +55,8 @@ public class LimitAspect {
 
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-
+        HttpServletRequest request = ServletUtils.getRequest();
+        HttpServletResponse response = ServletUtils.getResponse();
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Limit limitAnnotation = method.getAnnotation(Limit.class);
@@ -80,8 +86,11 @@ public class LimitAspect {
         if (count != null && count.intValue() <= limitCount) {
             return point.proceed();
         } else {
-            throw new LimitAccessException("接口访问超出频率限制");
+            CommonResult commonResult = CommonResult.failed("错误次数过多，请稍后重试");
+            ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
+//            throw new LimitAccessException("接口流量超出了限制");
         }
+        return null;
     }
 
     /**

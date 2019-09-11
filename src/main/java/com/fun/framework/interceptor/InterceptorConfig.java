@@ -15,7 +15,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 默认登录拦截全部接口
         registry.addInterceptor(authenticationInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/api/**")
+                .addPathPatterns("/admin/**");
     }
 
     @Bean

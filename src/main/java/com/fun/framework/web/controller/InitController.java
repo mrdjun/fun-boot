@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class InitController {
     @GetMapping("")
-    public String index(){
+    public String login(){
         return "login";
     }
 
+    @GetMapping("index")
+    public String index(){
+        return "index";
+    }
 
 }

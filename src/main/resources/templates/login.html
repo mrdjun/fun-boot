@@ -46,8 +46,8 @@
             <form id="signupForm">
                 <h4 class="no-margins">登录：</h4>
                 <p class="m-t-md">请输入账号密码登录</p>
-                <input type="text"     name="username" class="form-control uname"     placeholder="用户名" value="admin"    />
-                <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="admin" />
+                <input type="text"     name="username" class="form-control uname" placeholder="用户名" value="admin" />
+                <input type="password" name="password" class="form-control pword" placeholder="密码"   value="admin" />
                 <!--<div class="row m-t" th:if="${captchaEnabled==true}">-->
                     <!--<div class="col-xs-6">-->
                         <!--<input type="text" name="validateCode" class="form-control code" placeholder="验证码" maxlength="5" autocomplete="off">-->
@@ -71,7 +71,7 @@
         </div>
     </div>
 </div>
-<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!--<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>-->
 <!-- 全局js -->
 <script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
@@ -80,7 +80,7 @@
 <script src="../static/ajax/libs/validate/messages_zh.min.js" th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
 <script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
 <script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
-<script src="../static/fun/js/fun-ui.js" th:src="@{/heng/js/heng-ui.js?v=4.0.0}"></script>
-<script src="../static/fun/login.js" th:src="@{/heng/login.js}"></script>
+<script src="../static/fun/js/fun-ui.js" th:src="@{/fun/js/fun-ui.js?v=4.0.0}"></script>
+<script src="../static/fun/login.js" th:src="@{/fun/login.js}"></script>
 </body>
 </html>
