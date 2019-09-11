@@ -32,9 +32,6 @@
 >请作者吃个肉夹馍 :)
 <p align="center">
 	<img src="https://i.loli.net/2019/09/11/IkJ1uNUVxaLzY79.jpg" alt="praise"  width="180" height="160">
-	<p align="center">
-		<em>图片示例2</em>
-	</p>
 </p>
 
 
