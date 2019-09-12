@@ -18,16 +18,5 @@ spring:
   thymeleaf:
     cache: false
 
-jwt:
-  # JWT存储的请求头
-  tokenHeader: Authorization
-  # JWT加解密使用的密钥
-  secret: mySecret
-  # JWT的超期限时间(24h 毫秒：60*60*1000)
-  expiration: 3600000
-  # JWT负载中拿到开头
-  tokenHead: Bearer
-  # 加密算法
-  encodeMethod: HMacSHA256
 
 

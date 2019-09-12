@@ -55,7 +55,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(NeedLoginToken.class)) {
             NeedLoginToken needLoginToken = method.getAnnotation(NeedLoginToken.class);
             if (needLoginToken.required()) {
-                // 执行认证
+                // 没有token
                 if (StringUtils.isNull(token)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));

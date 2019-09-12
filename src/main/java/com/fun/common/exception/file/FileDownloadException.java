@@ -1,4 +1,4 @@
-package com.fun.common.exception;
+package com.fun.common.exception.file;
 
 /**
  * 文件下载异常

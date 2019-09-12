@@ -1,6 +1,6 @@
 package com.fun.framework.handler;
 
-import com.fun.common.exception.FileDownloadException;
+import com.fun.common.exception.file.FileDownloadException;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;

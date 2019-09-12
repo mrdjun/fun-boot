@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -14,10 +15,23 @@ import java.util.List;
 
 /**
  * created by DJun on 2019/9/11 12:56
- * desc:
+ * desc: 通用Web配置
  */
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class CommonWebConfig implements WebMvcConfigurer {
+
+    /**
+     * 资源映射配置
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        /** 本地文件上传路径 */
+        registry.addResourceHandler("/profile/**").addResourceLocations("file:" + FunBootConfig.getProfile() + "/");
+
+        /* swagger配置 */
+        // registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        // registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 
     /**
      * 跨域
@@ -28,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .maxAge(3600 * 24);
+                .maxAge(3600 * 30); // 从创建到过期所能存在的时间 ms
     }
 
     /**
@@ -36,7 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //1.需要定义一个convert转换消息的对象;
+        //1.定义一个convert转换消息的对象;
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         //2.添加fastJson的配置信息，比如：是否要格式化返回的json数据;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -46,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
                 SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteNullListAsEmpty,
                 SerializerFeature.WriteDateUseDateFormat);
-        //3.处理中文乱码问题
+        //3.处理中文可能乱码问题
         List<MediaType> fastMediaTypes = new ArrayList<>();
         fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
         //4.在convert中添加配置信息.
