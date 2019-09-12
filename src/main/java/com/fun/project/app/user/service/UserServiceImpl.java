@@ -1,14 +1,19 @@
-package com.fun.project.system.service;
+package com.fun.project.app.user.service;
 
-import com.fun.project.system.entity.User;
-import com.fun.project.system.mapper.UserMapper;
+import com.fun.project.app.user.entity.User;
+import com.fun.project.app.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * created by DJun on 2019/9/12 18:17
+ * desc:
+ */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
+
     @Autowired
     private UserMapper userMapper ;
 

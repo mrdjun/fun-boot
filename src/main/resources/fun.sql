@@ -71,7 +71,7 @@ COMMIT;
 BEGIN;
 LOCK TABLES `fun`.`sys_oper_log` WRITE;
 DELETE FROM `fun`.`sys_oper_log`;
-INSERT INTO `fun`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (14, '获取用户列表', '127.0.0.1', '内网IP', NULL, 'admin', 165, 'com.fun.project.system.controller.UserController.getUserList()', '{}', 1568129451558, '1');
+INSERT INTO `fun`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (14, '获取用户列表', '127.0.0.1', '内网IP', NULL, 'admin', 165, 'com.fun.project.app.user.controller.UserController.getUserList()', '{}', 1568129451558, '1');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

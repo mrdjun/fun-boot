@@ -1,6 +1,6 @@
-package com.fun.project.monitor.service;
+package com.fun.project.admin.monitor.operlog.service;
 
-import com.fun.project.monitor.entity.OperLog;
+import com.fun.project.admin.monitor.operlog.entity.OperLog;
 
 import java.util.List;
 

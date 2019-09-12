@@ -1,9 +1,9 @@
-package com.fun.project.monitor.controller;
+package com.fun.project.admin.monitor.operlog.controller;
 
 import com.fun.common.pageHelper.CommonPage;
 import com.fun.common.result.CommonResult;
-import com.fun.project.monitor.entity.OperLog;
-import com.fun.project.monitor.service.IOperLogService;
+import com.fun.project.admin.monitor.operlog.entity.OperLog;
+import com.fun.project.admin.monitor.operlog.service.IOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.fun.project.system.entity;
+package com.fun.project.app.user.entity;
 
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;

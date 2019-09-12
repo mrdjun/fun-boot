@@ -1,4 +1,4 @@
-package com.fun.project.system.controller;
+package com.fun.project.app.user.controller;
 
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.StringUtils;
@@ -7,8 +7,8 @@ import com.fun.framework.annotaion.Log;
 import com.fun.framework.annotaion.enums.LimitType;
 import com.fun.framework.annotaion.NeedLoginToken;
 import com.fun.framework.interceptor.TokenService;
-import com.fun.project.system.entity.User;
-import com.fun.project.system.service.UserService;
+import com.fun.project.app.user.entity.User;
+import com.fun.project.app.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,13 @@
-package com.fun.project.system.mapper;
+package com.fun.project.app.user.mapper;
 
-import com.fun.project.system.entity.User;
+import com.fun.project.app.user.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * 用户信息Mapper接口
+ * created by DJun on 2019/9/12 18:15
+ * desc:
  */
 public interface UserMapper {
     /**

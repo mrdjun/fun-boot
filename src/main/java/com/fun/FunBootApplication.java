@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableAsync
 @EnableTransactionManagement
-@MapperScan("com.fun.project.*.mapper")
+@MapperScan({"com.fun.project.admin.*.*.mapper","com.fun.project.app.*.mapper"})
 public class FunBootApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(FunBootApplication.class).run(args);

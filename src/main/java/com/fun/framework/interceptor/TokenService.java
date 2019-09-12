@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Verification;
 import com.fun.common.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
-import com.fun.project.system.entity.User;
+import com.fun.project.app.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;

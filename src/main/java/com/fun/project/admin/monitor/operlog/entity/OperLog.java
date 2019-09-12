@@ -1,5 +1,4 @@
-package com.fun.project.monitor.entity;
-
+package com.fun.project.admin.monitor.operlog.entity;
 
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;

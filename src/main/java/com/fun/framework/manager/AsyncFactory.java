@@ -2,8 +2,8 @@ package com.fun.framework.manager;
 
 import com.fun.common.utils.AddressUtils;
 import com.fun.common.utils.SpringUtils;
-import com.fun.project.monitor.entity.OperLog;
-import com.fun.project.monitor.service.IOperLogService;
+import com.fun.project.admin.monitor.operlog.entity.OperLog;
+import com.fun.project.admin.monitor.operlog.service.IOperLogService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.TimerTask;

@@ -1,10 +1,13 @@
-package com.fun.project.system.service;
+package com.fun.project.app.user.service;
 
-import com.fun.project.system.entity.User;
+import com.fun.project.app.user.entity.User;
 
 import java.util.List;
 
-
+/**
+ * created by DJun on 2019/9/12 18:16
+ * desc:
+ */
 public interface UserService {
     /**
      * 查询用户
@@ -12,7 +15,7 @@ public interface UserService {
      * @param userId 用户ID
      * @return 用户
      */
-     User selectUserById(Long userId);
+    User selectUserById(Long userId);
 
     /**
      * 查询用户列表
@@ -20,7 +23,7 @@ public interface UserService {
      * @param user 用户
      * @return 用户集合
      */
-     List<User> selectUserList(User user);
+    List<User> selectUserList(User user);
 
     /**
      * 新增用户
@@ -28,7 +31,7 @@ public interface UserService {
      * @param user 用户
      * @return 结果
      */
-     int insertUser(User user);
+    int insertUser(User user);
 
     /**
      * 修改用户
@@ -36,7 +39,7 @@ public interface UserService {
      * @param user 用户
      * @return 结果
      */
-     int updateUser(User user);
+    int updateUser(User user);
 
     /**
      * 批量删除用户
@@ -44,7 +47,7 @@ public interface UserService {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-     int deleteUserByIds(String ids);
+    int deleteUserByIds(String ids);
 
     /**
      * 删除用户信息
@@ -52,7 +55,8 @@ public interface UserService {
      * @param userId 用户ID
      * @return 结果
      */
-     int deleteUserById(Long userId);
+    int deleteUserById(Long userId);
 
-     User login(String loginName,String pwd);
+    User login(String loginName, String pwd);
+
 }

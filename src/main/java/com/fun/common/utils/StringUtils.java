@@ -289,7 +289,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。 例如：HELLO_WORLD->HelloWorld
+     * 将下划线大写方式命名的字符串转换为驼峰式。
+     * 如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。 例如：HELLO_WORLD->HelloWorld
      *
      * @param name 转换前的下划线大写方式命名的字符串
      * @return 转换后的驼峰式命名的字符串
@@ -343,4 +344,52 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * 首字母大写
+     *
+     * @param str 需处理字符串
+     * @return new str
+     */
+    public static String upperCaseFirst(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * 首字母小写
+     *
+     * @param str 需处理字符串
+     * @return new str
+     */
+    public static String lowerCaseFirst(String str) {
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
+    }
+
+    /**
+     * 下划线，转换为驼峰式
+     *
+     * @param underscoreName  str
+     * @return new str
+     */
+    public static String underlineToCamelCase(String underscoreName) {
+        StringBuilder result = new StringBuilder();
+        if (underscoreName != null && underscoreName.trim().length() > 0) {
+            boolean flag = false;
+            for (int i = 0; i < underscoreName.length(); i++) {
+                char ch = underscoreName.charAt(i);
+                if ("_".charAt(0) == ch) {
+                    flag = true;
+                } else {
+                    if (flag) {
+                        result.append(Character.toUpperCase(ch));
+                        flag = false;
+                    } else {
+                        result.append(ch);
+                    }
+                }
+            }
+        }
+        return result.toString();
+    }
+
 }

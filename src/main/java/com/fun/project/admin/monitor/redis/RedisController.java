@@ -1,4 +1,4 @@
-package com.fun.project.monitor.controller;
+package com.fun.project.admin.monitor.redis;
 
 import com.fun.common.exception.RedisConnectException;
 import com.fun.common.result.CommonResult;
