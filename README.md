@@ -13,7 +13,7 @@
 
 > 一款现代化的脚手架项目。集成APP的api与后端api于一体:beers:
 
-> 地址：https://github.com/mrdjun/fun-boot 主语言[java] 欢迎star
+> 个人博客：https://blog.csdn.net/qq_41647999 主语言[java] 欢迎star
 ------------------------------
 
 # 文档
