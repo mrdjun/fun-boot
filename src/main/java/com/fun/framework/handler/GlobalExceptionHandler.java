@@ -22,6 +22,9 @@ import javax.validation.Path;
 import java.util.List;
 import java.util.Set;
 
+/***
+ * 捕获全项目异常处理
+ */
 @Slf4j
 @RestControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
