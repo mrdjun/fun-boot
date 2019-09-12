@@ -6,7 +6,7 @@
 
     <groupId>com.fun</groupId>
     <artifactId>fun-boot</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <developers>
