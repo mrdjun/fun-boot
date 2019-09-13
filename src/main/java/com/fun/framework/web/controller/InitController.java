@@ -1,17 +1,17 @@
 package com.fun.framework.web.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * created by DJun on 2019/9/9 17:23
  * desc:
  */
-@Controller
+@RestController
 public class InitController {
     @GetMapping("")
     public String login(){
-        return "login";
+        return "登录页面正在熬夜开发中...";
     }
 
     @GetMapping("index")
