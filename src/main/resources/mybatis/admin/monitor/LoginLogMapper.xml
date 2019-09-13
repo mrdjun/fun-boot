@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.admin.monitor.log.mapper.LoginLogMapper">
+
+    <resultMap type="LoginLog" id="LoginLogResult">
+        <id     property="infoId"        column="info_id"           />
+        <result property="loginName"     column="login_name"        />
+        <result property="loginLocation" column="login_location"    />
+        <result property="ipaddr"        column="ipaddr"            />
+        <result property="os"            column="os"                />
+        <result property="browser"       column="browser"           />
+        <result property="msg"           column="msg"               />
+        <result property="createTime"     column="create_time"      />
+        <result property="status"        column="status"            />
+    </resultMap>
+
+    <insert id="insertLoginLog" parameterType="LoginLog">
+		insert into sys_login_log (login_name, status, ipaddr, login_location, browser, os, msg, create_time)
+		values (#{loginName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, #{createTime})
+	</insert>
+
+    <select id="selectLoginLogList" parameterType="LoginLog" resultMap="LoginLogResult">
+        select info_id,login_name,ipaddr,login_location,browser,os,status,msg,create_time from sys_login_log
+        <where>
+            <if test="ipaddr != null and ipaddr != ''">
+                AND ipaddr like concat('%', #{ipaddr}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND login_name like concat('%', #{loginName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteLoginLogByIds" parameterType="String">
+        delete from sys_login_log where info_id in
+        <foreach collection="array" item="infoId" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+
+    <update id="cleanLoginLog">
+        truncate table sys_login_log
+    </update>
+
+</mapper> 

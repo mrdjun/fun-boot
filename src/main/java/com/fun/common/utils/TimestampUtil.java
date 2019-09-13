@@ -20,7 +20,6 @@ public class TimestampUtil {
      * 时间戳 转 日期 (13位毫秒级)
      */
     public static String TimestampToDate13(String timestamp) {
-        // 13位的秒级别的时间戳
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
     }
 

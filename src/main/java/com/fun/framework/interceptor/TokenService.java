@@ -52,10 +52,9 @@ public class TokenService {
     /**
      * 生成 JWT-Token
      *
-     * 每一次生成token之前，判断缓存里面是否已经有token
      * 生成token之后，存入缓存
      */
-    public String getToken(User user) {
+    public String getToken(User user) throws RedisConnectException {
         String token;
 
         Date start = new Date();
@@ -71,7 +70,7 @@ public class TokenService {
         try {
             iRedisService.set(user.getLoginName(), token, expiration);
         } catch (RedisConnectException e) {
-            e.printStackTrace();
+            throw new RedisConnectException("Redis连接异常...");
         }
 
         return token;

@@ -6,7 +6,7 @@ import com.fun.framework.annotaion.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
 import com.fun.framework.manager.AsyncManager;
-import com.fun.project.admin.monitor.operlog.entity.OperLog;
+import com.fun.project.admin.monitor.log.entity.OperLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -84,7 +84,7 @@ public class LogAspect {
             // 获取当前操作的方法名
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
-
+            // 封装对象
             OperLog operLog = new OperLog();
             operLog.setStatus(String.valueOf(BusinessStatus.SUCCESS.ordinal()));
             operLog.setOperIp(ip);

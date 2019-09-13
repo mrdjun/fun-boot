@@ -1,4 +1,4 @@
-package com.fun.project.admin.monitor.operlog.entity;
+package com.fun.project.admin.monitor.log.entity;
 
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;
@@ -10,7 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 public class OperLog extends BaseEntity {
     /** 日志主键 */
     private Long operId;

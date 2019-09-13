@@ -1,7 +1,7 @@
-package com.fun.project.admin.monitor.operlog.service;
+package com.fun.project.admin.monitor.log.service;
 
-import com.fun.project.admin.monitor.operlog.entity.OperLog;
-import com.fun.project.admin.monitor.operlog.mapper.OperLogMapper;
+import com.fun.project.admin.monitor.log.entity.OperLog;
+import com.fun.project.admin.monitor.log.mapper.OperLogMapper;
 import com.fun.common.utils.text.Convert;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;

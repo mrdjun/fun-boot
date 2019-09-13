@@ -1,6 +1,6 @@
-package com.fun.project.admin.monitor.operlog.mapper;
+package com.fun.project.admin.monitor.log.mapper;
 
-import com.fun.project.admin.monitor.operlog.entity.OperLog;
+import com.fun.project.admin.monitor.log.entity.OperLog;
 import java.util.List;
 
 /**

@@ -91,7 +91,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     return false;
                 }
 
-
                 // 验证 token
                 JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
 
