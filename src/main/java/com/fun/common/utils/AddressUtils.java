@@ -20,7 +20,7 @@ public class AddressUtils {
             return "内网IP";
         }
         if (FunBootConfig.isAddressEnabled()) {
-            String rspStr = HttpUtils.sendPost(IP_URL, "ip=" + ip);
+            String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip);
             if (StringUtils.isEmpty(rspStr)) {
                 log.error("获取地理位置异常 {}", ip);
                 return address;
