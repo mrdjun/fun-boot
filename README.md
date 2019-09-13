@@ -16,20 +16,16 @@
 ------------------------------
 
 # 文档
+待开发完成后，公布文档。
+
 ## 结构
 - ums - 用户管理
 - sys - 系统管理
+
 ## api分布
 - /api/**   app的接口地址
 - /admin/** 管理员的接口地址   
    
-# 捐赠
-
->请作者吃个肉夹馍 :)
-<p align="center">
-	<img src="https://i.loli.net/2019/09/11/IkJ1uNUVxaLzY79.jpg" alt="praise"  width="180" height="160">
-</p>
-
 
 # My link：
 
