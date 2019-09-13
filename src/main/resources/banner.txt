@@ -1,9 +1,9 @@
 ${AnsiColor.YELLOW}Hello,Welcome to Fun-boot...${AnsiColor.RED}Sprin${AnsiColor.BRIGHT_YELLOW}gBoot的${AnsiColor.BRIGHT_GREEN}版本号:${AnsiColor.RED}${AnsiColor.MAGENTA} ${spring-boot.formatted-version} ${AnsiColor.BRIGHT_YELLOW}
 
-                           _____  _      _              ____   ____   ____   _____ ${AnsiColor.YELLOW}
-                          /    / / \ /\ / \  /|        /  __\ /  _ \ /  _ \ /__ __\${AnsiColor.BRIGHT_GREEN}
-                          |  __\ | | || | |\ || _____  | |_// | / \| | / \|   / \  ${AnsiColor.BRIGHT_CYAN}
-                          | |    | \_/| | | \|| \____\ | |_\\ | \_/| | \_/|   | |   ${AnsiColor.BLUE}
-                          \_/    \____/ \_/  \|        \____/ \____/ \____/   \_/  ${AnsiColor.MAGENTA}
+           _____  _      _              ____   ____   ____   _____ ${AnsiColor.YELLOW}
+          /    / / \ /\ / \  /|        /  __\ /  _ \ /  _ \ /__ __\${AnsiColor.BRIGHT_GREEN}
+          |  __\ | | || | |\ || _____  | |_// | / \| | / \|   / \  ${AnsiColor.BRIGHT_CYAN}
+          | |    | \_/| | | \|| \____\ | |_\\ | \_/| | \_/|   | |   ${AnsiColor.BLUE}
+          \_/    \____/ \_/  \|        \____/ \____/ \____/   \_/  ${AnsiColor.MAGENTA}
 
-${AnsiColor.MAGENTA}2019年，祝每一个努力的人都有所收获。人生路上，泪水在左，欢笑在右，生命的鲜花铺满两旁。走过生命的四季，我们经历了泪水的洗礼，见证了欢笑的时刻，欣赏着朝阳的升起，凝视着花蕊的绽放。人生途中，我们收获着生命之神不尽的惠赠，满揣着她的礼物与祝福启程。一路走来，因为收获，我们不曾寒冷，我们从未孤独。 ${AnsiColor.DEFAULT}
+${AnsiColor.MAGENTA}2019年，祝每一个努力的人都有所收获。我们不必期望每个梦想都成真，不必在乎每一个得失和错漏，不要总是想自己得到没有，人生，不可能总是精彩。生活原本是多样的感受形式，快乐，痛苦，失望，忧伤，都是一次一次选择的阅历，一次一次人生的体验。有哲人说过，意义在于过程，幸福源于细节。推开窗，窗外是蓝蓝的天。
