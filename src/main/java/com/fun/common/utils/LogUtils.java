@@ -28,7 +28,7 @@ public class LogUtils {
         String jsessionId = request.getRequestedSessionId();
         String ip = IpUtils.getIpAddr(request);
         String accept = request.getHeader("accept");
-        String userAgent = request.getHeader("User-Agent");
+        String userAgent = request.getHeader("AppUser-Agent");
         String url = request.getRequestURI();
         String params = getParams(request);
 

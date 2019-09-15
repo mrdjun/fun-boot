@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.admin.system.user.mapper.AdminUserMapper">
+
+	<resultMap 	type="AdminUser" 		id="AdminUserResult">
+		<id     property="userId"       column="user_id"      />
+		<result property="loginName"    column="login_name"   />
+		<result property="username"     column="username"    />
+		<result property="email"        column="email"        />
+		<result property="telephone"  	column="telephone"  />
+		<result property="sex"          column="sex"          />
+		<result property="avatar"       column="avatar"       />
+		<result property="password"     column="password"     />
+		<result property="salt"         column="salt"         />
+		<result property="status"       column="status"       />
+		<result property="delFlag"      column="del_flag"     />
+		<result property="loginIp"      column="login_ip"     />
+		<result property="loginDate"    column="login_date"   />
+		<result property="createBy"     column="create_by"    />
+		<result property="createTime"   column="create_time"  />
+		<result property="updateBy"     column="update_by"    />
+		<result property="updateTime"   column="update_time"  />
+		<result property="remark"       column="remark"       />
+	</resultMap>
+
+	<sql id="selectAdminUserVo">
+		select user_id, login_name, username, email, telephone, sex, avatar, password, salt, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark from sys_user
+    </sql>
+
+	<select id="selectAdminUserList" parameterType="AdminUser" resultMap="AdminUserResult">
+		<include refid="selectAdminUserVo"/>
+		where del_flag = '1'
+		<if test="loginName != null and loginName != ''">
+			AND login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="status != null and status != ''">
+			AND status = #{status}
+		</if>
+		<if test="telephone != null and telephone != ''">
+			AND telephone like concat('%', #{telephone}, '%')
+		</if>
+	</select>
+
+	<select id="selectUserByLoginName" parameterType="String" resultMap="AdminUserResult">
+	    <include refid="selectAdminUserVo"/>
+		where login_name = #{loginName}
+	</select>
+
+	<select id="selectAdminUserByTelephone" parameterType="String" resultMap="AdminUserResult">
+		<include refid="selectAdminUserVo"/>
+		where telephone = #{telephone}
+	</select>
+
+	<select id="selectAdminUserByEmail" parameterType="String" resultMap="AdminUserResult">
+	    <include refid="selectAdminUserVo"/>
+		where email = #{email}
+	</select>
+
+	<select id="selectAdminUserById" parameterType="Long" resultMap="AdminUserResult">
+		<include refid="selectAdminUserVo"/>
+		where user_id = #{userId}
+	</select>
+
+	<delete id="deleteAdminUserById" parameterType="Long">
+ 		delete from sys_user where user_id = #{userId}
+ 	</delete>
+
+ 	<delete id="deleteAdminUserByIds" parameterType="Long">
+ 		update sys_user set del_flag = '2' where user_id in
+ 		<foreach collection="array" item="userId" open="(" separator="," close=")">
+ 			#{userId}
+        </foreach>
+ 	</delete>
+
+ 	<update id="updateAdminUser" parameterType="AdminUser">
+ 		update sys_user
+ 		<set>
+ 			<if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+ 			<if test="username != null and username != ''">username = #{username},</if>
+ 			<if test="email != null and email != ''">email = #{email},</if>
+ 			<if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+ 			<if test="sex != null and sex != ''">sex = #{sex},</if>
+ 			<if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
+ 			<if test="password != null and password != ''">password = #{password},</if>
+ 			<if test="salt != null and salt != ''">salt = #{salt},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+ 			<if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
+ 			<if test="loginDate != null">login_date = #{loginDate},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+ 			<if test="remark != null">remark = #{remark}</if>
+ 		</set>
+ 		where user_id = #{userId}
+	</update>
+
+	<update id="updateUser" parameterType="AdminUser">
+		update sys_user
+		<set>
+			<if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+			<if test="username != null and username != ''">username = #{username},</if>
+			<if test="email != null and email != ''">email = #{email},</if>
+			<if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+			<if test="sex != null and sex != ''">sex = #{sex},</if>
+			<if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
+			<if test="password != null and password != ''">password = #{password},</if>
+			<if test="salt != null and salt != ''">salt = #{salt},</if>
+			<if test="status != null and status != ''">status = #{status},</if>
+			<if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
+			<if test="loginDate != null">login_date = #{loginDate},</if>
+			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+
+ 	<insert id="insertAdminUser" parameterType="AdminUser" useGeneratedKeys="true" keyProperty="userId">
+ 		insert into sys_user(
+ 			<if test="loginName != null and loginName != ''">login_name,</if>
+ 			<if test="username != null and username != ''">username,</if>
+ 			<if test="email != null and email != ''">email,</if>
+ 			<if test="avatar != null and avatar != ''">avatar,</if>
+ 			<if test="telephone != null and telephone != ''">telephone,</if>
+ 			<if test="sex != null and sex != ''">sex,</if>
+ 			<if test="password != null and password != ''">password,</if>
+ 			<if test="salt != null and salt != ''">salt,</if>
+ 			<if test="status != null and status != ''">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			<if test="remark != null and remark != ''">remark,</if>
+ 			<if test="createTime != null and createTime != ''">create_time</if>
+ 		)values(
+ 			<if test="loginName != null and loginName != ''">#{loginName},</if>
+ 			<if test="username != null and username != ''">#{username},</if>
+ 			<if test="email != null and email != ''">#{email},</if>
+ 			<if test="avatar != null and avatar != ''">#{avatar},</if>
+ 			<if test="telephone != null and telephone != ''">#{telephone},</if>
+ 			<if test="sex != null and sex != ''">#{sex},</if>
+ 			<if test="password != null and password != ''">#{password},</if>
+ 			<if test="salt != null and salt != ''">#{salt},</if>
+ 			<if test="status != null and status != ''">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			<if test="remark != null and remark != ''">#{remark},</if>
+            <if test="createTime != null and createTime != ''">#{createTime}</if>
+ 		)
+	</insert>
+
+	<select id="checkLoginNameUnique" parameterType="String" resultType="int">
+		select count(1) from sys_user where login_name=#{loginName}
+	</select>
+
+	<select id="checkPhoneUnique" parameterType="String" resultType="int">
+		select count(1) from sys_user where telephone=#{telephone}
+	</select>
+
+	<select id="checkEmailUnique" parameterType="String" resultType="int">
+		select count(1) from sys_user where email=#{email}
+	</select>
+
+</mapper> 

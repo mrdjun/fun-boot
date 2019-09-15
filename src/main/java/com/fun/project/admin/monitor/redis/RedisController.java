@@ -23,21 +23,18 @@ public class RedisController {
     @Autowired
     private IRedisService redisService;
 
-    @NeedLoginToken
     @Log("执行 Redis keysSize 命令")
     @GetMapping("/keysSize")
     public Map<String, Object> getKeysSize() throws RedisConnectException {
         return redisService.getKeysSize();
     }
 
-    @NeedLoginToken
     @Log("执行 Redis memoryInfo 命令")
     @GetMapping("/memoryInfo")
     public Map<String, Object> getMemoryInfo() throws RedisConnectException {
         return redisService.getMemoryInfo();
     }
 
-    @NeedLoginToken
     @Log("执行 Redis keys 命令")
     @GetMapping("/keys")
     public CommonResult keys(String arg) throws RedisConnectException {
@@ -45,7 +42,6 @@ public class RedisController {
         return CommonResult.success(set);
     }
 
-    @NeedLoginToken
     @Log("执行Redis get命令")
     @GetMapping("/get")
     public CommonResult get(String arg) throws RedisConnectException {
@@ -53,7 +49,6 @@ public class RedisController {
         return CommonResult.success(result == null ? "" : result);
     }
 
-    @NeedLoginToken
     @Log("执行Redis set命令")
     @GetMapping("/set")
     public CommonResult set(String arg) throws RedisConnectException {
@@ -66,7 +61,6 @@ public class RedisController {
         return CommonResult.success(result);
     }
 
-    @NeedLoginToken
     @Log("执行Redis del命令")
     @GetMapping("/del")
     public CommonResult del(String arg) throws RedisConnectException {
@@ -75,7 +69,6 @@ public class RedisController {
         return CommonResult.success(INTEGER_PREFIX + result);
     }
 
-    @NeedLoginToken
     @Log("执行Redis exists命令")
     @GetMapping("/exists")
     public CommonResult exists(String arg) throws RedisConnectException {
@@ -88,14 +81,12 @@ public class RedisController {
         return CommonResult.success(INTEGER_PREFIX + count);
     }
 
-    @NeedLoginToken
     @Log("执行Redis pttl命令")
     @GetMapping("/pttl")
     public CommonResult pttl(String arg) throws RedisConnectException {
         return CommonResult.success(INTEGER_PREFIX + this.redisService.pttl(arg));
     }
 
-    @NeedLoginToken
     @Log("执行Redis pexpire命令")
     @GetMapping("/pexpire")
     public CommonResult pexpire(String arg) throws RedisConnectException {

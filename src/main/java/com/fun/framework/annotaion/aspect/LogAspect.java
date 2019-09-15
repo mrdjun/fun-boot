@@ -6,6 +6,7 @@ import com.fun.framework.annotaion.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
 import com.fun.framework.manager.AsyncManager;
+import com.fun.framework.shiro.ShiroUtils;
 import com.fun.project.admin.monitor.log.entity.OperLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -63,10 +64,16 @@ public class LogAspect {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog())
             return;
-        // 获取当前登录用户账号
+
+        // 获取当前app端用户登录账号
         String currUserLoginName = TokenUtil.getTokenLoginName();
 
-        // 获取当前时间的时间戳
+        // 若当前用户为后台用户
+        if (StringUtils.isEmpty(currUserLoginName)) {
+            currUserLoginName = ShiroUtils.getLoginName();
+        }
+        log.info("当前用户为{0}",currUserLoginName);
+
         long beginTime = System.currentTimeMillis();
         try {
             // 获得注解
@@ -97,7 +104,7 @@ public class LogAspect {
             }
             operLog.setMethod(className + "." + methodName + "()");
             setRequestValue(operLog);
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog,beginTime));
+            AsyncManager.me().execute(AsyncFactory.recordOper(operLog, beginTime));
 
         } catch (Exception exp) {
             // 记录本地异常日志

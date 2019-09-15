@@ -4,7 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
- * 获取i18n资源文件
+ * 获取 message.properties 资源文件
  */
 public class MessageUtils {
     /**

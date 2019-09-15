@@ -12,8 +12,8 @@ import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotaion.PassToken;
 import com.fun.framework.annotaion.NeedLoginToken;
 import com.fun.framework.redis.IRedisService;
-import com.fun.project.app.user.entity.User;
-import com.fun.project.app.user.service.UserService;
+import com.fun.project.app.user.entity.AppUser;
+import com.fun.project.app.user.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,9 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+/***
+ * JWT Token 拦截验证
+ */
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
-    private UserService userService;
+    private IAppUserService IAppUserService;
     @Autowired
     private IRedisService iRedisService;
 
@@ -83,16 +86,16 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     return false;
                 }
 
-                User user = userService.selectUserById(Long.parseLong(userId));
+                AppUser appUser = IAppUserService.selectUserById(Long.parseLong(userId));
 
-                if (StringUtils.isNull(user)) {
+                if (StringUtils.isNull(appUser)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);
                     ServletUtils.renderString(httpServletResponse, JSONObject.toJSONString(commonResult));
                     return false;
                 }
 
                 // 验证 token
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(appUser.getPassword())).build();
 
                 try {
                     jwtVerifier.verify(token);

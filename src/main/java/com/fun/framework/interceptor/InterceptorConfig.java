@@ -18,10 +18,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 默认登录拦截全部接口
+        // 默认登录拦截app接口
         registry.addInterceptor(authenticationInterceptor())
-                .addPathPatterns("/api/**")
-                .addPathPatterns("/admin/**");
+                .addPathPatterns("/app/**");
         // 防止表单重复提交拦截
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
     }
@@ -31,6 +30,5 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 登录拦截
         return new AuthenticationInterceptor();
     }
-
 
 }

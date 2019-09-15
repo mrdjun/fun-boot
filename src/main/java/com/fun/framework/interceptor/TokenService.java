@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Verification;
 import com.fun.common.exception.RedisConnectException;
 import com.fun.framework.redis.IRedisService;
-import com.fun.project.app.user.entity.User;
+import com.fun.project.app.user.entity.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -54,21 +54,21 @@ public class TokenService {
      *
      * 生成token之后，存入缓存
      */
-    public String getToken(User user) throws RedisConnectException {
+    public String getToken(AppUser appUser) throws RedisConnectException {
         String token;
 
         Date start = new Date();
         long currentTime = System.currentTimeMillis() + expiration;//一小时有效时间
         Date end = new Date(currentTime);
 
-        token = JWT.create().withAudience(user.getUserId().toString())
+        token = JWT.create().withAudience(appUser.getUserId().toString())
                 .withIssuedAt(start)
-                .withSubject(user.getLoginName())
+                .withSubject(appUser.getLoginName())
                 .withExpiresAt(end)
-                .sign(Algorithm.HMAC256(user.getPassword()));
+                .sign(Algorithm.HMAC256(appUser.getPassword()));
 
         try {
-            iRedisService.set(user.getLoginName(), token, expiration);
+            iRedisService.set(appUser.getLoginName(), token, expiration);
         } catch (RedisConnectException e) {
             throw new RedisConnectException("Redis连接异常...");
         }
