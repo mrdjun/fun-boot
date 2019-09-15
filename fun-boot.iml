@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="FacetManager">
-    <facet type="JRebel" name="JRebel">
+    <facet type="JRebel" name="JRebel" >
       <configuration>
         <option name="deleteUnindexed" value="false" />
         <option name="httpAuthEnabled" value="false" />
