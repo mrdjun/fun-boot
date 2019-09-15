@@ -1,5 +1,6 @@
 package com.fun.project.app.user.controller;
 
+import com.fun.common.constant.LoginType;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotaion.Log;
 import com.fun.framework.annotaion.NeedLoginToken;
@@ -24,7 +25,6 @@ public class AppUserController {
     private IAppUserService appUserService;
 
     @ApiOperation("用户列表")
-    @NeedLoginToken
     @Log("获取用户列表")
     @GetMapping("/list")
     public CommonResult getUserList(AppUser appUser,
@@ -34,7 +34,9 @@ public class AppUserController {
         return CommonResult.success(list);
     }
 
+    @NeedLoginToken
     @ApiOperation("通过userId查询用户信息")
+    @Log(value = "通过userId查询用户信息",type = LoginType.App)
     @GetMapping("/selectUserById/{userId}")
     public CommonResult selectUserById(@PathVariable("userId") Long userId) {
         return CommonResult.success(appUserService.selectUserById(userId));

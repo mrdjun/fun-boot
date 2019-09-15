@@ -38,4 +38,5 @@ public class OperLog extends BaseEntity {
     /** 方法参数 */
     private String operParam;
 
+
 }

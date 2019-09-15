@@ -82,7 +82,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         AdminUser user = null;
         try {
-            user = loginService.login(username,password);
+            user = loginService.login(username, password);
         } catch (Exception e) {
             log.info("用户[" + username + "]登录验证未通过，原因：{}", e.getMessage());
         }

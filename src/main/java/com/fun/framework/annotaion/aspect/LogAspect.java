@@ -1,6 +1,7 @@
 package com.fun.framework.annotaion.aspect;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fun.common.constant.LoginType;
 import com.fun.common.utils.*;
 import com.fun.framework.annotaion.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
@@ -60,34 +61,38 @@ public class LogAspect {
         handleLog(joinPoint, e);
     }
 
-    private void handleLog(final JoinPoint joinPoint, final Exception e) {
+    protected void handleLog(final JoinPoint joinPoint, final Exception e) {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog())
             return;
-
-        // 获取当前app端用户登录账号
-        String currUserLoginName = TokenUtil.getTokenLoginName();
-
-        // 若当前用户为后台用户
-        if (StringUtils.isEmpty(currUserLoginName)) {
-            currUserLoginName = ShiroUtils.getLoginName();
-        }
-        log.info("当前用户为{0}",currUserLoginName);
-
-        long beginTime = System.currentTimeMillis();
         try {
+            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+            Method method = signature.getMethod();
+            Log logAnnotation = method.getAnnotation(Log.class);
+            // 获取操作名称
+            String operName = logAnnotation.value();
+            // 获取LoginType
+            String currLoginType = logAnnotation.type().getCode();
+            String currUserLoginName;
+            // 获取当前app端用户登录账号
+            if (currLoginType.equals(LoginType.App.getCode())) {
+                currUserLoginName = TokenUtil.getTokenLoginName();
+            }
+            // 若当前用户为后台用户
+            else
+                currUserLoginName = ShiroUtils.getLoginName();
+
+            long beginTime = System.currentTimeMillis();
+
             // 获得注解
             Log controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null)
                 return;
+
             // 获取用户ip
             HttpServletRequest request = ServletUtils.getRequest();
             String ip = IpUtils.getIpAddr(request);
-            // 获取注解上的操作描述
-            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-            Method method = signature.getMethod();
-            Log logAnnotation = method.getAnnotation(Log.class);
-            String operName = logAnnotation.value();
+
             // 获取当前操作的方法名
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
@@ -98,12 +103,14 @@ public class LogAspect {
             operLog.setOperName(operName);
             operLog.setLoginName(currUserLoginName);
             operLog.setCreateTime(beginTime);
+
             if (e != null) {
                 operLog.setStatus(String.valueOf(BusinessStatus.FAIL.ordinal()));
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             operLog.setMethod(className + "." + methodName + "()");
-            setRequestValue(operLog);
+            // 处理设置注解上的参数
+            getControllerMethodDescription(controllerLog, operLog);
             AsyncManager.me().execute(AsyncFactory.recordOper(operLog, beginTime));
 
         } catch (Exception exp) {
@@ -129,17 +136,18 @@ public class LogAspect {
     }
 
     /**
-     * 获取注解中对方法的描述信息 用于Controller层注解
+     * 获取并保存@Log的其它参数的值
      *
-     * @param log     日志
+     * @param log     @Log 注解对象
      * @param operLog 操作日志
      * @throws Exception e
      */
     public void getControllerMethodDescription(Log log, OperLog operLog)
             throws Exception {
-
-        // 用于扩展 @Log 的参数
-
+        // 是否需要保存request，参数和值
+        if (log.isSaveRequestData()) {
+            setRequestValue(operLog);
+        }
     }
 
     /**

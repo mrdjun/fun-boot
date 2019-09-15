@@ -57,7 +57,7 @@ public class AsyncFactory {
     public static TimerTask recordLogin(final LoginLog loginLog,
                                         final LoginType loginType,
                                         final Object... args) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("AppUser-Agent"));
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("user-agent"));
 
         return new TimerTask() {
             @Override
@@ -80,7 +80,6 @@ public class AsyncFactory {
                 s.append(LogUtils.getBlock(loginLog.getMsg()));
                 sys_user_logger.info(s.toString(), args);
 
-                // 输出日志到数据库
                 loginLog.setLoginLocation(location);
                 loginLog.setOs(os);
                 loginLog.setBrowser(browser);
@@ -89,13 +88,15 @@ public class AsyncFactory {
                 if (loginType == LoginType.App){
                     AppUser appUser = new AppUser();
                     appUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
+                    appUser.setLoginName(loginLog.getLoginName());
                     appUser.setLoginIp(ipAddr);
-                    SpringUtils.getBean(AppUserServiceImpl.class).updateAppUser(appUser);
+                    SpringUtils.getBean(AppUserServiceImpl.class).updateAppUserByLoginName(appUser);
                 } else{
                     AdminUser adminUser = new AdminUser();
                     adminUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
                     adminUser.setLoginIp(ipAddr);
-                    SpringUtils.getBean(AdminUserServiceImpl.class).updateUserInfo(adminUser);
+                    adminUser.setLoginName(loginLog.getLoginName());
+                    SpringUtils.getBean(AdminUserServiceImpl.class).updateUserInfoByLoginName(adminUser);
                 }
 
                 SpringUtils.getBean(LoginLogServiceImpl.class).insertLoginLog(loginLog);

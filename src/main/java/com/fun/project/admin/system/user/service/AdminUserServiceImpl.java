@@ -96,6 +96,11 @@ public class AdminUserServiceImpl implements IAdminUserService {
     }
 
     @Override
+    public int updateUserInfoByLoginName(AdminUser user) {
+        return adminUserMapper.updateUserInfoByLoginName(user);
+    }
+
+    @Override
     public int resetUserPwd(AdminUser user) {
         user.randomSalt();
         user.setPassword(Md5Utils.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));

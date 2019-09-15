@@ -21,8 +21,9 @@ import javax.validation.constraints.NotBlank;
  * desc:
  */
 @Controller
-public class LoginController {
+public class AdminLoginController {
     String prefix = "/fun/views";
+
 
     @GetMapping("/login")
     public String login() {

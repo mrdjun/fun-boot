@@ -92,6 +92,7 @@ public interface IAdminUserService {
      */
      int updateUserInfo(AdminUser user);
 
+     int updateUserInfoByLoginName(AdminUser adminUser);
     /**
      * 修改用户密码信息
      *

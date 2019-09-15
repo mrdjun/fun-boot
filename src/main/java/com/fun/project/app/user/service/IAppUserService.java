@@ -41,6 +41,8 @@ public interface IAppUserService {
      */
     int updateAppUser(AppUser appUser);
 
+    int updateAppUserByLoginName(AppUser appUser);
+
     /**
      * 批量删除用户
      *

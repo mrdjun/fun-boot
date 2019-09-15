@@ -42,6 +42,8 @@ public interface AppUserMapper {
      */
     int updateAppUser(AppUser AppUser);
 
+    int updateAppUserByLoginName(AppUser AppUser);
+
     /**
      * 删除用户信息
      *
@@ -57,6 +59,8 @@ public interface AppUserMapper {
      * @return 结果
      */
     int deleteUserByIds(String userIds);
+
+
 
     /** 登录接口 */
     AppUser login(@Param("loginName") String loginName, @Param("password") String password);

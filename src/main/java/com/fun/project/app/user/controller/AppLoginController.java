@@ -6,6 +6,7 @@ import com.fun.common.exception.RedisConnectException;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.*;
 import com.fun.framework.annotaion.Limit;
+import com.fun.framework.annotaion.Log;
 import com.fun.framework.annotaion.NeedLoginToken;
 import com.fun.framework.annotaion.enums.LimitType;
 import com.fun.framework.interceptor.TokenService;
@@ -34,7 +35,7 @@ import static com.fun.framework.manager.AsyncUtils.excRecordLoginLog;
 @RestController
 @Slf4j
 @RequestMapping("/app/user")
-public class AppUserLoginController {
+public class AppLoginController {
     @Autowired
     private IAppUserService appUserService;
     @Autowired
@@ -59,7 +60,7 @@ public class AppUserLoginController {
         AppUser appUserInfo = appUserService.login(loginName, password);
 
         if (StringUtils.isNull(appUserInfo)) {
-            excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.App,Constants.LOGIN_FAIL);
+            excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.App, Constants.LOGIN_FAIL);
             return CommonResult.failed(Constants.LOGIN_FAIL);
         }
 
@@ -68,18 +69,19 @@ public class AppUserLoginController {
             token = tokenService.getToken(appUserInfo);
         } catch (RedisConnectException e) {
             log.info("[Redis连接失败，请管理员检查]-[{}]", DateUtils.getTime());
-            excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL,LoginType.App, Constants.LOGIN_FAIL);
+            excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.App, Constants.LOGIN_FAIL);
             return CommonResult.failed(Constants.LOGIN_FAIL);
         }
         Cookie cookie = new Cookie("token", token);
         ServletUtils.getResponse().addCookie(cookie);
 
-        excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS,LoginType.App, Constants.LOGIN_SUCCESS);
+        excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS, LoginType.App, Constants.LOGIN_SUCCESS);
         return CommonResult.success(appUserInfo, Constants.LOGIN_SUCCESS);
     }
 
     @ApiOperation(value = "退出登录", notes = "操作成功自动跳转login页面", produces = "application/json, application/xml", consumes = "application/json, application/xml")
     @NeedLoginToken
+    @Log(value = "退出登录",type = LoginType.App)
     @GetMapping("/logout")
     public CommonResult logout() {
         // 此处 Token 无需是否为空，拦截器已验证
@@ -90,7 +92,7 @@ public class AppUserLoginController {
             log.info("[Redis连接失败，请管理员检查]-[{}]", DateUtils.getNowDate());
             return CommonResult.failed();
         }
-        excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS, LoginType.App,Constants.LOGOUT);
+        excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS, LoginType.App, Constants.LOGOUT);
         return CommonResult.success(Constants.LOGOUT);
     }
 

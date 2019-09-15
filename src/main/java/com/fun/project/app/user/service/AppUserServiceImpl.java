@@ -40,6 +40,11 @@ public class AppUserServiceImpl implements IAppUserService {
     }
 
     @Override
+    public int updateAppUserByLoginName(AppUser appUser) {
+        return appUserMapper.updateAppUserByLoginName(appUser);
+    }
+
+    @Override
     public int deleteUserByIds(String ids) {
         return appUserMapper.deleteUserByIds(ids);
     }

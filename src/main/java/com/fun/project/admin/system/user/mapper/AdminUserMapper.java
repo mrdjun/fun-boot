@@ -73,6 +73,8 @@ public interface AdminUserMapper {
      */
      int updateUser(AdminUser user);
 
+     int updateUserInfoByLoginName(AdminUser user);
+
     /**
      * 新增用户信息
      *

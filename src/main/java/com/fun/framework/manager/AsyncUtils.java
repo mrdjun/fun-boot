@@ -17,8 +17,8 @@ public class AsyncUtils {
                                          String status,
                                          LoginType loginType,
                                          String msg) {
-        String ipAddr = IpUtils.getIpAddr(request);
         LoginLog loginLog = new LoginLog();
+        String ipAddr = IpUtils.getIpAddr(request);
         loginLog.setCreateTime(System.currentTimeMillis());
         loginLog.setStatus(status);
         loginLog.setMsg(msg);
