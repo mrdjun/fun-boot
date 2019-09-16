@@ -10,9 +10,8 @@ import java.util.Map;
 
 /**
  * created by DJun on 2019/9/12 22:26
- * desc: 判断请求url和数据是否和上一次相同，
- *       如果和上次相同，则是重复提交表单。
- *       有效时间为5秒内。
+ * desc: 防止表单重复提交实现类
+ * 判断请求url和数据是否和上一次相同，如果和上次相同，则是重复提交表单。有效时间为5秒内。
  */
 @Component
 public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
@@ -56,7 +55,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
                 }
             }
         }
-        Map<String, Object> sessionMap = new HashMap<String, Object>();
+        Map<String, Object> sessionMap = new HashMap<>();
         sessionMap.put(url, nowDataMap);
         session.setAttribute(SESSION_REPEAT_KEY, sessionMap);
         return false;
@@ -77,9 +76,6 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     private boolean compareTime(Map<String, Object> nowMap, Map<String, Object> preMap) {
         long time1 = (Long) nowMap.get(REPEAT_TIME);
         long time2 = (Long) preMap.get(REPEAT_TIME);
-        if ((time1 - time2) < (this.intervalTime * 1000)) {
-            return true;
-        }
-        return false;
+        return (time1 - time2) < (this.intervalTime * 1000);
     }
 }

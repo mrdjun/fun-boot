@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 
 /**
  * created by DJun on 2019/9/12 21:15
- * desc: 防止表单重复提交
+ * desc: 防止表单重复提交抽象类
  */
 @Component
 public abstract class RepeatSubmitInterceptor extends HandlerInterceptorAdapter {

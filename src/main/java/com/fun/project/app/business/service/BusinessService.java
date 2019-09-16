@@ -5,4 +5,5 @@ package com.fun.project.app.business.service;
  * desc:
  */
 public interface BusinessService {
+
 }
