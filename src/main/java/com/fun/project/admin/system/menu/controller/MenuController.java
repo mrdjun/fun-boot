@@ -1,9 +1,12 @@
 package com.fun.project.admin.system.menu.controller;
 
+import com.fun.common.result.CommonResult;
+import com.fun.framework.annotaion.Log;
 import com.fun.project.admin.system.menu.entity.Menu;
 import com.fun.project.admin.system.menu.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +37,14 @@ public class MenuController {
         return menuService.selectMenuList(menu);
     }
 
+    @Log("新增菜单")
+    @PostMapping("/add")
+    @ResponseBody
+    public CommonResult add(@Validated Menu menu){
+        if (menuService.checkMenuNameUnique(menu)>0)
+            return CommonResult.failed("已存在该菜单");
+        return CommonResult.success(menuService.insertMenu(menu));
+    }
 
 
 

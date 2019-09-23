@@ -119,7 +119,7 @@ public interface IMenuService {
      * 校验菜单名称是否唯一
      *
      * @param menu 菜单信息
-     * @return 结果
+     * @return 存在则返回0，不存在则返回1
      */
     int checkMenuNameUnique(Menu menu);
 }
