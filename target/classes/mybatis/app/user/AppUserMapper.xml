@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.app.user.mapper.AppUserMapper">
+
+    <resultMap type="AppUser"           id="AppUserResult"     >
+        <result property="userId"       column="user_id"    />
+        <result property="loginName"    column="login_name" />
+        <result property="username"     column="username"   />
+        <result property="uAccount"     column="u_account"  />
+        <result property="userType"     column="user_type"  />
+        <result property="userLevel"    column="user_level" />
+        <result property="email"        column="email"      />
+        <result property="sex"          column="sex"        />
+        <result property="password"     column="password"   />
+        <result property="salt"         column="salt"       />
+        <result property="avatar"       column="avatar"     />
+        <result property="telephone"    column="telephone"  />
+        <result property="delFlag"      column="del_flag"   />
+        <result property="loginIp"      column="login_ip"   />
+        <result property="loginDate"    column="login_date" />
+        <result property="openId"       column="open_id"    />
+        <result property="isLock"       column="is_lock"    />
+        <result property="createTime"   column="create_time"/>
+        <result property="updateTime"   column="update_time"/>
+        <result property="status"       column="status"     />
+        <result property="remark"       column="remark"     />
+        <result property="honor"        column="honor"      />
+        <result property="exp"          column="exp"        />
+        <result property="fansNum"      column="fans_num"   />
+        <result property="followNum"    column="follow_num" />
+        <result property="oid"          column="oid"        />
+        <result property="health"       column="health"     />
+        <result property="banTime"      column="ban_time"   />
+        <result property="isVerify"     column="is_verify"  />
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select
+            user_id, login_name, username, u_account, user_type,
+            user_level, email, sex, password, salt, avatar, telephone,
+             del_flag, login_ip, login_date, open_id, is_lock, create_time,
+             update_time, status, remark, honor, exp, fans_num, follow_num,
+             oid, health, ban_time, is_verify
+         from ums_user
+    </sql>
+
+    <select id="selectUserList" parameterType="AppUser" resultMap="AppUserResult">
+        <include refid="selectUserVo"/>
+        <where>
+            <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectUserById" parameterType="Long" resultMap="AppUserResult">
+        <include refid="selectUserVo"/>
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertUser" parameterType="AppUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into ums_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="loginName != null  and loginName != ''">login_name,</if>
+            <if test="username != null  and username != ''">username,</if>
+            <if test="uAccount != null  and uAccount != ''">u_account,</if>
+            <if test="userLevel != null ">user_level,</if>
+            <if test="email != null  and email != ''">email,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="password != null  and password != ''">password,</if>
+            <if test="salt != null  and salt != ''">salt,</if>
+            <if test="avatar != null  and avatar != ''">avatar,</if>
+            <if test="telephone != null  and telephone != ''">telephone,</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag,</if>
+            <if test="loginIp != null  and loginIp != ''">login_ip,</if>
+            <if test="loginDate != null  and loginDate != ''">login_date,</if>
+            <if test="openId != null  and openId != ''">open_id,</if>
+            <if test="isLock != null  and isLock != ''">is_lock,</if>
+            <if test="createTime != null  and createTime != ''">create_time,</if>
+            <if test="updateTime != null  and updateTime != ''">update_time,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="honor != null ">honor,</if>
+            <if test="exp != null ">exp,</if>
+            <if test="fansNum != null ">fans_num,</if>
+            <if test="followNum != null ">follow_num,</if>
+            <if test="oid != null  and oid != ''">oid,</if>
+            <if test="health != null ">health,</if>
+            <if test="banTime != null  and banTime != ''">ban_time,</if>
+            <if test="isVerify != null  and isVerify != ''">is_verify,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="loginName != null  and loginName != ''">#{loginName},</if>
+            <if test="username != null  and username != ''">#{username},</if>
+            <if test="uAccount != null  and uAccount != ''">#{uAccount},</if>
+            <if test="userLevel != null ">#{userLevel},</if>
+            <if test="email != null  and email != ''">#{email},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+            <if test="salt != null  and salt != ''">#{salt},</if>
+            <if test="avatar != null  and avatar != ''">#{avatar},</if>
+            <if test="telephone != null  and telephone != ''">#{telephone},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+            <if test="loginIp != null  and loginIp != ''">#{loginIp},</if>
+            <if test="loginDate != null  and loginDate != ''">#{loginDate},</if>
+            <if test="openId != null  and openId != ''">#{openId},</if>
+            <if test="isLock != null  and isLock != ''">#{isLock},</if>
+            <if test="createTime != null  and createTime != ''">#{createTime},</if>
+            <if test="updateTime != null  and updateTime != ''">#{updateTime},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="honor != null ">#{honor},</if>
+            <if test="exp != null ">#{exp},</if>
+            <if test="fansNum != null ">#{fansNum},</if>
+            <if test="followNum != null ">#{followNum},</if>
+            <if test="oid != null  and oid != ''">#{oid},</if>
+            <if test="health != null ">#{health},</if>
+            <if test="banTime != null  and banTime != ''">#{banTime},</if>
+            <if test="isVerify != null  and isVerify != ''">#{isVerify},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppUser" parameterType="AppUser">
+        update ums_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null  and username != ''">username = #{username},</if>
+            <if test="uAccount != null  and uAccount != ''">u_account = #{uAccount},</if>
+            <if test="userType != null  and userType != ''">user_type = #{userType},</if>
+            <if test="userLevel != null ">user_level = #{userLevel},</if>
+            <if test="email != null  and email != ''">email = #{email},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="salt != null  and salt != ''">salt = #{salt},</if>
+            <if test="avatar != null  and avatar != ''">avatar = #{avatar},</if>
+            <if test="telephone != null  and telephone != ''">telephone = #{telephone},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="loginIp != null  and loginIp != ''">login_ip = #{loginIp},</if>
+            <if test="loginDate != null  and loginDate != ''">login_date = #{loginDate},</if>
+            <if test="openId != null  and openId != ''">open_id = #{openId},</if>
+            <if test="isLock != null  and isLock != ''">is_lock = #{isLock},</if>
+            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="honor != null ">honor = #{honor},</if>
+            <if test="exp != null ">exp = #{exp},</if>
+            <if test="fansNum != null ">fans_num = #{fansNum},</if>
+            <if test="followNum != null ">follow_num = #{followNum},</if>
+            <if test="oid != null  and oid != ''">oid = #{oid},</if>
+            <if test="health != null ">health = #{health},</if>
+            <if test="banTime != null  and banTime != ''">ban_time = #{banTime},</if>
+            <if test="isVerify != null  and isVerify != ''">is_verify = #{isVerify}</if>
+        </trim>
+          where user_id = #{userId}
+    </update>
+
+    <update id="updateAppUserByLoginName">
+        update ums_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null  and username != ''">username = #{username},</if>
+            <if test="uAccount != null  and uAccount != ''">u_account = #{uAccount},</if>
+            <if test="userType != null  and userType != ''">user_type = #{userType},</if>
+            <if test="userLevel != null ">user_level = #{userLevel},</if>
+            <if test="email != null  and email != ''">email = #{email},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="salt != null  and salt != ''">salt = #{salt},</if>
+            <if test="avatar != null  and avatar != ''">avatar = #{avatar},</if>
+            <if test="telephone != null  and telephone != ''">telephone = #{telephone},</if>
+            <if test="delFlag != null  and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="loginIp != null  and loginIp != ''">login_ip = #{loginIp},</if>
+            <if test="loginDate != null  and loginDate != ''">login_date = #{loginDate},</if>
+            <if test="openId != null  and openId != ''">open_id = #{openId},</if>
+            <if test="isLock != null  and isLock != ''">is_lock = #{isLock},</if>
+            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="honor != null ">honor = #{honor},</if>
+            <if test="exp != null ">exp = #{exp},</if>
+            <if test="fansNum != null ">fans_num = #{fansNum},</if>
+            <if test="followNum != null ">follow_num = #{followNum},</if>
+            <if test="oid != null  and oid != ''">oid = #{oid},</if>
+            <if test="health != null ">health = #{health},</if>
+            <if test="banTime != null  and banTime != ''">ban_time = #{banTime},</if>
+            <if test="isVerify != null  and isVerify != ''">is_verify = #{isVerify}</if>
+        </trim>
+         where login_name = #{loginName}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Long">
+        delete from ums_user where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from ums_user where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <select id="login" resultMap="AppUserResult">
+        <include refid="selectUserVo"/>
+        where login_name = #{loginName} and password = #{password}
+    </select>
+</mapper>

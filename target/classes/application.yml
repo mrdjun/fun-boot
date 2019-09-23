@@ -1,0 +1,22 @@
+server:
+  port: 8886
+  tomcat:
+    uri-encoding: utf-8
+  # HTTP请求和响应头的最大量，以字节为单位，默认值为4096字节,超过此长度的部分不予处理,一般8K。
+  # 解决java.io.EOFException: null问题
+  max-http-header-size: 8192
+  use-forward-headers: true
+
+spring:
+  profiles:
+    active: test
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  thymeleaf:
+    cache: false
+
+
+
