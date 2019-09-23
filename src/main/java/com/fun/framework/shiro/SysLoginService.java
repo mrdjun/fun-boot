@@ -19,8 +19,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * created by DJun on 2019/9/14 15:08
- * desc:
+ * @author DJun
  */
 @Component
 public class SysLoginService {

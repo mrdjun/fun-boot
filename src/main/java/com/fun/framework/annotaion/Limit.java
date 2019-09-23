@@ -8,8 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * created by DJun on 2019/9/7 17:57
- * desc: 接口限流
+ * @author DJun
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -70,7 +70,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- SpringBoot 拦截器 -->
+        <!-- SpringBoot Aop -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -114,7 +114,7 @@
             <version>${mybatis.spring.boot.starter.version}</version>
         </dependency>
 
-        <!-- pagehelper 分页插件 -->
+        <!-- PageHelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>

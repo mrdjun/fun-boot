@@ -49,8 +49,9 @@ public class FunBootStartedRunner implements ApplicationRunner {
         if (context.isActive()) {
             InetAddress address = InetAddress.getLocalHost();
             String url = String.format("http://%s:%s", address.getHostAddress(), port);
-            if (StringUtils.isNotBlank(contextPath))
+            if (StringUtils.isNotBlank(contextPath)) {
                 url += contextPath;
+            }
             log.info(" __    ___   _      ___   _     ____ _____  ____ ");
             log.info("/ /`  / / \\ | |\\/| | |_) | |   | |_   | |  | |_  ");
             log.info("\\_\\_, \\_\\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ ");

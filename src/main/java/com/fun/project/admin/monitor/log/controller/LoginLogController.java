@@ -19,7 +19,6 @@ import java.util.List;
  * desc: 登录日志
  */
 @RestController
-@NeedLoginToken
 @RequestMapping("/admin/monitor/loginLog")
 public class LoginLogController {
 

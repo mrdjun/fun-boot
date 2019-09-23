@@ -81,8 +81,9 @@ public class AdminUserServiceImpl implements IAdminUserService {
     public int updateUser(AdminUser user) {
         // 获取修改者
         Long userId = user.getUserId();
-        if (StringUtils.isNotEmpty(ShiroUtils.getLoginName()))
+        if (StringUtils.isNotEmpty(ShiroUtils.getLoginName())) {
             user.setUpdateBy(ShiroUtils.getLoginName());
+        }
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
@@ -138,8 +139,9 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Override
     public int changeStatus(AdminUser user) {
         // 不可修改超级管理员的状态
-        if (AdminUser.isAdmin(user.getUserId()))
+        if (AdminUser.isAdmin(user.getUserId())) {
             return 0;
+        }
         return adminUserMapper.updateUser(user);
     }
 

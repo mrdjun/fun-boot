@@ -3,6 +3,7 @@ package com.fun.project.admin.monitor.log.service;
 import com.fun.project.admin.monitor.log.entity.OperLog;
 import com.fun.project.admin.monitor.log.mapper.OperLogMapper;
 import com.fun.common.utils.text.Convert;
+import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/10 14:58
- * desc:
+ * @author DJun
  */
 @Service
 public class OperLogServiceImpl implements IOperLogService {
 
     @Autowired
-    private OperLogMapper operLogMapper ;
+    private OperLogMapper operLogMapper;
 
     /**
      * 新增操作日志
@@ -31,14 +31,14 @@ public class OperLogServiceImpl implements IOperLogService {
 
     /**
      * 查询系统操作日志集合
+     * 如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）
      *
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
     @Override
-    public List<OperLog> selectOperLogList(OperLog operLog,int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return operLogMapper.selectOperLogList(operLog);
+    public List<OperLog> selectOperLogList(OperLog operLog, int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> operLogMapper.selectOperLogList(operLog));
     }
 
     /**

@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * created by DJun on 2019/9/7 18:26
- * desc: 时间戳工具类
+ * 时间戳工具类
+ * @author DJun
  */
 public class TimestampUtil {
 
@@ -41,7 +41,7 @@ public class TimestampUtil {
      * 获取当前时间的时间戳（10位秒级）
      */
     public static long getCurrentTimestamp10() {
-        return new Date().getTime() / 1000;
+        return System.currentTimeMillis();
     }
 
     /**

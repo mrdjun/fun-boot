@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 /**
- * created by DJun on 2019/9/13 12:42
- * desc:
+ * @author DJun
  */
 @Service
 public class LoginLogServiceImpl implements ILoginLogService {
     @Autowired
-    private LoginLogMapper loginLogMapper ;
+    private LoginLogMapper loginLogMapper;
 
     @Override
     public void insertLoginLog(LoginLog loginLog) {
@@ -24,9 +24,8 @@ public class LoginLogServiceImpl implements ILoginLogService {
     }
 
     @Override
-    public List<LoginLog> selectLoginLogList(LoginLog loginLog,int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        return loginLogMapper.selectLoginLogList(loginLog);
+    public List<LoginLog> selectLoginLogList(LoginLog loginLog, int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> loginLogMapper.selectLoginLogList(loginLog));
     }
 
     @Override

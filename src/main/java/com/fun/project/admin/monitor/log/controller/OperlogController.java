@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * created by DJun on 2019/9/10 15:39
- * desc:
- */
 
+/**
+ * @author DJun
+ */
 @RestController
-@NeedLoginToken
 @RequestMapping("/admin/monitor/operLog")
 public class OperlogController {
 

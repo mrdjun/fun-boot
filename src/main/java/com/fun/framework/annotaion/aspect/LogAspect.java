@@ -63,8 +63,9 @@ public class LogAspect {
 
     protected void handleLog(final JoinPoint joinPoint, final Exception e) {
         // 如果没开启日志记录则直接退出
-        if (!funBootConfig.isOpenLog())
+        if (!funBootConfig.isOpenLog()) {
             return;
+        }
         try {
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Method method = signature.getMethod();
@@ -79,15 +80,17 @@ public class LogAspect {
                 currUserLoginName = TokenUtil.getTokenLoginName();
             }
             // 若当前用户为后台用户
-            else
+            else {
                 currUserLoginName = ShiroUtils.getLoginName();
+            }
 
             long beginTime = System.currentTimeMillis();
 
             // 获得注解
             Log controllerLog = getAnnotationLog(joinPoint);
-            if (controllerLog == null)
+            if (controllerLog == null) {
                 return;
+            }
 
             // 获取用户ip
             HttpServletRequest request = ServletUtils.getRequest();

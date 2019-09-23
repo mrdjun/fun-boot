@@ -7,8 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * created by DJun on 2019/9/13 22:40
- * desc:
+ * @author DJun
  */
 @Data
 @Component

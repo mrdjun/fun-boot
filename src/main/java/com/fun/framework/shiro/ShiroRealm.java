@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 /**
- * created by DJun on 2019/9/13 22:57
- * desc: 自定义实现 ShiroRealm，包含认证和授权两大模块
+ * 自定义实现 ShiroRealm，包含认证和授权两大模块
  * 处理登录、权限
+ * @author DJun
  */
 @Component
 @Slf4j
@@ -86,8 +86,9 @@ public class ShiroRealm extends AuthorizingRealm {
         } catch (Exception e) {
             log.info("用户[" + username + "]登录验证未通过，原因：{}", e.getMessage());
         }
-        if (StringUtils.isNull(user))
+        if (StringUtils.isNull(user)) {
             return null;
+        }
         return new SimpleAuthenticationInfo(user, password, getName());
     }
 

@@ -27,9 +27,9 @@ import javax.validation.constraints.NotBlank;
 import static com.fun.framework.manager.AsyncUtils.excRecordLoginLog;
 
 /**
- * created by DJun on 2019/9/13 10:57
- * desc: 前台用户登录相关业务：
+ * 前台用户登录相关业务：
  * 登录、退出登录、注册、找回密码、修改密码
+ * @author DJun
  */
 @Api(value = "登录", description = "登录管理api", position = 40, produces = "http")
 @RestController

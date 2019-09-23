@@ -17,8 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * created by DJun on 2019/9/14 9:45
  * desc: 图片验证码（支持算术形式）
+ * @author DJun
  */
 @Controller
 @RequestMapping("/captcha")
@@ -66,8 +66,9 @@ public class CaptchaController {
             e.printStackTrace();
         } finally {
             try {
-                if (out != null)
+                if (out != null) {
                     out.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -29,8 +29,9 @@ public class Md5Utils {
     }
 
     private static String toHex(byte[] hash) {
-        if (hash == null)
+        if (hash == null) {
             return null;
+        }
 
         StringBuilder sb = new StringBuilder(hash.length * 2);
         int i;

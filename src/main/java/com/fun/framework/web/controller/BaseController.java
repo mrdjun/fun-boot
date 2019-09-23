@@ -5,9 +5,9 @@ import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.ShiroUtils;
 import com.fun.project.admin.system.user.entity.AdminUser;
 
+
 /**
- * created by DJun on 2019/9/9 17:23
- * desc:
+ * @author DJun
  */
 public class BaseController {
 

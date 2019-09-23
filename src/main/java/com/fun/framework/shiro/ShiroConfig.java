@@ -21,15 +21,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Base64Utils;
 
+import javax.servlet.Filter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.*;
+
 
 /**
- * created by DJun on 2019/9/13 20:35
- * desc: Shiro 配置类
+ * Shiro 配置类
+ * @author DJun
  */
 @Configuration
 public class ShiroConfig {
@@ -56,8 +55,9 @@ public class ShiroConfig {
     private RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host + ":" + port);
-        if (StringUtils.isNotBlank(password))
+        if (StringUtils.isNotBlank(password)) {
             redisManager.setPassword(password);
+        }
         redisManager.setTimeout(timeout);
         redisManager.setDatabase(database);
         return redisManager;
@@ -88,11 +88,17 @@ public class ShiroConfig {
         for (String url : anonUrls) {
             filterChainDefinitionMap.put(url, "anon");
         }
-        // Shiro已经实现了退出登录
+        filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        // Shiro已经实现了退出登录，直接调用即可
         filterChainDefinitionMap.put(shiroProperties.getLogoutUrl(), "logout");
 
         // 除上以外所有 url都必须认证通过才可以访问以下api，未通过认证自动访问 LoginUrl
         filterChainDefinitionMap.put("/admin/**", "user");
+
+        Map<String, Filter> filters = new LinkedHashMap<>();
+        filters.put("captchaValidate", captchaValidateFilter());
+
+        shiroFilterFactoryBean.setFilters(filters);
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
@@ -188,7 +194,6 @@ public class ShiroConfig {
         redisSessionDAO.setRedisManager(redisManager());
         return redisSessionDAO;
     }
-
 
     /**
      * 开启Shiro注解通知器

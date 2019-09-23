@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/14 9:41
- * desc:
+ * 菜单信息
+ * @author DJun
  */
 public interface MenuMapper {
     /**

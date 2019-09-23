@@ -212,9 +212,10 @@ public class MenuServiceImpl implements IMenuService {
     @Override
     public int checkMenuNameUnique(Menu menu) {
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (StringUtils.isNull(info))
+        if (StringUtils.isNull(info)) {
             return 0;
-        else
+        } else {
             return 1;
+        }
     }
 }

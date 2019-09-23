@@ -15,7 +15,7 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/admin/redis")
+@RequestMapping("/admin/monitor/redis")
 public class RedisController {
 
     private static final String INTEGER_PREFIX = "(integer) ";
@@ -53,10 +53,11 @@ public class RedisController {
     @GetMapping("/set")
     public CommonResult set(String arg) throws RedisConnectException {
         String[] args = arg.split(",");
-        if (args.length == 1)
+        if (args.length == 1) {
             return CommonResult.failed("(error) ERR wrong number of arguments for 'set' command");
-        else if (args.length != 2)
+        } else if (args.length != 2) {
             return CommonResult.failed("(error) ERR syntax error");
+        }
         String result = this.redisService.set(args[0], args[1]);
         return CommonResult.success(result);
     }
@@ -75,8 +76,9 @@ public class RedisController {
         int count = 0;
         String[] arr = arg.split(",");
         for (String key : arr) {
-            if (this.redisService.exists(key))
+            if (this.redisService.exists(key)) {
                 count++;
+            }
         }
         return CommonResult.success(INTEGER_PREFIX + count);
     }
