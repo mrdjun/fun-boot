@@ -7,6 +7,7 @@ import com.fun.project.admin.system.menu.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,12 +41,23 @@ public class MenuController {
     @Log("新增菜单")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult add(@Validated Menu menu){
-        if (menuService.checkMenuNameUnique(menu)>0)
-            return CommonResult.failed("已存在该菜单");
+    public CommonResult add(@Validated Menu menu) {
+        if (menuService.checkMenuNameUnique(menu) > 0)
+            return CommonResult.failed("该菜单已存在");
         return CommonResult.success(menuService.insertMenu(menu));
     }
 
+    @Log("删除菜单")
+    @PostMapping("/remove/{menuId}")
+    @ResponseBody
+    public CommonResult remove(@PathVariable("menuId") Long menuId){
 
+        if (menuService.selectCountMenuByParentId(menuId)>0)
+            return CommonResult.failed("存在子菜单，不允许删除");
+        if (menuService.selectCountRoleMenuByMenuId(menuId)>0)
+            return CommonResult.failed("该菜单已分配，不允许删除");
+
+        return CommonResult.success(menuService.deleteMenuById(menuId));
+    }
 
 }

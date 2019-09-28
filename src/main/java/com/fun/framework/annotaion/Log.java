@@ -8,9 +8,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
- * created by DJun on 2019/9/9 19:47
- * desc: 操作日志记录
+ * 操作日志记录
+ * @author DJun
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

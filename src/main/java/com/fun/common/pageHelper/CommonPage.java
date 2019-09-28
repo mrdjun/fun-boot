@@ -9,11 +9,17 @@ import java.util.List;
  * 分页数据封装类
  */
 public class CommonPage<T> {
-    // 页数
+    /**
+     * 页数
+     */
     private Integer pageNum;
-    // 每一页显示数据数
+    /**
+     * 每一页显示数据数
+     */
     private Integer pageSize;
-    // 总页数
+    /**
+     * 总页数
+     */
     private Integer totalPage;
     private Long total;
     private List<T> list;

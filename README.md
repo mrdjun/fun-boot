@@ -7,11 +7,10 @@
 <a href="https://github.com/mrdjun/fun-boot/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/github/license/java-aodeng/hope.svg?style=flat-square"/></a>
 </p>
 
-
-# 简介
+#【正在维护，欢迎各位加入我们】
+#简介
 
 > 一款现代化的脚手架项目。集成APP的api与后端api于一体:beers:
-
 > 个人博客：https://blog.csdn.net/qq_41647999 主语言[java] 欢迎star
 ------------------------------
 

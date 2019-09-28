@@ -17,9 +17,10 @@ import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
+
 /**
- * created by DJun on 2019/9/8 14:53
- * desc: 颁发令牌 ： 下发token
+ * 颁发令牌 ： 下发token
+ * @author DJun
  */
 @Service("TokenService")
 public class TokenService {

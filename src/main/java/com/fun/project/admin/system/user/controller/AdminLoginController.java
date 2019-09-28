@@ -9,18 +9,17 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 
 /**
- * created by DJun on 2019/9/14 9:44
- * desc:
+ * 登录接口
+ * @author DJun
+ * @date 2019/9/14 9:44
  */
 @Controller
+@RequestMapping("/admin")
 public class AdminLoginController {
     String prefix = "/fun/views";
 
@@ -48,7 +47,7 @@ public class AdminLoginController {
             }
             return CommonResult.failed(msg);
         }
-        return CommonResult.success(Constants.LOGIN_SUCCESS);
+        return CommonResult.success(1,Constants.LOGIN_SUCCESS);
     }
 
     @GetMapping("/unauthorized")

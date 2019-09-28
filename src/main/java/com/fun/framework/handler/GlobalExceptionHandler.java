@@ -24,6 +24,7 @@ import java.util.Set;
 
 /***
  * 捕获全项目异常处理
+ * @author DJun
  */
 @Slf4j
 @RestControllerAdvice
