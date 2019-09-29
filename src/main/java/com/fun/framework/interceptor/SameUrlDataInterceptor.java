@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * created by DJun on 2019/9/12 22:26
- * desc: 防止表单重复提交实现类
+ * 防止表单重复提交实现类
  * 判断请求url和数据是否和上一次相同，如果和上次相同，则是重复提交表单。有效时间为5秒内。
+ * @author DJun
  */
 @Component
-public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
+public class SameUrlDataInterceptor extends AbstractRepeatSubmitInterceptor {
     public final String REPEAT_PARAMS = "repeatParams";
 
     public final String REPEAT_TIME = "repeatTime";

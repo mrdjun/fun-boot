@@ -1,11 +1,10 @@
-package com.fun.framework.shiro;
+package com.fun.framework.shiro.helper;
+
 
 /**
- * created by DJun on 2019/9/14 11:36
- * desc:
+ * @author DJun
  */
-public class ShiroConstants
-{
+public class ShiroConstants {
     /**
      * 当前登录的用户
      */

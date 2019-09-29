@@ -4,9 +4,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
 
+
 /**
- * created by DJun on 2019/9/7 17:52
- * desc:
+ * 处理拦截时的消息回复
+ * @author DJun
  */
 public class FunBootResponse extends HashMap<String, Object> {
 

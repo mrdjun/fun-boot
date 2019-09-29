@@ -59,7 +59,8 @@ public class TokenService {
         String token;
 
         Date start = new Date();
-        long currentTime = System.currentTimeMillis() + expiration;//一小时有效时间
+        //一小时有效时间
+        long currentTime = System.currentTimeMillis() + expiration;
         Date end = new Date(currentTime);
 
         token = JWT.create().withAudience(appUser.getUserId().toString())

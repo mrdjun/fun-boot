@@ -4,7 +4,7 @@ import com.fun.common.exception.base.BusinessException;
 import com.fun.common.utils.SpringUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.text.Convert;
-import com.fun.framework.shiro.ShiroUtils;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.project.admin.system.role.entity.Role;
 import com.fun.project.admin.system.role.entity.RoleMenu;
 import com.fun.project.admin.system.role.mapper.RoleMapper;

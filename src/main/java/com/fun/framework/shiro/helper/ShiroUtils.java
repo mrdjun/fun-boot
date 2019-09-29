@@ -1,7 +1,8 @@
-package com.fun.framework.shiro;
+package com.fun.framework.shiro.helper;
 
 import com.fun.common.utils.BeanUtils;
 import com.fun.common.utils.StringUtils;
+import com.fun.framework.shiro.ShiroRealm;
 import com.fun.project.admin.system.user.entity.AdminUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
@@ -11,27 +12,36 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 /**
- * created by DJun on 2019/9/14 10:23
- * desc: shiro 工具类
+ * shiro 工具类
+ *
+ * @author DJun
  */
 public class ShiroUtils {
 
-    // 获取主体
+    /**
+     * 获取主体
+     */
     public static Subject getSubject() {
         return SecurityUtils.getSubject();
     }
 
-    // 获取Session
+    /**
+     * 获取Session
+     */
     public static Session getSession() {
         return SecurityUtils.getSubject().getSession();
     }
 
-    // 退出登录
+    /**
+     * 退出登录
+     */
     public static void logout() {
         getSubject().logout();
     }
 
-    // 获取当前用户
+    /**
+     * 获取当前用户
+     */
     public static AdminUser getSysUser() {
         AdminUser user = null;
         Object obj = getSubject().getPrincipal();
@@ -42,6 +52,9 @@ public class ShiroUtils {
         return user;
     }
 
+    /**
+     * 设置当前用户
+     */
     public static void setSysUser(AdminUser user) {
         Subject subject = getSubject();
         PrincipalCollection principalCollection = subject.getPrincipals();
@@ -51,7 +64,9 @@ public class ShiroUtils {
         subject.runAs(newPrincipalCollection);
     }
 
-    // 清理授权缓存
+    /**
+     * 清理授权缓存
+     */
     public static void clearCachedAuthorizationInfo() {
         RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
         ShiroRealm realm = (ShiroRealm) rsm.getRealms().iterator().next();

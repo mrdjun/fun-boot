@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * created by DJun on 2019/9/12 21:15
- * desc: 防止表单重复提交抽象类
+ * 防止表单重复提交抽象类
+ * @author DJun
  */
 @Component
-public abstract class RepeatSubmitInterceptor extends HandlerInterceptorAdapter {
+public abstract class AbstractRepeatSubmitInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,

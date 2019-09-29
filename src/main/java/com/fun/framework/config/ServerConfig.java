@@ -20,6 +20,9 @@ public class ServerConfig {
         return getDomain(request);
     }
 
+    /***
+     * 获取请求地址
+     */
     public static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String contextPath = request.getServletContext().getContextPath();

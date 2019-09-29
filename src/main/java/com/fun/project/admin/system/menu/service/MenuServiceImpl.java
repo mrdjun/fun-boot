@@ -2,7 +2,7 @@ package com.fun.project.admin.system.menu.service;
 
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.TreeUtils;
-import com.fun.framework.shiro.ShiroUtils;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.framework.web.entity.Ztree;
 import com.fun.project.admin.system.menu.entity.Menu;
 import com.fun.project.admin.system.menu.mapper.MenuMapper;
@@ -214,8 +214,8 @@ public class MenuServiceImpl implements IMenuService {
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
         if (StringUtils.isNull(info)) {
             return 0;
-        } else {
-            return 1;
         }
+        return 1;
+
     }
 }

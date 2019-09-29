@@ -1,4 +1,4 @@
-package com.fun.framework.shiro;
+package com.fun.framework.shiro.helper;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.constant.LoginType;
@@ -11,6 +11,7 @@ import com.fun.common.utils.MessageUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.manager.AsyncUtils;
+import com.fun.framework.shiro.helper.ShiroConstants;
 import com.fun.project.admin.system.user.entity.AdminUser;
 import com.fun.project.admin.system.user.entity.UserStatus;
 import com.fun.project.admin.system.user.service.IAdminUserService;

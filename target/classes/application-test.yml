@@ -35,6 +35,11 @@ spring:
           config:
             multi-statement-allow: true
 
+#  thymeleaf:
+#    prefix: classpath:templates
+#    encoding: UTF-8
+#    cache: false
+
   redis:
     database: 0
     host: 127.0.0.1

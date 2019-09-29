@@ -16,10 +16,14 @@ import java.util.Map;
 @Data
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    /** 时间戳 */
     private Long createTime;
     private Long updateTime;
     private String status;
+    /** 创建者 */
+    private String createBy;
+    /** 更新者 */
+    private String updateBy;
     /** 搜索值 */
     private String searchValue;
     /** 备注 */

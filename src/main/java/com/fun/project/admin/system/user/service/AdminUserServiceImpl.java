@@ -3,7 +3,7 @@ package com.fun.project.admin.system.user.service;
 import com.fun.common.utils.Md5Utils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.text.Convert;
-import com.fun.framework.shiro.ShiroUtils;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.project.admin.system.role.entity.Role;
 import com.fun.project.admin.system.role.mapper.RoleMapper;
 import com.fun.project.admin.system.user.entity.AdminUser;

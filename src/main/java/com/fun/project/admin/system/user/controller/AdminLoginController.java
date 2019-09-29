@@ -10,6 +10,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.constraints.NotBlank;
 
@@ -25,8 +26,8 @@ public class AdminLoginController {
 
 
     @GetMapping("/login")
-    public String login() {
-        return prefix + "/login";
+    public ModelAndView login() {
+        return new ModelAndView(prefix + "/login");
     }
 
 

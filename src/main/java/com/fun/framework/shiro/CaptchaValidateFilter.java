@@ -1,6 +1,8 @@
 package com.fun.framework.shiro;
 
 import com.fun.common.utils.StringUtils;
+import com.fun.framework.shiro.helper.ShiroConstants;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Captcha 验证码过滤器
+ * @author DJun
  */
 @Setter
 @Getter

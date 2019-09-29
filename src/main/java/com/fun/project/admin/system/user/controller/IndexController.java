@@ -1,22 +1,15 @@
 package com.fun.project.admin.system.user.controller;
 
 import com.fun.framework.config.FunBootConfig;
-import com.fun.project.admin.system.menu.entity.Menu;
-import com.fun.project.admin.system.menu.service.IMenuService;
-import com.fun.project.admin.system.user.entity.AdminUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-
-import static com.fun.framework.shiro.ShiroUtils.getSysUser;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
- * created by DJun on 2019/9/14 13:07
- * desc:
+ * @author U-Fun
+ * @date 2019/9/29
  */
 @Controller
 public class IndexController {
@@ -26,14 +19,10 @@ public class IndexController {
     @Autowired
     private FunBootConfig funBootConfig;
 
-    @GetMapping()
-    public String toIndex(){
-        return prefix + "/login";
-    }
 
     // 系统首页
     @GetMapping("/admin/index")
-    public String index(ModelMap mmap) {
+    public ModelAndView index(ModelMap mmap) {
 //        // 取身份信息
 //        AdminUser user = getSysUser();
 //        // 根据用户id取出菜单
@@ -42,16 +31,18 @@ public class IndexController {
 //        mmap.put("user", user);
 //        mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
 //        mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
-        return prefix + "/index";
+        return new ModelAndView( prefix + "/index");
     }
+
+
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap) {
+    public ModelAndView main(ModelMap mmap) {
         mmap.put("version", funBootConfig.getVersion());
         mmap.put("name", funBootConfig.getName());
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
-        return prefix + "/main";
+        return new ModelAndView(prefix + "/main") ;
     }
 
 }

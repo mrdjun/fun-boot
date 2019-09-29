@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * 分页数据封装类
  */
+
 public class CommonPage<T> {
     /**
      * 页数

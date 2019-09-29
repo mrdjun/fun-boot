@@ -25,12 +25,13 @@ import java.lang.reflect.Method;
 
 /***
  * JWT Token 拦截验证
+ * @author DJun
  */
-public class AuthenticationInterceptor implements HandlerInterceptor {
+public class AppLoginHandleInterceptor implements HandlerInterceptor {
     @Autowired
-    private IAppUserService IAppUserService;
+    private IAppUserService appUserService;
     @Autowired
-    private IRedisService iRedisService;
+    private IRedisService redisService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest,
@@ -78,7 +79,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }
 
                 // 缓存中是否有当前用户登陆的token
-                String currToken = iRedisService.get(loginName);
+                String currToken = redisService.get(loginName);
                 // 第二次生成token后，使上一次的token 过期
                 if (StringUtils.isNull(currToken) || !currToken.equals(token)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);
@@ -86,7 +87,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     return false;
                 }
 
-                AppUser appUser = IAppUserService.selectUserById(Long.parseLong(userId));
+                AppUser appUser = appUserService.selectUserById(Long.parseLong(userId));
 
                 if (StringUtils.isNull(appUser)) {
                     CommonResult commonResult = CommonResult.unauthorized(false);

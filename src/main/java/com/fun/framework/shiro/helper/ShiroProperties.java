@@ -1,4 +1,4 @@
-package com.fun.framework.shiro;
+package com.fun.framework.shiro.helper;
 
 import lombok.Data;
 import org.springframework.boot.SpringBootConfiguration;
