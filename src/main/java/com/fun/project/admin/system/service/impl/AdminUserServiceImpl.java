@@ -1,5 +1,6 @@
 package com.fun.project.admin.system.service.impl;
 
+import com.fun.common.exception.FunBootException;
 import com.fun.common.utils.Md5Utils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.text.Convert;
@@ -20,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/14 10:35
- * desc:
+ *
+ * @author DJun
  */
 @Service
 public class AdminUserServiceImpl implements IAdminUserService {
@@ -78,7 +79,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = FunBootException.class)
     public int updateUser(AdminUser user) {
         // 获取修改者
         Long userId = user.getUserId();

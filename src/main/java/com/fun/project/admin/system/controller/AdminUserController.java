@@ -4,16 +4,17 @@ import com.fun.common.constant.Constants;
 import com.fun.common.pageHelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
-import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotaion.Limit;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,10 +33,8 @@ public class AdminUserController {
     @Autowired
     private IAdminUserService adminUserService;
 
-    /**
-     * 异步登录处理
-     * 如果是Ajax请求，返回Json字符串。
-     */
+
+    @ApiOperation(value = "异步登录",notes = "如果是Ajax请求，返回Json字符串")
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response) {
         if (ServletUtils.isAjaxRequest(request)) {
@@ -63,9 +62,30 @@ public class AdminUserController {
 
 
     @GetMapping("/user")
-    public ModelAndView user() {
+    public ModelAndView userIndex() {
         return new ModelAndView(Constants.VIEW_PREFIX + "system/user/user");
     }
+
+    @PostMapping("/user")
+    @ResponseBody
+    public CommonResult userAjax() {
+        return CommonResult.success("");
+    }
+
+    @GetMapping("/add")
+    @ResponseBody
+    public CommonResult addUser(@Validated AdminUser user) {
+        if (adminUserService.checkLoginNameUnique(user.getLoginName()) < 0) {
+            return CommonResult.failed("失败，账号'" + user.getLoginName() + "' 已存在");
+        } else if (adminUserService.checkEmailUnique(user.getEmail()) < 0) {
+            return CommonResult.failed("失败，邮箱'" + user.getEmail() + "' 已存在");
+        } else if (adminUserService.checkPhoneUnique(user.getTelephone()) < 0) {
+            return CommonResult.failed("失败，手机号码'" + user.getTelephone() + "' 已存在");
+        }
+
+        return CommonResult.success(adminUserService.insertUser(user));
+    }
+
 
     @PostMapping("/list")
     @ResponseBody
@@ -76,5 +96,34 @@ public class AdminUserController {
         return CommonResult.success(CommonPage.restPage(list));
     }
 
+    @ApiOperation(value = "异步验证用户名是否唯一",notes = "返回0，则不存在")
+    @PostMapping("/checkLoginNameUnique")
+    @ResponseBody
+    public CommonResult checkLoginNameUniqueAjax(@Validated AdminUser user) {
+        if (adminUserService.checkLoginNameUnique(user.getLoginName()) < 0) {
+            return CommonResult.failed("失败，账号'" + user.getLoginName() + "' 已存在");
+        }
+        return CommonResult.success(Constants.SUCCESS);
+    }
+
+    @ApiOperation(value = "异步验证邮箱是否唯一",notes = "返回0，则不存在")
+    @PostMapping("/checkEmailUnique")
+    @ResponseBody
+    public CommonResult checkEmailUniqueAjax(@Validated AdminUser user) {
+        if (adminUserService.checkEmailUnique(user.getEmail()) < 0) {
+            return CommonResult.failed("失败，邮箱'" + user.getEmail() + "' 已存在");
+        }
+        return CommonResult.success(Constants.SUCCESS);
+    }
+
+    @ApiOperation(value = "异步验证手机号码是否唯一",notes = "返回0，则不存在")
+    @PostMapping("/checkPhoneUnique")
+    @ResponseBody
+    public CommonResult checkPhoneUniqueAjax(@Validated AdminUser user) {
+        if (adminUserService.checkPhoneUnique(user.getTelephone()) < 0) {
+            return CommonResult.failed("失败，手机号码'" + user.getTelephone() + "' 已存在");
+        }
+        return CommonResult.success(Constants.SUCCESS);
+    }
 
 }

@@ -32,7 +32,7 @@ public class AdminUser extends BaseEntity {
     @Size(max = 30, message = "邮箱长度不能超过50个字符")
     private String email;
 
-    @Size(max = 15, message = "手机号码长度不能超过15个字符")
+    @Size(max = 11, message = "手机号码长度不能超过11个字符")
     private String telephone;
     /**
      * 0-男1-女2-未知
