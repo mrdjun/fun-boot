@@ -1,14 +1,13 @@
 package com.fun.framework.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.fun.framework.shiro.helper.ShiroProperties;
+import com.fun.framework.shiro.helper.FunBootShiroProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.spring.web.config.ShiroWebFilterConfiguration;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -36,7 +35,7 @@ import java.util.*;
 public class ShiroConfig {
 
     @Autowired
-    private ShiroProperties shiroProperties;
+    private FunBootShiroProperties funBootShiroProperties;
 
     @Value("${spring.redis.host}")
     private String host;
@@ -81,16 +80,16 @@ public class ShiroConfig {
         // 设置 securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 设置登录url
-        shiroFilterFactoryBean.setLoginUrl(shiroProperties.getLoginUrl());
+        shiroFilterFactoryBean.setLoginUrl(funBootShiroProperties.getLoginUrl());
         // 设置登录成功后跳转url
-        shiroFilterFactoryBean.setSuccessUrl(shiroProperties.getIndexUrl());
+        shiroFilterFactoryBean.setSuccessUrl(funBootShiroProperties.getIndexUrl());
         // 设置未授权跳转url
-        shiroFilterFactoryBean.setUnauthorizedUrl(shiroProperties.getUnauthorizedUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl(funBootShiroProperties.getUnauthorizedUrl());
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         // 设置免认证 url
-        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(shiroProperties.getAnonUrl(), ",");
+        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(funBootShiroProperties.getAnonUrl(), ",");
        for (String url : anonUrls) {
             filterChainDefinitionMap.put(url, "anon");
         }
@@ -98,7 +97,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/login", "captchaValidate");
 
         // Shiro已经实现了退出登录，直接调用即可
-        filterChainDefinitionMap.put(shiroProperties.getLogoutUrl(), "logout");
+        filterChainDefinitionMap.put(funBootShiroProperties.getLogoutUrl(), "logout");
 
         // 以下地址通过认证后才可访问，未通过认证自动访问 LoginUrl
         filterChainDefinitionMap.put("/admin/**", "user");
@@ -143,7 +142,7 @@ public class ShiroConfig {
         // 设置 cookie 名称，对应登录页面的 <input type="checkbox" name="rememberMe"/>
         SimpleCookie cookie = new SimpleCookie("rememberMe");
         // 设置 cookie 的过期时间（秒）
-        cookie.setMaxAge(shiroProperties.getCookieTimeout());
+        cookie.setMaxAge(funBootShiroProperties.getCookieTimeout());
         return cookie;
     }
 
@@ -174,7 +173,7 @@ public class ShiroConfig {
         Collection<SessionListener> listeners = new ArrayList<>();
         listeners.add(new ShiroSessionListener());
         // 设置 session超时时间
-        sessionManager.setGlobalSessionTimeout(shiroProperties.getSessionTimeout() * 1000L);
+        sessionManager.setGlobalSessionTimeout(funBootShiroProperties.getSessionTimeout() * 1000L);
         sessionManager.setSessionListeners(listeners);
         sessionManager.setSessionDAO(redisSessionDAO());
         sessionManager.setSessionIdUrlRewritingEnabled(false);

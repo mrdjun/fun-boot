@@ -11,10 +11,9 @@ import com.fun.common.utils.MessageUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.manager.AsyncUtils;
-import com.fun.framework.shiro.helper.ShiroConstants;
-import com.fun.project.admin.system.user.entity.AdminUser;
-import com.fun.project.admin.system.user.entity.UserStatus;
-import com.fun.project.admin.system.user.service.IAdminUserService;
+import com.fun.project.admin.system.entity.user.AdminUser;
+import com.fun.project.admin.system.entity.user.UserStatus;
+import com.fun.project.admin.system.service.IAdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -10,8 +10,9 @@ import java.util.Properties;
 import static com.google.code.kaptcha.Constants.*;
 
 /**
- * created by DJun on 2019/9/14 22:13
- * desc: 验证码配置
+ * 验证码配置
+ *
+ * @author DJun
  */
 @Configuration
 public class CaptchaConfig {
@@ -61,7 +62,7 @@ public class CaptchaConfig {
         // KAPTCHA_SESSION_KEY
         properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCodeMath");
         // 验证码文本生成器
-        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.cqjava.framework.config.KaptchaTextCreator");
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.fun.framework.shiro.helper.KaptchaTextCreator");
         // 验证码文本字符间距 默认为2
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
         // 验证码文本字符长度 默认为5

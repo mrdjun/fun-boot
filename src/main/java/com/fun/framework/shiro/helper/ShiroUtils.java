@@ -3,7 +3,7 @@ package com.fun.framework.shiro.helper;
 import com.fun.common.utils.BeanUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.ShiroRealm;
-import com.fun.project.admin.system.user.entity.AdminUser;
+import com.fun.project.admin.system.entity.user.AdminUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;

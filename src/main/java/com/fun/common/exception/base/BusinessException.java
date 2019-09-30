@@ -1,8 +1,8 @@
 package com.fun.common.exception.base;
 
 /**
- * created by DJun on 2019/9/14 17:51
- * desc: 业务发生异常
+ * 业务发生异常
+ * @author DJun
  */
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;

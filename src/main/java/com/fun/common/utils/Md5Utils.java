@@ -1,6 +1,6 @@
 package com.fun.common.utils;
 
-import com.fun.project.admin.system.user.entity.AdminUser;
+import com.fun.project.admin.system.entity.user.AdminUser;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

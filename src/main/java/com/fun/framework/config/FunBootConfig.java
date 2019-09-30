@@ -8,8 +8,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * created by DJun on 2019/9/7 14:42
- * desc: 系统信息
+ * 系统信息
+ * @author DJun
  */
 @Data
 @Component
@@ -38,19 +38,13 @@ public class FunBootConfig {
     /** 日志开关 */
     private boolean openLog;
 
+
     public static String getProfile() {
         return profile;
-    }
-    public void setProfile(String profile) {
-        FunBootConfig.profile = profile;
     }
 
     public static boolean isAddressEnabled() {
         return addressEnabled;
-    }
-
-    public void setAddressEnabled(boolean addressEnabled) {
-        FunBootConfig.addressEnabled = addressEnabled;
     }
 
     /**

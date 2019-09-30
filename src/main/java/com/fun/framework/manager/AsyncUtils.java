@@ -2,7 +2,7 @@ package com.fun.framework.manager;
 
 import com.fun.common.constant.LoginType;
 import com.fun.common.utils.IpUtils;
-import com.fun.project.admin.monitor.log.entity.LoginLog;
+import com.fun.project.admin.monitor.entity.LoginLog;
 
 import javax.servlet.http.HttpServletRequest;
 

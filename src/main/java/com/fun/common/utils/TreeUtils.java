@@ -1,6 +1,6 @@
 package com.fun.common.utils;
 
-import com.fun.project.admin.system.menu.entity.Menu;
+import com.fun.project.admin.system.entity.Menu;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -4,15 +4,14 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fun.framework.config.FunBootConfig;
+import com.fun.framework.shiro.helper.FunBootShiroProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +48,23 @@ public class InterceptorConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** 本地文件上传路径 */
+        /* 本地文件上传路径 */
         registry.addResourceHandler("/profile/**").addResourceLocations("file:" + FunBootConfig.getProfile() + "/");
-        /** swagger配置 */
+        /* swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        /* 解决静态资源映射问题 */
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+    /**
+     * 访问ip直接跳转页面
+     * 这里可以跳过 Shiro 认证访问页面
+     */
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        // 后面接模板页的地址，非controller地址
+//        registry.addViewController("").setViewName("/fun/views/index");
+//    }
 
     /**
      * 跨域

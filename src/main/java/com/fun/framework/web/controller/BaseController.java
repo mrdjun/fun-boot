@@ -3,7 +3,7 @@ package com.fun.framework.web.controller;
 
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.helper.ShiroUtils;
-import com.fun.project.admin.system.user.entity.AdminUser;
+import com.fun.project.admin.system.entity.user.AdminUser;
 
 
 /**

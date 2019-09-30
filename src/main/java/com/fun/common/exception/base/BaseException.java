@@ -4,8 +4,8 @@ import com.fun.common.utils.MessageUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * created by DJun on 2019/9/12 18:49
- * desc:
+ *
+ * @author DJun
  */
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;

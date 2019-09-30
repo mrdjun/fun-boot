@@ -147,7 +147,7 @@ COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_oper_log` WRITE;
 DELETE FROM `fun_base`.`sys_oper_log`;
-INSERT INTO `fun_base`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (14, '获取用户列表', '127.0.0.1', '内网IP', NULL, 'admin', 165, 'com.fun.project.system.controller.UserController.getUserList()', '{}', 1568129451558, '1'),(15, '执行 Redis keysSize 命令', '127.0.0.1', '内网IP', NULL, 'admin', 19, 'com.fun.project.admin.monitor.redis.RedisController.getKeysSize()', '{}', 1568557413000, '1');
+INSERT INTO `fun_base`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (14, '获取用户列表', '127.0.0.1', '内网IP', NULL, 'admin', 165, 'com.fun.project.system.controller.UserController.getUserList()', '{}', 1568129451558, '1'),(15, '执行 Redis keysSize 命令', '127.0.0.1', '内网IP', NULL, 'admin', 19, 'com.fun.project.admin.monitor.controller.RedisController.getKeysSize()', '{}', 1568557413000, '1');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

@@ -2,12 +2,12 @@ package com.fun.framework.manager;
 
 import com.fun.common.constant.LoginType;
 import com.fun.common.utils.*;
-import com.fun.project.admin.monitor.log.entity.LoginLog;
-import com.fun.project.admin.monitor.log.entity.OperLog;
-import com.fun.project.admin.monitor.log.service.IOperLogService;
-import com.fun.project.admin.monitor.log.service.LoginLogServiceImpl;
-import com.fun.project.admin.system.user.entity.AdminUser;
-import com.fun.project.admin.system.user.service.AdminUserServiceImpl;
+import com.fun.project.admin.monitor.entity.LoginLog;
+import com.fun.project.admin.monitor.entity.OperLog;
+import com.fun.project.admin.monitor.service.IOperLogService;
+import com.fun.project.admin.monitor.service.impl.LoginLogServiceImpl;
+import com.fun.project.admin.system.entity.user.AdminUser;
+import com.fun.project.admin.system.service.impl.AdminUserServiceImpl;
 import com.fun.project.app.user.entity.AppUser;
 import com.fun.project.app.user.service.AppUserServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;

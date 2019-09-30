@@ -8,7 +8,7 @@ import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
 import com.fun.framework.manager.AsyncManager;
 import com.fun.framework.shiro.helper.ShiroUtils;
-import com.fun.project.admin.monitor.log.entity.OperLog;
+import com.fun.project.admin.monitor.entity.OperLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;

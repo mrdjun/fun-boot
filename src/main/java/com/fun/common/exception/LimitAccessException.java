@@ -1,8 +1,8 @@
 package com.fun.common.exception;
 
 /**
- * created by DJun on 2019/9/7 17:53
- * desc: 接口限流异常类
+ * 接口限流异常类
+ * @author DJun
  */
 public class LimitAccessException extends Exception {
 

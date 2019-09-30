@@ -3,13 +3,19 @@ package com.fun.common.constant;
 import lombok.Getter;
 
 /**
- * created by DJun on 2019/9/14 12:27
- * desc: 登录类型：前台、后台
+ * 登录类型：前台、后台
+ * @author DJun
  */
 @Getter
 public enum LoginType {
-
-    App("0","app"),admin("1","admin");
+    /**
+     * App端
+     */
+    App("0","app"),
+    /**
+     * admin端
+     */
+    admin("1","admin");
 
     private final String code;
     private final String info;

@@ -1,8 +1,8 @@
 package com.fun.common.constant;
 
 /**
- * created by DJun on 2019/9/13 14:05
- * desc: 通用常量信息
+ * 通用常量信息
+ * @author DJun
  */
 public class Constants {
 
@@ -31,4 +31,8 @@ public class Constants {
      */
     public static final String LOGOUT = "注销成功";
 
+    /**
+     * 前端页面路径前缀
+     */
+    public static final String VIEW_PREFIX = "fun/views/";
 }

@@ -1,8 +1,8 @@
 package com.fun.common.exception;
 
 /**
- * created by DJun on 2019/9/7 17:53
- * desc:
+ * 系统异常
+ * @author DJun
  */
 public class FunBootException extends Exception {
 
