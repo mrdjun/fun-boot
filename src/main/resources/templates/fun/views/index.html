@@ -3,15 +3,53 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
-    <title>后台管理系统</title>
+    <title>FUN-BOOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" th:href="@{/fun/favicon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/fun/css/fun.css}" media="all">
 </head>
 <body>
-    首页
+
+<h1>首页建设中...</h1>
+<p th:text="${copyrightYear}"></p>
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <li th:each="menu : ${menus}">
+        <a th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}"
+           th:href="@{${menu.url == ''} ? |#| : ${menu.url}}">
+            <i class="fa fa-bar-chart-o" th:class="${menu.icon}"></i>
+            <span class="nav-label" th:text="${menu.menuName}">一级菜单</span>
+            <span th:class="${menu.url == '' || menu.url == '#'} ? |fa arrow|"></span>
+        </a>
+        <ul class="nav nav-second-level collapse">
+            <li th:each="cmenu : ${menu.children}">
+                <a th:if="${#lists.isEmpty(cmenu.children)}"
+                   th:class="${cmenu.target == ''} ? |menuItem| : ${cmenu.target}" th:utext="${cmenu.menuName}"
+                   th:href="@{${cmenu.url}}">二级菜单</a>
+                <a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span
+                        class="fa arrow"></span></a>
+                <ul th:if="${not #lists.isEmpty(cmenu.children)}" class="nav nav-third-level">
+                    <li th:each="emenu : ${cmenu.children}"><a
+                            th:class="${emenu.target == ''} ? |menuItem| : ${emenu.target}" th:text="${emenu.menuName}"
+                            th:href="@{${emenu.url}}">三级菜单</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</nav>
+
+<script th:src="@{layui/layui.js}"></script>
+<script th:inline="javascript">
+    var ctx = [[@{
+        /}]];
+        var currentUser = [[${user}]];
+        currentUser.menus = [[${menus}]];
+
+
+</script>
 </body>
 </html>

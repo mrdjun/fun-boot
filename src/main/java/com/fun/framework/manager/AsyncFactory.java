@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
 import java.util.TimerTask;
 
 /**
- * created by DJun on 2019/9/9 16:42
- * desc: 异步工厂 （产生任务用）
+ * 异步工厂 （产生任务用）
  * 异步操作任务调度线程池
+ * @author DJun
  */
 @Slf4j
 public class AsyncFactory {
@@ -84,7 +84,7 @@ public class AsyncFactory {
                 loginLog.setOs(os);
                 loginLog.setBrowser(browser);
 
-                // 更新最后一次登录信息
+                // 更新APP用户最后一次登录信息
                 if (loginType == LoginType.App){
                     AppUser appUser = new AppUser();
                     appUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
@@ -92,6 +92,7 @@ public class AsyncFactory {
                     appUser.setLoginIp(ipAddr);
                     SpringUtils.getBean(AppUserServiceImpl.class).updateAppUserByLoginName(appUser);
                 } else{
+                    // 更新Admin用户最后一次登录信息
                     AdminUser adminUser = new AdminUser();
                     adminUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
                     adminUser.setLoginIp(ipAddr);

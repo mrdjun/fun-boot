@@ -3,6 +3,7 @@ package com.fun.project.admin.system.controller;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotaion.Log;
 import com.fun.project.admin.system.entity.Menu;
+import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,9 @@ public class MenuController {
     @PostMapping("/add")
     @ResponseBody
     public CommonResult add(@Validated Menu menu) {
-        if (menuService.checkMenuNameUnique(menu) > 0)
+        if (menuService.checkMenuNameUnique(menu) > 0) {
             return CommonResult.failed("该菜单已存在");
+        }
         return CommonResult.success(menuService.insertMenu(menu));
     }
 
@@ -49,12 +51,15 @@ public class MenuController {
     @ResponseBody
     public CommonResult remove(@PathVariable("menuId") Long menuId){
 
-        if (menuService.selectCountMenuByParentId(menuId)>0)
+        if (menuService.selectCountMenuByParentId(menuId)>0) {
             return CommonResult.failed("存在子菜单，不允许删除");
-        if (menuService.selectCountRoleMenuByMenuId(menuId)>0)
+        }
+        if (menuService.selectCountRoleMenuByMenuId(menuId)>0) {
             return CommonResult.failed("该菜单已分配，不允许删除");
+        }
 
         return CommonResult.success(menuService.deleteMenuById(menuId));
     }
+
 
 }

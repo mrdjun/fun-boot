@@ -64,11 +64,13 @@ public class SysLoginService {
             AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.admin, MessageUtils.message("user.blocked"));
             throw new UserBlockedException();
         }
+
         // 5、验证密码
         if (!Md5Utils.validatePwd(user,password)){
             AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.admin, MessageUtils.message("user.password.not.match"));
             throw new UserPasswordNotMatchException();
         }
+
         AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS, LoginType.admin, MessageUtils.message("user.login.success"));
         return user;
     }

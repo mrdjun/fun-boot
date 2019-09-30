@@ -8,8 +8,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * created by DJun on 2019/9/9 18:23
- * desc: 异步任务管理器
+ * 异步任务管理器
+ * @author DJun
  */
 public class AsyncManager {
     /**

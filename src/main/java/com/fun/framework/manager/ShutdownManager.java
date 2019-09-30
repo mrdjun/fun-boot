@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 
 /**
- * created by DJun on 2019/9/9 17:52
- * desc: 确保应用退出时能关闭后台线程
+ * 确保应用退出时能关闭后台线程
+ * @author DJun
  */
 @Component
 @Slf4j

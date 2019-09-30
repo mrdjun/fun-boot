@@ -8,10 +8,11 @@
 </p>
 
 #【正在维护，欢迎各位加入我们】
+
 #简介
 
 > 一款现代化的脚手架项目。集成APP的api与后端api于一体:beers:
-> 个人博客：https://blog.csdn.net/qq_41647999 主语言[java] 欢迎star
+> 个人博客：https://blog.csdn.net/qq_41647999 主语言 [java] 欢迎star
 ------------------------------
 
 # 文档

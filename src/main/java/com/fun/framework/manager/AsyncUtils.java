@@ -7,8 +7,8 @@ import com.fun.project.admin.monitor.entity.LoginLog;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * created by DJun on 2019/9/14 12:09
- * desc:
+ * 提取存储公用部分，传递参数到异步工厂
+ * @author DJun
  */
 public class AsyncUtils {
 

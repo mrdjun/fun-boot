@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/14 20:48
- * desc: 菜单权限数据处理
+ * 菜单权限数据处理
+ * @author DJun
  */
 public class TreeUtils {
     /**
@@ -19,7 +19,7 @@ public class TreeUtils {
      * @return String
      */
     public static List<Menu> getChildPerms(List<Menu> list, int parentId) {
-        List<Menu> returnList = new ArrayList<Menu>();
+        List<Menu> returnList = new ArrayList<>();
         for (Iterator<Menu> iterator = list.iterator(); iterator.hasNext(); ) {
             Menu t = (Menu) iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点

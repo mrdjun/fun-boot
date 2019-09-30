@@ -1,5 +1,8 @@
 package com.fun.framework.shiro;
 
+import com.fun.common.exception.user.UserException;
+import com.fun.common.exception.user.UserNotExistsException;
+import com.fun.common.exception.user.UserPasswordNotMatchException;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.framework.shiro.helper.SysLoginService;
@@ -75,7 +78,8 @@ public class ShiroRealm extends AuthorizingRealm {
      * @throws AuthenticationException 认证相关异常
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
         String password = "";
@@ -86,8 +90,9 @@ public class ShiroRealm extends AuthorizingRealm {
         try {
             user = loginService.login(username, password);
         } catch (Exception e) {
-            log.info("用户[" + username + "]登录验证未通过，原因：{}", e.getMessage());
+            throw e;
         }
+
         if (StringUtils.isNull(user)) {
             return null;
         }

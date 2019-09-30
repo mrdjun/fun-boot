@@ -15,6 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,9 +32,12 @@ public class AdminUserController {
     @Autowired
     private IAdminUserService adminUserService;
 
+    /**
+     * 异步登录处理
+     * 如果是Ajax请求，返回Json字符串。
+     */
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response) {
-        // 如果是Ajax请求，返回Json字符串。
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
         }
@@ -52,21 +56,16 @@ public class AdminUserController {
         try {
             subject.login(token);
         } catch (AuthenticationException e) {
-            String msg = "用户或密码错误";
-            if (StringUtils.isNotEmpty(e.getMessage())) {
-                msg = e.getMessage();
-            }
-            return CommonResult.failed(msg);
+            return CommonResult.failed("用户名或密码错误");
         }
-        return CommonResult.success(1, Constants.LOGIN_SUCCESS);
+        return CommonResult.success(Constants.LOGIN_SUCCESS);
     }
 
 
     @GetMapping("/user")
-    public String user() {
-        return Constants.VIEW_PREFIX + "system/user/user";
+    public ModelAndView user() {
+        return new ModelAndView(Constants.VIEW_PREFIX + "system/user/user");
     }
-
 
     @PostMapping("/list")
     @ResponseBody

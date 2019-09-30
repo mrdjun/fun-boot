@@ -2,11 +2,18 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.framework.config.FunBootConfig;
+import com.fun.project.admin.system.entity.Menu;
+import com.fun.project.admin.system.entity.user.AdminUser;
+import com.fun.project.admin.system.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+
+import static com.fun.framework.shiro.helper.ShiroUtils.getSysUser;
 
 /**
  *
@@ -15,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class ViewController {
-//    @Autowired
-//    private IMenuService menuService;
+    @Autowired
+    private IMenuService menuService;
     @Autowired
     private FunBootConfig funBootConfig;
 
@@ -50,14 +57,16 @@ public class ViewController {
      */
     @GetMapping("/admin/index")
     public ModelAndView index(ModelMap mmap) {
-//        // 取身份信息
-//        AdminUser user = getSysUser();
-//        // 根据用户id取出菜单
-//        List<Menu> menus = menuService.selectMenusByUser(user);
-//        mmap.put("menus", menus);
-//        mmap.put("user", user);
-//        mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
-//        mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
+
+        // 取身份信息
+        AdminUser user = getSysUser();
+        // 根据用户id取出菜单
+        List<Menu> menus = menuService.selectMenusByUser(user);
+        mmap.put("menus", menus);
+        mmap.put("user", user);
+        mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
+        mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
+
         return new ModelAndView( Constants.VIEW_PREFIX + "index");
     }
 

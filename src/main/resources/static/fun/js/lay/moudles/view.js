@@ -1,6 +1,5 @@
 //视图路由
-layui
-    .extend({
+layui.extend({
         loadBar: 'lay/modules/loadBar',
         dropdown: 'lay/modules/dropdown'
     })
