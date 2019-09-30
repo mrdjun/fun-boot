@@ -68,12 +68,11 @@ public class Md5Utils {
     public static boolean validatePwd(AdminUser adminUser,String pwd){
         return adminUser.getPassword().equals(encryptPassword(adminUser.getLoginName(),pwd,adminUser.getSalt()));
     }
-
-    public static void main(String[] args) {
-        AdminUser adminUser = new AdminUser();
-        adminUser.setPassword("b35b89afc0e805106fdc6aeb0bc0f00f");
-        adminUser.setLoginName("admin");
-        adminUser.setSalt("888888");
-        System.out.println(validatePwd(adminUser,"admin"));
-    }
+//    public static void main(String[] args) {
+//        AdminUser adminUser = new AdminUser();
+//        adminUser.setPassword("b35b89afc0e805106fdc6aeb0bc0f00f");
+//        adminUser.setLoginName("admin");
+//        adminUser.setSalt("888888");
+//        System.out.println(validatePwd(adminUser,"admin"));
+//    }
 }

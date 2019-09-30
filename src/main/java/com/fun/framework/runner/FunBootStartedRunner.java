@@ -16,6 +16,7 @@ import java.net.InetAddress;
 /**
  * created by DJun on 2019/8/18 16:31
  * desc: 启动前检查 redis 是否连接成功
+ * @author DJun
  */
 @Component
 @Slf4j

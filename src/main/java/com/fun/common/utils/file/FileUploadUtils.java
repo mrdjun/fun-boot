@@ -16,6 +16,7 @@ import java.io.IOException;
 
 /**
  * 文件上传工具类
+ * @author DJun
  */
 public class FileUploadUtils {
     /**
@@ -90,8 +91,8 @@ public class FileUploadUtils {
     public static final String upload(String baseDir, MultipartFile file, String[] allowedExtension)
             throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
             InvalidExtensionException {
-        int fileNamelength = file.getOriginalFilename().length();
-        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
+        int fileNameLength = file.getOriginalFilename().length();
+        if (fileNameLength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
             throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
         }
 

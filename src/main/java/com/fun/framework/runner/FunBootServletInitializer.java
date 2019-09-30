@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 /**
  * web容器中进行部署
+ * @author DJun
  */
 public class FunBootServletInitializer extends SpringBootServletInitializer {
     @Override
