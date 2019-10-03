@@ -12,44 +12,74 @@
     <link rel="icon" th:href="@{/fun/favicon.ico}" type="image/x-icon"/>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" th:href="@{/fun/css/fun.css}" media="all">
-</head>
-<body>
 
-<h1>首页建设中...</h1>
-<p th:text="${copyrightYear}"></p>
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <li th:each="menu : ${menus}">
-        <a th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}"
-           th:href="@{${menu.url == ''} ? |#| : ${menu.url}}">
-            <i class="fa fa-bar-chart-o" th:class="${menu.icon}"></i>
-            <span class="nav-label" th:text="${menu.menuName}">一级菜单</span>
-            <span th:class="${menu.url == '' || menu.url == '#'} ? |fa arrow|"></span>
-        </a>
-        <ul class="nav nav-second-level collapse">
-            <li th:each="cmenu : ${menu.children}">
-                <a th:if="${#lists.isEmpty(cmenu.children)}"
-                   th:class="${cmenu.target == ''} ? |menuItem| : ${cmenu.target}" th:utext="${cmenu.menuName}"
-                   th:href="@{${cmenu.url}}">二级菜单</a>
-                <a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span
-                        class="fa arrow"></span></a>
-                <ul th:if="${not #lists.isEmpty(cmenu.children)}" class="nav nav-third-level">
-                    <li th:each="emenu : ${cmenu.children}"><a
-                            th:class="${emenu.target == ''} ? |menuItem| : ${emenu.target}" th:text="${emenu.menuName}"
-                            th:href="@{${emenu.url}}">三级菜单</a></li>
-                </ul>
+    <style type="text/css">
+        .layui-logo{width:245px}
+        .layui-logo img{width:32px;margin-bottom:4px;margin-right:3px;display:inline-block;vertical-align:middle}
+    </style>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img th:src="@{/fun/images/logo.png}" style="cursor: pointer" alt="LOGO">
+            <span>FUN-BOOT</span>
+        </div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="@{/fun/images/avatar/default.gif}" class="layui-nav-img">
+                    U-FUN
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
             </li>
         </ul>
-    </li>
-</nav>
+    </div>
 
-<script th:src="@{layui/layui.js}"></script>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">系统管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户管理</a></dd>
+                        <dd><a href="javascript:;">角色管理</a></dd>
+                        <dd><a href="javascript:;">菜单管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">系统监控</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">登录日志</a></dd>
+                        <dd><a href="javascript:;">操作日志</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div style="padding: 15px;">内容主体区域</div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+
 <script th:inline="javascript">
-    var ctx = [[@{
-        /}]];
-        var currentUser = [[${user}]];
-        currentUser.menus = [[${menus}]];
-
-
+    var ctx = [[@{/}]];
+        layui.use('element', function(){
+            var element = layui.element;
+        });
 </script>
 </body>
 </html>

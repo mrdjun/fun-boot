@@ -15,7 +15,7 @@ public interface AdminUserMapper {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-     List<AdminUser> selectUserList(AdminUser user);
+     List<AdminUser> selectAdminUserList(AdminUser user);
 
     /**
      * 通过用户名查询用户

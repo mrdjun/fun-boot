@@ -66,13 +66,7 @@ public class AdminUserController {
         return new ModelAndView(Constants.VIEW_PREFIX + "system/user/user");
     }
 
-    @PostMapping("/user")
-    @ResponseBody
-    public CommonResult userAjax() {
-        return CommonResult.success("");
-    }
-
-    @GetMapping("/add")
+    @GetMapping("/user/add")
     @ResponseBody
     public CommonResult addUser(@Validated AdminUser user) {
         if (adminUserService.checkLoginNameUnique(user.getLoginName()) < 0) {
@@ -86,18 +80,17 @@ public class AdminUserController {
         return CommonResult.success(adminUserService.insertUser(user));
     }
 
-
-    @PostMapping("/list")
+    @PostMapping("/user/list")
     @ResponseBody
     public CommonResult<CommonPage<AdminUser>> getAdminUserList(AdminUser adminUser,
                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                                 @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        List<AdminUser> list = adminUserService.selectUserList(adminUser, pageNum, pageSize);
+        List<AdminUser> list = adminUserService.selectAdminUserList(adminUser, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(list));
     }
 
     @ApiOperation(value = "异步验证用户名是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/checkLoginNameUnique")
+    @PostMapping("/user/checkLoginNameUnique")
     @ResponseBody
     public CommonResult checkLoginNameUniqueAjax(@Validated AdminUser user) {
         if (adminUserService.checkLoginNameUnique(user.getLoginName()) < 0) {
@@ -107,7 +100,7 @@ public class AdminUserController {
     }
 
     @ApiOperation(value = "异步验证邮箱是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/checkEmailUnique")
+    @PostMapping("/user/checkEmailUnique")
     @ResponseBody
     public CommonResult checkEmailUniqueAjax(@Validated AdminUser user) {
         if (adminUserService.checkEmailUnique(user.getEmail()) < 0) {
@@ -117,7 +110,7 @@ public class AdminUserController {
     }
 
     @ApiOperation(value = "异步验证手机号码是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/checkPhoneUnique")
+    @PostMapping("/user/checkPhoneUnique")
     @ResponseBody
     public CommonResult checkPhoneUniqueAjax(@Validated AdminUser user) {
         if (adminUserService.checkPhoneUnique(user.getTelephone()) < 0) {

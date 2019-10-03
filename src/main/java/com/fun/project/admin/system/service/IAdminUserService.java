@@ -17,7 +17,7 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-     List<AdminUser> selectUserList(AdminUser user,int pageNum,int pageSize);
+     List<AdminUser> selectAdminUserList(AdminUser user,int pageNum,int pageSize);
 
     /**
      * 通过用户名查询用户

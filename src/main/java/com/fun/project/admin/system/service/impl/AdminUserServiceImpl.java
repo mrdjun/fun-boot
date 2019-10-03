@@ -34,9 +34,8 @@ public class AdminUserServiceImpl implements IAdminUserService {
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public List<AdminUser> selectUserList(AdminUser user, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return adminUserMapper.selectUserList(user);
+    public List<AdminUser> selectAdminUserList(AdminUser user, int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum,pageSize).doSelectPage(()->adminUserMapper.selectAdminUserList(user));
     }
 
     @Override
