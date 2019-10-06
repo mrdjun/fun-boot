@@ -2,6 +2,7 @@ package com.fun.common.constant;
 
 /**
  * 通用常量信息
+ *
  * @author DJun
  */
 public class Constants {
@@ -35,4 +36,9 @@ public class Constants {
      * 前端页面路径前缀
      */
     public static final String VIEW_PREFIX = "fun/views/";
+
+
+    public static String view(String view) {
+        return VIEW_PREFIX + view;
+    }
 }

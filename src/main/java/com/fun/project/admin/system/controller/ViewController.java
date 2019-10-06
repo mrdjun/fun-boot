@@ -67,7 +67,7 @@ public class ViewController {
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
         mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
 
-        return new ModelAndView( Constants.VIEW_PREFIX + "index");
+        return new ModelAndView( Constants.view("index"));
     }
 
     /**
@@ -78,7 +78,7 @@ public class ViewController {
         mmap.put("version", funBootConfig.getVersion());
         mmap.put("name", funBootConfig.getName());
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
-        return new ModelAndView(Constants.VIEW_PREFIX + "main") ;
+        return new ModelAndView(Constants.view("main")) ;
     }
 
     /**

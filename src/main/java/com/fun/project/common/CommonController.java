@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * created by DJun on 2019/9/12 18:35
- * desc: 通用请求处理
+ * 通用请求处理
+ * @author DJun
  */
 @RestController
 public class CommonController {

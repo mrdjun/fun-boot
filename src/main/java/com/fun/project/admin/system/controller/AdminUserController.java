@@ -7,6 +7,7 @@ import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotaion.Limit;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
+@Api("")
 public class AdminUserController {
 
     @Autowired
@@ -40,7 +42,7 @@ public class AdminUserController {
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
         }
-        return Constants.VIEW_PREFIX + "/login";
+        return Constants.view( "/login");
     }
 
 
@@ -63,7 +65,7 @@ public class AdminUserController {
 
     @GetMapping("/user")
     public ModelAndView userIndex() {
-        return new ModelAndView(Constants.VIEW_PREFIX + "system/user/user");
+        return new ModelAndView(Constants.view( "system/user/user"));
     }
 
     @GetMapping("/user/add")
