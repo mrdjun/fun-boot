@@ -1,20 +1,20 @@
 package com.fun.project.admin.system.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Api;
 
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.service.${classInfo.className}Service;
+import com.fun.project.admin.entity.${classInfo.className};
+import com.fun.common.pagehelper.CommonPage;
 
 import javax.annotation.Resource;
-import io.swagger.annotations.ApiOperation;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author u-fun
@@ -29,17 +29,18 @@ public class ${classInfo.className}Controller {
     private ${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 
 
-    @ApiOperation(" 查询${classInfo.className}列表")
+    @ApiOperation(value = "分页查询${classInfo.className}列表")
     @PostMapping("/select${classInfo.className}List")
     @ResponseBody
     public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) int pageNum,
                                         @RequestParam(value = "pageNum",defaultValue = "10",required = false)int pageSize){
-        return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first},pageNum,pageSize)));
+        List<${classInfo.className}> ${classInfo.className?uncap_first}s = ${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first},pageNum,pageSize);
+        return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}s));
     }
 
 
-    @ApiOperation("通过Id查询${classInfo.className}")
+    @ApiOperation(value = "通过Id查询${classInfo.className}")
     @Log("通过Id查询${classInfo.className}")
     @GetMapping("/select${classInfo.className}ById/${r"{"}${classInfo.conversionPrimaryKey}${r"}"}")
     @ResponseBody
@@ -47,7 +48,7 @@ public class ${classInfo.className}Controller {
         return CommonResult.success(${classInfo.className?uncap_first}Service.select${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
     }
 
-    @ApiOperation("新增${classInfo.className}")
+    @ApiOperation(value = "新增${classInfo.className}")
     @Log("新增${classInfo.className}")
     @PostMapping("/insert${classInfo.className}")
     @ResponseBody
@@ -56,7 +57,7 @@ public class ${classInfo.className}Controller {
     }
 
 
-    @ApiOperation("修改${classInfo.className}信息")
+    @ApiOperation(value = "修改${classInfo.className}信息")
     @Log("修改${classInfo.className}信息")
     @PostMapping("/update${classInfo.className}")
     @ResponseBody
@@ -65,7 +66,7 @@ public class ${classInfo.className}Controller {
     }
 
 
-    @ApiOperation("通过id删除${classInfo.className}")
+    @ApiOperation(value = "通过id删除${classInfo.className}")
     @Log("通过id删除${classInfo.className}")
     @PostMapping("/delete${classInfo.className}ById/${r"{"}${classInfo.conversionPrimaryKey}${r"}"}")
     @ResponseBody
@@ -73,7 +74,7 @@ public class ${classInfo.className}Controller {
         return CommonResult.success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
     }
 
-    @ApiOperation("通过id批量删除${classInfo.className}")
+    @ApiOperation(value = "通过id批量删除${classInfo.className}")
     @Log("通过id批量删除${classInfo.className}")
     @PostMapping("/deleteList")
     @ResponseBody

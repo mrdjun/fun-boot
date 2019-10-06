@@ -1,13 +1,18 @@
-package com.fun.project.admin.system.service;
+package com.fun.project.admin.system.service.impl;
+
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fun.common.utils.text.Convert;
+import com.fun.common.pagehelper.CommonPage;
+import com.fun.project.admin.system.mapper.${classInfo.className}Mapper;
+import com.fun.project.admin.system.service.${classInfo.className}Service;
+import com.fun.project.admin.system.entity.${classInfo.className};
+
 import java.util.List;
-import java.util.Map;
 
 /**
- * ${classInfo.classComment}
+ * ${classInfo.classComment} 业务实现类
  *
  * @author u-fun
  * @date ${.now?string('yyyy/MM/dd')}
@@ -19,21 +24,20 @@ public class ${classInfo.className}ServiceImpl implements ${classInfo.className}
 	private ${classInfo.className}Mapper ${classInfo.className?uncap_first}Mapper;
 
 	/**
+	 * 分页查询${classInfo.className}列表
+	 */
+	@Override
+	public List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},int pageNum,int pageSize){
+	return  PageHelper.startPage(pageNum,pageSize).doSelectPage(()->${classInfo.className?uncap_first}Mapper.select${classInfo.className}List(${classInfo.className?uncap_first}));
+	}
+
+	/**
 	 * 通过Id查询 ${classInfo.className}
 	 */
 	@Override
 	public ${classInfo.className} select${classInfo.className}ById(long ${classInfo.conversionPrimaryKey}) {
 		return ${classInfo.className?uncap_first}Mapper.select${classInfo.className}ById(${classInfo.conversionPrimaryKey});
 	}
-
-	/**
-	 * 查询${classInfo.className}列表
-	 */
-
-	@Override
-  	public List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},int pageNum,int pageSize){
-		return  PageHelper.startPage(pageNum,pageSize).doSelectPage(()->${classInfo.className?uncap_first}Mapper.select${classInfo.className}List(${classInfo.className?uncap_first}));
- 	}
 
 	/**
      * 新增${classInfo.className}

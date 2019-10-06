@@ -1,7 +1,6 @@
 package com.fun.project.admin.system.mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
+import com.fun.project.admin.entity.${classInfo.className};
 import java.util.List;
 
 /**

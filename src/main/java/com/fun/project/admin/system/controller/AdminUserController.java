@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.pageHelper.CommonPage;
+import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotaion.Limit;
