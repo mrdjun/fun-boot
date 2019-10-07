@@ -4,8 +4,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * created by DJun on 2019/9/14 15:20
- * desc: Ztree 树结构实体类
+ * Ztree 树结构实体类
+ * @author DJun
  */
 @Data
 public class Ztree implements Serializable {

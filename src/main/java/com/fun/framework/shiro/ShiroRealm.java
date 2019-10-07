@@ -1,8 +1,5 @@
 package com.fun.framework.shiro;
 
-import com.fun.common.exception.user.UserException;
-import com.fun.common.exception.user.UserNotExistsException;
-import com.fun.common.exception.user.UserPasswordNotMatchException;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.framework.shiro.helper.SysLoginService;
