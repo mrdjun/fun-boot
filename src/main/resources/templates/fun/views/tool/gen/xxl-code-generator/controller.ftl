@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Api("${classInfo.classComment}")
 @Controller
-@RequestMapping("/app/${classInfo.className?uncap_first}")
+@RequestMapping("/admin/${classInfo.className?uncap_first}")
 public class ${classInfo.className}Controller {
 
     @Autowired
