@@ -7,7 +7,7 @@
 <a href="https://github.com/mrdjun/fun-boot/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/github/license/java-aodeng/hope.svg?style=flat-square"/></a>
 </p>
 
-【正在维护，欢迎各位加入我们】
+【正在开发与维护，欢迎各位加入我们】
 # 简介
 > 一款现代化的脚手架项目。集成APP的api与后端api于一体:beers:<br>
 > 个人博客：https://blog.csdn.net/qq_41647999 <br>
@@ -42,11 +42,9 @@
 - 完善代码注释，让初次接触FunBoot的朋友更加易于学习（完）
 - 国庆期间停更三天（2019/10/1 - 3）
 - 定制代码生成器（细节完善:1、删除entity多余字段 2、需要把int与long字段映射为Integer与Long的问题），减少写重复代码，提高对业务的专注性（完）
-- 基于LayUI 开发<b style="color:yellow;">基础版</b>后台页面
+- 基于LayUI 开发基础版后台页面（后端菜单渲染,后端首页与其它系统页面）
 - 将基础版修改为Ajax加载HTML代码渲染页面
-- 优化后端页面UI
-- 后端菜单渲染
-- 后端首页与其它系统页面
+- 大力优化后端页面UI
 - JVM与服务器资源监控
 - 数据库账号密码加密
 
