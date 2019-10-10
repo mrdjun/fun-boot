@@ -18,10 +18,13 @@ spring:
   thymeleaf:
     cache: false
 
+  # 映射freemarker获取静态资源的路径
   mvc:
-    static-path-pattern: /static/**
+    static-path-pattern: /**
   resources:
     static-locations: classpath:/static/
+
+
   # 生成工具用的freemarker
   freemarker:
     # 模板加载路径

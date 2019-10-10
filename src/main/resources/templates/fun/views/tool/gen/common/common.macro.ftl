@@ -1,23 +1,23 @@
 <#macro commonStyle>
 
 <#-- favicon -->
-<link rel="icon" href="favicon.ico" />
+<link rel="icon" href="/fun/favicon.ico" />
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.5 -->
-<link rel="stylesheet" href="${request.contextPath}/static/gen/adminlte/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-<link rel="stylesheet" href="${request.contextPath}/static/gen/plugins/font-awesome-4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${request.contextPath}/gen/plugins/font-awesome-4.5.0/css/font-awesome.min.css">
 <!-- Ionicons -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"> -->
-<link rel="stylesheet" href="${request.contextPath}/static/gen/plugins/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="${request.contextPath}/gen/plugins/ionicons-2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="${request.contextPath}/static/gen/adminlte/dist/css/AdminLTE-local.min.css">
+<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/dist/css/AdminLTE-local.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet" href="${request.contextPath}/static/gen/adminlte/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/dist/css/skins/_all-skins.min.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,18 +33,18 @@
 <#macro commonScript>
 
 <!-- jQuery 2.1.4 -->
-<script src="${request.contextPath}/static/gen/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="${request.contextPath}/gen/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="${request.contextPath}/static/gen/adminlte/bootstrap/js/bootstrap.min.js"></script>
+<script src="${request.contextPath}/gen/adminlte/bootstrap/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="${request.contextPath}/static/gen/adminlte/plugins/fastclick/fastclick.min.js"></script>
+<script src="${request.contextPath}/gen/adminlte/plugins/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App -->
-<script src="${request.contextPath}/static/gen/adminlte/dist/js/app.min.js"></script>
+<script src="${request.contextPath}/gen/adminlte/dist/js/app.min.js"></script>
 <#-- jquery.slimscroll -->
-<script src="${request.contextPath}/static/gen/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="${request.contextPath}/gen/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <#-- layer -->
-<script src="${request.contextPath}/static/gen/plugins/layer/layer.js"></script>
-<script src="${request.contextPath}/static/gen/js/common.1.js"></script>
+<script src="${request.contextPath}/gen/plugins/layer/layer.js"></script>
+<script src="${request.contextPath}/gen/js/common.1.js"></script>
 
 </#macro>
 

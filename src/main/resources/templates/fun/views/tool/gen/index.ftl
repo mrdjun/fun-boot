@@ -6,8 +6,8 @@
 
     <#import "common/common.macro.ftl" as netCommon>
     <@netCommon.commonStyle />
-    <link rel="stylesheet" href="${request.contextPath}/static/gen/plugins/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="${request.contextPath}/static/gen/plugins/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="${request.contextPath}/gen/plugins/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="${request.contextPath}/gen/plugins/codemirror/addon/hint/show-hint.css">
 
 </head>
 <body class="hold-transition skin-blue layout-top-nav ">
@@ -30,7 +30,7 @@
                         <#-- 表结构 -->
                         <div class="box box-default">
                             <div class="box-header with-border">
-                                <h4 class="pull-left">表结构信息</h4>
+                                <h4 class="pull-left">表结构（DDL）信息</h4>
                                 <button type="button" class="btn btn-default btn-xs pull-right" id="codeGenerate">生成代码
                                 </button>
                             </div>
@@ -88,12 +88,12 @@ CREATE TABLE `ums_user` (
                                 </div>
                                 <div class="chart tab-pane active" id="mybatis">
                                     <div class="box-body">
-                                        Mybatis：<textarea id="mybatis_ide"></textarea>
+                                        MybatisXML：<textarea id="mybatis_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="model">
                                     <div class="box-body ">
-                                        Model：<textarea id="model_ide"></textarea>
+                                        Entity：<textarea id="model_ide"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -109,13 +109,13 @@ CREATE TABLE `ums_user` (
 </div>
 
 <@netCommon.commonScript />
-<script src="${request.contextPath}/static/gen/plugins/codemirror/lib/codemirror.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/addon/hint/show-hint.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/addon/hint/anyword-hint.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/addon/display/placeholder.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/mode/clike/clike.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/mode/sql/sql.js"></script>
-<script src="${request.contextPath}/static/gen/plugins/codemirror/mode/xml/xml.js"></script>
-<script src="${request.contextPath}/static/gen/js/index.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/lib/codemirror.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/hint/show-hint.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/hint/anyword-hint.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/display/placeholder.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/clike/clike.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/sql/sql.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/xml/xml.js"></script>
+<script src="${request.contextPath}/gen/js/index.js"></script>
 </body>
 </html>
