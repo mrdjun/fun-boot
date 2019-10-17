@@ -17,6 +17,7 @@
     <link rel="stylesheet" th:href="@{/fun/css/login.css(t=2)}" media="all">
     <link rel="stylesheet" th:href="@{/fun/css/fun.css(t=2)}" media="all">
     <script>if (window.top !== window.self) {window.top.location = window.location};</script>
+
 </head>
 <body>
 <div id="fun-login" lay-title="登录">
@@ -75,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="layui-form-item fun-tr">
-                                <a id="regist-href">注册账号</a>
+                                <a style="cursor: pointer" id="regist-href">注册账号</a>
                             </div>
                         </div>
                     </div>
@@ -102,6 +103,7 @@
                                     <input type="password" name="passwordB" lay-verify="required"
                                            placeholder="密码确认" autocomplete="off" class="layui-input">
                                 </div>
+
                                 <div class="layui-form-item">
                                     <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
                                             lay-filter="regist-submit" id="regist">
@@ -113,7 +115,7 @@
                             </div>
                         </div>
                         <div class="layui-form-item fun-tr">
-                            <a id="login-href">已有账号？马上登录</a>
+                            <a style="cursor: pointer" id="login-href">已有账号？马上登录</a>
                         </div>
                     </div>
                 </div>
@@ -126,75 +128,76 @@
 <script th:src="@{/layui/layui.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{/}]];
-    var captchaType = [[${captchaType}]];
-    layui.extend({
-        validate: '/fun/lay/modules/validate'
-    }).use(['form', 'layer'], function (form, layer) {
-        var $ = layui.jquery,
-            validate = layui.validate,
-            type = 'login',
-            $loginDiv = $('#fun-login').find('#login-div'),
-            $registDiv = $('#fun-login').find('#regist-div');
-        form.verify(validate);
-        form.render();
-        initCode();
+        var captchaType = [[${captchaType}]];
+        layui.extend({
+            validate: '/fun/lay/modules/validate'
+        }).use(['form', 'layer'], function (form, layer) {
+            var $ = layui.jquery,
+                validate = layui.validate,
+                type = 'login',
+                $view = $('#fun-login'),
+                $loginDiv = $view.find('#login-div'),
+                $registDiv = $view.find('#regist-div');
+            form.verify(validate);
+            form.render();
+            initCode();
 
-        //提交登录表单
-        form.on('submit(login-submit)', function (data) {
-            var loading = $(this).find('.layui-icon');
-            if (loading.is(":visible")) return;
-            loading.show();
+            //提交登录表单
+            form.on('submit(login-submit)', function (data) {
+                var loading = $(this).find('.layui-icon');
+                if (loading.is(":visible")) return;
+                loading.show();
 
-            $.post(ctx + 'admin/login', data.field, function (r) {
-                if (r.code === 200) {
-                    location.href = ctx + 'admin/index';
-                } else {
-                    layer.msg(r.message);
-                    loading.hide();
-                    initCode();
+                $.post(ctx + 'admin/login', data.field, function (r) {
+                    if (r.code === 200) {
+                        location.href = ctx + 'admin/index';
+                    } else {
+                        layer.msg(r.message);
+                        loading.hide();
+                        initCode();
+                    }
+                });
+                return false;
+            });
+
+
+            function initCode() {
+                $view.find('#codeimg').attr("src", ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random());
+            }
+
+            $view.find('#codeimg').on('click', function () {
+                initCode();
+            });
+
+            $view.find('#regist-href').on('click', function () {
+                resetForm();
+                type = 'regist';
+                $loginDiv.hide();
+                $registDiv.show();
+            });
+
+            $view.find('#login-href').on('click', function () {
+                resetForm();
+                type = 'login';
+                $loginDiv.show();
+                $registDiv.hide();
+            });
+
+            function resetForm() {
+                $loginDiv.find('input[name="loginName"]').val('')
+                    .end().find('input[name="password"]').val('')
+                    .end().find('input[name="validateCode"]').val('');
+            }
+
+            $(document).on('keydown', function (e) {
+                if (e.keyCode === 13) {
+                    if (type === 'login')
+                        $view.find('#login').trigger("click");
+                    if (type === 'regist')
+                        $view.find('#regist').trigger("click");
                 }
             });
-            return false;
         });
-
-
-        function initCode() {
-            $('#fun-login').find('#codeimg').attr("src", ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random());
-        }
-
-        $('#fun-login').find('#codeimg').on('click', function () {
-            initCode();
-        });
-
-        $('#fun-login').find('#regist-href').on('click', function () {
-            resetForm();
-            type = 'regist';
-            $loginDiv.hide();
-            $registDiv.show();
-        });
-
-        $('#fun-login').find('#login-href').on('click', function () {
-            resetForm();
-            type = 'login';
-            $loginDiv.show();
-            $registDiv.hide();
-        });
-
-        function resetForm() {
-            $loginDiv.find('input[name="loginName"]').val('')
-                .end().find('input[name="password"]').val('')
-                .end().find('input[name="validateCode"]').val('');
-        }
-
-        $(document).on('keydown', function (e) {
-            if (e.keyCode === 13) {
-                if (type === 'login')
-                    $('#fun-login').find('#login').trigger("click");
-                if (type === 'regist')
-                    $('#fun-login').find('#regist').trigger("click");
-            }
-        });
-    });
 
 </script>
 
