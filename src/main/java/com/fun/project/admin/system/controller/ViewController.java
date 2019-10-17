@@ -44,16 +44,10 @@ public class ViewController {
     }
 
     /**
-     * 定向到登录页
-     */
-    @GetMapping("/login")
-    public String redirectLogin() {
-        return "redirect:/admin/login";
-    }
-
-    /**
      * 系统首页
      * 在用户访问首页的时候，就把该用户的权限、角色等传给前端
+     * 涉及敏感数据时，如密码可将密码属性用@JSONField(serial=false)反序列化。
+     * 此外，不暴露出来也行，管理端页面直接使用集合即可。
      */
     @GetMapping("/admin/index")
     public ModelAndView index(ModelMap mmap) {
@@ -67,7 +61,23 @@ public class ViewController {
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
         mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
 
-        return new ModelAndView( Constants.view("index"));
+        return new ModelAndView("template");
+    }
+
+    /**
+     * 定向到登录页
+     */
+    @GetMapping("/login")
+    public String redirectLogin() {
+        return "redirect:/admin/login";
+    }
+
+    /**
+     * layout 页面
+     */
+    @GetMapping("/admin/layout")
+    public String layout() {
+        return Constants.view("layout");
     }
 
     /**
@@ -104,5 +114,6 @@ public class ViewController {
     public ModelAndView error500() {
         return new ModelAndView("/error/500");
     }
+
 
 }

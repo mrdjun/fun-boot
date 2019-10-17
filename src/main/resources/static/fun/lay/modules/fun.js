@@ -28,8 +28,20 @@ layui.extend({
         this.routeLeaveFunc = callback
     };
 
+    self.render = function (elem) {
+        // if (typeof elem == 'string') elem = $('#' + elem);
+        // var action = elem.get(0).tagName === 'SCRIPT' ? 'next' : 'find';
+        // elem[action]('[is-template]').remove();
+        // view.parse(elem)
+    };
+
+    // layer.alert('页面初始化')
     self.initPage = function (initCallback) {
-        layer.alert('页面初始化')
+        //加载样式文件
+        layui.each(layui.conf.style, function (index, url) {
+            layui.link(url + '?v=' + conf.v)
+        });
+        self.initView(self.route);
     };
 
     // 初始化视图区域
@@ -69,12 +81,62 @@ layui.extend({
         }
     };
 
+    //根据当前加载的 URL高亮左侧导航
+    self.sidebarFocus = function (url) {
+        url = url || self.route.href;
+        var elem = $('#app-sidebar')
+            .find('[lay-href="' + url + '"]')
+            .eq(0);
+        // $bread.empty();
+        if (elem.length > 0) {
+            // 生成面包屑
+            // var breadHtml = '';
+            // elem.parents('dl').prev('a').each(function (k, v) {
+            //     var $this = $(this);
+            //     breadHtml += '<a>' + $this[0].innerText + ' / </a>';
+            // });
+            // breadHtml += '<a>' + elem[0].innerText+ ' </a>';
+            // $bread.append(breadHtml);
 
-    // 打印错误信息
-    self.log = function (msg, type) {
-        if (conf.debug === false) return;
-        if (type === undefined) type = 'error';
-        console.error(msg)
+            elem.parents('.layui-nav-item').addClass('layui-nav-itemed')
+                .siblings().removeClass('layui-nav-itemed');
+            elem.click();
+        }
+    };
+    self.flexible = function (open) {
+        if (open === true) {
+            view.container.removeClass(self.shrinkCls)
+        } else {
+            view.container.addClass(self.shrinkCls)
+        }
+    };
+    self.on = function (name, callback) {
+        return layui.onevent(conf.eventName, 'system(' + name + ')', callback)
+    };
+    self.event = function (name, params) {
+        layui.event(conf.eventName, 'system(' + name + ')', params)
+    };
+    self.csshref = function (name) {
+        name = name === undefined ? self.route.path.join('/') : name;
+        return conf.css + 'views/' + name + '.css' + '?v=' + conf.v
+    };
+    self.prev = function (n) {
+        if (n === undefined) n = -1;
+        window.history.go(n)
+    };
+    self.navigate = function (url) {
+        if (url === conf.entry) url = '/';
+        window.location.hash = url
+    };
+    self.data = function (settings, storage) {
+        if (settings === undefined) return layui.data(conf.tableName);
+        if ($.isArray(settings)) {
+            layui.each(settings, function (i) {
+                layui.data(conf.tableName, settings[i], storage)
+            })
+        } else {
+            layui.data(conf.tableName, settings, storage)
+        }
     };
 
     // ajax get请求
@@ -343,75 +405,6 @@ layui.extend({
         });
     };
 
-    self.loadHtml = function (url, callback) {
-        url = url || conf.entry;
-        loadBar.start();
-
-        var queryIndex = url.indexOf('?');
-        if (queryIndex !== -1) url = url.slice(0, queryIndex);
-
-        $.ajax({
-            url:
-                (url.indexOf(conf.base) === 0 ? '' : conf.views) +
-                url +
-                conf.engine +
-                '?v=' +
-                conf.v,
-            type: 'get',
-            data: {
-                'invalid_ie_cache': new Date().getTime()
-            },
-            dataType: 'html',
-            success: function (r) {
-                var result;
-                try {
-                    result = JSON.parse(r);
-                } catch (e) {
-                    result = {'code': 'err'};
-                }
-                if (result.code === 401) {
-                    self.notify('登录失效', '登录已失效，请重新登录', function () {
-                        window.location.reload();
-                        window.location.hash = '';
-                    });
-                    loadBar.finish();
-                    return;
-                }
-                if (result.code === 403) {
-                    self.tab.change('/403');
-                    loadBar.finish();
-                    return;
-                }
-                if (result.code === 404) {
-                    self.tab.change('/404');
-                    loadBar.finish();
-                    return;
-                }
-                if (result.code === 500) {
-                    self.tab.change('/500');
-                    loadBar.finish();
-                    return;
-                }
-                callback({html: r, url: url});
-                loadBar.finish()
-            },
-            error: function (res) {
-                if (res.code === 404) {
-                    self.tab.change('/404');
-                }
-                if (res.code === 403) {
-                    self.tab.change('/403');
-                }
-                if (res.code === 500) {
-                    self.tab.change('/500');
-                }
-                self.log(
-                    '请求视图文件异常\n文件路径：' + url + '\n状态：' + res.code
-                );
-                loadBar.error();
-            }
-        })
-    };
 
     // url 正则
     self.isUrl = function (str) {
