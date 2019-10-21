@@ -37,7 +37,6 @@ public class Constants {
      */
     public static final String VIEW_PREFIX = "fun/views/";
 
-
     public static String view(String view) {
         return VIEW_PREFIX + view;
     }

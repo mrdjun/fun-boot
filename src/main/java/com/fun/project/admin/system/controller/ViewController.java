@@ -17,7 +17,7 @@ import static com.fun.framework.shiro.helper.ShiroUtils.getSysUser;
 
 /**
  *
- * @author U-Fun
+ * @author MrDJun
  * @date 2019/9/29
  */
 @Controller
@@ -61,7 +61,7 @@ public class ViewController {
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
         mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
 
-        return new ModelAndView("template");
+        return new ModelAndView(Constants.view("layout"));
     }
 
     /**
@@ -70,14 +70,6 @@ public class ViewController {
     @GetMapping("/login")
     public String redirectLogin() {
         return "redirect:/admin/login";
-    }
-
-    /**
-     * layout 页面
-     */
-    @GetMapping("/admin/layout")
-    public String layout() {
-        return Constants.view("layout");
     }
 
     /**
@@ -115,5 +107,8 @@ public class ViewController {
         return new ModelAndView("/error/500");
     }
 
-
+    @GetMapping("/test")
+    public ModelAndView testLayout(){
+        return new ModelAndView(Constants.view("index"));
+    }
 }

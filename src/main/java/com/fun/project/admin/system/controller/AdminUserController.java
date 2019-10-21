@@ -1,6 +1,10 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.exception.user.CaptchaException;
+import com.fun.common.exception.user.UserBlockedException;
+import com.fun.common.exception.user.UserNotExistsException;
+import com.fun.common.exception.user.UserPasswordNotMatchException;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
@@ -36,13 +40,13 @@ public class AdminUserController {
     private IAdminUserService adminUserService;
 
 
-    @ApiOperation(value = "异步登录",notes = "如果是Ajax请求，返回Json字符串")
+    @ApiOperation(value = "异步登录", notes = "如果是Ajax请求，返回Json字符串")
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response) {
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
         }
-        return Constants.view( "/login");
+        return Constants.view("/login");
     }
 
 
@@ -56,16 +60,19 @@ public class AdminUserController {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-        } catch (AuthenticationException e) {
+        } catch (UserNotExistsException | UserBlockedException | UserPasswordNotMatchException e ) {
             return CommonResult.failed("用户名或密码错误");
+        } catch (CaptchaException ca) {
+            return CommonResult.failed("验证码错误");
         }
+
         return CommonResult.success(Constants.LOGIN_SUCCESS);
     }
 
 
     @GetMapping("/user")
     public ModelAndView userIndex() {
-        return new ModelAndView(Constants.view( "system/user/user"));
+        return new ModelAndView(Constants.view("system/user/user"));
     }
 
     @GetMapping("/user/add")
@@ -91,32 +98,32 @@ public class AdminUserController {
         return CommonResult.success(CommonPage.restPage(list));
     }
 
-    @ApiOperation(value = "异步验证用户名是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/user/checkLoginNameUnique")
+    @ApiOperation(value = "异步验证用户名是否唯一", notes = "返回0，则不存在")
+    @PostMapping("/user/checkLoginNameUnique/{loginName}")
     @ResponseBody
-    public CommonResult checkLoginNameUniqueAjax(@Validated AdminUser user) {
-        if (adminUserService.checkLoginNameUnique(user.getLoginName()) < 0) {
-            return CommonResult.failed("失败，账号'" + user.getLoginName() + "' 已存在");
+    public CommonResult checkLoginNameUniqueAjax(@PathVariable("loginName") String loginName) {
+        if (adminUserService.checkLoginNameUnique(loginName) < 0) {
+            return CommonResult.failed("失败，账号'" + loginName + "' 已存在");
         }
         return CommonResult.success(Constants.SUCCESS);
     }
 
-    @ApiOperation(value = "异步验证邮箱是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/user/checkEmailUnique")
+    @ApiOperation(value = "异步验证邮箱是否唯一", notes = "返回0，则不存在")
+    @PostMapping("/user/checkEmailUnique/{email}")
     @ResponseBody
-    public CommonResult checkEmailUniqueAjax(@Validated AdminUser user) {
-        if (adminUserService.checkEmailUnique(user.getEmail()) < 0) {
-            return CommonResult.failed("失败，邮箱'" + user.getEmail() + "' 已存在");
+    public CommonResult checkEmailUniqueAjax(@PathVariable("email") String email) {
+        if (adminUserService.checkEmailUnique(email) < 0) {
+            return CommonResult.failed("失败，邮箱'" + email + "' 已存在");
         }
         return CommonResult.success(Constants.SUCCESS);
     }
 
-    @ApiOperation(value = "异步验证手机号码是否唯一",notes = "返回0，则不存在")
-    @PostMapping("/user/checkPhoneUnique")
+    @ApiOperation(value = "异步验证手机号码是否唯一", notes = "返回0，则不存在")
+    @PostMapping("/user/checkPhoneUnique/{telephone}")
     @ResponseBody
-    public CommonResult checkPhoneUniqueAjax(@Validated AdminUser user) {
-        if (adminUserService.checkPhoneUnique(user.getTelephone()) < 0) {
-            return CommonResult.failed("失败，手机号码'" + user.getTelephone() + "' 已存在");
+    public CommonResult checkPhoneUniqueAjax(@PathVariable("telephone") String telephone) {
+        if (adminUserService.checkPhoneUnique(telephone) < 0) {
+            return CommonResult.failed("失败，手机号码'" + telephone + "' 已存在");
         }
         return CommonResult.success(Constants.SUCCESS);
     }

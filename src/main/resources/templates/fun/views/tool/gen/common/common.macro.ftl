@@ -7,17 +7,17 @@
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.5 -->
-<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${request.contextPath}/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <!-- Font Awesome -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"> -->
-<link rel="stylesheet" href="${request.contextPath}/gen/plugins/font-awesome-4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${request.contextPath}/fun/font/font-awesome-4.7.0/css/font-awesome.min.css">
 <!-- Ionicons -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"> -->
-<link rel="stylesheet" href="${request.contextPath}/gen/plugins/ionicons-2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="${request.contextPath}/adminlte/bower_components/Ionicons/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/dist/css/AdminLTE-local.min.css">
+<link rel="stylesheet" href="${request.contextPath}/adminlte/dist/css/AdminLTE.min.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-<link rel="stylesheet" href="${request.contextPath}/gen/adminlte/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="${request.contextPath}/adminlte/dist/css/skins/_all-skins.min.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,18 +33,18 @@
 <#macro commonScript>
 
 <!-- jQuery 2.1.4 -->
-<script src="${request.contextPath}/gen/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="${request.contextPath}/adminlte/bower_components/jquery/dist/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="${request.contextPath}/gen/adminlte/bootstrap/js/bootstrap.min.js"></script>
+<script src="${request.contextPath}/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="${request.contextPath}/gen/adminlte/plugins/fastclick/fastclick.min.js"></script>
+<script src="${request.contextPath}/adminlte/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="${request.contextPath}/gen/adminlte/dist/js/app.min.js"></script>
+<script src="${request.contextPath}/adminlte/dist/js/adminlte.min.js"></script>
 <#-- jquery.slimscroll -->
-<script src="${request.contextPath}/gen/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="${request.contextPath}/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <#-- layer -->
-<script src="${request.contextPath}/gen/plugins/layer/layer.js"></script>
-<script src="${request.contextPath}/gen/js/common.1.js"></script>
+<script src="${request.contextPath}/adminlte/plugins/layer/layer.js"></script>
+<script src="${request.contextPath}/fun/js/gen/common.1.js"></script>
 
 </#macro>
 

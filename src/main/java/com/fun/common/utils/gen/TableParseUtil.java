@@ -170,7 +170,6 @@ public class TableParseUtil {
         int index = 0;
         if (tableName.contains("_")) {
             String[] strArr = tableName.split("_");
-            System.out.println(strArr.length);
             for (int i = 1; i < strArr.length; ++i) {
                 index++;
                 if (index == 1) {
