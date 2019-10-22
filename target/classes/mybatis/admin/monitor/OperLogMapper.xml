@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.admin.monitor.mapper.OperLogMapper">
+
+    <resultMap type="OperLog"           id="OperLogResult">
+        <result property="operId"       column="oper_id"/>
+        <result property="operName"     column="oper_name"/>
+        <result property="operIp"       column="oper_ip"/>
+        <result property="operLocation" column="oper_location"/>
+        <result property="errorMsg"     column="error_msg"/>
+        <result property="loginName"    column="login_name"/>
+        <result property="time"         column="time"/>
+        <result property="method"       column="method"/>
+        <result property="operParam"    column="oper_param"/>
+        <result property="createTime"   column="create_time"/>
+        <result property="status"       column="status"/>
+    </resultMap>
+
+    <sql id="selectOperLogVo">
+		select
+		 oper_id, oper_name,oper_ip,oper_location, error_msg,
+		 login_name,`time`,method,oper_param,create_time,status
+		from sys_oper_log
+    </sql>
+
+    <insert id="insertOperlog" parameterType="OperLog">
+		insert into sys_oper_log(
+		 oper_name,oper_ip,oper_location,error_msg,
+		 login_name,`time`,method,oper_param,create_time
+		)
+        values (
+         #{operName},#{operIp},#{operLocation},#{errorMsg},
+         #{loginName},#{time},#{method},#{operParam},#{createTime}
+        )
+	</insert>
+
+    <select id="selectOperLogList" parameterType="OperLog" resultMap="OperLogResult">
+        <include refid="selectOperLogVo"/>
+        <where>
+            <if test="operName != null and operName != ''">
+                AND oper_name like concat('%', #{operName}, '%')
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND login_name like concat('%', #{loginName}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <!--<if test="params.beginTime != null and params.beginTime != ''">&lt;!&ndash; 开始时间检索 &ndash;&gt;-->
+                <!--and create_time &gt;= #{params.beginTime}-->
+            <!--</if>-->
+            <!--<if test="params.endTime != null and params.endTime != ''">&lt;!&ndash; 结束时间检索 &ndash;&gt;-->
+                <!--and create_time &lt;= #{params.beginTime}-->
+            <!--</if>-->
+        </where>
+    </select>
+
+    <delete id="deleteOperLogByIds" parameterType="String">
+        delete from sys_oper_log where oper_id in
+        <foreach collection="array" item="operId" open="(" separator="," close=")">
+            #{operId}
+        </foreach>
+    </delete>
+
+    <select id="selectOperLogById" parameterType="Long" resultMap="OperLogResult">
+        <include refid="selectOperLogVo"/>
+        where oper_id = #{operId}
+    </select>
+
+    <update id="cleanOperLog">
+        truncate table sys_oper_log
+    </update>
+
+</mapper> 
