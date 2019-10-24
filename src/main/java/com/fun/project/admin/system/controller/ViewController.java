@@ -44,7 +44,7 @@ public class ViewController {
     }
 
     /**
-     * layout页面
+     * 首页 layout 页面
      * 在用户访问首页的时候，就把该用户的权限、角色等传给前端
      * 涉及敏感数据时，如密码可将密码属性用@JSONField(serial=false)反序列化。
      * 此外，不暴露出来也行，管理端页面直接使用集合即可。

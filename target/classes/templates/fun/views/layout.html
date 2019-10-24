@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini gray-bg">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -103,18 +103,18 @@
 
 
     <!-- Start 左侧菜单 -->
-    <aside class="main-sidebar" id="side-menu">
+    <aside class="main-sidebar">
 
         <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
+        <section class="sidebar" id="side-menu">
 
-            <!-- 用户头像 (optional) -->
+            <!-- 左侧用户头像 (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
                     <img th:src="@{/fun/images/avatar/default.gif}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>admin</p>
+                    <p>[[${user.loginName}]]</p>
                     <!-- Status -->
                     <a href="#"><i class="fa fa-circle text-success"></i>在线</a>
                     <a th:href="@{logout}" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
@@ -126,47 +126,50 @@
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="菜单关键字">
                     <span class="input-group-btn">
-                      <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                      <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                              class="fa fa-search"></i></button>
                     </span>
                 </div>
             </form>
             <!-- /.search form -->
 
-            <ul class="sidebar-menu" data-widget="tree">
-                <!-- Optionally, you can add icons to the links -->
-                <li class="treeview active">
-                    <a href="#"><i class="fa fa-gear"></i> <span>系统管理</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>用户管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>角色管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>菜单管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>部门管理</a></li>
-                    </ul>
-                </li>
+            <!-- 左侧菜单项 -->
+            <nav class="navbar-default nav"  role="navigation">
 
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-heartbeat"></i> <span>系统监控</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>登录日志</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>操作日志</a></li>
-                    </ul>
-                </li>
-                <li><a th:href="@{/tool/gen}"><i class="fa fa-flash"></i> <span>代码生成工具</span></a></li>
-            </ul>
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="treeview" th:each="menu : ${menus}">
+                        <a th:href="@{${menu.url == ''} ? |#| : ${menu.url}}" th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}">
+                            <i th:class="${menu.icon}"></i>
+                            <span class="nav-label" th:utext="${menu.menuName}">一级菜单</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+
+                        <!-- 二级菜单 -->
+                        <ul class="treeview-menu nav nav-second-level">
+                            <li th:each="cmenu : ${menu.children}">
+                                <a th:if="${#lists.isEmpty(cmenu.children)}" th:class="${cmenu.target == ''} ? |menuItem| : ${cmenu.target}" th:utext="${cmenu.menuName}" th:href="@{${cmenu.url}}">二级菜单</a>
+                                <a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span class="fa arrow"></span></a>
+
+                                <ul th:if="${not #lists.isEmpty(cmenu.children)}" class="treeview-menu">
+                                    <li th:each="emenu : ${cmenu.children}">
+                                        <a th:class="${emenu.target == ''} ? |menuItem| : ${emenu.target}"
+                                           th:text="${emenu.menuName}" th:href="@{${emenu.url}}">三级菜单</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </section>
         <!-- /.左侧菜单 -->
     </aside>
     <!-- !END  左侧菜单 -->
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- 中心内容区域 -->
     <div class="content-wrapper">
         <!-- 面包屑 -->
         <section class="content-header">
@@ -182,20 +185,19 @@
                 <button class="roll-nav roll-right tabRight">
                     <i class="fa fa-forward"></i>
                 </button>
-                <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
+                <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i>刷新</a>
             </div>
         </section>
 
-        <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
+        <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i></a>
 
-        <!-- Main content -->
+        <!-- Iframe  -->
         <div class="row mainContent" id="content-main">
             <iframe class="fun_iframe" width="100%" height="100%" name="iframe0" data-id="/admin/system/main"
-                    th:src="@{/admin/system/main}" scrolling="no" frameborder="0"  id="frame_content"></iframe>
+                    th:src="@{/admin/system/main}" scrolling="no" frameborder="0" id="frame_content"></iframe>
         </div>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.中心内容区域-->
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -290,9 +292,10 @@
 <script th:src="@{/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 <script th:src="@{/adminlte/dist/js/adminlte.min.js}"></script>
 <script th:src="@{/fun/lib/jquery.contextMenu.min.js}"></script>
-<script th:src="@{/adminlte/plugins/metisMenu/jquery.metisMenu.js}"></script>
 <script th:src="@{/adminlte/plugins/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/adminlte/plugins/metisMenu/jquery.metisMenu.js}"></script>
 <script th:src="@{/adminlte/plugins/layer/layer.js}"></script>
+<script th:src="@{/adminlte/plugins/slimScroll/jquery.slimscroll.min.js}"></script>
 <script th:src="@{/adminlte/plugins/fullscreen/jquery.fullscreen.js}"></script>
 <script th:src="@{/fun/js/fun-ui.js}"></script>
 <script th:src="@{/fun/js/index.js}"></script>
