@@ -32,7 +32,7 @@ public class FunBootConfig {
     /**  上传路径 */
     private static String profile;
 
-    /**  获取地址开关 */
+    /**  获取 ip的地区地址开关 */
     private static boolean addressEnabled;
 
     /** 日志开关 */

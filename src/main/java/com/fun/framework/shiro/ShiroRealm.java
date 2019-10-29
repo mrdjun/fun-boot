@@ -1,5 +1,6 @@
 package com.fun.framework.shiro;
 
+import com.fun.common.exception.user.*;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.framework.shiro.helper.SysLoginService;
@@ -21,6 +22,7 @@ import java.util.Set;
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
  * 处理登录、权限
+ *
  * @author DJun
  */
 @Component
@@ -84,15 +86,26 @@ public class ShiroRealm extends AuthorizingRealm {
             password = new String(upToken.getPassword());
         }
         AdminUser user = null;
+
         try {
             user = loginService.login(username, password);
+        } catch (CaptchaException e) {
+            throw new AuthenticationException(e.getMessage(), e);
+        } catch (UserNotExistsException e) {
+            throw new UnknownAccountException(e.getMessage(), e);
+        } catch (UserPasswordNotMatchException e) {
+            throw new IncorrectCredentialsException(e.getMessage(), e);
+        } catch (UserPasswordRetryLimitExceedException e) {
+            throw new ExcessiveAttemptsException(e.getMessage(), e);
+        } catch (UserBlockedException e) {
+            throw new LockedAccountException(e.getMessage(), e);
+        } catch (RoleBlockedException e) {
+            throw new LockedAccountException(e.getMessage(), e);
         } catch (Exception e) {
-            throw e;
+            log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
+            throw new AuthenticationException(e.getMessage(), e);
         }
 
-        if (StringUtils.isNull(user)) {
-            return null;
-        }
         return new SimpleAuthenticationInfo(user, password, getName());
     }
 

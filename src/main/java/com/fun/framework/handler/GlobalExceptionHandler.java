@@ -3,6 +3,8 @@ package com.fun.framework.handler;
 import com.fun.common.exception.file.FileDownloadException;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.exception.LimitAccessException;
+import com.fun.common.exception.user.CaptchaException;
+import com.fun.common.exception.user.UserPasswordRetryLimitExceedException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -31,15 +33,18 @@ import java.util.Set;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
+    /**
+     * 系统异常
+     */
     @ExceptionHandler(value = Exception.class)
     public FunBootResponse handleException(Exception e) {
         log.error("系统内部异常，异常信息", e);
-        return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("系统内部异常");
+        return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("服务器错误，请联系管理员");
     }
 
     @ExceptionHandler(value = FunBootException.class)
     public FunBootResponse handleFunBootException(FunBootException e) {
-        log.error("系统错误", e);
+        log.error("系统异常", e);
         return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
     }
 
@@ -102,4 +107,15 @@ public class GlobalExceptionHandler {
     public void handleFileDownloadException(FileDownloadException e) {
         log.error("FileDownloadException", e);
     }
+
+    /**
+     * 密码错误次数过多
+     */
+    @ExceptionHandler(value = UserPasswordRetryLimitExceedException.class)
+    public FunBootResponse handleUserPasswordRetryLimitExceedException(UserPasswordRetryLimitExceedException e) {
+        log.error("密码错误次数过多，锁定10分钟", e);
+        return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
+    }
+
+
 }

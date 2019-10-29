@@ -1,13 +1,11 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.exception.user.CaptchaException;
-import com.fun.common.exception.user.UserBlockedException;
-import com.fun.common.exception.user.UserNotExistsException;
-import com.fun.common.exception.user.UserPasswordNotMatchException;
+import com.fun.common.exception.user.*;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
+import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotaion.Limit;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
@@ -39,7 +37,6 @@ public class AdminUserController {
     @Autowired
     private IAdminUserService adminUserService;
 
-
     @ApiOperation(value = "异步登录", notes = "如果是Ajax请求，返回Json字符串")
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response) {
@@ -60,10 +57,12 @@ public class AdminUserController {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-        } catch (UserNotExistsException | UserBlockedException | UserPasswordNotMatchException e ) {
-            return CommonResult.failed("用户名或密码错误");
-        } catch (CaptchaException ca) {
-            return CommonResult.failed("验证码错误");
+        } catch (AuthenticationException e ) {
+            String msg = "账号或密码错误";
+            if (StringUtils.isNotEmpty(e.getMessage())){
+                msg = e.getMessage();
+            }
+            return CommonResult.failed(msg);
         }
 
         return CommonResult.success(Constants.LOGIN_SUCCESS);

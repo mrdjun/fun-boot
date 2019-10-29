@@ -1,12 +1,14 @@
 package com.fun.common.constant;
 
+
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * 通用常量信息
  *
  * @author DJun
  */
 public class Constants {
-
     /**
      * 通用成功标识
      */
@@ -40,4 +42,9 @@ public class Constants {
     public static String view(String view) {
         return VIEW_PREFIX + view;
     }
+
+    /**
+     * 获取ip地区地址开关
+     */
+    public static final boolean ADDRESS_ENABLED = true;
 }

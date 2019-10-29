@@ -80,7 +80,7 @@ public class LimitAspect {
         if (count != null && count.intValue() <= limitCount) {
             return point.proceed();
         } else {
-            CommonResult commonResult = CommonResult.failed("错误次数过多，请稍后重试");
+            CommonResult commonResult = CommonResult.failed("系统繁忙，请稍后后重试");
             ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
 //            throw new LimitAccessException("接口流量超出了限制");
         }

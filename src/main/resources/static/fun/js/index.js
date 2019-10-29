@@ -1,6 +1,7 @@
 $(function () {
     // MetsiMenu
     $('#side-menu').metisMenu();
+
     initIframe();
     // 回车键进入或退出全屏
     $(window).keydown(function (event) {
