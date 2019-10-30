@@ -34,7 +34,7 @@ public class ${classInfo.className}Controller {
     @ResponseBody
     public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) int pageNum,
-                                        @RequestParam(value = "pageNum",defaultValue = "10",required = false)int pageSize){
+                                        @RequestParam(value = "pageSize",defaultValue = "10",required = false)int pageSize){
         List<${classInfo.className}> ${classInfo.className?uncap_first}s = ${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first},pageNum,pageSize);
         return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}s));
     }
