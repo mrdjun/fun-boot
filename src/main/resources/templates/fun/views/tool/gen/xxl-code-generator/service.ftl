@@ -9,7 +9,7 @@ import java.util.List;
 * @author u-fun
 * @date ${.now?string('yyyy/MM/dd')}
 */
-public interface ${classInfo.className}Service {
+public interface I${classInfo.className}Service {
 
     /**
     * 查询${classInfo.className}列表

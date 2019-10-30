@@ -1,6 +1,6 @@
 package com.fun.project.admin.system.mapper;
 
-import com.fun.project.admin.entity.${classInfo.className};
+import com.fun.project.admin.system.entity.${classInfo.className};
 import java.util.List;
 
 /**

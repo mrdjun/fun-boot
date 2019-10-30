@@ -3,17 +3,17 @@ package com.fun.project.admin.system.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
-import com.fun.project.admin.service.${classInfo.className}Service;
-import com.fun.project.admin.entity.${classInfo.className};
+import com.fun.project.admin.system.service.I${classInfo.className}Service;
+import com.fun.project.admin.system.entity.${classInfo.className};
 import com.fun.common.pagehelper.CommonPage;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,11 +22,11 @@ import java.util.List;
  */
 @Api("${classInfo.classComment}")
 @Controller
-@RequestMapping("/admin/${classInfo.className?uncap_first}")
+@RequestMapping("/admin/system/${classInfo.className?uncap_first}")
 public class ${classInfo.className}Controller {
 
     @Autowired
-    private ${classInfo.className}Service ${classInfo.className?uncap_first}Service;
+    private I${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 
 
     @ApiOperation(value = "分页查询${classInfo.className}列表")

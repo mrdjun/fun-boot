@@ -1,12 +1,12 @@
 package com.fun.project.admin.system.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fun.common.utils.text.Convert;
-import com.fun.common.pagehelper.CommonPage;
 import com.fun.project.admin.system.mapper.${classInfo.className}Mapper;
-import com.fun.project.admin.system.service.${classInfo.className}Service;
+import com.fun.project.admin.system.service.I${classInfo.className}Service;
 import com.fun.project.admin.system.entity.${classInfo.className};
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * @date ${.now?string('yyyy/MM/dd')}
  */
 @Service
-public class ${classInfo.className}ServiceImpl implements ${classInfo.className}Service {
+public class ${classInfo.className}ServiceImpl implements I${classInfo.className}Service {
 
 	@Autowired
 	private ${classInfo.className}Mapper ${classInfo.className?uncap_first}Mapper;
