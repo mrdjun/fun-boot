@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.admin.system.mapper.DictDataMapper">
+
+    <resultMap id="DictDataResult" type="DictData" >
+        <result column="dict_code" property="dictCode" />
+        <result column="dict_sort" property="dictSort" />
+        <result column="dict_label" property="dictLabel" />
+        <result column="dict_value" property="dictValue" />
+        <result column="dict_type" property="dictType" />
+        <result column="css_class" property="cssClass" />
+        <result column="list_class" property="listClass" />
+        <result column="is_default" property="isDefault" />
+        <result column="status" property="status" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <sql id="DictDataResultVo">
+        select
+        dict_code,dict_sort,dict_label,dict_value,dict_type,css_class,list_class,is_default,status,create_by,create_time,update_by,update_time,remark
+         from sys_dict_data
+    </sql>
+
+    <select id="selectDictDataById" parameterType="Long" resultMap="DictDataResult">
+        <include refid="DictDataResultVo" />
+        WHERE dict_code = #{dictCode}
+    </select>
+
+    <select id="selectDictDataList" parameterType="DictData" resultMap="DictDataResult">
+        <include refid="DictDataResultVo"/>
+        <where>
+            <if test="dictCode != null and dictCode != 0">
+                and dict_code = #{dictCode}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertDictData" parameterType="DictData" useGeneratedKeys="true">
+        INSERT INTO sys_dict_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dictCode != null  and dictCode != ''">dict_code, </if>
+            <if test="dictSort != null  and dictSort != ''">dict_sort, </if>
+            <if test="dictLabel != null  and dictLabel != ''">dict_label, </if>
+            <if test="dictValue != null  and dictValue != ''">dict_value, </if>
+            <if test="dictType != null  and dictType != ''">dict_type, </if>
+            <if test="cssClass != null  and cssClass != ''">css_class, </if>
+            <if test="listClass != null  and listClass != ''">list_class, </if>
+            <if test="isDefault != null  and isDefault != ''">is_default, </if>
+            <if test="status != null  and status != ''">status, </if>
+            <if test="createBy != null  and createBy != ''">create_by, </if>
+            <if test="createTime != null  and createTime != ''">create_time, </if>
+            <if test="updateBy != null  and updateBy != ''">update_by, </if>
+            <if test="updateTime != null  and updateTime != ''">update_time, </if>
+            <if test="remark != null  and remark != ''">remark </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dictCode != null  and dictCode != ''">#{dictCode},</if>
+            <if test="dictSort != null  and dictSort != ''">#{dictSort},</if>
+            <if test="dictLabel != null  and dictLabel != ''">#{dictLabel},</if>
+            <if test="dictValue != null  and dictValue != ''">#{dictValue},</if>
+            <if test="dictType != null  and dictType != ''">#{dictType},</if>
+            <if test="cssClass != null  and cssClass != ''">#{cssClass},</if>
+            <if test="listClass != null  and listClass != ''">#{listClass},</if>
+            <if test="isDefault != null  and isDefault != ''">#{isDefault},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null  and createTime != ''">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null  and updateTime != ''">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark}</if>
+        </trim>
+    </insert>
+
+    <update id="updateDictData" parameterType="DictData" >
+        UPDATE sys_dict_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dictCode != null  and dictCode != ''">dict_code = #{dictCode},</if>
+            <if test="dictSort != null  and dictSort != ''">dict_sort = #{dictSort},</if>
+            <if test="dictLabel != null  and dictLabel != ''">dict_label = #{dictLabel},</if>
+            <if test="dictValue != null  and dictValue != ''">dict_value = #{dictValue},</if>
+            <if test="dictType != null  and dictType != ''">dict_type = #{dictType},</if>
+            <if test="cssClass != null  and cssClass != ''">css_class = #{cssClass},</if>
+            <if test="listClass != null  and listClass != ''">list_class = #{listClass},</if>
+            <if test="isDefault != null  and isDefault != ''">is_default = #{isDefault},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        WHERE  dict_code = #{dictCode}
+    </update>
+
+    <delete id="deleteDictDataById" parameterType="Long">
+        DELETE FROM sys_dict_data
+        WHERE  dict_code = #{dictCode}
+    </delete>
+
+    <delete id="deleteDictDataByIds" parameterType="String">
+        delete from sys_dict_data where dict_code in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="selectDictDataByType" parameterType="DictData" resultMap="DictDataResult">
+        <include refid="DictDataResultVo"/>
+        where status = '0' and dict_type = #{dictType} order by dict_sort asc
+    </select>
+
+    <select id="selectDictLabel" resultType="String">
+		select dict_label from sys_dict_data
+		where dict_type = #{dictType} and dict_value = #{dictValue}
+	</select>
+
+</mapper>

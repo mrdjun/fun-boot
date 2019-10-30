@@ -1,4 +1,4 @@
-package com.fun.framework.annotaion;
+package com.fun.framework.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

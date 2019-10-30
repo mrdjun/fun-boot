@@ -1,4 +1,4 @@
-package com.fun.framework.annotaion.enums;
+package com.fun.framework.annotation.enums;
 
 
 public enum LimitType {

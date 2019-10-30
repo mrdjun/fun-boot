@@ -1,9 +1,8 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.result.CommonResult;
-import com.fun.framework.annotaion.Log;
+import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.entity.Menu;
-import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

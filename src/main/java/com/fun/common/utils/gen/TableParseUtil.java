@@ -26,6 +26,34 @@ public class TableParseUtil {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
         tableSql = tableSql.trim();
+        String beforeSql="";
+        String afterSql="";
+        if (tableSql.contains("UNIQUE")) {
+            beforeSql = tableSql.substring(tableSql.indexOf("CREATE"),tableSql.indexOf("UNIQUE")-1);
+            afterSql=tableSql.substring(tableSql.indexOf("UNIQUE"));
+            if (afterSql.contains("BTREE")){
+                afterSql=afterSql.substring(afterSql.indexOf("BTREE")+5);
+                tableSql=beforeSql+afterSql;
+            }else if(afterSql.contains("btree")){
+                afterSql=afterSql.substring(afterSql.indexOf("btree")+5);
+                tableSql=beforeSql+afterSql;
+            }else {
+                throw new CodeGenerateException("Table structure anomaly.");
+            }
+        }
+        if (tableSql.contains("unique")){
+            beforeSql = tableSql.substring(tableSql.indexOf("CREATE"),tableSql.indexOf("unique")-1);
+            afterSql=tableSql.substring(tableSql.indexOf("unique"));
+            if (afterSql.contains("BTREE")){
+                afterSql=afterSql.substring(afterSql.indexOf("BTREE")+5);
+                tableSql=beforeSql+afterSql;
+            }else if(afterSql.contains("btree")){
+                afterSql=afterSql.substring(afterSql.indexOf("btree")+5);
+                tableSql=beforeSql+afterSql;
+            }else {
+                throw new CodeGenerateException("Table structure anomaly.");
+            }
+        }
 
         // table Name
         String tableName = null;

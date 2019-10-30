@@ -1,6 +1,6 @@
-package com.fun.framework.annotaion;
+package com.fun.framework.annotation;
 
-import com.fun.framework.annotaion.enums.LimitType;
+import com.fun.framework.annotation.enums.LimitType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

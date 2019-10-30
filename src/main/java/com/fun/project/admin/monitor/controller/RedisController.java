@@ -2,8 +2,7 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.exception.RedisConnectException;
 import com.fun.common.result.CommonResult;
-import com.fun.framework.annotaion.Log;
-import com.fun.framework.annotaion.NeedLoginToken;
+import com.fun.framework.annotation.Log;
 import com.fun.framework.redis.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

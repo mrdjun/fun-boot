@@ -2,7 +2,7 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
-import com.fun.framework.annotaion.Log;
+import com.fun.framework.annotation.Log;
 import com.fun.project.admin.monitor.entity.OperLog;
 import com.fun.project.admin.monitor.service.IOperLogService;
 import org.springframework.beans.factory.annotation.Autowired;

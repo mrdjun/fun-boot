@@ -12,12 +12,13 @@
     <link th:href="@{/fun/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/fun/libs/contextMenu/jquery.contextMenu.min.css}" rel="stylesheet"/>
     <link th:href="@{/fun/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
-    <link th:href="@{/fun/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/static/fun/css/main/animate.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/fun-style.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/skins.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/fun-ui.css?v=4.0.0}" rel="stylesheet"/>
 </head>
-<body class="fixed-sidebar skin-blue full-height-layout gray-bg" style="overflow: hidden">
+<body class="fixed-sidebar skin-blue full-height-layout gray-bg" style="overflow: hidden"
+      th:classappend="|${@config.getKey('sys.index.sideTheme')} ${@config.getKey('sys.index.skinName')}|">
 <div id="wrapper">
 
     <!--左侧导航开始-->

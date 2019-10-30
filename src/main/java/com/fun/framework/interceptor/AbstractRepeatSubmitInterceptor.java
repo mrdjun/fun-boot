@@ -3,7 +3,7 @@ package com.fun.framework.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
-import com.fun.framework.annotaion.RepeatSubmit;
+import com.fun.framework.annotation.RepeatSubmit;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

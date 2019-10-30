@@ -472,7 +472,7 @@
                 } else {
                     return data;
                 }
-            },
+            }
         },
         // 表单封装处理
         form: {

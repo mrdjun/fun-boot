@@ -2,8 +2,8 @@ package com.fun.project.app.user.controller;
 
 import com.fun.common.constant.LoginType;
 import com.fun.common.result.CommonResult;
-import com.fun.framework.annotaion.Log;
-import com.fun.framework.annotaion.NeedLoginToken;
+import com.fun.framework.annotation.Log;
+import com.fun.framework.annotation.NeedLoginToken;
 import com.fun.project.app.user.entity.AppUser;
 import com.fun.project.app.user.service.IAppUserService;
 import io.swagger.annotations.*;

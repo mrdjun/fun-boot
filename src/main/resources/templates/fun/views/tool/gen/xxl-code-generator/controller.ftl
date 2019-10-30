@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/system/${classInfo.className?uncap_first}")
 public class ${classInfo.className}Controller {
-
+    private String prefix = "system/${classInfo.className?uncap_first}/";
     @Autowired
     private I${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 

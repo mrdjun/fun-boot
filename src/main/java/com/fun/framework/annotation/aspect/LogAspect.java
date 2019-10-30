@@ -1,9 +1,9 @@
-package com.fun.framework.annotaion.aspect;
+package com.fun.framework.annotation.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.constant.LoginType;
 import com.fun.common.utils.*;
-import com.fun.framework.annotaion.enums.BusinessStatus;
+import com.fun.framework.annotation.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
 import com.fun.framework.manager.AsyncManager;
@@ -16,7 +16,7 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.fun.framework.annotaion.Log;
+import com.fun.framework.annotation.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -36,7 +36,7 @@ public class LogAspect {
 
 
     // 配置织入点
-    @Pointcut("@annotation(com.fun.framework.annotaion.Log)")
+    @Pointcut("@annotation(com.fun.framework.annotation.Log)")
     public void logPointCut() {
     }
 

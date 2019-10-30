@@ -1,12 +1,11 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.exception.user.*;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
-import com.fun.framework.annotaion.Limit;
+import com.fun.framework.annotation.Limit;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
 import io.swagger.annotations.Api;

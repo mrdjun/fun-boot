@@ -1,12 +1,12 @@
-package com.fun.framework.annotaion.aspect;
+package com.fun.framework.annotation.aspect;
 
 
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.IpUtils;
 import com.fun.common.utils.ServletUtils;
-import com.fun.framework.annotaion.Limit;
-import com.fun.framework.annotaion.enums.LimitType;
+import com.fun.framework.annotation.Limit;
+import com.fun.framework.annotation.enums.LimitType;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +42,7 @@ public class LimitAspect {
         this.limitRedisTemplate = limitRedisTemplate;
     }
 
-    @Pointcut("@annotation(com.fun.framework.annotaion.Limit)")
+    @Pointcut("@annotation(com.fun.framework.annotation.Limit)")
     public void pointcut() {
         // do nothing
     }

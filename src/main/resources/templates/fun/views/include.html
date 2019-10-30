@@ -1,15 +1,167 @@
-<!-- 通用CSS -->
+<!-- Header 通用CSS -->
 <head th:fragment=header(title)>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title th:text="${title}"></title>
-    <link rel="icon" th:href="@{/fun/favicon.ico}" type="image/x-icon"/>
-    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+    <link rel="shortcut icon" th:href="@{/fun/favicon.ico}">
+    <link th:href="@{/fun/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- bootstrap-table 表格插件样式 -->
+    <link th:href="@{/fun/libs/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/css/main/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/css/fun-style.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/css/fun-ui.css}" rel="stylesheet"/>
 </head>
 
+<!-- Footer 通用JS -->
+<div th:fragment="footer">
+    <script th:src="@{/fun/js/plugins/jquery.min.js}"></script>
+    <script th:src="@{/fun/js/plugins/bootstrap.min.js}"></script>
+    <!-- bootstrap-table 表格插件 -->
+    <script th:src="@{/fun/libs/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.js}"></script>
+    <!-- jquery-validate 表单验证插件 -->
+    <script th:src="@{/fun/libs/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/fun/libs/validate/messages_zh.min.js}"></script>
+    <script th:src="@{/fun/libs/validate/jquery.validate.extend.js}"></script>
+    <!-- jquery-validate 表单树插件 -->
+    <script th:src="@{/fun/libs/bootstrap-treetable/bootstrap-treetable.js}"></script>
+    <!-- jquery-export 表格导出插件 -->
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/export/tableExport.js}"></script>
+    <!-- 遮罩层 -->
+    <script th:src="@{/fun/libs/blockUI/jquery.blockUI.js}"></script>
+    <script th:src="@{/fun/libs/iCheck/icheck.min.js}"></script>
+    <script th:src="@{/fun/libs/layer/layer.min.js}"></script>
+    <script th:src="@{/fun/libs/layui/layui.js}"></script>
+    <script th:src="@{/fun/js/common.js?v=4.0.0}"></script>
+    <script th:src="@{/fun/js/fun-ui.js?v=4.0.0}"></script>
+    <script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+</div>
+
+<!-- ztree -->
+<div th:fragment="ztree-css">
+    <link th:href="@{/fun/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="ztree-js">
+    <script th:src="@{/fun/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+</div>
+
+<!-- bootstrap-select下拉框插件 -->
+<div th:fragment="bootstrap-select-css">
+    <link th:href="@{/fun/libs/bootstrap-select/bootstrap-select.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="bootstrap-select-js">
+    <script th:src="@{/fun/libs/bootstrap-select/bootstrap-select.js}"></script>
+</div>
+
+<!-- datetimepicker日期和时间插件 -->
+<div th:fragment="datetimepicker-css">
+    <link th:href="@{/fun/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="datetimepicker-js">
+    <script th:src="@{/fun/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
+</div>
+
+
+<!-- ui布局插件 -->
+<div th:fragment="layout-latest-css">
+    <link th:href="@{/fun/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="layout-latest-js">
+    <script th:src="@{/fun/libs/jquery-layout/jquery.layout-latest.js}"></script>
+</div>
+
+<!-- summernote富文本编辑器插件 -->
+<div th:fragment="summernote-css">
+    <link th:href="@{/fun/libs/summernote/summernote.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/libs/summernote/summernote-bs3.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="summernote-js">
+    <script th:src="@{/fun/libs/summernote/summernote.min.js}"></script>
+    <script th:src="@{/fun/libs/summernote/summernote-zh-CN.js}"></script>
+</div>
+
+<!-- cropbox图像裁剪插件 -->
+<div th:fragment="cropbox-css">
+    <link th:href="@{/fun/libs/cropbox/cropbox.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="cropbox-js">
+    <script th:src="@{/fun/libs/cropbox/cropbox.js}"></script>
+</div>
+
+<!-- jasny功能扩展插件 -->
+<div th:fragment="jasny-bootstrap-css">
+    <link th:href="@{/fun/libs/jasny/jasny-bootstrap.min.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="jasny-bootstrap-js">
+    <script th:src="@{/fun/libs/jasny/jasny-bootstrap.min.js}"></script>
+</div>
+
+<!-- fileinput文件上传插件 -->
+<div th:fragment="bootstrap-fileinput-css">
+    <link th:href="@{/fun/libs/bootstrap-fileinput/fileinput.min.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="bootstrap-fileinput-js">
+    <script th:src="@{/fun/libs/bootstrap-fileinput/fileinput.min.js}"></script>
+</div>
+
+<!-- duallistbox双列表框插件 -->
+<div th:fragment="bootstrap-duallistbox-css">
+    <link th:href="@{/fun/libs/duallistbox/bootstrap-duallistbox.min.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="bootstrap-duallistbox-js">
+    <script th:src="@{/fun/libs/duallistbox/bootstrap-duallistbox.min.js}"></script>
+</div>
+
+<!-- suggest搜索自动补全 -->
+<div th:fragment="bootstrap-suggest-js">
+    <script th:src="@{/fun/libs/suggest/bootstrap-suggest.min.js}"></script>
+</div>
+
+<!-- typeahead搜索自动补全 -->
+<div th:fragment="bootstrap-typeahead-js">
+    <script th:src="@{/fun/libs/typeahead/bootstrap3-typeahead.min.js}"></script>
+</div>
+
+<!-- jsonview格式化和语法高亮JSON格式数据查看插件 -->
+<div th:fragment="jsonview-css">
+    <link th:href="@{/fun/libs/jsonview/jquery.jsonview.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="jsonview-js">
+    <script th:src="@{/fun/libs/jsonview/jquery.jsonview.js}"></script>
+</div>
+
+<!-- jquery.steps表单向导插件 -->
+<div th:fragment="jquery-steps-css">
+    <link th:href="@{/fun/libs/staps/jquery.steps.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="jquery-steps-js">
+    <script th:src="@{/fun/libs/staps/jquery.steps.min.js}"></script>
+</div>
+
+<!-- ECharts百度统计图表插件 -->
+<div th:fragment="echarts-js">
+    <script th:src="@{/fun/libs/report/echarts/echarts-all.js}"></script>
+</div>
+
+<!-- peity图表组合插件 -->
+<div th:fragment="peity-js">
+    <script th:src="@{/fun/libs/report/peity/jquery.peity.min.js}"></script>
+</div>
+
+<!-- sparkline线状图插件 -->
+<div th:fragment="sparkline-js">
+    <script th:src="@{/fun/libs/report/sparkline/jquery.sparkline.min.js}"></script>
+</div>
+
+<!-- 表格拖拽插件 -->
+<div th:fragment="bootstrap-table-reorder-js">
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/reorder/bootstrap-table-reorder.js}"></script>
+    <script th:src="@{/fun/libs/bootstrap-table/extensions/reorder/jquery.tablednd.js}"></script>
+</div>

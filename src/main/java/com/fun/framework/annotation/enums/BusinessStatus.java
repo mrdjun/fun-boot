@@ -1,4 +1,4 @@
-package com.fun.framework.annotaion.enums;
+package com.fun.framework.annotation.enums;
 
 /**
  * 操作状态

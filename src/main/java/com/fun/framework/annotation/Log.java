@@ -1,4 +1,4 @@
-package com.fun.framework.annotaion;
+package com.fun.framework.annotation;
 
 
 import com.fun.common.constant.LoginType;

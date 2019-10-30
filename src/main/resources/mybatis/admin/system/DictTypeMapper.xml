@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.admin.system.mapper.DictTypeMapper">
+
+    <resultMap id="DictTypeResult" type="DictType" >
+        <result column="dict_id" property="dictId" />
+        <result column="dict_name" property="dictName" />
+        <result column="dict_type" property="dictType" />
+        <result column="status" property="status" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <sql id="DictTypeResultVo">
+        select
+        dict_id,dict_name,dict_type,status,create_by,create_time,update_by,update_time,remark
+        from sys_dict_type
+    </sql>
+
+    <select id="selectDictTypeById" parameterType="Long" resultMap="DictTypeResult">
+        <include refid="DictTypeResultVo" />
+        WHERE dict_id = #{dictId}
+    </select>
+
+    <select id="selectDictTypeList" parameterType="DictType" resultMap="DictTypeResult">
+        <include refid="DictTypeResultVo"/>
+        <where>
+            <if test="dictId != null and dictId != 0">
+                and dict_id = #{dictId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertDictType" parameterType="DictType" useGeneratedKeys="true">
+        INSERT INTO sys_dict_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dictId != null  and dictId != ''">dict_id, </if>
+            <if test="dictName != null  and dictName != ''">dict_name, </if>
+            <if test="dictType != null  and dictType != ''">dict_type, </if>
+            <if test="status != null  and status != ''">status, </if>
+            <if test="createBy != null  and createBy != ''">create_by, </if>
+            <if test="createTime != null  and createTime != ''">create_time, </if>
+            <if test="updateBy != null  and updateBy != ''">update_by, </if>
+            <if test="updateTime != null  and updateTime != ''">update_time, </if>
+            <if test="remark != null  and remark != ''">remark </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dictId != null  and dictId != ''">#{dictId},</if>
+            <if test="dictName != null  and dictName != ''">#{dictName},</if>
+            <if test="dictType != null  and dictType != ''">#{dictType},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null  and createTime != ''">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null  and updateTime != ''">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark}</if>
+        </trim>
+    </insert>
+
+    <update id="updateDictType" parameterType="DictType" >
+        UPDATE sys_dict_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dictId != null  and dictId != ''">dict_id = #{dictId},</if>
+            <if test="dictName != null  and dictName != ''">dict_name = #{dictName},</if>
+            <if test="dictType != null  and dictType != ''">dict_type = #{dictType},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        WHERE  dict_id = #{dictId}
+    </update>
+
+    <delete id="deleteDictTypeById" parameterType="Long">
+        DELETE FROM sys_dict_type
+        WHERE  dict_id = #{dictId}
+    </delete>
+
+    <delete id="deleteDictTypeByIds" parameterType="String">
+        delete from sys_dict_type where dict_id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="checkDictTypeUnique" parameterType="String" resultMap="DictTypeResult">
+        <include refid="DictTypeResultVo"/>
+        where dict_type = #{dictType}
+    </select>
+
+    <select id="selectDictTypeByType" parameterType="String" resultMap="DictTypeResult">
+        <include refid="DictTypeResultVo"/>
+        where dict_type = #{dictType}
+    </select>
+
+</mapper>

@@ -4,9 +4,10 @@ import com.fun.project.admin.system.entity.user.AdminUser;
 
 import java.util.List;
 
+
 /**
- * created by DJun on 2019/9/14 9:43
- * desc:
+ * @author DJun
+ * @date 2019/9/14 9:43
  */
 public interface IAdminUserService {
 
