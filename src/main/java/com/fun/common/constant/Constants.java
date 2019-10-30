@@ -1,8 +1,6 @@
 package com.fun.common.constant;
 
 
-import org.springframework.beans.factory.annotation.Value;
-
 /**
  * 通用常量信息
  *

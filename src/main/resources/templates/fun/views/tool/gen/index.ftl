@@ -6,8 +6,8 @@
 
     <#import "common/common.macro.ftl" as netCommon>
     <@netCommon.commonStyle />
-    <link rel="stylesheet" href="${request.contextPath}/adminlte/plugins/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="${request.contextPath}/adminlte/plugins/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="${request.contextPath}/gen/plugins/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="${request.contextPath}/gen/plugins/codemirror/addon/hint/show-hint.css">
 
 </head>
 <body class="hold-transition skin-blue layout-top-nav ">
@@ -109,13 +109,13 @@ CREATE TABLE `ums_user` (
 </div>
 
 <@netCommon.commonScript />
-<script src="${request.contextPath}/adminlte/plugins/codemirror/lib/codemirror.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/addon/hint/show-hint.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/addon/hint/anyword-hint.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/addon/display/placeholder.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/mode/clike/clike.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/mode/sql/sql.js"></script>
-<script src="${request.contextPath}/adminlte/plugins/codemirror/mode/xml/xml.js"></script>
-<script src="${request.contextPath}/fun/js/gen/index.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/lib/codemirror.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/hint/show-hint.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/hint/anyword-hint.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/addon/display/placeholder.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/clike/clike.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/sql/sql.js"></script>
+<script src="${request.contextPath}/gen/plugins/codemirror/mode/xml/xml.js"></script>
+<script src="${request.contextPath}/gen/js/index.js"></script>
 </body>
 </html>

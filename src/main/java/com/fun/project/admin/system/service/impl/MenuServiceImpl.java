@@ -159,7 +159,7 @@ public class MenuServiceImpl implements IMenuService {
         StringBuilder sb = new StringBuilder();
         sb.append(menu.getMenuName());
         if (permsFlag) {
-            sb.append("<font color=\"#888\">&nbsp;&nbsp;&nbsp;").append(menu.getPerms()).append("</font>");
+            sb.append("<fonts color=\"#888\">&nbsp;&nbsp;&nbsp;").append(menu.getPerms()).append("</fonts>");
         }
         return sb.toString();
     }
