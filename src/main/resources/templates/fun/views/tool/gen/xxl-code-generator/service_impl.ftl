@@ -1,6 +1,5 @@
 package com.fun.project.admin.system.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,8 +28,8 @@ public class ${classInfo.className}ServiceImpl implements I${classInfo.className
 	 * 分页查询${classInfo.className}列表
 	 */
 	@Override
-	public List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},int pageNum,int pageSize){
-	return  PageHelper.startPage(pageNum,pageSize).doSelectPage(()->${classInfo.className?uncap_first}Mapper.select${classInfo.className}List(${classInfo.className?uncap_first}));
+	public List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first}){
+		return  ${classInfo.className?uncap_first}Mapper.select${classInfo.className}List(${classInfo.className?uncap_first});
 	}
 
 	/**

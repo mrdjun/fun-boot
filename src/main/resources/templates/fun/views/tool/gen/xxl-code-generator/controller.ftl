@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
 import com.fun.common.result.CommonResult;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.I${classInfo.className}Service;
 import com.fun.project.admin.system.entity.${classInfo.className};
@@ -23,7 +24,7 @@ import java.util.List;
 @Api("${classInfo.classComment}")
 @Controller
 @RequestMapping("/admin/system/${classInfo.className?uncap_first}")
-public class ${classInfo.className}Controller {
+public class ${classInfo.className}Controller extends BaseController{
     private String prefix = "system/${classInfo.className?uncap_first}/";
     @Autowired
     private I${classInfo.className}Service ${classInfo.className?uncap_first}Service;
@@ -32,11 +33,10 @@ public class ${classInfo.className}Controller {
     @ApiOperation(value = "分页查询${classInfo.className}列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},
-                                        @RequestParam(value = "pageNum",defaultValue = "1",required = false) int pageNum,
-                                        @RequestParam(value = "pageSize",defaultValue = "10",required = false)int pageSize){
-        List<${classInfo.className}> ${classInfo.className?uncap_first}s = ${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first},pageNum,pageSize);
-        return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}s));
+    public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first}){
+        startPage();
+        List<${classInfo.className}> ${classInfo.className?uncap_first}List = ${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first});
+        return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}List));
     }
 
 
@@ -52,7 +52,7 @@ public class ${classInfo.className}Controller {
     @GetMapping("/edit/{${classInfo.conversionPrimaryKey}}")
     public String select${classInfo.className}ById(@PathVariable("${classInfo.conversionPrimaryKey}") Long ${classInfo.conversionPrimaryKey}, ModelMap mmap){
         mmap.put("${classInfo.className?uncap_first}",${classInfo.className?uncap_first}Service.select${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
-        return Constants.view(prefix + "edit");
+        return view(prefix + "edit");
     }
 
     @ApiOperation(value = "修改${classInfo.className}信息")

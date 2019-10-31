@@ -16,7 +16,7 @@ public interface I${classInfo.className}Service {
     * @param ${classInfo.className?uncap_first} 查询对象
     * @return 查询列表
     */
-    List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},int pageNum,int pageSize);
+    List<${classInfo.className}> select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
     * 通过Id查询 ${classInfo.className}
