@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head>
-	<th:block th:include="include :: header('字典数据列表')" />
-</head>
+<head th:replace="include :: header('字典数据列表')"></head>
 <body class="gray-bg">
 	<div class="container-div">
 		<div class="row">
@@ -43,9 +41,9 @@
 				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:dict:remove">
 		            <i class="fa fa-remove"></i> 删除
 		        </a>
-		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:dict:export">
-		            <i class="fa fa-download"></i> 导出
-		        </a>
+<!--		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:dict:export">-->
+<!--		            <i class="fa fa-download"></i> 导出-->
+<!--		        </a>-->
 	        </div>
 	        
 	        <div class="col-sm-12 select-table table-striped">
@@ -58,7 +56,7 @@
 		var editFlag = [[${@permission.hasPermi('system:dict:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:dict:remove')}]];
 		var datas = [[${@dict.getType('sys_normal_disable')}]];
-		var prefix = ctx + "system/dict/data";
+		var prefix = ctx + "admin/system/dict/data";
 
 		$(function() {
 			var options = {
@@ -66,7 +64,7 @@
 				createUrl: prefix + "/add/{id}",
 				updateUrl: prefix + "/edit/{id}",
 				removeUrl: prefix + "/remove",
-				exportUrl: prefix + "/export",
+				// exportUrl: prefix + "/export",
 				queryParams: queryParams,
 				sortName: "createTime",
 		        sortOrder: "desc",
@@ -105,7 +103,10 @@
 					{
 						field: 'createTime',
 						title: '创建时间',
-						sortable: true
+						sortable: true,
+						formatter : function (value,row,index) {
+							return $.common.formatTimestamp(value);
+						}
 					},
 					{
 						title: '操作',

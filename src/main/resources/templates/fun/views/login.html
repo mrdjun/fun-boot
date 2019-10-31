@@ -15,7 +15,10 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css(t=2)}" media="all">
     <link rel="stylesheet" th:href="@{/fun/css/login.css(t=2)}" media="all">
     <link rel="stylesheet" th:href="@{/fun/css/fun.css(t=2)}" media="all">
-    <script>if (window.top !== window.self) {window.top.location = window.location};</script>
+    <script>if (window.top !== window.self) {
+        window.top.location = window.location
+    }
+    ;</script>
 
 </head>
 <body>
@@ -44,27 +47,29 @@
                                     <input type="password" name="password" lay-verify="required"
                                            placeholder="密码" autocomplete="off" class="layui-input" value="admin">
                                 </div>
-
-                                <div class="layui-form-item">
-                                    <div class="layui-row">
-                                        <div class="layui-col-xs7">
-                                            <label class="layui-icon label-icon layui-icon-vercode"></label>
-                                            <input type="text" maxlength="5" name="validateCode" lay-verify="required"
-                                                   placeholder="验证码" class="layui-input" autocomplete="off">
-                                        </div>
-                                        <div class="layui-col-xs5" th:if="${captchaEnabled==true}">
-                                            <a href="javascript:void(0);" title="点击更换验证码">
-                                                <!-- <img th:src="@{/captcha/captchaImage(type=${captchaType})}" class="codeimg" width="85%"/>-->
-                                                <img id="codeimg" class="codeimg" width="80%"/>
-                                            </a>
+                                <div th:if="${captchaEnabled == true}">
+                                    <div class="layui-form-item">
+                                        <div class="layui-row">
+                                            <div class="layui-col-xs7">
+                                                <label class="layui-icon label-icon layui-icon-vercode"></label>
+                                                <input type="text" maxlength="5" name="validateCode"
+                                                       lay-verify="required"
+                                                       placeholder="验证码" class="layui-input" autocomplete="off">
+                                            </div>
+                                            <div class="layui-col-xs5">
+                                                <a href="javascript:void(0);" title="点击更换验证码">
+                                                    <!-- <img th:src="@{/captcha/captchaImage(type=${captchaType})}" class="codeimg" width="85%"/>-->
+                                                    <img id="codeimg" class="codeimg" width="80%"/>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="layui-form-item" style="margin-top: -10px;">
+                                        <input type="checkbox" id="rememberMe" name="rememberMe" title="记住我"
+                                               lay-skin="primary">
+                                    </div>
                                 </div>
-                                <div class="layui-form-item" style="margin-top: -10px;"
-                                     th:classappend="${captchaEnabled==false} ? 'm-t'">
-                                    <input type="checkbox" id="rememberMe" name="rememberMe" title="记住我"
-                                           lay-skin="primary">
-                                </div>
+
                                 <div class="layui-form-item">
                                     <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
                                             lay-filter="login-submit" id="login">
@@ -80,7 +85,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-col-xs12 layui-col-lg4 layui-col-lg-offset4 fun-hide" style="display: none" id="regist-div">
+                <div class="layui-col-xs12 layui-col-lg4 layui-col-lg-offset4 fun-hide" style="display: none"
+                     id="regist-div">
                     <div class="layui-form" lay-filter="regist-form">
                         <div class="layui-anim layui-anim-upbit">
                             <ul class="login-type-tab">
@@ -126,8 +132,10 @@
 
 <script th:src="@{/layui/layui.js}"></script>
 <script th:inline="javascript">
-    var ctx = [[@{/}]];
-        var captchaType = [[${captchaType}]];
+    var ctx = [[@{
+        /}]];
+        var captchaType = [[${captchaType}]]
+            , captchaEnabled = [[${captchaEnabled}]];
         layui.extend({
             validate: '/fun/lay/modules/validate'
         }).use(['form', 'layer'], function (form, layer) {

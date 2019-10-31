@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fun.common.utils.text.Convert;
+import com.fun.common.utils.TimestampUtil;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.project.admin.system.mapper.${classInfo.className}Mapper;
 import com.fun.project.admin.system.service.I${classInfo.className}Service;
 import com.fun.project.admin.system.entity.${classInfo.className};
@@ -12,7 +14,7 @@ import com.fun.project.admin.system.entity.${classInfo.className};
 import java.util.List;
 
 /**
- * ${classInfo.classComment} 业务实现类
+ * ${classInfo.classComment}
  *
  * @author u-fun
  * @date ${.now?string('yyyy/MM/dd')}
@@ -44,6 +46,8 @@ public class ${classInfo.className}ServiceImpl implements I${classInfo.className
      */
 	@Override
 	public int insert${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}) {
+		${classInfo.className?uncap_first}.setCreateTime(TimestampUtil.getCurrentTimestamp13());
+		${classInfo.className?uncap_first}.setCreateBy(ShiroUtils.getLoginName());
 		return ${classInfo.className?uncap_first}Mapper.insert${classInfo.className}(${classInfo.className?uncap_first});
 	}
 
@@ -68,6 +72,8 @@ public class ${classInfo.className}ServiceImpl implements I${classInfo.className
 	 */
 	@Override
 	public int update${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}) {
+		${classInfo.className?uncap_first}.setUpdateTime(TimestampUtil.getCurrentTimestamp13());
+		${classInfo.className?uncap_first}.setUpdateBy(ShiroUtils.getLoginName());
 		return ${classInfo.className?uncap_first}Mapper.update${classInfo.className}(${classInfo.className?uncap_first});
 	}
 

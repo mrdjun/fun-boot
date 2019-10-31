@@ -3,21 +3,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.system.mapper.DictDataMapper">
 
-    <resultMap id="DictDataResult" type="DictData" >
-        <result column="dict_code" property="dictCode" />
-        <result column="dict_sort" property="dictSort" />
-        <result column="dict_label" property="dictLabel" />
-        <result column="dict_value" property="dictValue" />
-        <result column="dict_type" property="dictType" />
-        <result column="css_class" property="cssClass" />
-        <result column="list_class" property="listClass" />
-        <result column="is_default" property="isDefault" />
-        <result column="status" property="status" />
-        <result column="create_by" property="createBy" />
+    <resultMap id="DictDataResult"   type="DictData" >
+        <result column="dict_code"   property="dictCode" />
+        <result column="dict_sort"   property="dictSort" />
+        <result column="dict_label"  property="dictLabel" />
+        <result column="dict_value"  property="dictValue" />
+        <result column="dict_type"   property="dictType" />
+        <result column="css_class"   property="cssClass" />
+        <result column="list_class"  property="listClass" />
+        <result column="is_default"  property="isDefault" />
+        <result column="status"      property="status" />
+        <result column="create_by"   property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="update_by" property="updateBy" />
+        <result column="update_by"   property="updateBy" />
         <result column="update_time" property="updateTime" />
-        <result column="remark" property="remark" />
+        <result column="remark"      property="remark" />
     </resultMap>
 
     <sql id="DictDataResultVo">
@@ -37,6 +37,15 @@
             <if test="dictCode != null and dictCode != 0">
                 and dict_code = #{dictCode}
             </if>
+            <if test="dictType != null and dictType != ''">
+                AND dict_type = #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                AND dict_label like concat('%', #{dictLabel}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
         </where>
     </select>
 
@@ -54,8 +63,6 @@
             <if test="status != null  and status != ''">status, </if>
             <if test="createBy != null  and createBy != ''">create_by, </if>
             <if test="createTime != null  and createTime != ''">create_time, </if>
-            <if test="updateBy != null  and updateBy != ''">update_by, </if>
-            <if test="updateTime != null  and updateTime != ''">update_time, </if>
             <if test="remark != null  and remark != ''">remark </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -70,8 +77,6 @@
             <if test="status != null  and status != ''">#{status},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null  and createTime != ''">#{createTime},</if>
-            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
-            <if test="updateTime != null  and updateTime != ''">#{updateTime},</if>
             <if test="remark != null  and remark != ''">#{remark}</if>
         </trim>
     </insert>
@@ -88,8 +93,6 @@
             <if test="listClass != null  and listClass != ''">list_class = #{listClass},</if>
             <if test="isDefault != null  and isDefault != ''">is_default = #{isDefault},</if>
             <if test="status != null  and status != ''">status = #{status},</if>
-            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
-            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
             <if test="remark != null  and remark != ''">remark = #{remark},</if>

@@ -61,6 +61,13 @@ public interface DictTypeMapper {
     int deleteDictTypeByIds(String[] dictIds);
 
     /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+    List<DictType> selectDictTypeAll();
+
+    /**
      * 根据字典类型查询信息
      *
      * @param dictType 字典类型

@@ -30,6 +30,13 @@ public interface IDictTypeService {
     DictType selectDictTypeById(long dictId);
 
     /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+    List<DictType> selectDictTypeAll();
+
+    /**
      * 新增DictType
      *
      * @param dictType 新增对象

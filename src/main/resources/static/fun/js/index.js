@@ -457,7 +457,7 @@ $(function() {
     $('#ax_close_max').click(function(){
         $('#content-main').toggleClass('max');
         $('#ax_close_max').hide();
-    })
+    });
 
     // 双击选项卡全屏显示
     function activeTabMax() {
@@ -466,7 +466,7 @@ $(function() {
     }
 
     $(window).keydown(function(event) {
-        if (event.keyCode == 27) {
+        if (event.keyCode === 27) {
             $('#content-main').removeClass('max');
             $('#ax_close_max').hide();
         }

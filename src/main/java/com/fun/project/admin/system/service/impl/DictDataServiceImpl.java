@@ -1,5 +1,7 @@
 package com.fun.project.admin.system.service.impl;
 
+import com.fun.common.utils.TimestampUtil;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,8 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public int insertDictData(DictData dictData) {
+        dictData.setCreateTime(TimestampUtil.getCurrentTimestamp13());
+        dictData.setCreateBy(ShiroUtils.getLoginName());
         return dictDataMapper.insertDictData(dictData);
     }
 
@@ -68,6 +72,8 @@ public class DictDataServiceImpl implements IDictDataService {
      */
     @Override
     public int updateDictData(DictData dictData) {
+        dictData.setUpdateTime(TimestampUtil.getCurrentTimestamp13());
+        dictData.setUpdateBy(ShiroUtils.getLoginName());
         return dictDataMapper.updateDictData(dictData);
     }
 

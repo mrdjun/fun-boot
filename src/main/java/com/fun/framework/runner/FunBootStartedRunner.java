@@ -44,7 +44,7 @@ public class FunBootStartedRunner implements ApplicationRunner {
             log.error("                        ");
             log.error("FunBoot启动失败，{}", e.getMessage());
             log.error("Redis连接异常，请检查Redis连接配置并确保Redis服务正常启动");
-            // 关闭 FunBoot
+            // 关闭 FunBoot 时关闭所有线程
             context.close();
         }
         if (context.isActive()) {

@@ -30,7 +30,7 @@ public class ${classInfo.className}Controller {
 
 
     @ApiOperation(value = "分页查询${classInfo.className}列表")
-    @PostMapping("/select${classInfo.className}List")
+    @PostMapping("/list")
     @ResponseBody
     public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first},
                                         @RequestParam(value = "pageNum",defaultValue = "1",required = false) int pageNum,
@@ -40,45 +40,34 @@ public class ${classInfo.className}Controller {
     }
 
 
-    @ApiOperation(value = "通过Id查询${classInfo.className}")
-    @Log("通过Id查询${classInfo.className}")
-    @GetMapping("/select${classInfo.className}ById/${r"{"}${classInfo.conversionPrimaryKey}${r"}"}")
-    @ResponseBody
-    public CommonResult select${classInfo.className}ById(@PathVariable("${classInfo.conversionPrimaryKey}") Long ${classInfo.conversionPrimaryKey}){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.select${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
-    }
-
     @ApiOperation(value = "新增${classInfo.className}")
     @Log("新增${classInfo.className}")
-    @PostMapping("/insert${classInfo.className}")
+    @PostMapping("/add")
     @ResponseBody
     public CommonResult insert${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}){
         return CommonResult.success(${classInfo.className?uncap_first}Service.insert${classInfo.className}(${classInfo.className?uncap_first}));
     }
 
+    /** 修改 ${classInfo.classComment} */
+    @GetMapping("/edit/{${classInfo.conversionPrimaryKey}}")
+    public String select${classInfo.className}ById(@PathVariable("${classInfo.conversionPrimaryKey}") Long ${classInfo.conversionPrimaryKey}, ModelMap mmap){
+        mmap.put("${classInfo.className?uncap_first}",${classInfo.className?uncap_first}Service.select${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
+        return Constants.view(prefix + "edit");
+    }
 
     @ApiOperation(value = "修改${classInfo.className}信息")
     @Log("修改${classInfo.className}信息")
-    @PostMapping("/update${classInfo.className}")
+    @PostMapping("/edit")
     @ResponseBody
     public CommonResult update${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}){
         return CommonResult.success(${classInfo.className?uncap_first}Service.update${classInfo.className}(${classInfo.className?uncap_first}));
     }
 
-
-    @ApiOperation(value = "通过id删除${classInfo.className}")
-    @Log("通过id删除${classInfo.className}")
-    @PostMapping("/delete${classInfo.className}ById/${r"{"}${classInfo.conversionPrimaryKey}${r"}"}")
-    @ResponseBody
-    public CommonResult delete${classInfo.className}ById(@PathVariable("${classInfo.conversionPrimaryKey}") Long ${classInfo.conversionPrimaryKey}){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ById(${classInfo.conversionPrimaryKey}));
-    }
-
-    @ApiOperation(value = "通过id批量删除${classInfo.className}")
+    @ApiOperation(value = "通过ids批量删除${classInfo.className}")
     @Log("通过id批量删除${classInfo.className}")
-    @PostMapping("/deleteList")
+    @PostMapping("/remove")
     @ResponseBody
-    public CommonResult delete${classInfo.className}ByIds(String ${classInfo.conversionPrimaryKey}s){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ByIds(${classInfo.conversionPrimaryKey}s));
+    public CommonResult delete${classInfo.className}ByIds(String ids){
+        return CommonResult.success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ByIds(ids));
     }
 }

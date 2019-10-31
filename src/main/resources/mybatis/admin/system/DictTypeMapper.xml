@@ -44,8 +44,6 @@
             <if test="status != null  and status != ''">status, </if>
             <if test="createBy != null  and createBy != ''">create_by, </if>
             <if test="createTime != null  and createTime != ''">create_time, </if>
-            <if test="updateBy != null  and updateBy != ''">update_by, </if>
-            <if test="updateTime != null  and updateTime != ''">update_time, </if>
             <if test="remark != null  and remark != ''">remark </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -55,8 +53,6 @@
             <if test="status != null  and status != ''">#{status},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null  and createTime != ''">#{createTime},</if>
-            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
-            <if test="updateTime != null  and updateTime != ''">#{updateTime},</if>
             <if test="remark != null  and remark != ''">#{remark}</if>
         </trim>
     </insert>
@@ -88,6 +84,10 @@
             #{item}
         </foreach>
     </delete>
+
+    <select id="selectDictTypeAll" resultMap="DictTypeResult">
+        <include refid="DictTypeResultVo"/>
+    </select>
 
     <select id="checkDictTypeUnique" parameterType="String" resultMap="DictTypeResult">
         <include refid="DictTypeResultVo"/>

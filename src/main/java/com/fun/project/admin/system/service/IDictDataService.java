@@ -66,14 +66,14 @@ public interface IDictDataService {
      * @param dictType 字典类型
      * @return 字典数据集合信息
      */
-     List<DictData> selectDictDataByType(String dictType);
+    List<DictData> selectDictDataByType(String dictType);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息
      *
-     * @param dictType 字典类型
+     * @param dictType  字典类型
      * @param dictValue 字典键值
      * @return 字典标签
      */
-     String selectDictLabel(String dictType, String dictValue);
+    String selectDictLabel(String dictType, String dictValue);
 }

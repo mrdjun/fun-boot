@@ -45,6 +45,16 @@ public class DictTypeServiceImpl implements IDictTypeService {
     }
 
     /**
+     * 根据所有字典类型
+     *
+     * @return 字典类型集合信息
+     */
+    @Override
+    public List<DictType> selectDictTypeAll() {
+        return dictTypeMapper.selectDictTypeAll();
+    }
+
+    /**
      * 新增DictType
      */
     @Override

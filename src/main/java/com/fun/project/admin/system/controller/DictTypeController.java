@@ -39,21 +39,13 @@ public class DictTypeController {
     }
 
     @ApiOperation(value = "分页查询DictType列表")
-    @PostMapping("/selectDictTypeList")
+    @PostMapping("/list")
     @ResponseBody
     public CommonResult selectDictTypeList(DictType dictType,
                                            @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-                                           @RequestParam(value = "pageNum", defaultValue = "10", required = false) int pageSize) {
+                                           @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
         List<DictType> dictTypes = dictTypeService.selectDictTypeList(dictType, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(dictTypes));
-    }
-
-    @ApiOperation(value = "通过Id查询DictType")
-    @Log("通过Id查询DictType")
-    @GetMapping("/selectDictTypeById/{dictId}")
-    @ResponseBody
-    public CommonResult selectDictTypeById(@PathVariable("dictId") Long dictId) {
-        return CommonResult.success(dictTypeService.selectDictTypeById(dictId));
     }
 
     /**
@@ -61,12 +53,12 @@ public class DictTypeController {
      */
     @GetMapping("/add")
     public String add() {
-        return Constants.view(prefix + "add");
+        return Constants.view(prefix + "/add");
     }
 
     @ApiOperation(value = "新增DictType")
     @Log("新增DictType")
-    @PostMapping("/insertDictType")
+    @PostMapping("/add")
     @ResponseBody
     public CommonResult insertDictType(DictType dictType) {
         if (Constants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dictType))) {
@@ -87,38 +79,42 @@ public class DictTypeController {
     @RequiresPermissions("system:dict:edit")
     @ApiOperation(value = "修改DictType信息")
     @Log("修改DictType信息")
-    @PostMapping("/updateDictType")
+    @PostMapping("/edit")
     @ResponseBody
     public CommonResult updateDictType(DictType dictType) {
         return CommonResult.success(dictTypeService.updateDictType(dictType));
     }
 
-    @RequiresPermissions("system:dict:remove")
-    @ApiOperation(value = "通过id删除DictType")
-    @Log("通过id删除DictType")
-    @PostMapping("/deleteDictTypeById/{dictId}")
-    @ResponseBody
-    public CommonResult deleteDictTypeById(@PathVariable("dictId") Long dictId) {
-        return CommonResult.success(dictTypeService.deleteDictTypeById(dictId));
-    }
 
     @ApiOperation(value = "通过id批量删除DictType")
-    @Log("通过id批量删除DictType")
-    @PostMapping("/deleteList")
+    @Log("通过ids批量删除DictType")
+    @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteDictTypeByIds(String dictIds) {
-        return CommonResult.success(dictTypeService.deleteDictTypeByIds(dictIds));
+    public CommonResult deleteDictTypeByIds(String ids) {
+        return CommonResult.success(dictTypeService.deleteDictTypeByIds(ids));
+    }
+
+    /**
+     * 查询字典详细
+     */
+    @RequiresPermissions("system:dict:list")
+    @GetMapping("/detail/{dictId}")
+    public String detail(@PathVariable("dictId") Long dictId, ModelMap mmap) {
+        mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
+        mmap.put("dictList", dictTypeService.selectDictTypeAll());
+        return Constants.view("system/dict/data/data");
     }
 
     /**
      * 选择字典树
      */
     @GetMapping("/selectDictTree/{columnId}/{dictType}")
-    public String selectDeptTree(@PathVariable("columnId") Long columnId, @PathVariable("dictType") String dictType,
+    public String selectDeptTree(@PathVariable("columnId") Long columnId,
+                                 @PathVariable("dictType") String dictType,
                                  ModelMap mmap) {
         mmap.put("columnId", columnId);
         mmap.put("dict", dictTypeService.selectDictTypeByType(dictType));
-        return prefix + "/tree";
+        return Constants.view(prefix + "tree");
     }
 
     /**
