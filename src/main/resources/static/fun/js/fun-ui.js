@@ -261,7 +261,7 @@
                     search.orderByColumn = params.sort;
                     search.isAsc = params.order;
                     return search;
-                }
+                };
                 $.btTable.bootstrapTable('refresh', params);
             },
             // 导出数据
