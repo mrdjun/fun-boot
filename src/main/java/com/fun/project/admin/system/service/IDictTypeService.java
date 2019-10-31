@@ -19,7 +19,7 @@ public interface IDictTypeService {
      * @param dictType 查询对象
      * @return 查询列表
      */
-    List<DictType> selectDictTypeList(DictType dictType, int pageNum, int pageSize);
+    List<DictType> selectDictTypeList(DictType dictType);
 
     /**
      * 通过Id查询 DictType

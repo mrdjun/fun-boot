@@ -18,7 +18,7 @@ public interface IDictDataService {
      * @param dictData 查询对象
      * @return 查询列表
      */
-    List<DictData> selectDictDataList(DictData dictData, int pageNum, int pageSize);
+    List<DictData> selectDictDataList(DictData dictData);
 
     /**
      * 通过Id查询 DictData

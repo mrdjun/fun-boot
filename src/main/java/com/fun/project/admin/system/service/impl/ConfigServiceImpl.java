@@ -29,8 +29,8 @@ public class ConfigServiceImpl implements IConfigService {
      * 分页查询Config列表
      */
     @Override
-    public List<Config> selectConfigList(Config config, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> configMapper.selectConfigList(config));
+    public List<Config> selectConfigList(Config config) {
+        return configMapper.selectConfigList(config);
     }
 
     /**

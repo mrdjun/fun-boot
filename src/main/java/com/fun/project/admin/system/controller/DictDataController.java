@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.framework.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +27,7 @@ import java.util.List;
 @Api("字典数据表")
 @Controller
 @RequestMapping("/admin/system/dict/data")
-public class DictDataController {
+public class DictDataController extends BaseController {
     private String prefix = "system/dict/data/";
 
     @Autowired
@@ -36,10 +37,9 @@ public class DictDataController {
     @ApiOperation(value = "分页查询DictData列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult selectDictDataList(DictData dictData,
-                                           @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-                                           @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-        List<DictData> dictDataList = dictDataService.selectDictDataList(dictData, pageNum, pageSize);
+    public CommonResult selectDictDataList(DictData dictData) {
+        startPage();
+        List<DictData> dictDataList = dictDataService.selectDictDataList(dictData);
         return CommonResult.success(CommonPage.restPage(dictDataList));
     }
 
@@ -49,7 +49,7 @@ public class DictDataController {
     @GetMapping("/edit/{dictCode}")
     public String selectDictDataById(@PathVariable("dictCode") Long dictCode, ModelMap mmap) {
         mmap.put("dict", dictDataService.selectDictDataById(dictCode));
-        return Constants.view(prefix + "/edit");
+        return view(prefix + "/edit");
     }
 
     /**
@@ -58,7 +58,7 @@ public class DictDataController {
     @GetMapping("/add/{dictType}")
     public String add(@PathVariable("dictType") String dictType, ModelMap mmap) {
         mmap.put("dictType", dictType);
-        return Constants.view(prefix + "/add");
+        return view(prefix + "/add");
     }
 
     @ApiOperation(value = "新增DictData")

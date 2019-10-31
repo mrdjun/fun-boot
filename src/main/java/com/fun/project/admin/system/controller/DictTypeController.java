@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.framework.web.entity.Ztree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ import java.util.List;
 @Api("字典类型表")
 @Controller
 @RequestMapping("/admin/system/dict")
-public class DictTypeController {
+public class DictTypeController extends BaseController {
     private String prefix = "system/dict/type/";
 
     @Autowired
@@ -35,25 +36,25 @@ public class DictTypeController {
     @RequiresPermissions("system:dict:view")
     @GetMapping()
     public String dictType() {
-        return Constants.view(prefix + "type");
+        return view(prefix + "type");
     }
 
     @ApiOperation(value = "分页查询DictType列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult selectDictTypeList(DictType dictType,
-                                           @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-                                           @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-        List<DictType> dictTypes = dictTypeService.selectDictTypeList(dictType, pageNum, pageSize);
+    public CommonResult selectDictTypeList(DictType dictType) {
+        startPage();
+        List<DictType> dictTypes = dictTypeService.selectDictTypeList(dictType);
         return CommonResult.success(CommonPage.restPage(dictTypes));
     }
+
 
     /**
      * 新增字典类型
      */
     @GetMapping("/add")
     public String add() {
-        return Constants.view(prefix + "/add");
+        return view(prefix + "/add");
     }
 
     @ApiOperation(value = "新增DictType")
@@ -73,7 +74,7 @@ public class DictTypeController {
     @GetMapping("/edit/{dictId}")
     public String edit(@PathVariable("dictId") Long dictId, ModelMap mmap) {
         mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
-        return Constants.view(prefix + "edit");
+        return view(prefix + "edit");
     }
 
     @RequiresPermissions("system:dict:edit")
@@ -102,7 +103,7 @@ public class DictTypeController {
     public String detail(@PathVariable("dictId") Long dictId, ModelMap mmap) {
         mmap.put("dict", dictTypeService.selectDictTypeById(dictId));
         mmap.put("dictList", dictTypeService.selectDictTypeAll());
-        return Constants.view("system/dict/data/data");
+        return view("system/dict/data/data");
     }
 
     /**
@@ -114,7 +115,7 @@ public class DictTypeController {
                                  ModelMap mmap) {
         mmap.put("columnId", columnId);
         mmap.put("dict", dictTypeService.selectDictTypeByType(dictType));
-        return Constants.view(prefix + "tree");
+        return view(prefix + "tree");
     }
 
     /**

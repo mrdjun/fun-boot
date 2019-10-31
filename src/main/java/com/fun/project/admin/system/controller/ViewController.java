@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
-import com.fun.common.constant.Constants;
 import com.fun.framework.config.FunBootConfig;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.project.admin.system.entity.Menu;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IMenuService;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-import static com.fun.framework.shiro.helper.ShiroUtils.getSysUser;
 
 /**
  *
@@ -21,7 +20,7 @@ import static com.fun.framework.shiro.helper.ShiroUtils.getSysUser;
  * @date 2019/9/29
  */
 @Controller
-public class ViewController {
+public class ViewController extends BaseController {
     @Autowired
     private IMenuService menuService;
     @Autowired
@@ -32,7 +31,7 @@ public class ViewController {
      */
     @GetMapping("/")
     public String redirectIndex() {
-        return "redirect:/admin/index";
+        return redirect("/admin/index");
     }
 
     /**
@@ -40,7 +39,7 @@ public class ViewController {
      */
     @GetMapping("/index")
     public String indexRedirectIndex() {
-        return "redirect:/admin/index";
+        return redirect("redirect:/admin/index");
     }
 
     /**
@@ -61,7 +60,7 @@ public class ViewController {
         mmap.put("copyrightYear", funBootConfig.getCopyrightYear());
         mmap.put("demoEnabled", funBootConfig.isDemoEnabled());
 
-        return new ModelAndView(Constants.view("layout"));
+        return new ModelAndView(view("layout"));
     }
 
     /**
@@ -79,7 +78,7 @@ public class ViewController {
     public ModelAndView main(ModelMap mmap) {
         mmap.put("version", funBootConfig.getVersion());
         mmap.put("name", funBootConfig.getName());
-        return new ModelAndView(Constants.view("index")) ;
+        return new ModelAndView(view("index")) ;
     }
 
     /**
@@ -106,8 +105,9 @@ public class ViewController {
         return new ModelAndView("/error/500");
     }
 
-    @GetMapping("/test")
+    /** 表单生成工具 */
+    @GetMapping("/tool/table")
     public ModelAndView testLayout(){
-        return new ModelAndView(Constants.view("index"));
+        return new ModelAndView(view("tool/table/table"));
     }
 }

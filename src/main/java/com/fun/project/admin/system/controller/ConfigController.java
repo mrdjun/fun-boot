@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.framework.web.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.List;
 @Api("参数配置表")
 @Controller
 @RequestMapping("/admin/config")
-public class ConfigController {
+public class ConfigController extends BaseController {
 
     @Autowired
     private IConfigService configService;
@@ -32,10 +33,9 @@ public class ConfigController {
     @ApiOperation(value = "分页查询Config列表")
     @PostMapping("/selectConfigList")
     @ResponseBody
-    public CommonResult selectConfigList(Config config,
-                                         @RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
-                                         @RequestParam(value = "pageNum", defaultValue = "10", required = false) int pageSize) {
-        List<Config> configs = configService.selectConfigList(config, pageNum, pageSize);
+    public CommonResult selectConfigList(Config config) {
+        startPage();
+        List<Config> configs = configService.selectConfigList(config);
         return CommonResult.success(CommonPage.restPage(configs));
     }
 

@@ -29,8 +29,8 @@ public class DictDataServiceImpl implements IDictDataService {
      * 分页查询DictData列表
      */
     @Override
-    public List<DictData> selectDictDataList(DictData dictData, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> dictDataMapper.selectDictDataList(dictData));
+    public List<DictData> selectDictDataList(DictData dictData) {
+        return dictDataMapper.selectDictDataList(dictData);
     }
 
     /**

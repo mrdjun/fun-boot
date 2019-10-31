@@ -4,6 +4,7 @@ import com.fun.common.constant.Constants;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.gen.CodeGeneratorTool;
 import com.fun.common.utils.gen.FreemarkerTool;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.project.admin.tool.entity.GenTable;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class GenController {
 
     @GetMapping("")
     public String index() {
-        return Constants.view("/tool/gen/index");
+        return BaseController.view("/tool/gen/index");
     }
 
     @PostMapping("/codeGenerate")

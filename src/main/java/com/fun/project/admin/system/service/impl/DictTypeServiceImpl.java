@@ -31,9 +31,9 @@ public class DictTypeServiceImpl implements IDictTypeService {
      * 分页查询DictType列表
      */
     @Override
-    public List<DictType> selectDictTypeList(DictType dictType, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() ->
-                dictTypeMapper.selectDictTypeList(dictType));
+    public List<DictType> selectDictTypeList(DictType dictType) {
+        return dictTypeMapper.selectDictTypeList(dictType);
+
     }
 
     /**

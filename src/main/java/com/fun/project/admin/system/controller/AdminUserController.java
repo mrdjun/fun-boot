@@ -6,6 +6,7 @@ import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotation.Limit;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
 import io.swagger.annotations.Api;
@@ -30,8 +31,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-@Api("")
-public class AdminUserController {
+@Api("管理员用户接口")
+public class AdminUserController extends BaseController {
 
     @Autowired
     private IAdminUserService adminUserService;
@@ -42,7 +43,7 @@ public class AdminUserController {
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
         }
-        return Constants.view("/login");
+        return view("/login");
     }
 
 
@@ -70,7 +71,7 @@ public class AdminUserController {
 
     @GetMapping("/user")
     public ModelAndView userIndex() {
-        return new ModelAndView(Constants.view("system/user/user"));
+        return new ModelAndView(view("system/user/user"));
     }
 
     @GetMapping("/user/add")

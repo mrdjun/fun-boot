@@ -18,7 +18,7 @@ public interface IConfigService {
      * @param config 查询对象
      * @return 查询列表
      */
-    List<Config> selectConfigList(Config config, int pageNum, int pageSize);
+    List<Config> selectConfigList(Config config);
 
     /**
      * 通过Id查询 Config
