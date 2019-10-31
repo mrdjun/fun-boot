@@ -3,16 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.system.mapper.DictTypeMapper">
 
-    <resultMap id="DictTypeResult" type="DictType" >
-        <result column="dict_id" property="dictId" />
-        <result column="dict_name" property="dictName" />
-        <result column="dict_type" property="dictType" />
-        <result column="status" property="status" />
-        <result column="create_by" property="createBy" />
-        <result column="create_time" property="createTime" />
-        <result column="update_by" property="updateBy" />
-        <result column="update_time" property="updateTime" />
-        <result column="remark" property="remark" />
+    <resultMap id="DictTypeResult" type="DictType">
+        <result column="dict_id" property="dictId"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <sql id="DictTypeResultVo">
@@ -22,15 +22,27 @@
     </sql>
 
     <select id="selectDictTypeById" parameterType="Long" resultMap="DictTypeResult">
-        <include refid="DictTypeResultVo" />
+        <include refid="DictTypeResultVo"/>
         WHERE dict_id = #{dictId}
     </select>
 
     <select id="selectDictTypeList" parameterType="DictType" resultMap="DictTypeResult">
         <include refid="DictTypeResultVo"/>
         <where>
-            <if test="dictId != null and dictId != 0">
-                and dict_id = #{dictId}
+            <if test="dictName != null and dictName != ''">
+                AND dict_name like concat('%', #{dictName}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                AND dict_type like concat('%', #{dictType}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and create_time &gt;= UNIX_TIMESTAMP(#{params.beginTime})*1000
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and create_time &lt;= UNIX_TIMESTAMP(#{params.endTime})*1000
             </if>
         </where>
     </select>
@@ -38,13 +50,13 @@
     <insert id="insertDictType" parameterType="DictType" useGeneratedKeys="true">
         INSERT INTO sys_dict_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="dictId != null  and dictId != ''">dict_id, </if>
-            <if test="dictName != null  and dictName != ''">dict_name, </if>
-            <if test="dictType != null  and dictType != ''">dict_type, </if>
-            <if test="status != null  and status != ''">status, </if>
-            <if test="createBy != null  and createBy != ''">create_by, </if>
-            <if test="createTime != null  and createTime != ''">create_time, </if>
-            <if test="remark != null  and remark != ''">remark </if>
+            <if test="dictId != null  and dictId != ''">dict_id,</if>
+            <if test="dictName != null  and dictName != ''">dict_name,</if>
+            <if test="dictType != null  and dictType != ''">dict_type,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null  and createTime != ''">create_time,</if>
+            <if test="remark != null  and remark != ''">remark</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="dictId != null  and dictId != ''">#{dictId},</if>
@@ -57,20 +69,18 @@
         </trim>
     </insert>
 
-    <update id="updateDictType" parameterType="DictType" >
+    <update id="updateDictType" parameterType="DictType">
         UPDATE sys_dict_type
         <trim prefix="SET" suffixOverrides=",">
             <if test="dictId != null  and dictId != ''">dict_id = #{dictId},</if>
             <if test="dictName != null  and dictName != ''">dict_name = #{dictName},</if>
             <if test="dictType != null  and dictType != ''">dict_type = #{dictType},</if>
             <if test="status != null  and status != ''">status = #{status},</if>
-            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
-            <if test="createTime != null  and createTime != ''">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null  and updateTime != ''">update_time = #{updateTime},</if>
             <if test="remark != null  and remark != ''">remark = #{remark},</if>
         </trim>
-        WHERE  dict_id = #{dictId}
+        WHERE dict_id = #{dictId}
     </update>
 
     <delete id="deleteDictTypeById" parameterType="Long">
