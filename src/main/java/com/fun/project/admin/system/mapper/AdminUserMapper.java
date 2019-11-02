@@ -111,22 +111,22 @@ public interface AdminUserMapper {
      * @param loginName 登录名称
      * @return 结果
      */
-    String checkLoginNameUnique(String loginName);
+    int checkLoginNameUnique(String loginName);
 
     /**
      * 校验手机号码是否唯一
      *
-     * @param user 手机号码
+     * @param telephone 手机号码
      * @return 结果
      */
-    String checkPhoneUnique(AdminUser user);
+    AdminUser checkPhoneUnique(String telephone);
 
     /**
      * 校验email是否唯一
      *
-     * @param user 用户邮箱
+     * @param email 用户邮箱
      * @return 结果
      */
-    String checkEmailUnique(AdminUser user);
+    AdminUser checkEmailUnique(String email);
 
 }

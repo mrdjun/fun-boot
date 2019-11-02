@@ -1,5 +1,6 @@
 package com.fun.project.admin.system.service.impl;
 
+import com.fun.common.constant.Constants;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.utils.Md5Utils;
 import com.fun.common.utils.StringUtils;
@@ -109,17 +110,34 @@ public class AdminUserServiceImpl implements IAdminUserService {
 
     @Override
     public String checkLoginNameUnique(String loginName) {
-        return adminUserMapper.checkLoginNameUnique(loginName);
+
+        int count = adminUserMapper.checkLoginNameUnique(loginName);
+        if (count > 0)
+        {
+            return Constants.NOT_UNIQUE;
+        }
+        return Constants.UNIQUE;
+
     }
 
     @Override
     public String checkPhoneUnique(AdminUser user) {
-        return adminUserMapper.checkPhoneUnique(user);
+        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        AdminUser info = adminUserMapper.checkPhoneUnique(user.getTelephone());
+        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+            return Constants.NOT_UNIQUE;
+        }
+        return Constants.UNIQUE;
     }
 
     @Override
     public String checkEmailUnique(AdminUser user) {
-        return adminUserMapper.checkEmailUnique(user);
+        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        AdminUser info = adminUserMapper.checkEmailUnique(user.getEmail());
+        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+            return Constants.NOT_UNIQUE;
+        }
+        return Constants.UNIQUE;
     }
 
     @Override

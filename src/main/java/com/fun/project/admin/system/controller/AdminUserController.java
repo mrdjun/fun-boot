@@ -158,7 +158,6 @@ public class AdminUserController extends BaseController {
     @PostMapping("/checkPhoneUnique")
     @ResponseBody
     public String checkPhoneUnique(AdminUser user) {
-        System.out.println(adminUserService.checkPhoneUnique(user));
         return adminUserService.checkPhoneUnique(user);
     }
 
