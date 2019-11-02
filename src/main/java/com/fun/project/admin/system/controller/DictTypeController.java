@@ -15,16 +15,18 @@ import io.swagger.annotations.Api;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.IDictTypeService;
-import com.fun.project.admin.system.entity.DictType;
+import com.fun.project.admin.system.entity.dict.DictType;
 import com.fun.common.pagehelper.CommonPage;
 
 import java.util.List;
+
+import static com.fun.common.result.CommonResult.success;
 
 /**
  * @author u-fun
  * @date 2019/10/30
  */
-@Api("字典类型表")
+@Api(description = "字典类型")
 @Controller
 @RequestMapping("/admin/system/dict")
 public class DictTypeController extends BaseController {
@@ -45,7 +47,7 @@ public class DictTypeController extends BaseController {
     public CommonResult selectDictTypeList(DictType dictType) {
         startPage();
         List<DictType> dictTypes = dictTypeService.selectDictTypeList(dictType);
-        return CommonResult.success(CommonPage.restPage(dictTypes));
+        return success(CommonPage.restPage(dictTypes));
     }
 
 
@@ -65,7 +67,7 @@ public class DictTypeController extends BaseController {
         if (Constants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dictType))) {
             return CommonResult.failed("新增字典'" + dictType.getDictName() + "'失败，字典类型已存在");
         }
-        return CommonResult.success(dictTypeService.insertDictType(dictType));
+        return success(dictTypeService.insertDictType(dictType));
     }
 
     /**
@@ -83,7 +85,7 @@ public class DictTypeController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public CommonResult updateDictType(DictType dictType) {
-        return CommonResult.success(dictTypeService.updateDictType(dictType));
+        return success(dictTypeService.updateDictType(dictType));
     }
 
 
@@ -92,7 +94,7 @@ public class DictTypeController extends BaseController {
     @PostMapping("/remove")
     @ResponseBody
     public CommonResult deleteDictTypeByIds(String ids) {
-        return CommonResult.success(dictTypeService.deleteDictTypeByIds(ids));
+        return success(dictTypeService.deleteDictTypeByIds(ids));
     }
 
     /**

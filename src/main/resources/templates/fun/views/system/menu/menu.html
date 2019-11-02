@@ -51,7 +51,7 @@
 		var editFlag = [[${@permission.hasPermi('system:menu:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:menu:remove')}]];
 		var datas = [[${@dict.getType('sys_show_hide')}]];
-		var prefix = ctx + "system/menu";
+		var prefix = ctx + "admin/system/menu";
 
 		$(function() {
 		    var options = {
@@ -99,13 +99,13 @@
 		            width: '10%',
 		            align: "left",
 		            formatter: function(value, item, index) {
-		                if (item.menuType == 'M') {
+		                if (item.menuType === 'M') {
 		                    return '<span class="label label-success">目录</span>';
 		                }
-		                else if (item.menuType == 'C') {
+		                else if (item.menuType === 'C') {
 		                    return '<span class="label label-primary">菜单</span>';
 		                }
-		                else if (item.menuType == 'F') {
+		                else if (item.menuType === 'F') {
 		                    return '<span class="label label-warning">按钮</span>';
 		                }
 		            }
@@ -123,7 +123,7 @@
 		            field: 'perms',
 		            title: '权限标识',
 		            width: '15%',
-		            align: "left",
+		            align: "left"
 		        },
 		        {
 		            title: '操作',

@@ -1,14 +1,14 @@
 package com.fun.project.admin.system.service;
 
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.entity.user.UserRole;
 
 import java.util.List;
 import java.util.Set;
 
 /**
- * created by DJun on 2019/9/14 17:07
- * desc:
+ * @author DJun
+ * @date 2019/9/14 17:07
  */
 public interface IRoleService {
     /**
@@ -94,18 +94,18 @@ public interface IRoleService {
     /**
      * 校验角色名称是否唯一
      *
-     * @param roleName roleName
+     * @param role 角色信息
      * @return 结果
      */
-     int checkRoleNameUnique(String roleName);
+     String checkRoleNameUnique(Role role);
 
     /**
      * 校验角色权限是否唯一
      *
-     * @param roleKey roleKey
+     * @param role 角色信息
      * @return 结果
      */
-    int checkRoleKeyUnique(String roleKey);
+     String checkRoleKeyUnique(Role role);
 
     /**
      * 通过角色ID查询角色使用数量

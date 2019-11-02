@@ -34,7 +34,7 @@ public class TreeUtils {
     /**
      * 递归列表
      *
-     * @param list
+     * @param list MenuList
      * @param t
      */
     private static void recursionFn(List<Menu> list, Menu t) {
@@ -69,7 +69,7 @@ public class TreeUtils {
         return tlist;
     }
 
-    List<Menu> returnList = new ArrayList<>();
+    private List<Menu> returnList = new ArrayList<>();
 
     /**
      * 根据父节点的ID获取所有子节点

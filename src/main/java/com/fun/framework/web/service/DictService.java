@@ -1,6 +1,6 @@
 package com.fun.framework.web.service;
 
-import com.fun.project.admin.system.entity.DictData;
+import com.fun.project.admin.system.entity.dict.DictData;
 import com.fun.project.admin.system.service.IDictDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

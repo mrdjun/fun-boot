@@ -15,13 +15,17 @@ import com.fun.project.admin.system.service.IConfigService;
 import com.fun.project.admin.system.entity.Config;
 import com.fun.common.pagehelper.CommonPage;
 
+
 import java.util.List;
+
+import static com.fun.common.result.CommonResult.failed;
+import static com.fun.common.result.CommonResult.success;
 
 /**
  * @author u-fun
  * @date 2019/10/30
  */
-@Api("参数配置表")
+@Api(description = "参数配置表")
 @Controller
 @RequestMapping("/admin/config")
 public class ConfigController extends BaseController {
@@ -36,7 +40,7 @@ public class ConfigController extends BaseController {
     public CommonResult selectConfigList(Config config) {
         startPage();
         List<Config> configs = configService.selectConfigList(config);
-        return CommonResult.success(CommonPage.restPage(configs));
+        return success(CommonPage.restPage(configs));
     }
 
 
@@ -45,7 +49,7 @@ public class ConfigController extends BaseController {
     @GetMapping("/selectConfigById/{configId}")
     @ResponseBody
     public CommonResult selectConfigById(@PathVariable("configId") Long configId) {
-        return CommonResult.success(configService.selectConfigById(configId));
+        return success(configService.selectConfigById(configId));
     }
 
     @ApiOperation(value = "新增Config")
@@ -54,9 +58,9 @@ public class ConfigController extends BaseController {
     @ResponseBody
     public CommonResult insertConfig(Config config) {
         if (Constants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
-            return CommonResult.failed("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return failed("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
-        return CommonResult.success(configService.insertConfig(config));
+        return success(configService.insertConfig(config));
     }
 
 
@@ -65,7 +69,7 @@ public class ConfigController extends BaseController {
     @PostMapping("/updateConfig")
     @ResponseBody
     public CommonResult updateConfig(Config config) {
-        return CommonResult.success(configService.updateConfig(config));
+        return success(configService.updateConfig(config));
     }
 
 
@@ -74,7 +78,7 @@ public class ConfigController extends BaseController {
     @PostMapping("/deleteConfigById/{configId}")
     @ResponseBody
     public CommonResult deleteConfigById(@PathVariable("configId") Long configId) {
-        return CommonResult.success(configService.deleteConfigById(configId));
+        return success(configService.deleteConfigById(configId));
     }
 
     @ApiOperation(value = "通过id批量删除Config")
@@ -82,7 +86,7 @@ public class ConfigController extends BaseController {
     @PostMapping("/deleteList")
     @ResponseBody
     public CommonResult deleteConfigByIds(String configIds) {
-        return CommonResult.success(configService.deleteConfigByIds(configIds));
+        return success(configService.deleteConfigByIds(configIds));
     }
 
     /**
@@ -90,8 +94,7 @@ public class ConfigController extends BaseController {
      */
     @PostMapping("/checkConfigKeyUnique")
     @ResponseBody
-    public String checkConfigKeyUnique(Config config)
-    {
+    public String checkConfigKeyUnique(Config config) {
         return configService.checkConfigKeyUnique(config);
     }
 }

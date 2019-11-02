@@ -1,6 +1,5 @@
 package com.fun.project.admin.system.controller;
 
-import com.fun.common.constant.Constants;
 import com.fun.framework.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -15,16 +14,18 @@ import io.swagger.annotations.Api;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.IDictDataService;
-import com.fun.project.admin.system.entity.DictData;
+import com.fun.project.admin.system.entity.dict.DictData;
 import com.fun.common.pagehelper.CommonPage;
 
 import java.util.List;
+
+import static com.fun.common.result.CommonResult.success;
 
 /**
  * @author u-fun
  * @date 2019/10/30
  */
-@Api("字典数据表")
+@Api(description = "字典数据")
 @Controller
 @RequestMapping("/admin/system/dict/data")
 public class DictDataController extends BaseController {
@@ -40,7 +41,7 @@ public class DictDataController extends BaseController {
     public CommonResult selectDictDataList(DictData dictData) {
         startPage();
         List<DictData> dictDataList = dictDataService.selectDictDataList(dictData);
-        return CommonResult.success(CommonPage.restPage(dictDataList));
+        return success(CommonPage.restPage(dictDataList));
     }
 
     /**
@@ -67,7 +68,7 @@ public class DictDataController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public CommonResult insertDictData(@Validated DictData dictData) {
-        return CommonResult.success(dictDataService.insertDictData(dictData));
+        return success(dictDataService.insertDictData(dictData));
     }
 
 
@@ -77,7 +78,7 @@ public class DictDataController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public CommonResult updateDictData(@Validated DictData dictData) {
-        return CommonResult.success(dictDataService.updateDictData(dictData));
+        return success(dictDataService.updateDictData(dictData));
     }
 
     @ApiOperation(value = "通过id批量删除DictData")
@@ -86,6 +87,6 @@ public class DictDataController extends BaseController {
     @PostMapping("/remove")
     @ResponseBody
     public CommonResult deleteDictDataByIds(String ids) {
-        return CommonResult.success(dictDataService.deleteDictDataByIds(ids));
+        return success(dictDataService.deleteDictDataByIds(ids));
     }
 }

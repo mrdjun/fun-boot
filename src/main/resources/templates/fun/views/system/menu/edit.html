@@ -65,7 +65,7 @@
 					<input id="icon" name="icon" class="form-control" type="text" placeholder="选择图标" th:field="*{icon}">
                     <div class="ms-parent" style="width: 100%;">
                         <div class="icon-drop animated flipInX" style="display: none;max-height:200px;overflow-y:auto">
-                            <div data-th-include="system/menu/icon"></div>
+                            <div data-th-include="fun/views/system/menu/icon"></div>
                         </div>
                     </div>
 				</div>
@@ -83,7 +83,7 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	 <script>
-        var prefix = ctx + "system/menu";
+        var prefix = ctx + "admin/system/menu";
 
         $(function() {
             var menuType = $('input[name="menuType"]:checked').val();
@@ -94,7 +94,7 @@
         	onkeyup: false,
         	rules:{
         		menuType:{
-        			required:true,
+        			required:true
         		},
         		menuName:{
         			remote: {
@@ -119,7 +119,7 @@
         		},
         		orderNum:{
         			digits:true
-        		},
+        		}
         	},
         	messages: {
                 "menuName": {
@@ -157,19 +157,19 @@
         });
 
         function menuVisible(menuType) {
-            if (menuType == "M") {
+            if (menuType === "M") {
                 $("#url").parents(".form-group").hide();
                 $("#perms").parents(".form-group").hide();
                 $("#icon").parents(".form-group").show();
                 $("#target").parents(".form-group").hide();
                 $("input[name='visible']").parents(".form-group").show();
-            } else if (menuType == "C") {
+            } else if (menuType === "C") {
                 $("#url").parents(".form-group").show();
                 $("#perms").parents(".form-group").show();
                 $("#icon").parents(".form-group").show();
                 $("#target").parents(".form-group").show();
                 $("input[name='visible']").parents(".form-group").show();
-            } else if (menuType == "F") {
+            } else if (menuType === "F") {
                 $("#url").parents(".form-group").hide();
                 $("#perms").parents(".form-group").show();
                 $("#icon").parents(".form-group").hide();
@@ -189,21 +189,21 @@
         	}
         }
         
-        function selectMenuTree() {
-        	var menuId = $("#treeId").val();
-        	if(menuId > 0) {
-        		var url = prefix + "/selectMenuTree/" + menuId;
-        		var options = {
-       				title: '菜单选择',
-       				width: "380",
-       				url: url,
-       				callBack: doSubmit
-       			};
-       			$.modal.openOptions(options);
-        	} else {
-        		$.modal.alertError("主菜单不能选择");
-        	}
-		}
+        // function selectMenuTree() {
+        // 	var menuId = $("#treeId").val();
+        // 	if(menuId > 0) {
+        // 		var url = prefix + "/selectMenuTree/" + menuId;
+        // 		var options = {
+       	// 			title: '菜单选择',
+       	// 			width: "380",
+       	// 			url: url,
+       	// 			callBack: doSubmit
+       	// 		};
+       	// 		$.modal.openOptions(options);
+        // 	} else {
+        // 		$.modal.alertWarning("主菜单不能选择");
+        // 	}
+		// }
 		
 		function doSubmit(index, layero){
 			var body = layer.getChildFrame('body', index);

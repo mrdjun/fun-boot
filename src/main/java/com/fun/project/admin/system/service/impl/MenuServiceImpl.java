@@ -1,12 +1,13 @@
 package com.fun.project.admin.system.service.impl;
 
+import com.fun.common.constant.Constants;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.TreeUtils;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.framework.web.entity.Ztree;
 import com.fun.project.admin.system.entity.Menu;
 import com.fun.project.admin.system.mapper.MenuMapper;
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.mapper.RoleMenuMapper;
 import com.fun.project.admin.system.service.IMenuService;
 import com.fun.project.admin.system.entity.user.AdminUser;
@@ -16,13 +17,14 @@ import org.springframework.stereotype.Service;
 import java.text.MessageFormat;
 import java.util.*;
 
+
 /**
- *
  * @author DJun
  */
 @Service
 public class MenuServiceImpl implements IMenuService {
-    public static final String PREMISSION_STRING = "perms[\"{0}\"]";
+
+
     @Autowired
     private MenuMapper menuMapper;
     @Autowired
@@ -114,7 +116,7 @@ public class MenuServiceImpl implements IMenuService {
         List<Menu> permissions = selectMenuAll();
         if (StringUtils.isNotEmpty(permissions)) {
             for (Menu menu : permissions) {
-                section.put(menu.getUrl(), MessageFormat.format(PREMISSION_STRING, menu.getPerms()));
+                section.put(menu.getUrl(), MessageFormat.format(Constants.PREMISSION_STRING, menu.getPerms()));
             }
         }
         return section;
@@ -211,12 +213,12 @@ public class MenuServiceImpl implements IMenuService {
     }
 
     @Override
-    public int checkMenuNameUnique(Menu menu) {
+    public String checkMenuNameUnique(Menu menu) {
+        Long menuId = StringUtils.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (StringUtils.isNull(info)) {
-            return 0;
+        if (StringUtils.isNotNull(info) && info.getMenuId().longValue() != menuId.longValue()) {
+            return Constants.NOT_UNIQUE;
         }
-        return 1;
-
+        return Constants.UNIQUE;
     }
 }

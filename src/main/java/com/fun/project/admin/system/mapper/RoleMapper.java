@@ -1,12 +1,12 @@
 package com.fun.project.admin.system.mapper;
 
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.role.Role;
 
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/14 13:22
- * desc:
+ * @author DJun
+ * @date 2019/9/14 13:22
  */
 public interface RoleMapper {
     /**
@@ -71,7 +71,7 @@ public interface RoleMapper {
      * @param roleName 角色名称
      * @return 角色信息
      */
-     int checkRoleNameUnique(String roleName);
+     Role checkRoleNameUnique(String roleName);
 
     /**
      * 校验角色权限是否唯一
@@ -79,5 +79,5 @@ public interface RoleMapper {
      * @param roleKey 角色权限
      * @return 角色信息
      */
-     int checkRoleKeyUnique(String roleKey);
+     Role checkRoleKeyUnique(String roleKey);
 }

@@ -52,6 +52,15 @@
     <script th:src="@{/fun/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
 </div>
 
+<!-- select2下拉框插件 -->
+<div th:fragment="select2-css">
+    <link th:href="@{/fun/libs/select2/select2.min.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/libs/select2/select2-bootstrap.css}" rel="stylesheet"/>
+</div>
+<div th:fragment="select2-js">
+    <script th:src="@{/fun/libs/select2/select2.min.js}"></script>
+</div>
+
 <!-- bootstrap-select下拉框插件 -->
 <div th:fragment="bootstrap-select-css">
     <link th:href="@{/fun/libs/bootstrap-select/bootstrap-select.css}" rel="stylesheet"/>

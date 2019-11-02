@@ -2,6 +2,8 @@ package com.fun.project.admin.system.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping("/captcha")
+@Api(description ="验证码")
 public class CaptchaController {
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
@@ -29,9 +32,7 @@ public class CaptchaController {
     @Resource(name = "captchaProducerMath")
     private Producer captchaProducerMath;
 
-    /**
-     * 验证码生成
-     */
+    @ApiOperation("验证码生成")
     @GetMapping("/captchaImage")
     public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) {
         ServletOutputStream out = null;

@@ -1,12 +1,14 @@
 package com.fun.project.admin.system.mapper;
 
-import com.fun.project.admin.system.entity.RoleMenu;
+import com.fun.project.admin.system.entity.role.RoleMenu;
 
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/14 13:24
- * desc: 角色与菜单关联表
+ * 角色与菜单关联表
+ *
+ * @author DJun
+ * @date 2019/9/14 13:24
  */
 public interface RoleMenuMapper {
 
@@ -16,7 +18,7 @@ public interface RoleMenuMapper {
      * @param roleId 角色ID
      * @return 结果
      */
-     int deleteRoleMenuByRoleId(Long roleId);
+    int deleteRoleMenuByRoleId(Long roleId);
 
     /**
      * 批量删除角色菜单关联信息
@@ -24,7 +26,7 @@ public interface RoleMenuMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-     int deleteRoleMenu(Long[] ids);
+    int deleteRoleMenu(Long[] ids);
 
     /**
      * 查询菜单使用数量
@@ -32,7 +34,7 @@ public interface RoleMenuMapper {
      * @param menuId 菜单ID
      * @return 结果
      */
-     int selectCountRoleMenuByMenuId(Long menuId);
+    int selectCountRoleMenuByMenuId(Long menuId);
 
     /**
      * 批量新增角色菜单信息
@@ -40,6 +42,6 @@ public interface RoleMenuMapper {
      * @param roleMenuList 角色菜单列表
      * @return 结果
      */
-     int batchRoleMenu(List<RoleMenu> roleMenuList);
+    int batchRoleMenu(List<RoleMenu> roleMenuList);
 
 }

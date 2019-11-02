@@ -18,7 +18,7 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-     List<AdminUser> selectAdminUserList(AdminUser user,int pageNum,int pageSize);
+    List<AdminUser> selectAdminUserList(AdminUser user);
 
     /**
      * 通过用户名查询用户
@@ -26,7 +26,7 @@ public interface IAdminUserService {
      * @param loginName 用户名
      * @return 用户对象信息
      */
-     AdminUser selectUserByLoginName(String loginName);
+    AdminUser selectUserByLoginName(String loginName);
 
     /**
      * 通过手机号码查询用户
@@ -34,7 +34,7 @@ public interface IAdminUserService {
      * @param telephone 手机号码
      * @return 用户对象信息
      */
-     AdminUser selectUserByTelephone(String telephone);
+    AdminUser selectUserByTelephone(String telephone);
 
     /**
      * 通过邮箱查询用户
@@ -42,7 +42,7 @@ public interface IAdminUserService {
      * @param email 邮箱
      * @return 用户对象信息
      */
-     AdminUser selectUserByEmail(String email);
+    AdminUser selectUserByEmail(String email);
 
     /**
      * 通过用户ID查询用户
@@ -50,7 +50,7 @@ public interface IAdminUserService {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-     AdminUser selectUserById(Long userId);
+    AdminUser selectUserById(Long userId);
 
     /**
      * 通过用户ID删除用户
@@ -58,7 +58,7 @@ public interface IAdminUserService {
      * @param userId 用户ID
      * @return 结果
      */
-     int deleteUserById(Long userId);
+    int deleteUserById(Long userId);
 
     /**
      * 批量删除用户信息
@@ -67,7 +67,7 @@ public interface IAdminUserService {
      * @return 结果
      * @throws Exception 异常
      */
-     int deleteUserByIds(String ids) throws Exception;
+    int deleteUserByIds(String ids) throws Exception;
 
     /**
      * 保存用户信息
@@ -75,7 +75,7 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 结果
      */
-     int insertUser(AdminUser user);
+    int insertUser(AdminUser user);
 
     /**
      * 保存用户信息
@@ -83,7 +83,7 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 结果
      */
-     int updateUser(AdminUser user);
+    int updateUser(AdminUser user);
 
     /**
      * 修改用户详细信息
@@ -91,16 +91,17 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 结果
      */
-     int updateUserInfo(AdminUser user);
+    int updateUserInfo(AdminUser user);
 
-     int updateUserInfoByLoginName(AdminUser adminUser);
+    int updateUserInfoByLoginName(AdminUser adminUser);
+
     /**
      * 修改用户密码信息
      *
      * @param user 用户信息
      * @return 结果
      */
-     int resetUserPwd(AdminUser user);
+    int resetUserPwd(AdminUser user);
 
     /**
      * 校验用户名称是否唯一
@@ -108,23 +109,23 @@ public interface IAdminUserService {
      * @param loginName 登录名称
      * @return 结果
      */
-    int checkLoginNameUnique(String loginName);
+    String checkLoginNameUnique(String loginName);
 
     /**
      * 校验手机号码是否唯一
      *
-     * @param telephone telephone
+     * @param user telephone
      * @return 结果
      */
-    int checkPhoneUnique(String telephone);
+    String checkPhoneUnique(AdminUser user);
 
     /**
      * 校验email是否唯一
      *
-     * @param email 用户信息
+     * @param user 用户信息
      * @return 结果
      */
-    int checkEmailUnique(String email);
+    String checkEmailUnique(AdminUser user);
 
     /**
      * 根据用户ID查询用户所属角色组
@@ -132,7 +133,7 @@ public interface IAdminUserService {
      * @param userId 用户ID
      * @return 结果
      */
-     String selectUserRoleGroup(Long userId);
+    String selectUserRoleGroup(Long userId);
 
     /**
      * 用户状态修改
@@ -140,6 +141,22 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 结果
      */
-     int changeStatus(AdminUser user);
+    int changeStatus(AdminUser user);
+
+    /**
+     * 根据条件分页查询已分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    List<AdminUser> selectAllocatedList(AdminUser user);
+
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    List<AdminUser> selectUnallocatedList(AdminUser user);
 
 }

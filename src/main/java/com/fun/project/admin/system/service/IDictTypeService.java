@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.service;
 
 import com.fun.framework.web.entity.Ztree;
-import com.fun.project.admin.system.entity.DictType;
+import com.fun.project.admin.system.entity.dict.DictType;
 
 import java.util.List;
 

@@ -388,7 +388,7 @@
             selectDictLabel: function (datas, value) {
                 var actions = [];
                 $.each(datas, function (index, dict) {
-                    if (dict.dictValue == ('' + value)) {
+                    if (dict.dictValue === ('' + value)) {
                         var listClass = $.common.equals("default", dict.listClass) || $.common.isEmpty(dict.listClass) ? "" : "badge badge-" + dict.listClass;
                         actions.push($.common.sprintf("<span class='%s'>%s</span>", listClass, dict.dictLabel));
                         return false;
@@ -429,7 +429,7 @@
                 $.bttTable = $('#' + options.id).bootstrapTreeTable({
                     code: options.code,                                 // 用于设置父子关系
                     parentCode: options.parentCode,                     // 用于设置父子关系
-                    type: 'post',                                        // 请求方式（*）
+                    type: 'post',                                       // 请求方式（*）
                     url: options.url,                                   // 请求后台的URL（*）
                     ajaxParams: options.ajaxParams,                     // 请求数据的ajax的data属性
                     rootIdValue: options.rootIdValue,                   // 设置指定根节点id值
@@ -466,7 +466,7 @@
             },
             // 请求获取数据后处理回调函数，校验异常状态提醒
             responseHandler: function (data) {
-                if (data.code != undefined && data.code != 0) {
+                if (data.code !== undefined && data.code !== 200) {
                     $.modal.alertWarning(data.message);
                     return [];
                 } else {
@@ -480,13 +480,13 @@
             reset: function (formId) {
                 var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
                 $("#" + currentId)[0].reset();
-                $.btTable.bootstrapTable('refresh');
+                $.bttTable.bootstrapTable('refresh');
             },
             // 获取选中复选框项
             selectCheckeds: function (name) {
                 var checkeds = "";
                 $('input:checkbox[name="' + name + '"]:checked').each(function (i) {
-                    if (0 == i) {
+                    if (0 === i) {
                         checkeds = $(this).val();
                     } else {
                         checkeds += ("," + $(this).val());
@@ -498,7 +498,7 @@
             selectSelects: function (name) {
                 var selects = "";
                 $('#' + name + ' option:selected').each(function (i) {
-                    if (0 == i) {
+                    if (0 === i) {
                         selects = $(this).val();
                     } else {
                         selects += ("," + $(this).val());
@@ -512,11 +512,11 @@
             // 显示图标
             icon: function (type) {
                 var icon = "";
-                if (type == modal_status.WARNING) {
+                if (type === modal_status.WARNING) {
                     icon = 0;
-                } else if (type == modal_status.SUCCESS) {
+                } else if (type === modal_status.SUCCESS) {
                     icon = 1;
-                } else if (type == modal_status.FAIL) {
+                } else if (type === modal_status.FAIL) {
                     icon = 2;
                 } else {
                     icon = 3;
@@ -525,7 +525,7 @@
             },
             // 消息提示
             msg: function (content, type) {
-                if (type != undefined) {
+                if (type !== undefined) {
                     layer.msg(content, {icon: $.modal.icon(type), time: 1000, shift: 5});
                 } else {
                     layer.msg(content);
@@ -1044,6 +1044,7 @@
         validate: {
             // 判断返回标识是否唯一 false 不存在 true 存在
             unique: function (value) {
+                // value为服务器的返回值result
                 return value === "0";
 
             },
@@ -1108,14 +1109,14 @@
             searchNode: function () {
                 // 取得输入的关键字的值
                 var value = $.common.trim($("#keyword").val());
-                if ($.tree._lastValue == value) {
+                if ($.tree._lastValue === value) {
                     return;
                 }
                 // 保存最后一次搜索名称
                 $.tree._lastValue = value;
                 var nodes = $._tree.getNodes();
                 // 如果要查空字串，就退出不查了。
-                if (value == "") {
+                if (value === "") {
                     $.tree.showAllNode(nodes);
                     return;
                 }
@@ -1125,7 +1126,7 @@
             },
             // 根据Id和Name选中指定节点
             selectByIdName: function (treeId, node) {
-                if ($.common.isNotEmpty(treeId) && treeId == node.id) {
+                if ($.common.isNotEmpty(treeId) && treeId === node.id) {
                     $._tree.selectNode(node, true);
                 }
             },

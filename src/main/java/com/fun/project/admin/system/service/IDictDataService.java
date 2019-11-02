@@ -1,6 +1,6 @@
 package com.fun.project.admin.system.service;
 
-import com.fun.project.admin.system.entity.DictData;
+import com.fun.project.admin.system.entity.dict.DictData;
 
 import java.util.List;
 

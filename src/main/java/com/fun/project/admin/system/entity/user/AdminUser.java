@@ -1,7 +1,8 @@
 package com.fun.project.admin.system.entity.user;
 
 import com.fun.framework.web.entity.BaseEntity;
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.Dept;
+import com.fun.project.admin.system.entity.role.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
@@ -20,6 +21,10 @@ import java.util.List;
 @Data
 public class AdminUser extends BaseEntity {
     private Long userId;
+
+    private Long deptId;
+
+    private Long roleId;
 
     @NotBlank(message = "登录账号不能为空")
     @Size(max = 30, message = "登录账号长度不能超过30个字符")
@@ -58,20 +63,18 @@ public class AdminUser extends BaseEntity {
     private String loginIp;
 
     private Long loginDate;
-    /**
-     * 创建者
-     */
-    private String createBy;
-    /**
-     * 修改者
-     */
-    private String updateBy;
 
     private List<Role> roles;
     /**
      * 角色组
      */
     private Long[] roleIds;
+
+    /** 部门对象 */
+    private Dept dept;
+
+    /** 岗位组 */
+    private Long[] postIds;
 
     /**
      * 生成随机盐

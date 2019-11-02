@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
 import com.fun.common.result.CommonResult;
+import static com.fun.common.result.CommonResult.failed;
+import static com.fun.common.result.CommonResult.success;
 import com.fun.framework.web.controller.BaseController;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.I${classInfo.className}Service;
@@ -36,7 +38,7 @@ public class ${classInfo.className}Controller extends BaseController{
     public CommonResult select${classInfo.className}List(${classInfo.className} ${classInfo.className?uncap_first}){
         startPage();
         List<${classInfo.className}> ${classInfo.className?uncap_first}List = ${classInfo.className?uncap_first}Service.select${classInfo.className}List(${classInfo.className?uncap_first});
-        return CommonResult.success(CommonPage.restPage(${classInfo.className?uncap_first}List));
+        return success(CommonPage.restPage(${classInfo.className?uncap_first}List));
     }
 
 
@@ -45,7 +47,7 @@ public class ${classInfo.className}Controller extends BaseController{
     @PostMapping("/add")
     @ResponseBody
     public CommonResult insert${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.insert${classInfo.className}(${classInfo.className?uncap_first}));
+        return success(${classInfo.className?uncap_first}Service.insert${classInfo.className}(${classInfo.className?uncap_first}));
     }
 
     /** 修改 ${classInfo.classComment} */
@@ -60,7 +62,7 @@ public class ${classInfo.className}Controller extends BaseController{
     @PostMapping("/edit")
     @ResponseBody
     public CommonResult update${classInfo.className}(${classInfo.className} ${classInfo.className?uncap_first}){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.update${classInfo.className}(${classInfo.className?uncap_first}));
+        return success(${classInfo.className?uncap_first}Service.update${classInfo.className}(${classInfo.className?uncap_first}));
     }
 
     @ApiOperation(value = "通过ids批量删除${classInfo.className}")
@@ -68,6 +70,6 @@ public class ${classInfo.className}Controller extends BaseController{
     @PostMapping("/remove")
     @ResponseBody
     public CommonResult delete${classInfo.className}ByIds(String ids){
-        return CommonResult.success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ByIds(ids));
+        return success(${classInfo.className?uncap_first}Service.delete${classInfo.className}ByIds(ids));
     }
 }

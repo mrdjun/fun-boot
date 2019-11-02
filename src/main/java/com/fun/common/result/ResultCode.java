@@ -1,11 +1,15 @@
 package com.fun.common.result;
 
 /**
- * Created by DJun on  2019/07/19 11:56
- * desc:
+ * @author DJun
+ * @date 2019/07/19 11:56
  */
 public enum ResultCode implements IErrorCode{
+    /**
+     * code and message
+     */
     SUCCESS(200,"操作成功"),
+    WARN(301,"操作警告"),
     FAILED(500,"操作失败"),
     VALIDATE_FAILED(404, "参数检验失败"),
     UNAUTHORIZED(401, "暂未登录或token已经过期"),

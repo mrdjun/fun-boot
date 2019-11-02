@@ -58,6 +58,7 @@ public class CommonPage<T> {
         result.setPageSize(pageInfo.getPageSize());
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getList());
+        // 返回 res.data.list
         return result;
     }
 

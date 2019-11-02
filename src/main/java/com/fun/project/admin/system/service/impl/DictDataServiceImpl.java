@@ -2,14 +2,13 @@ package com.fun.project.admin.system.service.impl;
 
 import com.fun.common.utils.TimestampUtil;
 import com.fun.framework.shiro.helper.ShiroUtils;
-import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fun.common.utils.text.Convert;
 import com.fun.project.admin.system.mapper.DictDataMapper;
 import com.fun.project.admin.system.service.IDictDataService;
-import com.fun.project.admin.system.entity.DictData;
+import com.fun.project.admin.system.entity.dict.DictData;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.fun.project.admin.system.entity;
+package com.fun.project.admin.system.entity.dict;
 
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.Getter;

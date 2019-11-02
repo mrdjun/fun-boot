@@ -1,4 +1,4 @@
-package com.fun.project.admin.system.entity;
+package com.fun.project.admin.system.entity.dict;
 
 import com.fun.common.constant.Constants;
 import com.fun.framework.web.entity.BaseEntity;

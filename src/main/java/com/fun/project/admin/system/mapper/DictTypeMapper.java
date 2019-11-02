@@ -1,6 +1,6 @@
 package com.fun.project.admin.system.mapper;
 
-import com.fun.project.admin.system.entity.DictType;
+import com.fun.project.admin.system.entity.dict.DictType;
 
 import java.util.List;
 

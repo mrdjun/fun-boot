@@ -30,9 +30,7 @@ public class ${classInfo.className} extends BaseEntity {
     <#list classInfo.fieldList as fieldItem >
 
         <#if fieldItem.fieldClass=='int' && index== 0>
-            /**
-             * ${fieldItem.fieldComment}
-             */
+            /**  ${fieldItem.fieldComment} */
             private Long ${fieldItem.fieldName};
             <#assign index=1 />
         <#elseif fieldItem.fieldName=='create_by' || fieldItem.fieldName=='createBy'>
@@ -42,19 +40,13 @@ public class ${classInfo.className} extends BaseEntity {
         <#elseif fieldItem.fieldName=='remark'>
         <#elseif fieldItem.fieldName=='status'>
         <#elseif fieldItem.fieldClass=='int' && index==1>
-            /**
-             * ${fieldItem.fieldComment}
-             */
+            /** ${fieldItem.fieldComment} */
             private Integer ${fieldItem.fieldName};
         <#elseif fieldItem.fieldClass=='long'>
-            /**
-             * ${fieldItem.fieldComment}
-             */
+            /** ${fieldItem.fieldComment} */
             private Long ${fieldItem.fieldName};
         <#else>
-           /**
-            * ${fieldItem.fieldComment}
-            */
+           /** ${fieldItem.fieldComment} */
             private ${fieldItem.fieldClass} ${fieldItem.fieldName};
         </#if>
 

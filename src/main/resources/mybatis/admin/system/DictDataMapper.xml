@@ -114,7 +114,7 @@
 
     <select id="selectDictDataByType" parameterType="DictData" resultMap="DictDataResult">
         <include refid="DictDataResultVo"/>
-        where status = '0' and dict_type = #{dictType} order by dict_sort asc
+        where status = '1' and dict_type = #{dictType} order by dict_sort asc
     </select>
 
     <select id="selectDictLabel" resultType="String">

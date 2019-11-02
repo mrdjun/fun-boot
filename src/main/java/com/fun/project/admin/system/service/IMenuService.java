@@ -2,7 +2,7 @@ package com.fun.project.admin.system.service;
 
 import com.fun.framework.web.entity.Ztree;
 import com.fun.project.admin.system.entity.Menu;
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.entity.user.AdminUser;
 
 import java.util.List;
@@ -121,5 +121,5 @@ public interface IMenuService {
      * @param menu 菜单信息
      * @return 存在则返回0，不存在则返回1
      */
-    int checkMenuNameUnique(Menu menu);
+    String checkMenuNameUnique(Menu menu);
 }

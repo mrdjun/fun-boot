@@ -3,14 +3,13 @@ package com.fun.project.admin.system.service.impl;
 import com.fun.common.constant.Constants;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.web.entity.Ztree;
-import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fun.common.utils.text.Convert;
 import com.fun.project.admin.system.mapper.DictTypeMapper;
 import com.fun.project.admin.system.service.IDictTypeService;
-import com.fun.project.admin.system.entity.DictType;
+import com.fun.project.admin.system.entity.dict.DictType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,8 @@
 package com.fun.framework.web.entity;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -7,7 +10,9 @@ import java.io.Serializable;
  * Ztree 树结构实体类
  * @author DJun
  */
-@Data
+@Getter
+@Setter
+@ToString
 public class Ztree implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +26,11 @@ public class Ztree implements Serializable {
      */
     private Long pId;
 
+    /** 解决 pId 被序列化成 pid 的问题*/
+    @JsonProperty("pId")
+    public Long getPId(){
+        return pId;
+    }
     /**
      * 节点名称
      */

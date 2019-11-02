@@ -1,6 +1,6 @@
 package com.fun.project.admin.system.mapper;
 
-import com.fun.project.admin.system.entity.DictData;
+import com.fun.project.admin.system.entity.dict.DictData;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

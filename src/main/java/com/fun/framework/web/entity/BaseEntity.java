@@ -23,6 +23,9 @@ public class BaseEntity implements Serializable {
      */
     private Long createTime;
     private Long updateTime;
+    /**
+     * 0-禁用 1-正常
+     */
     private String status;
     /**
      * 创建者

@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Created by DJun on  2019/07/19 11:49
- * desc:
+ * 统一结果返回类
+ * @author DJun
+ * @date 2019/07/19 11:49
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -91,4 +92,10 @@ public class CommonResult<T> implements Serializable {
         return new CommonResult<>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
+    /**
+     * 警告
+     */
+    public static <T> CommonResult<T> warn(String message) {
+        return new CommonResult<>(ResultCode.WARN.getCode(),message,null);
+    }
 }

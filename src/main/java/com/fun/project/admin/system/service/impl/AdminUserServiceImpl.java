@@ -5,14 +5,13 @@ import com.fun.common.utils.Md5Utils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.text.Convert;
 import com.fun.framework.shiro.helper.ShiroUtils;
-import com.fun.project.admin.system.entity.Role;
+import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.mapper.RoleMapper;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.entity.user.UserRole;
 import com.fun.project.admin.system.mapper.AdminUserMapper;
 import com.fun.project.admin.system.mapper.UserRoleMapper;
 import com.fun.project.admin.system.service.IAdminUserService;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author DJun
  */
 @Service
@@ -34,8 +32,8 @@ public class AdminUserServiceImpl implements IAdminUserService {
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public List<AdminUser> selectAdminUserList(AdminUser user, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum,pageSize).doSelectPage(()->adminUserMapper.selectAdminUserList(user));
+    public List<AdminUser> selectAdminUserList(AdminUser user) {
+        return adminUserMapper.selectAdminUserList(user);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
 
     @Override
     public AdminUser selectUserByTelephone(String telephone) {
-        return adminUserMapper.selectUserByTelephone(telephone);
+        return adminUserMapper.selectAdminUserByTelephone(telephone);
     }
 
     @Override
@@ -110,18 +108,18 @@ public class AdminUserServiceImpl implements IAdminUserService {
     }
 
     @Override
-    public int checkLoginNameUnique(String loginName) {
+    public String checkLoginNameUnique(String loginName) {
         return adminUserMapper.checkLoginNameUnique(loginName);
     }
 
     @Override
-    public int checkPhoneUnique(String telephone) {
-        return adminUserMapper.checkPhoneUnique(telephone);
+    public String checkPhoneUnique(AdminUser user) {
+        return adminUserMapper.checkPhoneUnique(user);
     }
 
     @Override
-    public int checkEmailUnique(String email) {
-        return adminUserMapper.checkEmailUnique(email);
+    public String checkEmailUnique(AdminUser user) {
+        return adminUserMapper.checkEmailUnique(user);
     }
 
     @Override
@@ -168,5 +166,25 @@ public class AdminUserServiceImpl implements IAdminUserService {
         }
     }
 
+    /**
+     * 根据条件分页查询已分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    public List<AdminUser> selectAllocatedList(AdminUser user) {
+        return adminUserMapper.selectAllocatedList(user);
+    }
 
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    public List<AdminUser> selectUnallocatedList(AdminUser user) {
+        return adminUserMapper.selectUnallocatedList(user);
+    }
 }

@@ -23,24 +23,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="updateBy"     column="update_by"    />
 		<result property="updateTime"   column="update_time"  />
 		<result property="remark"       column="remark"       />
+		<association property="dept"    column="dept_id" javaType="Dept" resultMap="deptResult" />
+		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
+	</resultMap>
+
+	<resultMap id="deptResult" type="Dept">
+		<id     property="deptId"   column="dept_id"     />
+		<result property="parentId" column="parent_id"   />
+		<result property="deptName" column="dept_name"   />
+		<result property="orderNum" column="order_num"   />
+		<result property="leader"   column="leader"   />
+		<result property="status"   column="dept_status" />
+	</resultMap>
+
+	<resultMap id="RoleResult" type="Role">
+		<id     property="roleId"       column="role_id"        />
+		<result property="roleName"     column="role_name"      />
+		<result property="roleKey"      column="role_key"       />
+		<result property="roleSort"     column="role_sort"      />
+		<result property="dataScope"     column="data_scope"    />
+		<result property="status"       column="role_status"    />
 	</resultMap>
 
 	<sql id="selectAdminUserVo">
-		select user_id, login_name, username, email, telephone, sex, avatar, password, salt, status, del_flag, login_ip, login_date, create_by, create_time, update_by, update_time, remark from sys_user
+		 select  u.user_id, u.dept_id, u.login_name, u.username, u.email, u.avatar, u.telephone, u.sex, u.password, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_time, u.remark,
+       		    d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
+       		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
+		from sys_user u
+			 left join sys_dept d on u.dept_id = d.dept_id
+			 left join sys_user_role ur on u.user_id = ur.user_id
+			 left join sys_role r on r.role_id = ur.role_id
     </sql>
 
 	<select id="selectAdminUserList" parameterType="AdminUser" resultMap="AdminUserResult">
-		<include refid="selectAdminUserVo"/>
-		where del_flag = '1'
+		select u.user_id, u.dept_id, u.login_name, u.username, u.email, u.avatar, u.telephone, u.password, u.sex, u.salt, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user u
+		left join sys_dept d on u.dept_id = d.dept_id
+		where u.del_flag = '1'
 		<if test="loginName != null and loginName != ''">
-			AND login_name like concat('%', #{loginName}, '%')
+			AND u.login_name like concat('%', #{loginName}, '%')
 		</if>
 		<if test="status != null and status != ''">
-			AND status = #{status}
+			AND u.status = #{status}
 		</if>
 		<if test="telephone != null and telephone != ''">
-			AND telephone like concat('%', #{telephone}, '%')
+			AND u.telephone like concat('%', #{telephone}, '%')
 		</if>
+		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+			and create_time &gt;= UNIX_TIMESTAMP(#{params.beginTime})*1000
+		</if>
+		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+			and create_time &lt;= UNIX_TIMESTAMP(#{params.endTime})*1000
+		</if>
+		<if test="deptId != null and deptId != 0">
+			AND (u.dept_id = #{deptId} OR u.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE FIND_IN_SET (#{deptId},ancestors) ))
+		</if>
+		<!-- 数据范围过滤 -->
+		<!-- 	${params.dataScope} -->
 	</select>
 
 	<select id="selectUserByLoginName" parameterType="String" resultMap="AdminUserResult">
@@ -169,12 +207,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(1) from sys_user where login_name=#{loginName}
 	</select>
 
-	<select id="checkPhoneUnique" parameterType="String" resultType="int">
-		select count(1) from sys_user where telephone=#{telephone}
+	<select id="checkPhoneUnique" parameterType="String" resultMap="AdminUserResult">
+		select user_id, telephone from sys_user where telephone=#{telephone}
 	</select>
 
-	<select id="checkEmailUnique" parameterType="String" resultType="int">
-		select count(1) from sys_user where email=#{email}
+	<select id="checkEmailUnique" parameterType="String" resultMap="AdminUserResult">
+		select user_id, email from sys_user where email=#{email}
+	</select>
+
+	<select id="selectAllocatedList" parameterType="AdminUser" resultMap="AdminUserResult">
+		select distinct u.user_id, u.dept_id, u.login_name, u.username, u.email, u.avatar, u.telephone, u.status, u.create_time
+		from sys_user u
+		left join sys_dept d on u.dept_id = d.dept_id
+		left join sys_user_role ur on u.user_id = ur.user_id
+		left join sys_role r on r.role_id = ur.role_id
+		where u.del_flag = '1' and r.role_id = #{roleId}
+		<if test="loginName != null and loginName != ''">
+			AND u.login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="telephone != null and telephone != ''">
+			AND u.telephone like concat('%', #{telephone}, '%')
+		</if>
+		<!-- 数据范围过滤 -->
+		<!-- 	${params.dataScope} -->
+	</select>
+
+	<select id="selectUnallocatedList" parameterType="AdminUser" resultMap="AdminUserResult">
+		select distinct u.user_id, u.dept_id, u.login_name, u.username, u.email, u.avatar, u.telephone, u.status, u.create_time
+		from sys_user u
+		left join sys_dept d on u.dept_id = d.dept_id
+		left join sys_user_role ur on u.user_id = ur.user_id
+		left join sys_role r on r.role_id = ur.role_id
+		where u.del_flag = '1' and (r.role_id != #{roleId} or r.role_id IS NULL)
+		and u.user_id not in (select u.user_id from sys_user u inner join sys_user_role ur on u.user_id = ur.user_id and ur.role_id = #{roleId})
+		<if test="loginName != null and loginName != ''">
+			AND u.login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="telephone != null and telephone != ''">
+			AND u.telephone like concat('%', #{telephone}, '%')
+		</if>
+		<!-- 数据范围过滤 -->
+		<!-- 		${params.dataScope} -->
 	</select>
 
 </mapper> 
