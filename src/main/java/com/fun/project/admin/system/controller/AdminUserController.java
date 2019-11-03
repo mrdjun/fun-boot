@@ -39,7 +39,6 @@ public class AdminUserController extends BaseController {
     private IAdminUserService adminUserService;
     @Autowired
     private IRoleService roleService;
-
     @Autowired
     private IPostService postService;
 
@@ -82,7 +81,7 @@ public class AdminUserController extends BaseController {
         } else if (Constants.NOT_UNIQUE.equals(adminUserService.checkEmailUnique(user))) {
             return warn("新增用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
-        return success(adminUserService.insertUser(user));
+        return success(adminUserService.insertAdminUser(user));
     }
 
     /**
@@ -90,7 +89,7 @@ public class AdminUserController extends BaseController {
      */
     @GetMapping("/edit/{userId}")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap) {
-        mmap.put("user", adminUserService.selectUserById(userId));
+        mmap.put("user", adminUserService.selectAdminUserById(userId));
         mmap.put("roles", roleService.selectRolesByUserId(userId));
         mmap.put("posts", postService.selectPostsByUserId(userId));
         return view(prefix + "/edit");
@@ -109,14 +108,14 @@ public class AdminUserController extends BaseController {
         } else if (Constants.NOT_UNIQUE.equals(adminUserService.checkEmailUnique(user))) {
             return warn("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
-        return success(adminUserService.updateUser(user));
+        return success(adminUserService.updateAdminUser(user));
     }
 
 
     @RequiresPermissions("system:user:resetPwd")
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap) {
-        mmap.put("user", adminUserService.selectUserById(userId));
+        mmap.put("user", adminUserService.selectAdminUserById(userId));
         return view(prefix + "/resetPwd");
     }
 
@@ -128,7 +127,7 @@ public class AdminUserController extends BaseController {
     public CommonResult resetPwdSave(AdminUser user) {
         if (adminUserService.resetUserPwd(user) > 0) {
             if (ShiroUtils.getUserId().equals(user.getUserId())) {
-                setSysUser(adminUserService.selectUserById(user.getUserId()));
+                setSysUser(adminUserService.selectAdminUserById(user.getUserId()));
             }
             return success(Constants.SUCCESS);
         }
@@ -141,7 +140,7 @@ public class AdminUserController extends BaseController {
     @ResponseBody
     public CommonResult remove(String ids) {
         try {
-            return success(adminUserService.deleteUserByIds(ids));
+            return success(adminUserService.deleteAdminUserByIds(ids));
         } catch (Exception e) {
             return failed(e.getMessage());
         }
@@ -165,7 +164,6 @@ public class AdminUserController extends BaseController {
     @PostMapping("/checkEmailUnique")
     @ResponseBody
     public String checkEmailUnique(AdminUser user) {
-        System.out.println(adminUserService.checkEmailUnique(user));
         return adminUserService.checkEmailUnique(user);
     }
 

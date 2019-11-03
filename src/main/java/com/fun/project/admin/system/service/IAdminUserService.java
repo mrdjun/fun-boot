@@ -50,7 +50,7 @@ public interface IAdminUserService {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    AdminUser selectUserById(Long userId);
+    AdminUser selectAdminUserById(Long userId);
 
     /**
      * 通过用户ID删除用户
@@ -58,7 +58,7 @@ public interface IAdminUserService {
      * @param userId 用户ID
      * @return 结果
      */
-    int deleteUserById(Long userId);
+    int deleteAdminUserById(Long userId);
 
     /**
      * 批量删除用户信息
@@ -67,7 +67,15 @@ public interface IAdminUserService {
      * @return 结果
      * @throws Exception 异常
      */
-    int deleteUserByIds(String ids) throws Exception;
+    int deleteAdminUserByIds(String ids) throws Exception;
+
+    /**
+     * 新增用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    int insertAdminUser(AdminUser user);
 
     /**
      * 保存用户信息
@@ -75,24 +83,20 @@ public interface IAdminUserService {
      * @param user 用户信息
      * @return 结果
      */
-    int insertUser(AdminUser user);
+    int updateAdminUser(AdminUser user);
 
     /**
-     * 保存用户信息
+     * 修改管理员信息
      *
      * @param user 用户信息
-     * @return 结果
-     */
-    int updateUser(AdminUser user);
-
-    /**
-     * 修改用户详细信息
-     *
-     * @param user 用户信息
-     * @return 结果
+     * @return 修改行数
      */
     int updateUserInfo(AdminUser user);
-
+    /**
+     * 通过 loginName 修改用户表
+     * @param adminUser userInfo
+     * @return num
+     */
     int updateUserInfoByLoginName(AdminUser adminUser);
 
     /**

@@ -4,15 +4,19 @@ import com.fun.common.constant.Constants;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.utils.Md5Utils;
 import com.fun.common.utils.StringUtils;
+import com.fun.common.utils.TimestampUtil;
 import com.fun.common.utils.text.Convert;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.project.admin.system.entity.role.Role;
+import com.fun.project.admin.system.entity.user.UserPost;
 import com.fun.project.admin.system.mapper.RoleMapper;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.entity.user.UserRole;
 import com.fun.project.admin.system.mapper.AdminUserMapper;
+import com.fun.project.admin.system.mapper.UserPostMapper;
 import com.fun.project.admin.system.mapper.UserRoleMapper;
 import com.fun.project.admin.system.service.IAdminUserService;
+import com.fun.project.admin.system.service.IConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +34,11 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
+    private UserPostMapper userPostMapper;
+    @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private IConfigService configService;
 
     @Override
     public List<AdminUser> selectAdminUserList(AdminUser user) {
@@ -53,34 +61,44 @@ public class AdminUserServiceImpl implements IAdminUserService {
     }
 
     @Override
-    public AdminUser selectUserById(Long userId) {
-        return adminUserMapper.selectUserById(userId);
+    public AdminUser selectAdminUserById(Long userId) {
+        return adminUserMapper.selectAdminUserById(userId);
     }
 
     @Override
-    public int deleteUserById(Long userId) {
-        return adminUserMapper.deleteUserById(userId);
+    public int deleteAdminUserById(Long userId) {
+        return adminUserMapper.deleteAdminUserById(userId);
     }
 
     @Override
-    public int deleteUserByIds(String ids) throws Exception {
+    public int deleteAdminUserByIds(String ids) throws Exception {
         Long[] userIds = Convert.toLongArray(ids);
-        return adminUserMapper.deleteUserByIds(userIds);
+        return adminUserMapper.deleteAdminUserByIds(userIds);
     }
 
     @Override
-    public int insertUser(AdminUser user) {
+    public int insertAdminUser(AdminUser user) {
         user.setCreateTime(System.currentTimeMillis());
+        if (StringUtils.isNotEmpty(ShiroUtils.getLoginName())) {
+            user.setCreateBy(ShiroUtils.getLoginName());
+        }
         user.randomSalt();
         user.setPassword(Md5Utils.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-        return adminUserMapper.insertUser(user);
+        // 新增用户信息
+        int rows = adminUserMapper.insertAdminUser(user);
+        // 新增用户岗位关联
+        insertAdminUserPost(user);
+        // 新增用户与角色管理
+        insertUserRole(user);
+        return rows;
     }
 
     @Override
     @Transactional(rollbackFor = FunBootException.class)
-    public int updateUser(AdminUser user) {
+    public int updateAdminUser(AdminUser user) {
         // 获取修改者
         Long userId = user.getUserId();
+        user.setUpdateTime(TimestampUtil.getCurrentTimestamp13());
         if (StringUtils.isNotEmpty(ShiroUtils.getLoginName())) {
             user.setUpdateBy(ShiroUtils.getLoginName());
         }
@@ -88,12 +106,22 @@ public class AdminUserServiceImpl implements IAdminUserService {
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
         insertUserRole(user);
-        return adminUserMapper.updateUser(user);
+        // 删除用户与角色关联
+        userRoleMapper.deleteUserRoleByUserId(userId);
+        // 新增用户与岗位管理
+        insertAdminUserPost(user);
+        return adminUserMapper.updateAdminUser(user);
     }
 
+    /**
+     * 修改用户个人详细信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
     @Override
     public int updateUserInfo(AdminUser user) {
-        return adminUserMapper.updateUser(user);
+        return adminUserMapper.updateAdminUser(user);
     }
 
     @Override
@@ -105,15 +133,14 @@ public class AdminUserServiceImpl implements IAdminUserService {
     public int resetUserPwd(AdminUser user) {
         user.randomSalt();
         user.setPassword(Md5Utils.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
-        return adminUserMapper.updateUser(user);
+        return adminUserMapper.updateAdminUser(user);
     }
 
     @Override
     public String checkLoginNameUnique(String loginName) {
 
         int count = adminUserMapper.checkLoginNameUnique(loginName);
-        if (count > 0)
-        {
+        if (count > 0) {
             return Constants.NOT_UNIQUE;
         }
         return Constants.UNIQUE;
@@ -159,7 +186,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
         if (AdminUser.isAdmin(user.getUserId())) {
             return 0;
         }
-        return adminUserMapper.updateUser(user);
+        return adminUserMapper.updateAdminUser(user);
     }
 
     /**
@@ -204,5 +231,27 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Override
     public List<AdminUser> selectUnallocatedList(AdminUser user) {
         return adminUserMapper.selectUnallocatedList(user);
+    }
+
+    /**
+     * 新增用户岗位信息
+     *
+     * @param user 用户对象
+     */
+    public void insertAdminUserPost(AdminUser user) {
+        Long[] posts = user.getPostIds();
+        if (StringUtils.isNotNull(posts)) {
+            // 新增用户与岗位管理
+            List<UserPost> list = new ArrayList<>();
+            for (Long postId : user.getPostIds()) {
+                UserPost up = new UserPost();
+                up.setUserId(user.getUserId());
+                up.setPostId(postId);
+                list.add(up);
+            }
+            if (list.size() > 0) {
+                userPostMapper.batchUserPost(list);
+            }
+        }
     }
 }

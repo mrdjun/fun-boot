@@ -117,7 +117,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public CommonResult authDataScopeSave(Role role) {
         if (roleService.authDataScope(role) > 0) {
-            setSysUser(userService.selectUserById(getSysUser().getUserId()));
+            setSysUser(userService.selectAdminUserById(getSysUser().getUserId()));
             return success(Constants.SUCCESS);
         }
         return failed();
@@ -170,7 +170,6 @@ public class RoleController extends BaseController {
     public CommonResult changeStatus(Role role) {
         return success(roleService.changeStatus(role));
     }
-
 
     /**
      * 分配用户

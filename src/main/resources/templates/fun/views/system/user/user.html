@@ -224,7 +224,7 @@
 		
 		/* 用户状态显示 */
 		function statusTools(row) {
-		    if (row.status === 1) {
+		    if (row.status === 0) {
     			return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
     		} else {
     			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
@@ -234,14 +234,14 @@
 		/* 用户管理-停用 */
 		function disable(userId) {
 			$.modal.confirm("确认要停用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
+				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
 		    })
 		}
 
 		/* 用户管理启用 */
 		function enable(userId) {
 			$.modal.confirm("确认要启用用户吗？", function() {
-				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 0 });
+				$.operate.post(prefix + "/changeStatus", { "userId": userId, "status": 1 });
 		    })
 		}
 	</script>

@@ -36,10 +36,10 @@ public interface AdminUserMapper {
     /**
      * 通过用户名查询用户
      *
-     * @param userName 用户名
+     * @param username 用户名
      * @return 用户对象信息
      */
-    AdminUser selectUserByLoginName(String userName);
+    AdminUser selectUserByLoginName(String username);
 
     /**
      * 通过手机号码查询用户
@@ -63,7 +63,7 @@ public interface AdminUserMapper {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    AdminUser selectUserById(Long userId);
+    AdminUser selectAdminUserById(Long userId);
 
     /**
      * 通过用户ID删除用户
@@ -71,7 +71,7 @@ public interface AdminUserMapper {
      * @param userId 用户ID
      * @return 结果
      */
-    int deleteUserById(Long userId);
+    int deleteAdminUserById(Long userId);
 
     /**
      * 批量删除用户信息
@@ -79,7 +79,7 @@ public interface AdminUserMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteUserByIds(Long[] ids);
+    int deleteAdminUserByIds(Long[] ids);
 
     /**
      * 修改用户信息
@@ -87,7 +87,7 @@ public interface AdminUserMapper {
      * @param user 用户信息
      * @return 结果
      */
-    int updateUser(AdminUser user);
+    int updateAdminUser(AdminUser user);
 
     /**
      * 根据loginName修改用户信息
@@ -103,7 +103,7 @@ public interface AdminUserMapper {
      * @param user 用户信息
      * @return 结果
      */
-    int insertUser(AdminUser user);
+    int insertAdminUser(AdminUser user);
 
     /**
      * 校验用户名称是否唯一
