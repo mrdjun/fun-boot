@@ -23,11 +23,10 @@ import javax.validation.constraints.NotBlank;
  * @author DJun
  * @date 2019/10/31
  */
-@Api(description = "管理员用户登录注册")
+@Api(tags = {"管理员用户登录注册"})
 @Controller
 @RequestMapping("/admin")
 public class AdminLoginController {
-
 
     @GetMapping("/login")
     public String loginPage(HttpServletRequest request, HttpServletResponse response) {

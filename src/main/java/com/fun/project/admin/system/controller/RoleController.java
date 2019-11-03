@@ -27,7 +27,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/10/3
  */
-@Api(description = "角色")
+@Api(tags = {"角色信息"})
 @Controller
 @RequestMapping("/admin/system/role")
 public class RoleController extends BaseController {

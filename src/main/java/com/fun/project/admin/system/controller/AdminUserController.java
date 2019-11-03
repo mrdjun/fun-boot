@@ -31,7 +31,7 @@ import static com.fun.common.result.CommonResult.*;
  */
 @Controller
 @RequestMapping("/admin/system/user")
-@Api(description = "管理员用户接口")
+@Api(tags = {"管理员用户"})
 public class AdminUserController extends BaseController {
     private final String prefix = "system/user";
 

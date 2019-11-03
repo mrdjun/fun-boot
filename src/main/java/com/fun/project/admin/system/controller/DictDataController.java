@@ -25,7 +25,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author u-fun
  * @date 2019/10/30
  */
-@Api(description = "字典数据")
+@Api(tags = {"字典数据"})
 @Controller
 @RequestMapping("/admin/system/dict/data")
 public class DictDataController extends BaseController {

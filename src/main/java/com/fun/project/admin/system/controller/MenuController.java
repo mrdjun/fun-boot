@@ -28,7 +28,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/9/23
  */
-@Api(description = "后台菜单")
+@Api(tags = {"后台菜单"})
 @Controller
 @RequestMapping("/admin/system/menu")
 public class MenuController extends BaseController {

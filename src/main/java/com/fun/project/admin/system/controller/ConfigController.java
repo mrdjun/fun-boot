@@ -28,7 +28,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author u-fun
  * @date 2019/10/30
  */
-@Api(description = "参数配置表")
+@Api(tags = {"参数配置"})
 @Controller
 @RequestMapping("/admin/system/config")
 public class ConfigController extends BaseController {

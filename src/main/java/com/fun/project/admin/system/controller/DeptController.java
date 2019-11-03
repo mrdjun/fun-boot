@@ -26,7 +26,7 @@ import static com.fun.common.result.CommonResult.*;
  * @author DJun
  * @date 2019/11/1
  */
-@Api(description = "部门接口")
+@Api(tags = {"部门信息"})
 @Controller
 @RequestMapping("admin/system/dept")
 public class DeptController extends BaseController {
