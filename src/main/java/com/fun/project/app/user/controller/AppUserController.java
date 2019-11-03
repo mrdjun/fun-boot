@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/7 16:11
- * desc:
+ * @author DJun
+ * @date 2019/9/7 16:11
  */
-@Api(description = "用户相关业务api")
+@Api(tags = "用户信息")
 @RestController
 @RequestMapping("/app/user")
 public class AppUserController {

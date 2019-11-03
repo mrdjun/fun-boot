@@ -31,7 +31,7 @@ import static com.fun.framework.manager.AsyncUtils.excRecordLoginLog;
  * 登录、退出登录、注册、找回密码、修改密码
  * @author DJun
  */
-@Api(value = "登录", description = "登录管理api", position = 40, produces = "http")
+@Api(tags = "app用户登录注册", position = 40, produces = "http")
 @RestController
 @Slf4j
 @RequestMapping("/app/user")
