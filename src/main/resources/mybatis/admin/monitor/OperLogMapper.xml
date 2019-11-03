@@ -48,12 +48,12 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
-            <!--<if test="params.beginTime != null and params.beginTime != ''">&lt;!&ndash; 开始时间检索 &ndash;&gt;-->
-                <!--and create_time &gt;= #{params.beginTime}-->
-            <!--</if>-->
-            <!--<if test="params.endTime != null and params.endTime != ''">&lt;!&ndash; 结束时间检索 &ndash;&gt;-->
-                <!--and create_time &lt;= #{params.beginTime}-->
-            <!--</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND create_time &gt;= UNIX_TIMESTAMP(#{params.beginTime})*1000
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND create_time &lt;= UNIX_TIMESTAMP(#{params.endTime})*1000
+            </if>
         </where>
     </select>
 

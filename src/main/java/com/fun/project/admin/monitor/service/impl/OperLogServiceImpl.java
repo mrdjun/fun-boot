@@ -4,7 +4,6 @@ import com.fun.project.admin.monitor.entity.OperLog;
 import com.fun.project.admin.monitor.mapper.OperLogMapper;
 import com.fun.common.utils.text.Convert;
 import com.fun.project.admin.monitor.service.IOperLogService;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +30,13 @@ public class OperLogServiceImpl implements IOperLogService {
 
     /**
      * 查询系统操作日志集合
-     * 如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）
      *
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
     @Override
-    public List<OperLog> selectOperLogList(OperLog operLog, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> operLogMapper.selectOperLogList(operLog));
+    public List<OperLog> selectOperLogList(OperLog operLog) {
+        return operLogMapper.selectOperLogList(operLog);
     }
 
     /**

@@ -7,7 +7,7 @@
     <groupId>com.fun</groupId>
     <artifactId>fun-boot</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>RELEASE</version>
 
     <developers>
         <developer>

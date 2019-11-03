@@ -5,8 +5,8 @@ import com.fun.project.admin.monitor.entity.LoginLog;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/13 12:41
- * desc:
+ * @author DJun
+ * @date 2019/9/13 12:41
  */
 public interface ILoginLogService {
     /**
@@ -22,7 +22,7 @@ public interface ILoginLogService {
      * @param loginLog 访问日志对象
      * @return 登录记录集合
      */
-    List<LoginLog> selectLoginLogList(LoginLog loginLog,int pageNum,int pageSize);
+    List<LoginLog> selectLoginLogList(LoginLog loginLog);
 
     /**
      * 批量删除系统登录日志

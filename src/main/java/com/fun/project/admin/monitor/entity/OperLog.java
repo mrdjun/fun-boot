@@ -4,8 +4,8 @@ import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;
 
 /**
- * created by DJun on 2019/9/9 20:57
- * desc: 日志实体
+ * @author DJun
+ * @date 2019/9/9 20:57
  */
 @Getter
 @Setter
@@ -37,6 +37,5 @@ public class OperLog extends BaseEntity {
 
     /** 方法参数 */
     private String operParam;
-
 
 }

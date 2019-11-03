@@ -4,7 +4,6 @@ import com.fun.common.utils.text.Convert;
 import com.fun.project.admin.monitor.entity.LoginLog;
 import com.fun.project.admin.monitor.mapper.LoginLogMapper;
 import com.fun.project.admin.monitor.service.ILoginLogService;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +24,8 @@ public class LoginLogServiceImpl implements ILoginLogService {
     }
 
     @Override
-    public List<LoginLog> selectLoginLogList(LoginLog loginLog, int pageNum, int pageSize) {
-        return PageHelper.startPage(pageNum, pageSize).doSelectPage(() -> loginLogMapper.selectLoginLogList(loginLog));
+    public List<LoginLog> selectLoginLogList(LoginLog loginLog) {
+        return loginLogMapper.selectLoginLogList(loginLog);
     }
 
     @Override

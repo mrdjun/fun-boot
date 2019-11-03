@@ -5,8 +5,9 @@ import com.fun.project.admin.monitor.entity.OperLog;
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/10 14:49
- * desc: 操作日志 service
+ * 操作日志
+ * @author DJun
+ * @date 2019/9/10 14:49
  */
 public interface IOperLogService {
 
@@ -23,7 +24,7 @@ public interface IOperLogService {
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-     List<OperLog> selectOperLogList(OperLog operLog,int pageNum, int pageSize);
+     List<OperLog> selectOperLogList(OperLog operLog);
 
     /**
      * 批量删除系统操作日志

@@ -1,48 +1,67 @@
 package com.fun.project.admin.monitor.controller;
 
+import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
+import com.fun.framework.web.controller.BaseController;
 import com.fun.project.admin.monitor.entity.LoginLog;
 import com.fun.project.admin.monitor.service.ILoginLogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * created by DJun on 2019/9/13 12:22
- * desc: 登录日志
- */
-@RestController
-@RequestMapping("/admin/monitor/loginLog")
-public class LoginLogController {
+import static com.fun.common.result.CommonResult.success;
 
+/**
+ * @author DJun
+ * @date 2019/9/13 12:22
+ */
+@Api(tags = {"登录日志"})
+@Controller
+@RequestMapping("/admin/monitor/loginlog")
+public class LoginLogController extends BaseController {
     @Autowired
     private ILoginLogService loginLogService;
 
-    @Log("获取登录日志列表")
+    @RequiresPermissions("monitor:loginLog:view")
+    @GetMapping()
+    public String loginLog() {
+        return view("monitor/log/loginLog");
+    }
+
+    @RequiresPermissions("monitor:loginLog:list")
+    @ApiOperation(value = "分页查询LoginLog列表")
     @PostMapping("/list")
-    public CommonResult<CommonPage<LoginLog>> loginLogList(LoginLog loginLog,
-                                                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
-        List<LoginLog> logs = loginLogService.selectLoginLogList(loginLog,pageNum,pageSize);
-        return CommonResult.success(CommonPage.restPage(logs));
+    @ResponseBody
+    public CommonResult selectLoginLogList(LoginLog loginLog) {
+        startPage();
+        List<LoginLog> loginLogList = loginLogService.selectLoginLogList(loginLog);
+        return success(CommonPage.restPage(loginLogList));
     }
 
-    @Log("批量删除登录日志")
+
+    @RequiresPermissions("monitor:loginLog:remove")
+    @ApiOperation(value = "删除LoginLog")
+    @Log("删除LoginLog")
     @PostMapping("/remove")
-    public CommonResult removeLoginLog(String ids){
-        return CommonResult.success(loginLogService.deleteLoginLogByIds(ids));
+    @ResponseBody
+    public CommonResult deleteLoginLogByIds(String ids) {
+        return success(loginLogService.deleteLoginLogByIds(ids));
     }
 
-    @Log("清空登录日志")
+    @RequiresPermissions("monitor:loginLog:remove")
+    @Log("清空登陆日志")
     @PostMapping("/clean")
-    public CommonResult cleanAll(){
+    @ResponseBody
+    public CommonResult clean() {
         loginLogService.cleanLoginLog();
-        return CommonResult.success("清除成功");
+        return success(Constants.SUCCESS);
     }
+
 }
