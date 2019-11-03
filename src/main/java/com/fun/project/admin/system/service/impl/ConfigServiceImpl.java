@@ -2,6 +2,8 @@ package com.fun.project.admin.system.service.impl;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.utils.StringUtils;
+import com.fun.common.utils.TimestampUtil;
+import com.fun.framework.shiro.helper.ShiroUtils;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import com.fun.project.admin.system.entity.Config;
 import java.util.List;
 
 /**
- * 参数配置表 业务实现类
+ * 参数配置表
  *
  * @author u-fun
  * @date 2019/10/30
@@ -46,6 +48,10 @@ public class ConfigServiceImpl implements IConfigService {
      */
     @Override
     public int insertConfig(Config config) {
+        config.setCreateTime(TimestampUtil.getCurrentTimestamp13());
+        if (StringUtils.isNotEmpty(ShiroUtils.getLoginName())){
+            config.setCreateBy(ShiroUtils.getLoginName());
+        }
         return configMapper.insertConfig(config);
     }
 
@@ -70,6 +76,10 @@ public class ConfigServiceImpl implements IConfigService {
      */
     @Override
     public int updateConfig(Config config) {
+        config.setUpdateTime(TimestampUtil.getCurrentTimestamp13());
+        if (StringUtils.isNotEmpty(ShiroUtils.getLoginName())){
+            config.setUpdateBy(ShiroUtils.getLoginName());
+        }
         return configMapper.updateConfig(config);
     }
 

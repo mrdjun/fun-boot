@@ -2,7 +2,10 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.framework.web.controller.BaseController;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,15 +30,23 @@ import static com.fun.common.result.CommonResult.success;
  */
 @Api(description = "参数配置表")
 @Controller
-@RequestMapping("/admin/config")
+@RequestMapping("/admin/system/config")
 public class ConfigController extends BaseController {
+    private String prefix = "system/config";
 
     @Autowired
     private IConfigService configService;
 
+    @RequiresPermissions("system:config:view")
+    @GetMapping()
+    public String config()
+    {
+        return view(prefix + "/config");
+    }
 
-    @ApiOperation(value = "分页查询Config列表")
-    @PostMapping("/selectConfigList")
+    @RequiresPermissions("system:config:list")
+    @ApiOperation("分页查询Config列表")
+    @PostMapping("/list")
     @ResponseBody
     public CommonResult selectConfigList(Config config) {
         startPage();
@@ -43,50 +54,51 @@ public class ConfigController extends BaseController {
         return success(CommonPage.restPage(configs));
     }
 
-
-    @ApiOperation(value = "通过Id查询Config")
-    @Log("通过Id查询Config")
-    @GetMapping("/selectConfigById/{configId}")
-    @ResponseBody
-    public CommonResult selectConfigById(@PathVariable("configId") Long configId) {
-        return success(configService.selectConfigById(configId));
+    /**
+     * 新增参数配置
+     */
+    @GetMapping("/add")
+    public String insertConfigPage() {
+        return view(prefix + "/add");
     }
 
-    @ApiOperation(value = "新增Config")
+    @RequiresPermissions("system:config:add")
+    @ApiOperation("新增Config")
     @Log("新增Config")
-    @PostMapping("/insertConfig")
+    @PostMapping("/add")
     @ResponseBody
-    public CommonResult insertConfig(Config config) {
+    public CommonResult insertConfig(@Validated Config config) {
         if (Constants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return failed("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         return success(configService.insertConfig(config));
     }
 
+    /**
+     * 修改参数配置
+     */
+    @GetMapping("/edit/{configId}")
+    public String updateConfigPage(@PathVariable("configId") Long configId, ModelMap mmap) {
+        mmap.put("config", configService.selectConfigById(configId));
+        return view(prefix + "/edit");
+    }
 
-    @ApiOperation(value = "修改Config信息")
+    @RequiresPermissions("system:config:edit")
+    @ApiOperation("修改Config信息")
     @Log("修改Config信息")
-    @PostMapping("/updateConfig")
+    @PostMapping("/edit")
     @ResponseBody
-    public CommonResult updateConfig(Config config) {
+    public CommonResult updateConfig(@Validated Config config) {
         return success(configService.updateConfig(config));
     }
 
-
-    @ApiOperation(value = "通过id删除Config")
-    @Log("通过id删除Config")
-    @PostMapping("/deleteConfigById/{configId}")
+    @RequiresPermissions("system:config:remove")
+    @ApiOperation("删除Config")
+    @Log("删除Config")
+    @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteConfigById(@PathVariable("configId") Long configId) {
-        return success(configService.deleteConfigById(configId));
-    }
-
-    @ApiOperation(value = "通过id批量删除Config")
-    @Log("通过id批量删除Config")
-    @PostMapping("/deleteList")
-    @ResponseBody
-    public CommonResult deleteConfigByIds(String configIds) {
-        return success(configService.deleteConfigByIds(configIds));
+    public CommonResult deleteConfigByIds(String ids) {
+        return success(configService.deleteConfigByIds(ids));
     }
 
     /**
