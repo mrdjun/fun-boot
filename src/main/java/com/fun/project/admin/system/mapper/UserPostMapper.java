@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 用户与岗位 表 数据层
  *
- * @author cqjava
+ * @author fun
  */
 public interface UserPostMapper {
     /**

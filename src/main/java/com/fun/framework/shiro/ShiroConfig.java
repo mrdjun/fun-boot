@@ -94,6 +94,7 @@ public class ShiroConfig {
             filterChainDefinitionMap.put(url, "anon");
         }
 
+        // 访问登录接口之前，验证码拦截器先拦截验证，避免爆破减轻服务器压力
         filterChainDefinitionMap.put("/admin/login", "captchaValidate");
 
         // Shiro已经实现了退出登录，直接调用即可

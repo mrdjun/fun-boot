@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 部门管理 数据层
  *
- * @author cqjava
+ * @author fun
  */
 public interface DeptMapper {
     /**
@@ -106,4 +106,12 @@ public interface DeptMapper {
      * @return 部门列表
      */
     List<Dept> selectChildrenDeptById(Long deptId);
+
+    /**
+     * 根据 AdminUser 查询部门
+     *
+     * @param userId userId
+     * @return deptName
+     */
+    String selectDeptNameByAdminUserId(@Param("userId") Long userId);
 }

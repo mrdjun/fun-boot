@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 岗位信息 服务层处理
  *
- * @author cqjava
+ * @author fun
  */
 @Service
 public class PostServiceImpl implements IPostService {

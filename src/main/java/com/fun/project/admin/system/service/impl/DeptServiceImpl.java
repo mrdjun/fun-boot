@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 部门管理 服务实现
  *
- * @author cqjava
+ * @author fun
  */
 @Service
 public class DeptServiceImpl implements IDeptService {

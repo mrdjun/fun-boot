@@ -5,11 +5,13 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 时间工具类
+ * @author DJun
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static String YYYY = "yyyy";
@@ -130,5 +132,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         // 计算差多少秒//输出结果
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+    /***
+     * 格式化 date 类型的时间
+     */
+    public static String getDateFormat(Date date, String dateFormatType) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatType, Locale.CHINA);
+        return simpleDateFormat.format(date);
     }
 }

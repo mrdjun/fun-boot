@@ -157,4 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	    where dept_id in (${ancestors})
 	</update>
 
+	<select id="selectDeptNameByAdminUserId" parameterType="Long" resultType="String">
+		SELECT d.dept_name FROM sys_dept d JOIN sys_user u ON u.dept_id = d.dept_id  WHERE u.user_id = #{userId}
+	</select>
 </mapper> 

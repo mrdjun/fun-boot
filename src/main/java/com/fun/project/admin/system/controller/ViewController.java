@@ -5,6 +5,7 @@ import com.fun.framework.web.controller.BaseController;
 import com.fun.project.admin.system.entity.Menu;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IMenuService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 /**
- *
+ * 公共页面跳转
  * @author MrDJun
  * @date 2019/9/29
  */
@@ -78,11 +79,11 @@ public class ViewController extends BaseController {
     public ModelAndView main(ModelMap mmap) {
         mmap.put("version", funBootConfig.getVersion());
         mmap.put("name", funBootConfig.getName());
-        return new ModelAndView(view("index")) ;
+        return new ModelAndView(view("index"));
     }
 
     /**
-     * 无权限
+     * ERROR:无权限
      */
     @GetMapping("/403")
     public ModelAndView unauthorized() {
@@ -90,7 +91,7 @@ public class ViewController extends BaseController {
     }
 
     /**
-     * 无页面
+     * ERROR:无页面
      */
     @GetMapping("/404")
     public ModelAndView error404() {
@@ -98,16 +99,36 @@ public class ViewController extends BaseController {
     }
 
     /**
-     * 服务端错误
+     * ERROR:服务端错误
      */
     @GetMapping("/500")
     public ModelAndView error500() {
         return new ModelAndView("/error/500");
     }
 
-    /** 表单生成工具 */
+    /**
+     * 表单生成工具
+     */
     @GetMapping("/tool/table")
-    public ModelAndView testLayout(){
+    public ModelAndView testLayout() {
         return new ModelAndView(view("tool/table/table"));
+    }
+
+    /**
+     * 丝袜哥
+     */
+    @RequiresPermissions("tool:swagger:view")
+    @GetMapping("/tool/swagger")
+    public String swaggerPage() {
+        return redirect("/swagger-ui.html");
+    }
+
+    /**
+     * druid 监控
+     */
+    @RequiresPermissions("monitor:data:view")
+    @GetMapping("/monitor/data")
+    public String druidPage() {
+        return redirect("/druid/index");
     }
 }

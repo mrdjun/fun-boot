@@ -3,7 +3,7 @@ package com.fun.common.exception.user;
 /**
  * 角色锁定异常类
  * 
- * @author cqjava
+ * @author fun
  */
 public class RoleBlockedException extends UserException
 {
