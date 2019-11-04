@@ -30,7 +30,6 @@ public class AddressUtils {
             try {
                 // 一般不会抛异常，只有本地调试 断网时，则会因为网络异常问题抛异常
                 rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip);
-
             } catch (Exception e) {
                 throw e;
             }

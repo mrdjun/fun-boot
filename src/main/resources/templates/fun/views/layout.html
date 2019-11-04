@@ -36,8 +36,7 @@
                         <a class="menuItem" title="个人中心" th:href="@{/admin/system/user/profile}">
                             <div class="hide" th:text="个人中心"></div>
                             <div class="pull-left image">
-                                <!-- <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}" class="img-circle" alt="头像">-->
-                                <img th:src="@{/fun/img/avatar/default.gif}" class="img-circle" alt="头像">
+                                 <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}" class="img-circle" alt="头像">
                             </div>
                         </a>
                         <div class="pull-left info">

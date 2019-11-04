@@ -7,14 +7,12 @@ import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.TimestampUtil;
 import com.fun.common.utils.text.Convert;
 import com.fun.framework.shiro.helper.ShiroUtils;
+import com.fun.project.admin.system.entity.Post;
 import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.entity.user.UserPost;
-import com.fun.project.admin.system.mapper.RoleMapper;
+import com.fun.project.admin.system.mapper.*;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.entity.user.UserRole;
-import com.fun.project.admin.system.mapper.AdminUserMapper;
-import com.fun.project.admin.system.mapper.UserPostMapper;
-import com.fun.project.admin.system.mapper.UserRoleMapper;
 import com.fun.project.admin.system.service.IAdminUserService;
 import com.fun.project.admin.system.service.IConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Autowired
     private UserRoleMapper userRoleMapper;
     @Autowired
-    private IConfigService configService;
+    private PostMapper postMapper;
 
     @Override
     public List<AdminUser> selectAdminUserList(AdminUser user) {
@@ -231,6 +229,19 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Override
     public List<AdminUser> selectUnallocatedList(AdminUser user) {
         return adminUserMapper.selectUnallocatedList(user);
+    }
+
+    @Override
+    public String selectUserPostGroup(Long userId) {
+        List<Post> list = postMapper.selectPostsByUserId(userId);
+        StringBuffer idsStr = new StringBuffer();
+        for (Post post : list) {
+            idsStr.append(post.getPostName()).append(",");
+        }
+        if (StringUtils.isNotEmpty(idsStr.toString())) {
+            return idsStr.substring(0, idsStr.length() - 1);
+        }
+        return idsStr.toString();
     }
 
     /**

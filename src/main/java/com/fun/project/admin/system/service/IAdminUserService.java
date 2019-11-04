@@ -11,7 +11,6 @@ import java.util.List;
  */
 public interface IAdminUserService {
 
-
     /**
      * 根据条件分页查询用户列表
      *
@@ -162,5 +161,12 @@ public interface IAdminUserService {
      * @return 用户信息集合信息
      */
     List<AdminUser> selectUnallocatedList(AdminUser user);
+    /**
+     * 根据用户ID查询用户所属岗位组
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    public String selectUserPostGroup(Long userId);
 
 }
