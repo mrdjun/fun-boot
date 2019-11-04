@@ -26,6 +26,7 @@ import static com.fun.common.result.CommonResult.success;
 @RequestMapping("/admin/monitor/online")
 public class OnlineUserController extends BaseController {
     private static String prefix = "monitor/online";
+
     @Autowired
     private ISessionService sessionService;
 

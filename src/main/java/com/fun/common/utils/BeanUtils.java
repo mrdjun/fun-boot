@@ -7,8 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * created by DJun on 2019/9/14 10:24
- * desc: Bean 工具类
+ * Bean 工具类
+ * @author DJun
+ * @date 2019/9/14 10:24
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
@@ -54,7 +55,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         Method[] methods = obj.getClass().getMethods();
 
         // 查找setter方法
-
         for (Method method : methods) {
             Matcher m = SET_PATTERN.matcher(method.getName());
             if (m.matches() && (method.getParameterTypes().length == 1)) {

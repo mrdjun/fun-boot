@@ -41,8 +41,8 @@ public class AdminLoginController {
     @Limit(key = "login", period = 60, count = 5, name = "后台登录接口", prefix = "limit")
     @ResponseBody
     public CommonResult loginAsync(@NotBlank(message = "{required}") String loginName,
-                              @NotBlank(message = "{required}") String password,
-                              @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe) {
+                                   @NotBlank(message = "{required}") String password,
+                                   @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe) {
         UsernamePasswordToken token = new UsernamePasswordToken(loginName, password, rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try {

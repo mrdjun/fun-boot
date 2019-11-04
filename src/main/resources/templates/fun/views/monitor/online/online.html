@@ -6,23 +6,23 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <!--        <div class="col-sm-12 search-collapse">-->
-        <!--            <form id="role-form">-->
-        <!--                <div class="select-list">-->
-        <!--                    <ul>-->
-        <!--                        <li>-->
-        <!--                            登录账号：<input type="text" name="loginName"/>-->
-        <!--                        </li>-->
-        <!--                        <li>-->
-        <!--                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i-->
-        <!--                                    class="fa fa-search"></i>&nbsp;搜索</a>-->
-        <!--                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i-->
-        <!--                                    class="fa fa-refresh"></i>&nbsp;重置</a>-->
-        <!--                        </li>-->
-        <!--                    </ul>-->
-        <!--                </div>-->
-        <!--            </form>-->
-        <!--        </div>-->
+        <div class="col-sm-12 search-collapse">
+            <form id="role-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            用户名：<input type="text" name="username"/>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-danger multiple disabled" onclick="javascript:batchForceLogout()"
@@ -53,15 +53,11 @@
                     title: '用户名',
                     formatter: function (value, row) {
                         if (row.current) {
-                            return value + '<span class="badge badge-warning">当前用户</span>';
+                            return value + '<span class="badge badge-warning">当前</span>';
                         } else {
                             return value;
                         }
                     }
-                },
-                {
-                    field: 'loginName',
-                    title: '登录账号'
                 },
                 {
                     field: 'deptName',
@@ -82,6 +78,10 @@
                             return '<span class="badge badge-danger">离线</span>';
                         }
                     }
+                },
+                {
+                    field: 'systemHost',
+                    title: '服务器地址'
                 },
                 {
                     field: 'startTimestamp',

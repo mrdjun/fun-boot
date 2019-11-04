@@ -57,14 +57,14 @@ public class SessionServiceImpl implements ISessionService {
                 onlineUser.setUsername(user.getUsername());
                 onlineUser.setUserId(user.getUserId().toString());
             }
-            // 获取当前访问服务地址，多服务器时使用
-//            try {
-//                inetAddress = InetAddress.getLocalHost();
-//                String systemHost = String.format("%s:%s", inetAddress.getHostAddress(), serverPort);
-//                onlineUser.setSystemHost(systemHost);
-//            } catch (UnknownHostException e) {
-//                log.error(e.getMessage());
-//            }
+            
+            try {
+                inetAddress = InetAddress.getLocalHost();
+                String systemHost = String.format("%s:%s", inetAddress.getHostAddress(), serverPort);
+                onlineUser.setSystemHost(systemHost);
+            } catch (UnknownHostException e) {
+                log.error(e.getMessage());
+            }
 
             String deptName = deptMapper.selectDeptNameByAdminUserId(user.getUserId());
             if (StringUtils.isNotEmpty(deptName)) {

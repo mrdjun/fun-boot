@@ -31,8 +31,6 @@ public @interface Limit {
     /**  限制访问次数 */
     int count();
 
-    /**
-     * 限制类型
-     */
+    /** 限制类型 */
     LimitType limitType() default LimitType.CUSTOMER;
 }

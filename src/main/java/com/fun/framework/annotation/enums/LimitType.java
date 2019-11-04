@@ -1,6 +1,9 @@
 package com.fun.framework.annotation.enums;
 
 
+/**
+ * @author DJun
+ */
 public enum LimitType {
     /**  传统类型 */
     CUSTOMER,

@@ -2,6 +2,7 @@ package com.fun.framework.manager;
 
 import com.fun.common.constant.LoginType;
 import com.fun.common.utils.IpUtils;
+import com.fun.common.utils.TimestampUtil;
 import com.fun.project.admin.monitor.entity.LoginLog;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class AsyncUtils {
                                          String msg) {
         LoginLog loginLog = new LoginLog();
         String ipAddr = IpUtils.getIpAddr(request);
-        loginLog.setCreateTime(System.currentTimeMillis());
+        loginLog.setCreateTime(TimestampUtil.getCurrentTimestamp13());
         loginLog.setStatus(status);
         loginLog.setMsg(msg);
         loginLog.setIpaddr(ipAddr);
