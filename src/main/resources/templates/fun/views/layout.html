@@ -36,7 +36,8 @@
                         <a class="menuItem" title="个人中心" th:href="@{/admin/system/user/profile}">
                             <div class="hide" th:text="个人中心"></div>
                             <div class="pull-left image">
-                                 <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}" class="img-circle" alt="头像">
+                                <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}"
+                                     class="img-circle" alt="头像">
                             </div>
                         </a>
                         <div class="pull-left info">
@@ -96,8 +97,8 @@
                     </li>
                     <li class="dropdown user-menu">
                         <a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
-<!--                            <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}"-->
-<!--                                 class="user-image">  -->
+                            <!--                            <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}"-->
+                            <!--                                 class="user-image">  -->
                             <img th:src="@{/fun/img/avatar/default.gif}" class="user-image">
 
                             <span class="hidden-xs">[[${user.loginName}]]</span>
@@ -160,13 +161,14 @@
 <script th:src="@{/fun/js/index.js}"></script>
 <script th:src="@{/fun/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript">
-    var ctx = [[@{/}]];
+    var ctx = [[@{
+        /}]];
 
-    /*用户管理-重置密码*/
-    function resetPwd() {
-        var url = ctx + 'system/user/profile/resetPwd';
-        $.modal.open("重置密码", url, '800', '500');
-    }
+        /*用户管理-重置密码*/
+        function resetPwd() {
+            var url = ctx + 'system/user/profile/resetPwd';
+            $.modal.open("重置密码", url, '800', '500');
+        }
 </script>
 </body>
 </html>

@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 
+/**
+ * @author DJun
+ */
 public interface IRedisService {
 
     /**

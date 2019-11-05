@@ -21,12 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 通用请求处理
+ * 通用上传下载
  * @author DJun
  */
 @RestController
-public class CommonController {
-    private Logger log = LoggerFactory.getLogger(CommonController.class);
+public class UpDownController {
+    private Logger log = LoggerFactory.getLogger(UpDownController.class);
 
     @Autowired
     private ServerConfig serverConfig;

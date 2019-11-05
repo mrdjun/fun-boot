@@ -38,13 +38,6 @@ public class TimestampUtil {
     }
 
     /**
-     * 获取当前时间的时间戳（10位秒级）
-     */
-    public static long getCurrentTimestamp10() {
-        return System.currentTimeMillis();
-    }
-
-    /**
      * 获取当前时间的时间戳（13位毫秒级）
      */
     public static long getCurrentTimestamp13() {

@@ -1,40 +1,40 @@
-<div class="layui-fluid layui-anim fun-anim" id="fun-redis-info" lay-title="Redis监控">
-    <div class="layui-row layui-col-space8 fun-container">
-        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 fun-hide">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <span class="fun-alert-base fun-alert-warn">监控已暂停，<a id="continue">点击继续</a></span>
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include :: header('Redis监控')"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Redis详细信息</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-header">Redis内存实时占用情况</div>
-                <div class="layui-card-body">
-                    <div id="redisMemoryChart" style="height: 320px"></div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-header">Redis Key的实时数量</div>
-                <div class="layui-card-body">
-                    <div id="redisKeySizeChart" style="height: 320px"></div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-header">Redis详细信息</div>
-                <div class="layui-card-body  fun-table-full">
-                    <div class="layui-form layui-border-box layui-table-view" lay-id="redisInfoTable">
-                        <div class="layui-table-box">
-                            <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
-                                <tr data-th-each="il:${infoList}">
-                                    <td>[[${il.key}]]</td>
-                                    <td>[[${il.description }]]</td>
-                                    <td>[[${il.value}]]</td>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover margin bottom">
+                                <thead>
+                                <tr>
+                                    <th>参数</th>
+                                    <th>描述</th>
+                                    <th>值</th>
                                 </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="il : ${infoList}">
+                                    <td th:text="${il.key}"></td>
+                                    <td th:text="${il.description}"></td>
+                                    <td th:text="${il.value}"></td>
+                                </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -42,20 +42,24 @@
             </div>
         </div>
     </div>
-</div>
-<style>
-    #fun-redis-info .layui-card-header {
-        font-weight: 600;
-    }
 
-    #fun-redis-info table th, #fun-redis-info table td {
-        height: 28px;
-        line-height: 28px;
-        padding: 9px 15px;
-        position: relative;
-        box-sizing: border-box;
-    }
-</style>
+</div>
+<th:block th:include="include :: footer"/>
 <script>
-  
+    $(".modal").appendTo("body"), $("[data-toggle=popover]").popover(), $(".collapse-link").click(function () {
+        var div_ibox = $(this).closest("div.ibox"),
+            e = $(this).find("i"),
+            i = div_ibox.find("div.ibox-content");
+        i.slideToggle(200),
+            e.toggleClass("fa-chevron-up").toggleClass("fa-chevron-down"),
+            div_ibox.toggleClass("").toggleClass("border-bottom")
+        setTimeout(function () {
+            div_ibox.resize();
+        }, 50);
+    }), $(".close-link").click(function () {
+        var div_ibox = $(this).closest("div.ibox");
+        div_ibox.remove()
+    });
 </script>
+</body>
+</html>
