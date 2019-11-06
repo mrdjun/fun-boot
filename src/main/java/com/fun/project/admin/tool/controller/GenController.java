@@ -62,8 +62,11 @@ public class GenController {
             result.put("dao_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/mapper.ftl", params));
             result.put("mybatis_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/mybatis.ftl", params));
             result.put("model_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/entity.ftl", params));
+            result.put("list_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/list.ftl", params));
+            result.put("edit_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/edit.ftl", params));
+            result.put("add_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/add.ftl", params));
 
-            // 计算,生成代码行数
+            // 计算生成代码行数
             int lineNum = 0;
             for (Map.Entry<String, String> item : result.entrySet()) {
                 if (item.getValue() != null) {

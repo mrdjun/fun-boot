@@ -7,7 +7,7 @@
     <groupId>com.fun</groupId>
     <artifactId>fun-boot</artifactId>
     <packaging>jar</packaging>
-    <version>RELEASE</version>
+    <version>1.0.0</version>
 
     <developers>
         <developer>
@@ -308,12 +308,12 @@
             <version>${jwt.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains</groupId>-->
+<!--            <artifactId>annotations</artifactId>-->
+<!--            <version>RELEASE</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 

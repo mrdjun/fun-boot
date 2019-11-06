@@ -127,7 +127,7 @@ public class ViewController extends BaseController {
      * druid 监控
      */
     @RequiresPermissions("monitor:data:view")
-    @GetMapping("/monitor/data")
+    @GetMapping("/admin/monitor/data")
     public String druidPage() {
         return redirect("/druid/index");
     }

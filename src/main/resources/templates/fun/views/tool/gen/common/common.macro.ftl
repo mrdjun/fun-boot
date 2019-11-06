@@ -1,7 +1,7 @@
 <#macro commonStyle>
 
 <#-- favicon -->
-<link rel="icon" href="/fun/favicon.ico" />
+<link rel="icon" href="/favicon.ico" />
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- Tell the browser to be responsive to screen width -->
@@ -53,7 +53,7 @@
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="#" class="navbar-brand"><b>Fun Code Generator</b></a>
+                <a href="http://www.github.com/mrdjun/fun-generator" class="navbar-brand"><b>FunBoot Code Generator</b></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -79,7 +79,7 @@
         Powered by <b>XXL Code Generator</b> v1.0.2
         <div class="pull-right hidden-xs">
             <strong>Copyright &copy; 2018-${.now?string('yyyy')} &nbsp;
-                <a href="http://mrdjun.github.io/" target="_blank" >DJun</a>
+                <a href="http://mrdjun.github.io/" target="_blank" >mrdjun</a>
                 <a href="https://github.com/mrdjun/fun-generator" target="_blank" >github</a>
             </strong><!-- All rights reserved. -->
         </div>

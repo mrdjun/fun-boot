@@ -200,6 +200,9 @@ public class MenuServiceImpl implements IMenuService {
     public int insertMenu(Menu menu) {
         menu.setCreateBy(ShiroUtils.getLoginName());
         menu.setCreateTime(System.currentTimeMillis());
+        if (menu.getIcon() == null || "".equals(menu.getIcon())){
+            menu.setIcon("#");
+        }
         ShiroUtils.clearCachedAuthorizationInfo();
         return menuMapper.insertMenu(menu);
     }
@@ -208,6 +211,9 @@ public class MenuServiceImpl implements IMenuService {
     public int updateMenu(Menu menu) {
         menu.setUpdateBy(ShiroUtils.getLoginName());
         menu.setUpdateTime(System.currentTimeMillis());
+        if (menu.getIcon() == null || "".equals(menu.getIcon())){
+            menu.setIcon("#");
+        }
         ShiroUtils.clearCachedAuthorizationInfo();
         return menuMapper.updateMenu(menu);
     }

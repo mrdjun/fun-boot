@@ -53,47 +53,65 @@ CREATE TABLE `ums_user` (
                         </div>
 
 
-                        <#-- 生成代码 -->
+                        <#-- 代码显示区域 -->
                         <div class="nav-tabs-custom">
                             <!-- Tabs within a box -->
                             <ul class="nav nav-tabs pull-right">
                                 <li class="pull-left header">生成代码</li>
-                                <li><a href="#model" data-toggle="tab">Entity</a></li>
-                                <li><a href="#mybatis" data-toggle="tab">Mybatis</a></li>
-                                <li><a href="#dao" data-toggle="tab">Mapper</a></li>
+                                <li><a href="#list"         data-toggle="tab">list.html</a></li>
+                                <li><a href="#edit"         data-toggle="tab">edit.html</a></li>
+                                <li><a href="#add"          data-toggle="tab">add.html</a></li>
+                                <li><a href="#model"        data-toggle="tab">Entity</a></li>
+                                <li><a href="#mybatis"      data-toggle="tab">Mybatis</a></li>
+                                <li><a href="#dao"          data-toggle="tab">Mapper</a></li>
                                 <li><a href="#service_impl" data-toggle="tab">ServiceImpl</a></li>
-                                <li><a href="#service" data-toggle="tab">Service</a></li>
+                                <li><a href="#service"      data-toggle="tab">Service</a></li>
                                 <li class="active"><a href="#controller" data-toggle="tab">Controller</a></li>
                             </ul>
                             <div class="tab-content no-padding">
                                 <div class="chart tab-pane active" id="controller">
                                     <div class="box-body">
-                                        Controller：<textarea id="controller_ide"></textarea>
+                                        controller.java：<textarea id="controller_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="service">
                                     <div class="box-body">
-                                        Service：<textarea id="service_ide"></textarea>
+                                        service.java：<textarea id="service_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="service_impl">
                                     <div class="box-body">
-                                        ServiceImpl：<textarea id="service_impl_ide"></textarea>
+                                        serviceImpl.java：<textarea id="service_impl_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="dao">
                                     <div class="box-body">
-                                        Mapper：<textarea id="dao_ide"></textarea>
+                                        mapper.java：<textarea id="dao_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="mybatis">
                                     <div class="box-body">
-                                        MybatisXML：<textarea id="mybatis_ide"></textarea>
+                                        mapper.xml：<textarea id="mybatis_ide"></textarea>
                                     </div>
                                 </div>
                                 <div class="chart tab-pane active" id="model">
                                     <div class="box-body ">
-                                        Entity：<textarea id="model_ide"></textarea>
+                                        entity.java：<textarea id="model_ide"></textarea>
+                                    </div>
+                                </div>
+                                <div class="chart tab-pane active" id="list">
+                                    <div class="box-body ">
+                                        list.html：<textarea id="list_ide"></textarea>
+                                    </div>
+                                </div>
+                                <div class="chart tab-pane active" id="edit">
+                                    <div class="box-body ">
+                                        edit.html：<textarea id="edit_ide"></textarea>
+                                    </div>
+                                </div>
+                                <div class="chart tab-pane active" id="add">
+                                    <div class="box-body ">
+                                        add.html：<textarea id="add_ide"></textarea>
                                     </div>
                                 </div>
                             </div>
