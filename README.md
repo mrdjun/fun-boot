@@ -17,39 +17,6 @@
 
 ---
 
-### FunBoot后台效果图
-
-<table>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/loginPage.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/layoutPage.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/mainPage.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-        <td><img src="https://github.com/mrdjun/fun-boot/tree/master/doc/ScreenShot/menuPage1.png"/></td>
-    </tr>
-</table>
-
 | 名称     | 技术                                |
 |:------ |:--------------------------------- |
 | app端   | JWT（升级为Oauth0+JJWT） + Redis       |
