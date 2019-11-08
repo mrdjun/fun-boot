@@ -23,15 +23,15 @@ $(function () {
     /**
      * 初始化 code area
      */
-    var controller_ide,
-        service_ide,
-        service_impl_ide,
-        dao_ide,
-        mybatis_ide,
-        model_ide,
-        list_ide,
-        add_ide,
-        edit_ide;
+    var controller_ide;
+    var service_ide;
+    var service_impl_ide;
+    var dao_ide;
+    var mybatis_ide;
+    var model_ide;
+    var list_ide;
+    var add_ide;
+    var edit_ide;
 
     function initCodeArea() {
 
@@ -134,11 +134,9 @@ $(function () {
             readOnly: true
         });
         edit_ide.setSize('auto', 'auto');
-
     }
 
     initCodeArea();
-
     /**
      * 生成代码
      */

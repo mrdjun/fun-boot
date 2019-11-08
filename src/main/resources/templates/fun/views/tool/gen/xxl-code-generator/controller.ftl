@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.ui.ModelMap;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
@@ -31,6 +32,7 @@ public class ${classInfo.className}Controller extends BaseController{
     @Autowired
     private I${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 
+    /** ${classInfo.className}页面 */
     @RequiresPermissions("system:${classInfo.className?uncap_first}:view")
     @GetMapping()
     public String ${classInfo.className?uncap_first}(){
@@ -55,6 +57,7 @@ public class ${classInfo.className}Controller extends BaseController{
 
     @RequiresPermissions("system:${classInfo.className?uncap_first}:add")
     @ApiOperation(value = "新增${classInfo.className}")
+    // 如果是App端，请使用LoginType枚举表明app，默认为admin
     @Log("新增${classInfo.className}")
     @PostMapping("/add")
     @ResponseBody
@@ -62,7 +65,7 @@ public class ${classInfo.className}Controller extends BaseController{
         return success(${classInfo.className?uncap_first}Service.insert${classInfo.className}(${classInfo.className?uncap_first}));
     }
 
-    /** 修改 ${classInfo.classComment} */
+    /** 修改${classInfo.className}页面 */
     @GetMapping("/edit/{${classInfo.conversionPrimaryKey}}")
     public String edit${classInfo.className}Page(@PathVariable("${classInfo.conversionPrimaryKey}") Long ${classInfo.conversionPrimaryKey}, ModelMap mmap){
         mmap.put("${classInfo.className?uncap_first}",${classInfo.className?uncap_first}Service.select${classInfo.className}ById(${classInfo.conversionPrimaryKey}));

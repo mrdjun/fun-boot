@@ -1,243 +1,547 @@
 /*
-MySQL 5.7.24
+MySQL Backup
 Database: fun_base
-Backup Time: 2019-11-01 22:49:14
+Backup Time: 2019-11-07 11:44:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_blob_triggers`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_calendars`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_cron_triggers`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_fired_triggers`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_job_details`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_locks`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_paused_trigger_grps`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_scheduler_state`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_simple_triggers`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_simprop_triggers`;
+DROP TABLE IF EXISTS `fun_base`.`qrtz_triggers`;
 DROP TABLE IF EXISTS `fun_base`.`sys_config`;
+DROP TABLE IF EXISTS `fun_base`.`sys_dept`;
 DROP TABLE IF EXISTS `fun_base`.`sys_dict_data`;
 DROP TABLE IF EXISTS `fun_base`.`sys_dict_type`;
+DROP TABLE IF EXISTS `fun_base`.`sys_job`;
+DROP TABLE IF EXISTS `fun_base`.`sys_job_log`;
 DROP TABLE IF EXISTS `fun_base`.`sys_login_log`;
 DROP TABLE IF EXISTS `fun_base`.`sys_menu`;
 DROP TABLE IF EXISTS `fun_base`.`sys_notice`;
 DROP TABLE IF EXISTS `fun_base`.`sys_oper_log`;
+DROP TABLE IF EXISTS `fun_base`.`sys_post`;
 DROP TABLE IF EXISTS `fun_base`.`sys_role`;
+DROP TABLE IF EXISTS `fun_base`.`sys_role_dept`;
 DROP TABLE IF EXISTS `fun_base`.`sys_role_menu`;
 DROP TABLE IF EXISTS `fun_base`.`sys_user`;
+DROP TABLE IF EXISTS `fun_base`.`sys_user_post`;
 DROP TABLE IF EXISTS `fun_base`.`sys_user_role`;
+DROP TABLE IF EXISTS `fun_base`.`ums_audio`;
 DROP TABLE IF EXISTS `fun_base`.`ums_user`;
+CREATE TABLE `qrtz_blob_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `blob_data` blob,
+  PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_calendars` (
+  `sched_name` varchar(120) NOT NULL,
+  `calendar_name` varchar(200) NOT NULL,
+  `calendar` blob NOT NULL,
+  PRIMARY KEY (`sched_name`,`calendar_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_cron_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `cron_expression` varchar(200) NOT NULL,
+  `time_zone_id` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_fired_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `entry_id` varchar(95) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `instance_name` varchar(200) NOT NULL,
+  `fired_time` bigint(13) NOT NULL,
+  `sched_time` bigint(13) NOT NULL,
+  `priority` int(11) NOT NULL,
+  `state` varchar(16) NOT NULL,
+  `job_name` varchar(200) DEFAULT NULL,
+  `job_group` varchar(200) DEFAULT NULL,
+  `is_nonconcurrent` varchar(1) DEFAULT NULL,
+  `requests_recovery` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`sched_name`,`entry_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_job_details` (
+  `sched_name` varchar(120) NOT NULL,
+  `job_name` varchar(200) NOT NULL,
+  `job_group` varchar(200) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `job_class_name` varchar(250) NOT NULL,
+  `is_durable` varchar(1) NOT NULL,
+  `is_nonconcurrent` varchar(1) NOT NULL,
+  `is_update_data` varchar(1) NOT NULL,
+  `requests_recovery` varchar(1) NOT NULL,
+  `job_data` blob,
+  PRIMARY KEY (`sched_name`,`job_name`,`job_group`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_locks` (
+  `sched_name` varchar(120) NOT NULL,
+  `lock_name` varchar(40) NOT NULL,
+  PRIMARY KEY (`sched_name`,`lock_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_paused_trigger_grps` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  PRIMARY KEY (`sched_name`,`trigger_group`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_scheduler_state` (
+  `sched_name` varchar(120) NOT NULL,
+  `instance_name` varchar(200) NOT NULL,
+  `last_checkin_time` bigint(13) NOT NULL,
+  `checkin_interval` bigint(13) NOT NULL,
+  PRIMARY KEY (`sched_name`,`instance_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_simple_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `repeat_count` bigint(7) NOT NULL,
+  `repeat_interval` bigint(12) NOT NULL,
+  `times_triggered` bigint(10) NOT NULL,
+  PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_simprop_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `str_prop_1` varchar(512) DEFAULT NULL,
+  `str_prop_2` varchar(512) DEFAULT NULL,
+  `str_prop_3` varchar(512) DEFAULT NULL,
+  `int_prop_1` int(11) DEFAULT NULL,
+  `int_prop_2` int(11) DEFAULT NULL,
+  `long_prop_1` bigint(20) DEFAULT NULL,
+  `long_prop_2` bigint(20) DEFAULT NULL,
+  `dec_prop_1` decimal(13,4) DEFAULT NULL,
+  `dec_prop_2` decimal(13,4) DEFAULT NULL,
+  `bool_prop_1` varchar(1) DEFAULT NULL,
+  `bool_prop_2` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+CREATE TABLE `qrtz_triggers` (
+  `sched_name` varchar(120) NOT NULL,
+  `trigger_name` varchar(200) NOT NULL,
+  `trigger_group` varchar(200) NOT NULL,
+  `job_name` varchar(200) NOT NULL,
+  `job_group` varchar(200) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `next_fire_time` bigint(13) DEFAULT NULL,
+  `prev_fire_time` bigint(13) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `trigger_state` varchar(16) NOT NULL,
+  `trigger_type` varchar(8) NOT NULL,
+  `start_time` bigint(13) NOT NULL,
+  `end_time` bigint(13) DEFAULT NULL,
+  `calendar_name` varchar(200) DEFAULT NULL,
+  `misfire_instr` smallint(2) DEFAULT NULL,
+  `job_data` blob,
+  PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
+  KEY `sched_name` (`sched_name`,`job_name`,`job_group`) USING BTREE,
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `sys_config` (
-  `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT '参数主键',
-  `config_name` varchar(100) DEFAULT '' COMMENT '参数名称',
-  `config_key` varchar(100) DEFAULT '' COMMENT '参数键名',
-  `config_value` varchar(500) DEFAULT '' COMMENT '参数键值',
-  `config_type` char(1) DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `config_id` int(5) NOT NULL AUTO_INCREMENT COMMENT ''参数主键'',
+  `config_name` varchar(100) DEFAULT '''' COMMENT ''参数名称'',
+  `config_key` varchar(100) DEFAULT '''' COMMENT ''参数键名'',
+  `config_value` varchar(500) DEFAULT '''' COMMENT ''参数键值'',
+  `config_type` char(1) DEFAULT ''N'' COMMENT ''系统内置（Y是 N否）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(500) DEFAULT NULL COMMENT ''备注'',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='参数配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''参数配置表'';
+CREATE TABLE `sys_dept` (
+  `dept_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''部门id'',
+  `parent_id` bigint(20) DEFAULT ''0'' COMMENT ''父部门id'',
+  `ancestors` varchar(50) DEFAULT '''' COMMENT ''祖级列表'',
+  `dept_name` varchar(30) DEFAULT '''' COMMENT ''部门名称'',
+  `order_num` int(4) DEFAULT ''0'' COMMENT ''显示顺序'',
+  `leader` varchar(20) DEFAULT NULL COMMENT ''负责人'',
+  `phone` varchar(11) DEFAULT NULL COMMENT ''联系电话'',
+  `email` varchar(50) DEFAULT NULL COMMENT ''邮箱'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''部门状态（0禁用 1正常）'',
+  `del_flag` char(1) DEFAULT ''1'' COMMENT ''删除标志（1代表存在 2代表删除）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  PRIMARY KEY (`dept_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''部门表'';
 CREATE TABLE `sys_dict_data` (
-  `dict_code` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典编码',
-  `dict_sort` int(4) DEFAULT '0' COMMENT '字典排序',
-  `dict_label` varchar(100) DEFAULT '' COMMENT '字典标签',
-  `dict_value` varchar(100) DEFAULT '' COMMENT '字典键值',
-  `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
-  `css_class` varchar(100) DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
-  `list_class` varchar(100) DEFAULT NULL COMMENT '表格回显样式',
-  `is_default` char(1) DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
-  `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `dict_code` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''字典编码'',
+  `dict_sort` int(4) DEFAULT ''0'' COMMENT ''字典排序'',
+  `dict_label` varchar(100) DEFAULT '''' COMMENT ''字典标签'',
+  `dict_value` varchar(100) DEFAULT '''' COMMENT ''字典键值'',
+  `dict_type` varchar(100) DEFAULT '''' COMMENT ''字典类型'',
+  `css_class` varchar(100) DEFAULT '''' COMMENT ''样式属性（其他样式扩展）'',
+  `list_class` varchar(100) DEFAULT NULL COMMENT ''表格回显样式'',
+  `is_default` char(1) DEFAULT ''N'' COMMENT ''是否默认（Y是 N否）'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''状态（0禁用 1正常）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(500) DEFAULT NULL COMMENT ''备注'',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典数据表';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''字典数据表'';
 CREATE TABLE `sys_dict_type` (
-  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典主键',
-  `dict_name` varchar(100) DEFAULT '' COMMENT '字典名称',
-  `dict_type` varchar(100) DEFAULT '' COMMENT '字典类型',
-  `status` char(1) DEFAULT '0' COMMENT '状态（0正常 1停用）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''字典主键'',
+  `dict_name` varchar(100) DEFAULT '''' COMMENT ''字典名称'',
+  `dict_type` varchar(100) DEFAULT '''' COMMENT ''字典类型'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''状态（0禁用 1正常）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(500) DEFAULT NULL COMMENT ''备注'',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE KEY `dict_type` (`dict_type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''字典类型表'';
+CREATE TABLE `sys_job` (
+  `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''任务ID'',
+  `job_name` varchar(64) NOT NULL DEFAULT '''' COMMENT ''任务名称'',
+  `job_group` varchar(64) NOT NULL DEFAULT ''DEFAULT'' COMMENT ''任务组名'',
+  `invoke_target` varchar(500) NOT NULL COMMENT ''调用目标字符串'',
+  `cron_expression` varchar(255) DEFAULT '''' COMMENT ''cron执行表达式'',
+  `misfire_policy` varchar(20) DEFAULT ''3'' COMMENT ''计划执行错误策略（1立即执行 2执行一次 3放弃执行）'',
+  `concurrent` char(1) DEFAULT ''1'' COMMENT ''是否并发执行（0允许 1禁止）'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''状态（1正常 0暂停）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(13) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(500) DEFAULT '''' COMMENT ''备注信息'',
+  PRIMARY KEY (`job_id`,`job_name`,`job_group`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''定时任务调度表'';
+CREATE TABLE `sys_job_log` (
+  `job_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''任务日志ID'',
+  `job_name` varchar(64) NOT NULL COMMENT ''任务名称'',
+  `job_group` varchar(64) NOT NULL COMMENT ''任务组名'',
+  `invoke_target` varchar(500) NOT NULL COMMENT ''调用目标字符串'',
+  `job_message` varchar(500) DEFAULT NULL COMMENT ''日志信息'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''执行状态（1正常 0失败）'',
+  `exception_info` varchar(2000) DEFAULT '''' COMMENT ''异常信息'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  PRIMARY KEY (`job_log_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''定时任务调度日志表'';
 CREATE TABLE `sys_login_log` (
   `info_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `login_name` varchar(25) DEFAULT NULL COMMENT '登录账号',
-  `login_location` varchar(100) DEFAULT NULL COMMENT '登录地点',
-  `ipaddr` varchar(50) DEFAULT NULL COMMENT 'ip地址',
-  `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
-  `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
+  `login_name` varchar(25) DEFAULT NULL COMMENT ''登录账号'',
+  `login_location` varchar(100) DEFAULT NULL COMMENT ''登录地点'',
+  `ipaddr` varchar(50) DEFAULT NULL COMMENT ''ip地址'',
+  `os` varchar(50) DEFAULT NULL COMMENT ''操作系统'',
+  `browser` varchar(50) DEFAULT NULL COMMENT ''浏览器'',
   `msg` varchar(255) DEFAULT NULL,
-  `create_time` bigint(15) DEFAULT NULL COMMENT '访问时间',
-  `status` char(1) DEFAULT '0' COMMENT '0-成功1-失败',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''访问时间'',
+  `status` char(1) DEFAULT ''0'' COMMENT ''0-成功1-失败'',
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COMMENT=''登录日志'';
 CREATE TABLE `sys_menu` (
-  `menu_id` int(11) NOT NULL AUTO_INCREMENT,
-  `menu_name` varchar(40) DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `order_num` int(4) DEFAULT NULL,
-  `url` varchar(200) DEFAULT NULL COMMENT '请求地址',
-  `target` varchar(20) CHARACTER SET utf8 DEFAULT '' COMMENT '打开方式（menuItem页签 menuBlank新窗口）',
-  `menu_type` char(1) CHARACTER SET utf8 DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
-  `visible` char(1) CHARACTER SET utf8 DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
-  `perms` varchar(100) CHARACTER SET utf8 DEFAULT '' COMMENT '权限标识',
-  `icon` varchar(100) CHARACTER SET utf8 DEFAULT '#' COMMENT '菜单图标',
-  `create_by` varchar(30) CHARACTER SET utf8 DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(30) CHARACTER SET utf8 DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` text CHARACTER SET utf8 COMMENT '备注',
+  `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT ''菜单ID'',
+  `menu_name` varchar(40) DEFAULT NULL COMMENT ''菜单名称'',
+  `parent_id` int(11) DEFAULT NULL COMMENT ''父菜单ID'',
+  `order_num` int(4) DEFAULT NULL COMMENT ''显示顺序'',
+  `url` varchar(200) DEFAULT ''#'' COMMENT ''请求地址'',
+  `target` varchar(20) CHARACTER SET utf8 DEFAULT '''' COMMENT ''打开方式（menuItem页签 menuBlank新窗口）'',
+  `menu_type` char(1) CHARACTER SET utf8 DEFAULT '''' COMMENT ''菜单类型（M目录 C菜单 F按钮）'',
+  `visible` char(1) CHARACTER SET utf8 DEFAULT ''0'' COMMENT ''菜单状态（0显示 1隐藏）'',
+  `perms` varchar(100) CHARACTER SET utf8 DEFAULT '''' COMMENT ''权限标识'',
+  `icon` varchar(100) CHARACTER SET utf8 DEFAULT ''#'' COMMENT ''菜单图标'',
+  `create_by` varchar(30) CHARACTER SET utf8 DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(13) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(30) CHARACTER SET utf8 DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(13) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(300) CHARACTER SET utf8 DEFAULT NULL COMMENT ''备注'',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `sys_notice` (
-  `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '公告ID',
-  `notice_title` varchar(50) NOT NULL COMMENT '公告标题',
-  `notice_type` char(1) NOT NULL COMMENT '公告类型（1通知 2公告）',
-  `notice_content` varchar(2000) DEFAULT NULL COMMENT '公告内容',
-  `status` char(1) DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
-  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT ''公告ID'',
+  `notice_title` varchar(50) NOT NULL COMMENT ''公告标题'',
+  `notice_type` char(1) NOT NULL COMMENT ''公告类型（1通知 2公告）'',
+  `notice_content` varchar(2000) DEFAULT NULL COMMENT ''公告内容'',
+  `status` char(1) DEFAULT ''0'' COMMENT ''公告状态（0正常 1关闭）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(255) DEFAULT NULL COMMENT ''备注'',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='通知公告表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''通知公告表'';
 CREATE TABLE `sys_oper_log` (
   `oper_id` int(11) NOT NULL AUTO_INCREMENT,
-  `oper_name` varchar(40) DEFAULT NULL COMMENT '操作名称',
-  `oper_ip` varchar(20) DEFAULT NULL COMMENT '操作者IP',
-  `oper_location` varchar(100) DEFAULT NULL COMMENT '操作者地点',
-  `error_msg` text COMMENT '错误信息',
-  `login_name` varchar(30) DEFAULT NULL COMMENT '登录账号',
-  `time` bigint(13) DEFAULT NULL COMMENT '操作耗时（ms）',
-  `method` varchar(200) DEFAULT NULL COMMENT '操作方法',
-  `oper_param` varchar(300) DEFAULT NULL COMMENT '方法参数',
+  `oper_name` varchar(40) DEFAULT NULL COMMENT ''操作名称'',
+  `oper_ip` varchar(20) DEFAULT NULL COMMENT ''操作者IP'',
+  `oper_location` varchar(100) DEFAULT NULL COMMENT ''操作者地点'',
+  `error_msg` text COMMENT ''错误信息'',
+  `login_name` varchar(30) DEFAULT NULL COMMENT ''登录账号'',
+  `time` bigint(13) DEFAULT NULL COMMENT ''操作耗时（ms）'',
+  `method` varchar(200) DEFAULT NULL COMMENT ''操作方法'',
+  `oper_param` varchar(300) DEFAULT NULL COMMENT ''方法参数'',
   `create_time` bigint(13) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT '1' COMMENT '0-错误1-正常',
+  `status` char(1) NOT NULL DEFAULT ''1'' COMMENT ''0-错误1-正常'',
   PRIMARY KEY (`oper_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `sys_post` (
+  `post_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT ''岗位ID'',
+  `post_code` varchar(64) NOT NULL COMMENT ''岗位编码'',
+  `post_name` varchar(50) NOT NULL COMMENT ''岗位名称'',
+  `post_sort` int(4) NOT NULL COMMENT ''显示顺序'',
+  `status` char(1) NOT NULL DEFAULT ''1'' COMMENT ''状态（1正常 0停用）'',
+  `create_by` varchar(64) DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(13) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(64) DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(13) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` varchar(500) DEFAULT NULL COMMENT ''备注'',
+  PRIMARY KEY (`post_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''岗位信息表'';
 CREATE TABLE `sys_role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(30) DEFAULT NULL,
-  `role_key` varchar(100) DEFAULT NULL COMMENT '角色权限字符串',
-  `role_sort` int(4) DEFAULT NULL COMMENT '显示顺序',
-  `status` char(1) DEFAULT '1' COMMENT '0-禁用1-正常',
-  `del_flag` char(1) DEFAULT '1' COMMENT '2-已删除1-正常',
+  `role_key` varchar(100) DEFAULT NULL COMMENT ''角色权限字符串'',
+  `role_sort` int(4) DEFAULT NULL COMMENT ''显示顺序'',
+  `data_scope` char(1) CHARACTER SET utf8 DEFAULT ''1'' COMMENT ''数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''0-禁用1-正常'',
+  `del_flag` char(1) DEFAULT ''1'' COMMENT ''2-已删除1-正常'',
   `create_by` varchar(30) DEFAULT NULL,
   `create_time` bigint(15) DEFAULT NULL,
   `update_by` varchar(30) DEFAULT NULL,
   `update_time` bigint(15) DEFAULT NULL,
-  `remark` text,
+  `remark` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `sys_role_dept` (
+  `role_id` bigint(11) NOT NULL COMMENT ''角色ID'',
+  `dept_id` bigint(11) NOT NULL COMMENT ''部门ID'',
+  PRIMARY KEY (`role_id`,`dept_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''角色和部门关联表'';
 CREATE TABLE `sys_role_menu` (
   `role_id` int(11) DEFAULT NULL,
   `menu_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `sys_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dept_id` bigint(11) DEFAULT NULL COMMENT ''部门ID'',
   `login_name` varchar(30) DEFAULT NULL,
   `username` varchar(30) DEFAULT NULL,
   `email` varchar(30) DEFAULT NULL,
   `telephone` varchar(11) DEFAULT NULL,
-  `sex` char(1) DEFAULT '2' COMMENT '0-男1-女2-未知',
-  `avatar` varchar(120) DEFAULT NULL COMMENT '头像路径',
-  `password` varchar(50) CHARACTER SET utf8 DEFAULT '' COMMENT '密码',
-  `salt` varchar(20) CHARACTER SET utf8 DEFAULT '' COMMENT '盐加密',
-  `status` char(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '帐号状态（0禁用 1正常）',
-  `del_flag` char(1) CHARACTER SET utf8 DEFAULT '1' COMMENT '删除标志（1代表存在 2代表删除）',
-  `login_ip` varchar(50) CHARACTER SET utf8 DEFAULT '' COMMENT '最后登陆IP',
-  `login_date` bigint(15) DEFAULT NULL COMMENT '最后登陆时间',
-  `create_by` varchar(25) CHARACTER SET utf8 DEFAULT '' COMMENT '创建者',
-  `create_time` bigint(15) DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(25) CHARACTER SET utf8 DEFAULT '' COMMENT '更新者',
-  `update_time` bigint(15) DEFAULT NULL COMMENT '更新时间',
-  `remark` text CHARACTER SET utf8 COMMENT '备注',
+  `sex` char(1) DEFAULT ''2'' COMMENT ''0-男1-女2-未知'',
+  `avatar` varchar(120) DEFAULT '''' COMMENT ''头像路径'',
+  `password` varchar(50) CHARACTER SET utf8 DEFAULT '''' COMMENT ''密码'',
+  `salt` varchar(20) CHARACTER SET utf8 DEFAULT '''' COMMENT ''盐加密'',
+  `status` char(1) CHARACTER SET utf8 DEFAULT ''1'' COMMENT ''帐号状态（0禁用 1正常）'',
+  `del_flag` char(1) CHARACTER SET utf8 DEFAULT ''1'' COMMENT ''删除标志（1代表存在 2代表删除）'',
+  `login_ip` varchar(50) CHARACTER SET utf8 DEFAULT '''' COMMENT ''最后登陆IP'',
+  `login_date` bigint(15) DEFAULT NULL COMMENT ''最后登陆时间'',
+  `create_by` varchar(25) CHARACTER SET utf8 DEFAULT '''' COMMENT ''创建者'',
+  `create_time` bigint(15) DEFAULT NULL COMMENT ''创建时间'',
+  `update_by` varchar(25) CHARACTER SET utf8 DEFAULT '''' COMMENT ''更新者'',
+  `update_time` bigint(15) DEFAULT NULL COMMENT ''更新时间'',
+  `remark` text CHARACTER SET utf8 COMMENT ''备注'',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `sys_user_post` (
+  `user_id` bigint(11) NOT NULL COMMENT ''用户ID'',
+  `post_id` bigint(11) NOT NULL COMMENT ''岗位ID'',
+  PRIMARY KEY (`user_id`,`post_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT=''用户与岗位关联表'';
 CREATE TABLE `sys_user_role` (
   `user_id` int(11) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `ums_audio` (
+  `audio_id` int(11) NOT NULL COMMENT ''音乐ID'',
+  `author` varchar(100) DEFAULT NULL COMMENT ''音乐作者'',
+  `name` varchar(200) DEFAULT NULL COMMENT ''音乐名称'',
+  `path` varchar(200) DEFAULT NULL COMMENT ''存放路径'',
+  `create_time` int(13) DEFAULT NULL COMMENT ''创建时间'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''0-禁用1-正常'',
+  PRIMARY KEY (`audio_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=''用户音乐'';
 CREATE TABLE `ums_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `login_name` varchar(25) DEFAULT NULL COMMENT '登录账号',
-  `username` varchar(20) DEFAULT NULL COMMENT '用户名',
-  `u_account` varchar(25) DEFAULT NULL COMMENT 'u号',
-  `user_type` varchar(2) DEFAULT NULL COMMENT '用户类型（00系统用户）',
-  `user_level` int(2) DEFAULT NULL COMMENT '用户等级',
+  `login_name` varchar(25) DEFAULT NULL COMMENT ''登录账号'',
+  `username` varchar(20) DEFAULT NULL COMMENT ''用户名'',
+  `u_account` varchar(25) DEFAULT NULL COMMENT ''u号'',
+  `user_type` varchar(2) DEFAULT NULL COMMENT ''用户类型（00系统用户）'',
+  `user_level` int(2) DEFAULT NULL COMMENT ''用户等级'',
   `email` varchar(30) DEFAULT NULL,
-  `sex` char(1) CHARACTER SET utf8 DEFAULT '2' COMMENT '用户性别（0男 1女 2未知）',
+  `sex` char(1) CHARACTER SET utf8 DEFAULT ''2'' COMMENT ''用户性别（0男 1女 2未知）'',
   `password` varchar(25) DEFAULT NULL,
-  `salt` varchar(20) DEFAULT NULL COMMENT '加密盐',
-  `avatar` varchar(100) DEFAULT NULL COMMENT '头像路径',
+  `salt` varchar(20) DEFAULT NULL COMMENT ''加密盐'',
+  `avatar` varchar(100) DEFAULT NULL COMMENT ''头像路径'',
   `telephone` varchar(15) DEFAULT NULL,
-  `del_flag` char(1) DEFAULT '0' COMMENT '删除标志（1代表存在 2代表删除）',
-  `login_ip` varchar(30) CHARACTER SET utf8 DEFAULT '' COMMENT '最后登陆IP',
-  `login_date` bigint(15) DEFAULT NULL COMMENT '最后登陆时间',
-  `open_id` varchar(30) DEFAULT NULL COMMENT '开放id',
-  `is_lock` char(1) DEFAULT '0' COMMENT '0-可修改u号1-不可修改',
-  `remark` varchar(500) CHARACTER SET utf8 DEFAULT NULL COMMENT '备注',
-  `honor` int(3) DEFAULT '400' COMMENT '信誉度',
-  `exp` int(10) DEFAULT '0' COMMENT '经验',
-  `fans_num` int(11) DEFAULT '0' COMMENT '粉丝量',
-  `follow_num` int(11) DEFAULT '0' COMMENT '关注量',
-  `oid` char(1) DEFAULT '4' COMMENT '个人信息公开程度:0-自己可见，1-同班，2-同系，3-同校，4-全部',
-  `health` int(2) DEFAULT '100' COMMENT '健康度',
-  `ban_time` bigint(15) DEFAULT NULL COMMENT '禁用账号到期时间',
+  `del_flag` char(1) DEFAULT ''0'' COMMENT ''删除标志（1代表存在 2代表删除）'',
+  `login_ip` varchar(30) CHARACTER SET utf8 DEFAULT '''' COMMENT ''最后登陆IP'',
+  `login_date` bigint(15) DEFAULT NULL COMMENT ''最后登陆时间'',
+  `open_id` varchar(30) DEFAULT NULL COMMENT ''开放id'',
+  `is_lock` char(1) DEFAULT ''0'' COMMENT ''0-可修改u号1-不可修改'',
+  `remark` varchar(500) CHARACTER SET utf8 DEFAULT NULL COMMENT ''备注'',
+  `honor` int(3) DEFAULT ''400'' COMMENT ''信誉度'',
+  `exp` int(10) DEFAULT ''0'' COMMENT ''经验'',
+  `fans_num` int(11) DEFAULT ''0'' COMMENT ''粉丝量'',
+  `follow_num` int(11) DEFAULT ''0'' COMMENT ''关注量'',
+  `oid` char(1) DEFAULT ''4'' COMMENT ''个人信息公开程度:0-自己可见，1-同班，2-同系，3-同校，4-全部'',
+  `health` int(2) DEFAULT ''100'' COMMENT ''健康度'',
+  `ban_time` bigint(15) DEFAULT NULL COMMENT ''禁用账号到期时间'',
   `update_time` bigint(15) DEFAULT NULL,
   `create_time` bigint(15) DEFAULT NULL,
-  `is_verify` char(1) DEFAULT '0' COMMENT '1-已认证，0-未认证',
-  `status` char(1) DEFAULT '1' COMMENT '0-禁用1-正常',
+  `is_verify` char(1) DEFAULT ''0'' COMMENT ''1-已认证，0-未认证'',
+  `status` char(1) DEFAULT ''1'' COMMENT ''0-禁用1-正常'',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 BEGIN;
+LOCK TABLES `fun_base`.`qrtz_blob_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_blob_triggers`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_calendars` WRITE;
+DELETE FROM `fun_base`.`qrtz_calendars`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_cron_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_cron_triggers`;
+INSERT INTO `fun_base`.`qrtz_cron_triggers` (`sched_name`,`trigger_name`,`trigger_group`,`cron_expression`,`time_zone_id`) VALUES (''CqjavaScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', ''0/10 * * * * ?'', ''Asia/Shanghai''),(''CqjavaScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', ''0/15 * * * * ?'', ''Asia/Shanghai''),(''CqjavaScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', ''0/20 * * * * ?'', ''Asia/Shanghai''),(''RuoyiScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', ''0/10 * * * * ?'', ''GMT+08:00''),(''RuoyiScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', ''0/15 * * * * ?'', ''GMT+08:00''),(''RuoyiScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', ''0/20 * * * * ?'', ''GMT+08:00'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_fired_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_fired_triggers`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_job_details` WRITE;
+DELETE FROM `fun_base`.`qrtz_job_details`;
+INSERT INTO `fun_base`.`qrtz_job_details` (`sched_name`,`job_name`,`job_group`,`description`,`job_class_name`,`is_durable`,`is_nonconcurrent`,`is_update_data`,`requests_recovery`,`job_data`) VALUES (''CqjavaScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3130202A202A202A202A203F74001172795461736B2E72794E6F506172616D7374000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000001740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E697A0E58F82EFBC8974000133740001317800),(''CqjavaScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3135202A202A202A202A203F74001572795461736B2E7279506172616D7328277279272974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000002740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E69C89E58F82EFBC8974000133740001317800),(''CqjavaScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3230202A202A202A202A203F74003872795461736B2E72794D756C7469706C65506172616D7328277279272C20747275652C20323030304C2C203331362E3530442C203130302974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000003740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E5A49AE58F82EFBC8974000133740001317800),(''RuoyiScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3130202A202A202A202A203F74001172795461736B2E72794E6F506172616D7374000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000001740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E697A0E58F82EFBC8974000133740001317800),(''RuoyiScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3135202A202A202A202A203F74001572795461736B2E7279506172616D7328277279272974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000002740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E69C89E58F82EFBC8974000133740001317800),(''RuoyiScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', NULL, ''com.cqjava.project.monitor.job.util.QuartzDisallowConcurrentExecution'', ''0'', ''1'', ''0'', ''0'', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720029636F6D2E63716A6176612E70726F6A6563742E6D6F6E69746F722E6A6F622E646F6D61696E2E4A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E00097872002A636F6D2E63716A6176612E6672616D65776F726B2E7765622E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3230202A202A202A202A203F74003872795461736B2E72794D756C7469706C65506172616D7328277279272C20747275652C20323030304C2C203331362E3530442C203130302974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000003740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E5A49AE58F82EFBC8974000133740001317800);
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_locks` WRITE;
+DELETE FROM `fun_base`.`qrtz_locks`;
+INSERT INTO `fun_base`.`qrtz_locks` (`sched_name`,`lock_name`) VALUES (''CqjavaScheduler'', ''STATE_ACCESS''),(''CqjavaScheduler'', ''TRIGGER_ACCESS''),(''RuoyiScheduler'', ''STATE_ACCESS''),(''RuoyiScheduler'', ''TRIGGER_ACCESS'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_paused_trigger_grps` WRITE;
+DELETE FROM `fun_base`.`qrtz_paused_trigger_grps`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_scheduler_state` WRITE;
+DELETE FROM `fun_base`.`qrtz_scheduler_state`;
+INSERT INTO `fun_base`.`qrtz_scheduler_state` (`sched_name`,`instance_name`,`last_checkin_time`,`checkin_interval`) VALUES (''CqjavaScheduler'', ''DESKTOP-7OL4LQO1572853444805'', 1572857245598, 15000),(''RuoyiScheduler'', ''LAPTOP-8MMNECSF1565602756014'', 1565602984423, 15000),(''RuoyiScheduler'', ''LAPTOP-8MMNECSF1565602997057'', 1565602999076, 15000);
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_simple_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_simple_triggers`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_simprop_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_simprop_triggers`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`qrtz_triggers` WRITE;
+DELETE FROM `fun_base`.`qrtz_triggers`;
+INSERT INTO `fun_base`.`qrtz_triggers` (`sched_name`,`trigger_name`,`trigger_group`,`job_name`,`job_group`,`description`,`next_fire_time`,`prev_fire_time`,`priority`,`trigger_state`,`trigger_type`,`start_time`,`end_time`,`calendar_name`,`misfire_instr`,`job_data`) VALUES (''CqjavaScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', ''TASK_CLASS_NAME1'', ''DEFAULT'', NULL, 1572853450000, -1, 5, ''PAUSED'', ''CRON'', 1572853445000, 0, NULL, 2, ''''),(''CqjavaScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', ''TASK_CLASS_NAME2'', ''DEFAULT'', NULL, 1572853455000, -1, 5, ''PAUSED'', ''CRON'', 1572853445000, 0, NULL, 2, ''''),(''CqjavaScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', ''TASK_CLASS_NAME3'', ''DEFAULT'', NULL, 1572853460000, -1, 5, ''PAUSED'', ''CRON'', 1572853445000, 0, NULL, 2, ''''),(''RuoyiScheduler'', ''TASK_CLASS_NAME1'', ''DEFAULT'', ''TASK_CLASS_NAME1'', ''DEFAULT'', NULL, 1565603000000, -1, 5, ''PAUSED'', ''CRON'', 1565602997000, 0, NULL, 2, ''''),(''RuoyiScheduler'', ''TASK_CLASS_NAME2'', ''DEFAULT'', ''TASK_CLASS_NAME2'', ''DEFAULT'', NULL, 1565603010000, -1, 5, ''PAUSED'', ''CRON'', 1565602997000, 0, NULL, 2, ''''),(''RuoyiScheduler'', ''TASK_CLASS_NAME3'', ''DEFAULT'', ''TASK_CLASS_NAME3'', ''DEFAULT'', NULL, 1565603000000, -1, 5, ''PAUSED'', ''CRON'', 1565602997000, 0, NULL, 2, '''');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
 LOCK TABLES `fun_base`.`sys_config` WRITE;
 DELETE FROM `fun_base`.`sys_config`;
-INSERT INTO `fun_base`.`sys_config` (`config_id`,`config_name`,`config_key`,`config_value`,`config_type`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', 20180316113300, 'ry', 20180316113300, '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow'),(2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', 20180316113300, 'ry', 20180316113300, '初始化密码 123456'),(3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', 20180316113300, 'ry', 20180316113300, '深色主题theme-dark，浅色主题theme-light');
+INSERT INTO `fun_base`.`sys_config` (`config_id`,`config_name`,`config_key`,`config_value`,`config_type`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''主框架页-默认皮肤样式名称'', ''sys.index.skinName'', ''skin-blue'', ''Y'', ''admin'', 1572778805957, ''admin'', 1572778805957, ''蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow''),(2, ''用户管理-账号初始密码'', ''sys.user.initPassword'', ''123456'', ''Y'', ''admin'', 1572778805957, ''admin'', 1572778805957, ''初始化密码 123456''),(3, ''主框架页-侧边栏主题'', ''sys.index.sideTheme'', ''theme-dark'', ''Y'', ''admin'', 1572778805957, ''admin'', 1572778805957, ''深色主题theme-dark，浅色主题theme-light'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_dept` WRITE;
+DELETE FROM `fun_base`.`sys_dept`;
+INSERT INTO `fun_base`.`sys_dept` (`dept_id`,`parent_id`,`ancestors`,`dept_name`,`order_num`,`leader`,`phone`,`email`,`status`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`) VALUES (100, 0, ''0'', ''u趣科技股份有限公司'', 0, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(101, 100, ''0,100'', ''上海总公司'', 1, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572691998691),(102, 100, ''0,100'', ''长沙分公司'', 2, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(103, 101, ''0,100,101'', ''研发部门'', 1, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(104, 101, ''0,100,101'', ''市场部门'', 2, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(105, 101, ''0,100,101'', ''测试部门'', 3, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(106, 101, ''0,100,101'', ''财务部门'', 4, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(107, 101, ''0,100,101'', ''运维部门'', 5, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(108, 102, ''0,100,102'', ''市场部门'', 1, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306),(109, 102, ''0,100,102'', ''财务部门'', 2, ''MrDJun'', ''15888888888'', ''mr.djun@qq.com'', ''1'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_dict_data` WRITE;
 DELETE FROM `fun_base`.`sys_dict_data`;
-INSERT INTO `fun_base`.`sys_dict_data` (`dict_code`,`dict_sort`,`dict_label`,`dict_value`,`dict_type`,`css_class`,`list_class`,`is_default`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, 1, '男', '0', 'sys_user_sex', '', '', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '性别男'),(2, 2, '女', '1', 'sys_user_sex', '', '', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '性别女'),(3, 3, '未知', '2', 'sys_user_sex', '', '', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '性别未知'),(4, 1, '显示', '0', 'sys_show_hide', '', 'primary', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '显示菜单'),(5, 2, '隐藏', '1', 'sys_show_hide', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '隐藏菜单'),(6, 1, '正常', '0', 'sys_normal_disable', '', 'primary', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '正常状态'),(7, 2, '停用', '1', 'sys_normal_disable', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '停用状态'),(8, 1, '正常', '0', 'sys_job_status', '', 'primary', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '正常状态'),(9, 2, '暂停', '1', 'sys_job_status', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '停用状态'),(10, 1, '默认', 'DEFAULT', 'sys_job_group', '', '', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '默认分组'),(11, 2, '系统', 'SYSTEM', 'sys_job_group', '', '', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '系统分组'),(12, 1, '是', 'Y', 'sys_yes_no', '', 'primary', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '系统默认是'),(13, 2, '否', 'N', 'sys_yes_no', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '系统默认否'),(14, 1, '通知', '1', 'sys_notice_type', '', 'warning', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '通知'),(15, 2, '公告', '2', 'sys_notice_type', '', 'success', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '公告'),(16, 1, '正常', '0', 'sys_notice_status', '', 'primary', 'Y', '0', 'admin', 20180316113300, 'ry', 20180316113300, '正常状态'),(17, 2, '关闭', '1', 'sys_notice_status', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '关闭状态'),(18, 1, '新增', '1', 'sys_oper_type', '', 'info', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '新增操作'),(19, 2, '修改', '2', 'sys_oper_type', '', 'info', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '修改操作'),(20, 3, '删除', '3', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '删除操作'),(21, 4, '授权', '4', 'sys_oper_type', '', 'primary', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '授权操作'),(22, 5, '导出', '5', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '导出操作'),(23, 6, '导入', '6', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '导入操作'),(24, 7, '强退', '7', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '强退操作'),(25, 8, '生成代码', '8', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '生成操作'),(26, 9, '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '清空操作'),(27, 1, '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '正常状态'),(28, 2, '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', 20180316113300, 'ry', 20180316113300, '停用状态'),(30, 1, '早餐', '1', 'sys_meal_type', '', '', 'N', '0', 'admin', 20190820151654, 'admin', 20190820151846, ''),(31, 2, '午餐', '2', 'sys_meal_type', '', '', 'N', '0', 'admin', 20190820151715, 'admin', 20190821102117, ''),(32, 3, '晚餐', '3', 'sys_meal_type', '', '', 'N', '0', 'admin', 20190820151912, 'admin', 20190822130712, '');
+INSERT INTO `fun_base`.`sys_dict_data` (`dict_code`,`dict_sort`,`dict_label`,`dict_value`,`dict_type`,`css_class`,`list_class`,`is_default`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, 1, ''男'', ''0'', ''sys_user_sex'', '''', '''', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''性别男''),(2, 2, ''女'', ''1'', ''sys_user_sex'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''性别女''),(3, 3, ''未知'', ''2'', ''sys_user_sex'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''性别未知''),(4, 1, ''显示'', ''0'', ''sys_show_hide'', '''', ''primary'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572699650186, ''显示菜单''),(5, 2, ''隐藏'', ''1'', ''sys_show_hide'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572699654819, ''隐藏菜单''),(6, 1, ''正常'', ''1'', ''sys_normal_disable'', '''', ''primary'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572590433791, ''正常状态''),(7, 2, ''停用'', ''0'', ''sys_normal_disable'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572590439098, ''停用状态''),(8, 1, ''正常'', ''1'', ''sys_job_status'', '''', ''primary'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572960880382, ''正常状态''),(9, 2, ''暂停'', ''0'', ''sys_job_status'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572960884392, ''停用状态''),(10, 1, ''默认'', ''DEFAULT'', ''sys_job_group'', '''', '''', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''默认分组''),(11, 2, ''系统'', ''SYSTEM'', ''sys_job_group'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''系统分组''),(12, 1, ''是'', ''Y'', ''sys_yes_no'', '''', ''primary'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''系统默认是''),(13, 2, ''否'', ''N'', ''sys_yes_no'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''系统默认否''),(14, 1, ''通知'', ''1'', ''sys_notice_type'', '''', ''warning'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''通知''),(15, 2, ''公告'', ''2'', ''sys_notice_type'', '''', ''success'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''公告''),(16, 1, ''正常'', ''0'', ''sys_notice_status'', '''', ''primary'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''正常状态''),(17, 2, ''关闭'', ''1'', ''sys_notice_status'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''关闭状态''),(18, 1, ''新增'', ''1'', ''sys_oper_type'', '''', ''info'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''新增操作''),(19, 2, ''修改'', ''2'', ''sys_oper_type'', '''', ''info'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''修改操作''),(20, 3, ''删除'', ''3'', ''sys_oper_type'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''删除操作''),(21, 4, ''授权'', ''4'', ''sys_oper_type'', '''', ''primary'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''授权操作''),(22, 5, ''导出'', ''5'', ''sys_oper_type'', '''', ''warning'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''导出操作''),(23, 6, ''导入'', ''6'', ''sys_oper_type'', '''', ''warning'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''导入操作''),(24, 7, ''强退'', ''7'', ''sys_oper_type'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''强退操作''),(25, 8, ''生成代码'', ''8'', ''sys_oper_type'', '''', ''warning'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''生成操作''),(26, 9, ''清空数据'', ''9'', ''sys_oper_type'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''清空操作''),(27, 1, ''成功'', ''1'', ''sys_common_status'', '''', ''primary'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572834565450, ''正常状态''),(28, 2, ''失败'', ''0'', ''sys_common_status'', '''', ''danger'', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572834569693, ''停用状态''),(30, 1, ''早餐'', ''1'', ''sys_meal_type'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''''),(31, 2, ''午餐'', ''2'', ''sys_meal_type'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''''),(32, 3, ''晚餐'', ''3'', ''sys_meal_type'', '''', '''', ''N'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''''),(33, 1, ''测试'', ''1'', ''ums_test_1'', NULL, ''default'', ''Y'', ''1'', ''admin'', 1572489468306, ''admin'', NULL, NULL),(34, 2, ''标签1'', ''1'', ''sys_test_1'', '''', ''default'', ''Y'', ''1'', ''admin'', 1572493057254, '''', NULL, ''标签1的描述内容'');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_dict_type` WRITE;
 DELETE FROM `fun_base`.`sys_dict_type`;
-INSERT INTO `fun_base`.`sys_dict_type` (`dict_id`,`dict_name`,`dict_type`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, '用户性别', 'sys_user_sex', '0', 'admin', 20180316113300, 'admin', 20180316113300, '用户性别列表'),(2, '菜单状态', 'sys_show_hide', '0', 'admin', 20180316113300, 'admin', 20180316113300, '菜单状态列表'),(3, '系统开关', 'sys_normal_disable', '0', 'admin', 20180316113300, 'admin', 20180316113300, '系统开关列表'),(4, '任务状态', 'sys_job_status', '0', 'admin', 20180316113300, 'admin', 20180316113300, '任务状态列表'),(5, '任务分组', 'sys_job_group', '0', 'admin', 20180316113300, 'admin', 20180316113300, '任务分组列表'),(6, '系统是否', 'sys_yes_no', '0', 'admin', 20180316113300, 'admin', 20180316113300, '系统是否列表'),(7, '通知类型', 'sys_notice_type', '0', 'admin', 20180316113300, 'admin', 20180316113300, '通知类型列表'),(8, '通知状态', 'sys_notice_status', '0', 'admin', 20180316113300, 'admin', 20180316113300, '通知状态列表'),(9, '操作类型', 'sys_oper_type', '0', 'admin', 20180316113300, 'admin', 20180316113300, '操作类型列表'),(10, '系统状态', 'sys_common_status', '0', 'admin', 20180316113300, 'admin', 20180316113300, '登录状态列表'),(11, '餐类型', 'sys_meal_type', '0', 'admin', 20190820151515, 'admin', 20190820152000, '餐类型列表');
+INSERT INTO `fun_base`.`sys_dict_type` (`dict_id`,`dict_name`,`dict_type`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''用户性别'', ''sys_user_sex'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''用户性别列表''),(2, ''菜单状态'', ''sys_show_hide'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''菜单状态列表''),(3, ''系统开关'', ''sys_normal_disable'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''系统开关列表''),(4, ''任务状态'', ''sys_job_status'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''任务状态列表''),(5, ''任务分组'', ''sys_job_group'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''任务分组列表''),(6, ''系统是否'', ''sys_yes_no'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''系统是否列表''),(7, ''通知类型'', ''sys_notice_type'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''通知类型列表''),(8, ''通知状态'', ''sys_notice_status'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''通知状态列表''),(9, ''操作类型'', ''sys_oper_type'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''操作类型列表''),(10, ''系统状态'', ''sys_common_status'', ''1'', ''admin'', 1572489468306, ''admin'', 1572489468306, ''登录状态列表'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_job` WRITE;
+DELETE FROM `fun_base`.`sys_job`;
+INSERT INTO `fun_base`.`sys_job` (`job_id`,`job_name`,`job_group`,`invoke_target`,`cron_expression`,`misfire_policy`,`concurrent`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''0/10 * * * * ?'', ''3'', ''1'', ''0'', ''admin'', 1572963151046, ''admin'', 1572963151046, ''无参示例''),(2, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''0/15 * * * * ?'', ''3'', ''1'', ''0'', ''admin'', 1572963151046, ''admin'', 1572963151046, ''有参示例''),(3, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''mrdjun\'', true, 2000L, 316.50D, 100)'', ''0/20 * * * * ?'', ''3'', ''1'', ''0'', ''admin'', 1572963151046, ''admin'', 1572963151046, ''多参示例'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_job_log` WRITE;
+DELETE FROM `fun_base`.`sys_job_log`;
+INSERT INTO `fun_base`.`sys_job_log` (`job_log_id`,`job_name`,`job_group`,`invoke_target`,`job_message`,`status`,`exception_info`,`create_time`) VALUES (7, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams'', ''系统默认（有参） 总共耗时：4毫秒'', ''0'', ''java.lang.NoSuchMethodException: com.fun.project.admin.monitor.task.FunBootTask.hasParams()\r\n	at java.lang.Class.getDeclaredMethod(Class.java:2130)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:52)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:31)\r\n	at com.fun.common.utils.job.QuartzDisallowConcurrentExecution.doExecute(QuartzDisallowConcurrentExecution.java:16)\r\n	at com.fun.common.utils.job.AbstractQuartzJob.execute(AbstractQuartzJob.java:39)\r\n	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)\r\n	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)\r\n'', 1572964020033),(8, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''ry\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：4毫秒'', ''1'', '''', 1572964020033),(9, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams'', ''系统默认（有参） 总共耗时：0毫秒'', ''0'', ''java.lang.NoSuchMethodException: com.fun.project.admin.monitor.task.FunBootTask.hasParams()\r\n	at java.lang.Class.getDeclaredMethod(Class.java:2130)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:52)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:31)\r\n	at com.fun.common.utils.job.QuartzDisallowConcurrentExecution.doExecute(QuartzDisallowConcurrentExecution.java:16)\r\n	at com.fun.common.utils.job.AbstractQuartzJob.execute(AbstractQuartzJob.java:39)\r\n	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)\r\n	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)\r\n'', 1572964035001),(10, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''ry\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：0毫秒'', ''1'', '''', 1572964040001),(11, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams'', ''系统默认（有参） 总共耗时：1毫秒'', ''0'', ''java.lang.NoSuchMethodException: com.fun.project.admin.monitor.task.FunBootTask.hasParams()\r\n	at java.lang.Class.getDeclaredMethod(Class.java:2130)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:52)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:31)\r\n	at com.fun.common.utils.job.QuartzDisallowConcurrentExecution.doExecute(QuartzDisallowConcurrentExecution.java:16)\r\n	at com.fun.common.utils.job.AbstractQuartzJob.execute(AbstractQuartzJob.java:39)\r\n	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)\r\n	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)\r\n'', 1572964050002),(12, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''ry\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：0毫秒'', ''1'', '''', 1572964060001),(13, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''ry\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：5毫秒'', ''1'', '''', 1572964280037),(14, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：2毫秒'', ''1'', '''', 1572964280035),(15, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：0毫秒'', ''1'', '''', 1572964290001),(16, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams'', ''系统默认（有参） 总共耗时：4毫秒'', ''0'', ''java.lang.NoSuchMethodException: com.fun.project.admin.monitor.task.FunBootTask.hasParams()\r\n	at java.lang.Class.getDeclaredMethod(Class.java:2130)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:52)\r\n	at com.fun.common.utils.job.JobInvokeUtil.invokeMethod(JobInvokeUtil.java:31)\r\n	at com.fun.common.utils.job.QuartzDisallowConcurrentExecution.doExecute(QuartzDisallowConcurrentExecution.java:16)\r\n	at com.fun.common.utils.job.AbstractQuartzJob.execute(AbstractQuartzJob.java:39)\r\n	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)\r\n	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)\r\n'', 1572964290007),(17, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：19毫秒'', ''1'', '''', 1573007410064),(18, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''系统默认（有参） 总共耗时：0毫秒'', ''1'', '''', 1573007415001),(19, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：0毫秒'', ''1'', '''', 1573007420000),(20, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''mrdjun\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：4毫秒'', ''1'', '''', 1573007420005),(21, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：0毫秒'', ''1'', '''', 1573007430000),(22, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''系统默认（有参） 总共耗时：0毫秒'', ''1'', '''', 1573007430001),(23, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：1毫秒'', ''1'', '''', 1573007440001),(24, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''mrdjun\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：1毫秒'', ''1'', '''', 1573007440002),(25, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''系统默认（有参） 总共耗时：0毫秒'', ''1'', '''', 1573007445000),(26, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：0毫秒'', ''1'', '''', 1573007450001),(27, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：1毫秒'', ''1'', '''', 1573007460001),(28, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''系统默认（有参） 总共耗时：0毫秒'', ''1'', '''', 1573007460003),(29, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''mrdjun\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：0毫秒'', ''1'', '''', 1573007460005),(30, ''系统默认（无参）'', ''DEFAULT'', ''FunBootTask.noParams'', ''系统默认（无参） 总共耗时：0毫秒'', ''1'', '''', 1573007470001),(31, ''系统默认（有参）'', ''DEFAULT'', ''FunBootTask.hasParams(\''mrdjun\'')'', ''系统默认（有参） 总共耗时：0毫秒'', ''1'', '''', 1573007475005),(32, ''系统默认（多参）'', ''DEFAULT'', ''FunBootTask.multipleParams(\''mrdjun\'', true, 2000L, 316.50D, 100)'', ''系统默认（多参） 总共耗时：0毫秒'', ''1'', '''', 1573007480003);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_login_log` WRITE;
 DELETE FROM `fun_base`.`sys_login_log`;
-INSERT INTO `fun_base`.`sys_login_log` (`info_id`,`login_name`,`login_location`,`ipaddr`,`os`,`browser`,`msg`,`create_time`,`status`) VALUES (49, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1568605653883, '0'),(50, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1568605656657, '0'),(51, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1568633759256, '0'),(52, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1568633836708, '0'),(53, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1568734483151, '0'),(54, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录失败', 1568734696410, '1'),(55, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录失败', 1568734767290, '1'),(56, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录失败', 1568734775653, '1'),(57, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1568735213558, '0'),(58, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1569251315678, '0'),(59, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1569252012500, '0'),(60, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1569254673425, '0'),(61, 'admin', '内网IP', '127.0.0.1', 'Unknown', 'Unknown', '登录成功', 1569254724325, '0'),(62, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569767866878, '0'),(63, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569769168705, '0'),(64, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1569769855153, '0'),(65, 'admin', 'XX XX', '171.211.68.123', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569770741424, '1'),(66, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Chrome', '登录成功', 1569815606643, '0'),(67, 'admin', '内网IP', '10.127.105.201', 'Windows 10', 'Chrome', '登录成功', 1569825672348, '0'),(68, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569833049083, '0'),(69, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569833656240, '1'),(70, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569833941235, '1'),(71, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569836327884, '0'),(72, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1569912440442, '1'),(73, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1569912448670, '1'),(74, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1569917169276, '1'),(75, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569918961305, '1'),(76, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569918973844, '1'),(77, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1569918984648, '1'),(78, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1569919097356, '1'),(79, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '用户不存在/密码错误', 1569919109290, '1'),(80, 'mrdjun', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569919805938, '0'),(81, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569922372302, '0'),(82, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1569978302313, '0'),(83, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1569986107952, '0'),(84, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570004703451, '0'),(85, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '验证码错误', 1570005159351, '1'),(86, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570005164209, '0'),(87, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570015133444, '0'),(88, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1570028929798, '0'),(89, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570031314505, '0'),(90, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1570031349952, '0'),(91, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1570031706871, '0'),(92, 'admin', '内网IP', '10.127.105.201', 'Windows 10', 'Chrome', '登录成功', 1570538129261, '0'),(93, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570599997774, '0'),(94, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1570600288745, '0'),(95, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1570608178633, '0'),(96, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Chrome', '登录成功', 1570859951942, '0'),(97, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Chrome', '登录成功', 1571273723005, '0'),(98, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Firefox', '登录成功', 1571274417513, '0'),(99, 'admin', 'XX XX', '118.120.234.58', 'Windows 10', 'Chrome', '登录成功', 1571291111557, '0'),(100, 'admin', 'XX XX', '171.211.33.42', 'Windows 10', 'Chrome', '登录成功', 1571494054409, '0'),(101, 'admin', 'XX XX', '118.120.187.51', 'Windows 10', 'Chrome', '登录成功', 1571579999642, '0'),(102, 'admin', 'XX XX', '118.120.187.51', 'Windows 10', 'Chrome', '登录成功', 1571581529079, '0'),(103, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1571583622338, '1'),(104, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1571583631823, '1'),(105, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1571583716307, '1'),(106, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1571583946258, '0'),(107, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1571584276839, '0'),(108, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1571584301854, '1'),(109, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1571584721105, '1'),(110, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1571584963970, '0'),(111, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Chrome', '登录成功', 1571618109509, '0'),(112, 'admin', '内网IP', '10.127.105.201', 'Windows 10', 'Chrome', '登录成功', 1571642159102, '0'),(113, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571650384942, '0'),(114, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571652128864, '0'),(115, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571657609536, '0'),(116, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571708212314, '0'),(117, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571710315457, '0'),(118, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Firefox', '登录成功', 1571710422859, '0'),(119, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571718839982, '0'),(120, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571733147488, '0'),(121, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571736335477, '0'),(122, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571740334211, '0'),(123, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571745466217, '0'),(124, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571753723687, '0'),(125, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571755070926, '0'),(126, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1571756502285, '0'),(127, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Chrome', '登录成功', 1571877230191, '0'),(128, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Firefox', '登录成功', 1571878039321, '0'),(129, 'admin', '内网IP', '10.127.106.2', 'Windows 10', 'Firefox', '登录成功', 1571882047359, '0'),(130, 'admin', 'XX XX', '118.120.228.243', 'Windows 10', 'Chrome', '登录成功', 1572004192945, '0'),(131, 'admin', 'XX XX', '118.120.228.243', 'Windows 10', 'Firefox', '验证码错误', 1572004362175, '1'),(132, 'admin', 'XX XX', '118.120.228.243', 'Windows 10', 'Firefox', '登录成功', 1572004402828, '0'),(133, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Internet Explorer 11', '登录成功', 1572004549506, '0'),(134, 'admin', '内网IP', '127.0.0.1', 'Windows 10', 'Chrome', '登录成功', 1572004716771, '0'),(135, 'admin', 'XX XX', '171.211.102.160', 'Windows 10', 'Chrome', '登录成功', 1572004902434, '0'),(136, 'admin', 'XX XX', '171.211.102.160', 'Windows 10', 'Firefox', '登录成功', 1572005655676, '0'),(137, 'admin', 'XX XX', '171.211.102.160', 'Windows 10', 'Firefox', '登录成功', 1572006877136, '0'),(138, 'admin', 'XX XX', '117.136.82.199', 'Android Mobile', 'Chrome Mobile', '验证码错误', 1572006999700, '1'),(139, 'admin', 'XX XX', '117.136.82.199', 'Android Mobile', 'Chrome Mobile', '登录成功', 1572007020020, '0'),(140, 'admin', 'XX XX', '171.211.102.160', 'Windows 10', 'Chrome', '登录成功', 1572007819502, '0'),(141, 'admin', 'XX XX', '171.211.102.160', 'Windows 10', 'Chrome', '登录成功', 1572007891412, '0'),(142, 'admin', '四川 德阳', '171.211.102.160', 'Windows 10', 'Chrome', '登录成功', 1572007928786, '0'),(143, 'admin', 'XX XX', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572336513125, '0'),(144, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572337763233, '1'),(145, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338495682, '1'),(146, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338507622, '1'),(147, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338600140, '1'),(148, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338686634, '1'),(149, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338870928, '1'),(150, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572338930664, '1'),(151, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572339532456, '1'),(152, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572339600384, '1'),(153, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572339717040, '1'),(154, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572339907144, '1'),(155, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340423855, '1'),(156, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340428647, '1'),(157, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340439986, '1'),(158, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340441255, '1'),(159, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340441850, '1'),(160, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340603944, '1'),(161, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340679378, '1'),(162, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572340742994, '1'),(163, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572341027421, '1'),(164, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '验证码错误', 1572341075153, '1'),(165, 'admin', 'XX XX', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572346496320, '0'),(166, 'admin', 'XX XX', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572346551872, '0'),(167, 'admin', 'XX XX', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572346726246, '0'),(168, 'admin', 'XX XX', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572346883023, '0'),(169, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Firefox', '登录成功', 1572348923282, '0'),(170, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Firefox', '登录成功', 1572351118266, '0'),(171, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Firefox', '登录成功', 1572356099223, '0'),(172, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572359619559, '0'),(173, 'admin', '四川 德阳', '171.211.32.181', 'Windows 10', 'Chrome', '登录成功', 1572360109347, '0'),(174, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1572361144421, '1'),(175, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1572361147041, '0'),(176, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Firefox 7', '登录成功', 1572361615249, '0'),(177, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1572397960299, '0'),(178, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1572398545682, '1'),(179, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1572398551048, '1'),(180, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '验证码错误', 1572411747106, '1'),(181, 'admin', '内网IP', '192.168.86.1', 'Windows 10', 'Chrome', '登录成功', 1572411750073, '0');
+INSERT INTO `fun_base`.`sys_login_log` (`info_id`,`login_name`,`login_location`,`ipaddr`,`os`,`browser`,`msg`,`create_time`,`status`) VALUES (1, ''admin'', ''内网IP'', ''127.0.0.1'', ''Unknown'', ''Unknown'', ''登录成功'', 1572790328996, ''1''),(2, ''admin'', ''内网IP'', ''127.0.0.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572792067919, ''1''),(3, ''admin'', ''内网IP'', ''127.0.0.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572792291585, ''1''),(4, ''admin'', ''内网IP'', ''10.127.106.2'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572834352587, ''1''),(5, ''admin'', ''内网IP'', ''10.127.106.2'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572837162368, ''1''),(6, ''admin'', ''内网IP'', ''10.127.106.2'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572838785072, ''1''),(7, ''admin'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572845042270, ''1''),(8, ''admin'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572848715500, ''1''),(9, ''admin'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572854895302, ''1''),(10, ''test01'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572854930984, ''1''),(11, ''mrdjun'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Firefox 7'', ''用户不存在/密码错误'', 1572854976305, ''0''),(12, ''mrdjun'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Firefox 7'', ''登录成功'', 1572854982696, ''1''),(13, ''test03'', ''内网IP'', ''10.127.105.174'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572855282851, ''1''),(14, ''admin'', ''内网IP'', ''10.127.105.174'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572856149216, ''1''),(15, ''admin'', ''内网IP'', ''10.127.105.174'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572856153428, ''1''),(16, ''admin'', ''内网IP'', ''10.127.105.174'', ''Windows 10'', ''Microsoft Edge'', ''登录成功'', 1572856155810, ''1''),(17, ''admin'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Firefox 7'', ''登录成功'', 1572857703097, ''1''),(18, ''mrdjun'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Firefox 7'', ''登录成功'', 1572857742666, ''1''),(19, ''test01'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Firefox 7'', ''登录成功'', 1572857924709, ''1''),(20, ''admin'', ''内网IP'', ''10.127.106.2'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572870613522, ''1''),(21, ''admin'', ''四川 德阳'', ''171.211.69.12'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572877500219, ''1''),(22, ''admin'', ''四川 德阳'', ''171.211.69.12'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572877513661, ''1''),(23, ''admin'', ''四川 德阳'', ''171.211.69.12'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572877685116, ''1''),(24, ''admin'', ''内网IP'', ''127.0.0.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572879867777, ''1''),(25, ''admin'', ''四川 德阳'', ''171.211.33.138'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572922760023, ''1''),(26, ''admin'', ''四川 德阳'', ''61.188.24.166'', ''Windows 10'', ''Chrome'', ''登录成功'', 1572960328467, ''1''),(27, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573007470946, ''1''),(28, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573010227500, ''1''),(29, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Chrome'', ''验证码错误'', 1573034771549, ''0''),(30, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573034775671, ''1''),(31, ''admin'', ''内网IP'', ''10.127.105.188'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573042392406, ''1''),(32, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573048863998, ''1''),(33, ''admin'', ''内网IP'', ''192.168.86.1'', ''Windows 10'', ''Firefox 7'', ''登录成功'', 1573049023856, ''1''),(34, ''admin'', ''内网IP'', ''10.127.106.2'', ''Windows 10'', ''Chrome'', ''登录成功'', 1573097499995, ''1'');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_menu` WRITE;
 DELETE FROM `fun_base`.`sys_menu`;
-INSERT INTO `fun_base`.`sys_menu` (`menu_id`,`menu_name`,`parent_id`,`order_num`,`url`,`target`,`menu_type`,`visible`,`perms`,`icon`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, '系统管理', 0, 1, '#', '', 'M', '0', '', 'fa fa-gear', 'admin', 1571878039321, 'admin', 1571878039321, '系统管理目录'),(2, '系统监控', 0, 2, '#', '', 'M', '0', '', 'fa fa-heartbeat', 'admin', 1571878039321, 'admin', 1571878039321, '系统监控目录'),(3, '系统工具', 0, 3, '#', '', 'M', '0', '', 'fa fa-wrench', 'admin', 1571878039321, 'admin', 1571878039321, '系统工具目录'),(4, '用户管理', 1, 1, '/admin/user', 'menuItem', 'C', '0', 'system:user:view', '#', 'admin', 1571878039321, 'admin', 1571878039321, NULL),(5, '角色管理', 1, 2, '/admin/system/role', 'menuItem', 'C', '0', 'system:role:view', '#', 'admin', 1571878039321, 'admin', 1571878039321, NULL),(6, '菜单管理', 1, 3, '/admin/system/menu', 'menuItem', 'C', '0', 'system:menu:view', '#', 'admin', 1571878039321, 'admin', 1571878039321, NULL),(7, '代码生成工具', 3, 1, '/tool/gen', 'menuItem', 'C', '0', '', '#', 'admin', 1571878039321, 'admin', 1571878039321, NULL),(8, '字典管理', 1, 6, '/admin/system/dict', 'menuItem', 'C', '0', 'system:dict:view', '#', 'admin', 1571878039321, 'admin', 1571878039321, NULL);
+INSERT INTO `fun_base`.`sys_menu` (`menu_id`,`menu_name`,`parent_id`,`order_num`,`url`,`target`,`menu_type`,`visible`,`perms`,`icon`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''系统管理'', 0, 1, ''#'', '''', ''M'', ''0'', '''', ''fa fa-gear'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''系统管理目录''),(2, ''系统监控'', 0, 2, ''#'', '''', ''M'', ''0'', '''', ''fa fa-heartbeat'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''系统监控目录''),(3, ''系统工具'', 0, 3, ''#'', '''', ''M'', ''0'', '''', ''fa fa-wrench'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''系统工具目录''),(4, ''用户管理'', 1, 1, ''/admin/system/user'', ''menuItem'', ''C'', ''0'', ''system:user:view'', ''#'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''用户管理菜单''),(5, ''角色管理'', 1, 2, ''/admin/system/role'', ''menuItem'', ''C'', ''0'', ''system:role:view'', ''#'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''角色管理菜单''),(6, ''菜单管理'', 1, 3, ''/admin/system/menu'', ''menuItem'', ''C'', ''0'', ''system:menu:view'', ''#'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''菜单管理菜单''),(7, ''代码生成'', 3, 1, ''/tool/gen'', ''menuItem'', ''C'', ''0'', '''', ''#'', ''admin'', 1571878039321, ''admin'', 1573048878761, NULL),(8, ''字典管理'', 1, 6, ''/admin/system/dict'', ''menuItem'', ''C'', ''0'', ''system:dict:view'', ''#'', ''admin'', 1571878039321, ''admin'', 1571878039321, NULL),(9, ''表单构建'', 3, 2, ''/tool/table'', ''menuItem'', ''C'', ''0'', '''', ''#'', ''admin'', 1571878039321, ''admin'', 1571878039321, ''表单生成工具''),(10, ''服务监控'', 2, 4, ''/admin/monitor/server'', ''menuItem'', ''C'', ''0'', ''monitor:sever:list'', ''#'', ''admin'', 1572705459463, ''admin'', 1573037379623, NULL),(12, ''配置管理'', 1, 4, ''/admin/system/config'', ''menuItem'', ''C'', ''0'', ''system:config:view'', ''#'', ''admin'', 1572781273526, '''', NULL, NULL),(13, ''部门管理'', 1, 5, ''/admin/system/dept'', ''menuItem'', ''C'', ''0'', ''system:dept:view'', ''#'', ''admin'', 1572783055987, '''', NULL, NULL),(14, ''岗位管理'', 1, 5, ''/admin/system/post'', ''menuItem'', ''C'', ''0'', ''system:post:view'', ''#'', ''admin'', 1572783262252, '''', NULL, NULL),(15, ''登录日志'', 2, 2, ''/admin/monitor/loginlog'', ''menuItem'', ''C'', ''0'', ''system:loginlog:view'', ''#'', ''admin'', 1572785878367, ''admin'', 1572854723402, NULL),(16, ''操作日志'', 2, 3, ''/admin/monitor/operlog'', ''menuItem'', ''C'', ''0'', ''system:operlog:view'', ''#'', ''admin'', 1572785932090, ''admin'', 1573037366635, NULL),(17, ''接口文档'', 3, 3, ''/tool/swagger'', ''menuItem'', ''C'', ''0'', ''tool:swagger:view'', ''#'', ''admin'', 1572792351293, ''admin'', 1573009087940, NULL),(19, ''在线用户'', 2, 1, ''/admin/monitor/online'', ''menuItem'', ''C'', ''0'', ''monitor:online:view'', ''#'', ''admin'', 1572854710296, ''admin'', 1572854770342, NULL),(20, ''Redis监控'', 2, 5, ''/admin/monitor/redis'', ''menuItem'', ''C'', ''0'', ''monitor:redis:view'', ''#'', ''admin'', 1572877806598, '''', NULL, NULL),(21, ''任务调度'', 2, 6, ''/admin/monitor/job'', ''menuItem'', ''C'', ''0'', ''monitor:job:view'', ''#'', ''admin'', 1572960797613, '''', NULL, NULL),(22, ''数据监控'', 2, 7, ''/admin/monitor/data'', ''menuItem'', ''C'', ''0'', ''monitor:data:view'', ''#'', ''admin'', 1573008427489, '''', NULL, NULL);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_notice` WRITE;
 DELETE FROM `fun_base`.`sys_notice`;
-INSERT INTO `fun_base`.`sys_notice` (`notice_id`,`notice_title`,`notice_type`,`notice_content`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, '温馨提醒：2019-07-01 项目启动', '2', '项目启动', '0', 'admin', NULL, 'admin', NULL, '管理员'),(2, '维护通知：2019-11-11 系统凌晨维护', '1', '维护内容', '0', 'admin', NULL, 'admin', NULL, '管理员');
+INSERT INTO `fun_base`.`sys_notice` (`notice_id`,`notice_title`,`notice_type`,`notice_content`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''温馨提醒：2019-07-01 项目启动'', ''2'', ''项目启动'', ''0'', ''admin'', NULL, ''admin'', NULL, ''管理员''),(2, ''维护通知：2019-11-11 系统凌晨维护'', ''1'', ''维护内容'', ''0'', ''admin'', NULL, ''admin'', NULL, ''管理员'');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_oper_log` WRITE;
 DELETE FROM `fun_base`.`sys_oper_log`;
-INSERT INTO `fun_base`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (1, '清空操作日志', '127.0.0.1', '内网IP', NULL, 'admin', 10, 'com.fun.project.admin.monitor.log.controller.OperlogController.clean()', '{}', 1569251546501, '1'),(2, '获取登录日志列表', '127.0.0.1', '内网IP', NULL, 'admin', 13, 'com.fun.project.admin.monitor.log.controller.LoginLogController.loginLogList()', '{}', 1569251598658, '1'),(3, '获取登录日志列表', '127.0.0.1', '内网IP', NULL, 'admin', 10, 'com.fun.project.admin.monitor.log.controller.LoginLogController.loginLogList()', '{\"pageNum\":[\"2\"],\"pageSize\":[\"10\"]}', 1569251634044, '1'),(4, '获取登录日志列表', '127.0.0.1', '内网IP', NULL, 'admin', 11, 'com.fun.project.admin.monitor.log.controller.LoginLogController.loginLogList()', '{\"pageNum\":[\"2\"],\"pageSize\":[\"0\"]}', 1569251644408, '1'),(5, '执行 Redis memoryInfo 命令', '127.0.0.1', '内网IP', NULL, 'admin', 11, 'com.fun.project.admin.monitor.redis.RedisController.getMemoryInfo()', '{}', 1569251812881, '1'),(6, '获取登录日志列表', '127.0.0.1', '内网IP', NULL, 'admin', 15, 'com.fun.project.admin.monitor.controller.LoginLogController.loginLogList()', '{}', 1570031729552, '1'),(7, '获取操作日志列表', '127.0.0.1', '内网IP', NULL, 'admin', 17, 'com.fun.project.admin.monitor.controller.OperlogController.operList()', '{}', 1570032319389, '1'),(8, '通过Id查询DictType', '192.168.86.1', '内网IP', 'nested exception is org.apache.ibatis.reflection.ReflectionException: Could not set property \'dictId\' of \'class com.fun.project.admin.system.entity.dict.DictType\' with value \'1\' Cause: org.apache.ibatis.reflection.ReflectionException: There is no setter for property named \'dictId\' in \'class com.fun.project.admin.system.entity.dict.DictType\'', 'admin', 18, 'com.fun.project.admin.system.controller.DictTypeController.selectDictTypeById()', '{}', 1572417742204, '1'),(9, '通过Id查询DictType', '192.168.86.1', '内网IP', NULL, 'admin', 20, 'com.fun.project.admin.system.controller.DictTypeController.selectDictTypeById()', '{}', 1572417868428, '1'),(10, '通过Id查询DictData', '192.168.86.1', '内网IP', NULL, 'admin', 17, 'com.fun.project.admin.system.controller.DictDataController.selectDictDataById()', '{}', 1572418241955, '1'),(11, '通过Id查询DictData', '192.168.86.1', '内网IP', NULL, 'admin', 11, 'com.fun.project.admin.system.controller.DictDataController.selectDictDataById()', '{}', 1572418246110, '1'),(12, '通过Id查询DictData', '192.168.86.1', '内网IP', NULL, 'admin', 11, 'com.fun.project.admin.system.controller.DictDataController.selectDictDataById()', '{}', 1572418248657, '1');
+INSERT INTO `fun_base`.`sys_oper_log` (`oper_id`,`oper_name`,`oper_ip`,`oper_location`,`error_msg`,`login_name`,`time`,`method`,`oper_param`,`create_time`,`status`) VALUES (59, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"服务监控\"],\"url\":[\"/admin/monitor/sever\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:sever:list\"],\"orderNum\":[\"1\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572705459537, ''1''),(60, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"删除测试\"],\"url\":[\"asdasd\"],\"target\":[\"menuItem\"],\"perms\":[\"system:delete\"],\"orderNum\":[\"1\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572705694668, ''1''),(61, ''删除菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 20, ''com.fun.project.admin.system.controller.MenuController.deleteMenuById()'', ''{}'', 1572705804309, ''1''),(62, ''删除菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.deleteMenuById()'', ''{}'', 1572705810079, ''1''),(63, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 13, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"10\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"服务监控\"],\"url\":[\"/admin/monitor/sever\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:sever:list\"],\"orderNum\":[\"2\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572705833690, ''1''),(64, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"10\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"服务监控\"],\"url\":[\"/admin/monitor/sever\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:sever:list\"],\"orderNum\":[\"1\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572705840916, ''1''),(65, ''新增用户'', ''192.168.86.1'', ''内网IP'', ''Invalid bound statement (not found): com.fun.project.admin.system.mapper.AdminUserMapper.insertUser'', ''admin'', 28, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"userName\":[\"测试人员1\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"18666666666\"],\"email\":[\"test1@qq.com\"],\"loginName\":[\"test01\"],\"password\":[\"123456\"],\"sex\":[\"0\"],\"remark\":[\"该用户仅限于系统测试\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572747263036, ''1''),(66, ''新增用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 35, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"userName\":[\"测试人员1\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"18666666666\"],\"email\":[\"test1@qq.com\"],\"loginName\":[\"test01\"],\"password\":[\"123456\"],\"sex\":[\"0\"],\"remark\":[\"该用户仅限于系统测试\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572747485146, ''1''),(67, ''新增用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"userName\":[\"测试人员01\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"15666666666\"],\"email\":[\"test01@qq.com\"],\"loginName\":[\"test01\"],\"password\":[\"123456\"],\"sex\":[\"0\"],\"remark\":[\"仅限用于测试\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572747740364, ''1''),(68, ''删除用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.AdminUserController.remove()'', ''{\"ids\":[\"6\"]}'', 1572748154481, ''1''),(69, ''删除用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 37, ''com.fun.project.admin.system.controller.AdminUserController.remove()'', ''{\"ids\":[\"6\"]}'', 1572748319223, ''1''),(70, ''新增用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"username\":[\"test01\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"18666666666\"],\"email\":[\"test01@qq.com\"],\"loginName\":[\"test01\"],\"password\":[\"123456\"],\"sex\":[\"2\"],\"remark\":[\"测试员工\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572748421497, ''1''),(71, ''修改用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 18, ''com.fun.project.admin.system.controller.AdminUserController.editSave()'', ''{\"userId\":[\"7\"],\"deptId\":[\"\"],\"username\":[\"测试人员01\"],\"dept.deptName\":[\"测试部门\"],\"telephone\":[\"18666666666\"],\"email\":[\"test01@qq.com\"],\"loginName\":[\"test01\"],\"sex\":[\"0\"],\"remark\":[\"测试员工01\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"\"]}'', 1572776140379, ''1''),(72, ''新增用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 21, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"username\":[\"测试人员02\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"18666666662\"],\"email\":[\"test02@qq.com\"],\"loginName\":[\"test02\"],\"password\":[\"123456\"],\"sex\":[\"0\"],\"remark\":[\"测试人员02\"],\"status\":[\"1\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572776565297, ''1''),(73, ''修改用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 21, ''com.fun.project.admin.system.controller.AdminUserController.editSave()'', ''{\"userId\":[\"8\"],\"deptId\":[\"\"],\"username\":[\"测试人员02\"],\"dept.deptName\":[\"测试部门\"],\"telephone\":[\"18666666662\"],\"email\":[\"test02@qq.com\"],\"loginName\":[\"test02\"],\"sex\":[\"0\"],\"remark\":[\"测试人员02\"],\"status\":[\"1\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572777657688, ''1''),(74, ''修改用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.AdminUserController.editSave()'', ''{\"userId\":[\"8\"],\"deptId\":[\"\"],\"username\":[\"测试人员02\"],\"dept.deptName\":[\"测试部门\"],\"telephone\":[\"18666666662\"],\"email\":[\"test02@qq.com\"],\"loginName\":[\"test02\"],\"sex\":[\"0\"],\"remark\":[\"测试人员02\"],\"status\":[\"1\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572777688576, ''1''),(75, ''重置密码'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.AdminUserController.resetPwdSave()'', ''{\"userId\":[\"8\"],\"loginName\":[\"test02\"],\"password\":[\"123456\"]}'', 1572778019368, ''1''),(76, ''修改用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 19, ''com.fun.project.admin.system.controller.AdminUserController.editSave()'', ''{\"userId\":[\"8\"],\"deptId\":[\"\"],\"username\":[\"测试人员02\"],\"dept.deptName\":[\"测试部门\"],\"telephone\":[\"18666666662\"],\"email\":[\"test02@qq.com\"],\"loginName\":[\"test02\"],\"sex\":[\"0\"],\"remark\":[\"测试人员02\"],\"status\":[\"0\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572778717250, ''1''),(77, ''新增用户'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 13, ''com.fun.project.admin.system.controller.AdminUserController.addUser()'', ''{\"deptId\":[\"105\"],\"username\":[\"测试人员03\"],\"deptName\":[\"测试部门\"],\"telephone\":[\"18666666663\"],\"email\":[\"test03@qq.com\"],\"loginName\":[\"test03\"],\"password\":[\"123456\"],\"sex\":[\"0\"],\"remark\":[\"测试人员03\"],\"status\":[\"1\"],\"roleIds\":[\"\"],\"postIds\":[\"4\"]}'', 1572778806111, ''1''),(78, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 21, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"1\"],\"menuType\":[\"C\"],\"menuName\":[\"配置管理\"],\"url\":[\"/admin/system/config\"],\"target\":[\"menuItem\"],\"perms\":[\"system:config:view\"],\"orderNum\":[\"4\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572781273654, ''1''),(79, ''修改Config信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 19, ''com.fun.project.admin.system.controller.ConfigController.updateConfig()'', ''{\"configId\":[\"3\"],\"configName\":[\"主框架页-侧边栏主题\"],\"configKey\":[\"sys.index.sideTheme\"],\"configValue\":[\"theme-light\"],\"configType\":[\"Y\"],\"remark\":[\"深色主题theme-dark，浅色主题theme-light\"]}'', 1572781695332, ''1''),(80, ''修改Config信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.ConfigController.updateConfig()'', ''{\"configId\":[\"3\"],\"configName\":[\"主框架页-侧边栏主题\"],\"configKey\":[\"sys.index.sideTheme\"],\"configValue\":[\"theme-dark\"],\"configType\":[\"Y\"],\"remark\":[\"深色主题theme-dark，浅色主题theme-light\"]}'', 1572781732087, ''1''),(81, ''新增Config'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 23, ''com.fun.project.admin.system.controller.ConfigController.insertConfig()'', ''{\"configName\":[\"test\"],\"configKey\":[\"test\"],\"configValue\":[\"test\"],\"configType\":[\"Y\"],\"remark\":[\"测试\"]}'', 1572782103508, ''1''),(82, ''删除Config'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.ConfigController.deleteConfigByIds()'', ''{\"ids\":[\"4\"]}'', 1572782292203, ''1''),(83, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 19, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"1\"],\"menuType\":[\"C\"],\"menuName\":[\"部门管理\"],\"url\":[\"/admin/system/dept\"],\"target\":[\"menuItem\"],\"perms\":[\"system:dept:view\"],\"orderNum\":[\"5\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572783056116, ''1''),(84, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"1\"],\"menuType\":[\"C\"],\"menuName\":[\"岗位管理\"],\"url\":[\"/admin/system/post\"],\"target\":[\"menuItem\"],\"perms\":[\"system:post:view\"],\"orderNum\":[\"5\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572783262365, ''1''),(85, ''新增岗位'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 20, ''com.fun.project.admin.system.controller.PostController.addSave()'', ''{\"postName\":[\"远程兼职\"],\"postCode\":[\"remote\"],\"postSort\":[\"5\"],\"status\":[\"1\"],\"remark\":[\"临时远程兼职岗位\"]}'', 1572784688641, ''1''),(86, ''修改岗位信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 13, ''com.fun.project.admin.system.controller.PostController.editSave()'', ''{\"postId\":[\"5\"],\"postName\":[\"远程兼职\"],\"postCode\":[\"remote\"],\"postSort\":[\"3\"],\"status\":[\"1\"],\"remark\":[\"临时远程兼职岗位\"]}'', 1572784694426, ''1''),(87, ''修改岗位信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 13, ''com.fun.project.admin.system.controller.PostController.editSave()'', ''{\"postId\":[\"4\"],\"postName\":[\"普通员工\"],\"postCode\":[\"user\"],\"postSort\":[\"4\"],\"status\":[\"1\"],\"remark\":[\"\"]}'', 1572784697011, ''1''),(88, ''修改岗位信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 10, ''com.fun.project.admin.system.controller.PostController.editSave()'', ''{\"postId\":[\"4\"],\"postName\":[\"普通员工\"],\"postCode\":[\"user\"],\"postSort\":[\"4\"],\"status\":[\"1\"],\"remark\":[\"\"]}'', 1572784712190, ''1''),(89, ''修改岗位信息'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.PostController.editSave()'', ''{\"postId\":[\"5\"],\"postName\":[\"远程兼职\"],\"postCode\":[\"remote\"],\"postSort\":[\"5\"],\"status\":[\"1\"],\"remark\":[\"临时远程兼职岗位\"]}'', 1572784729621, ''1''),(90, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"登录日志\"],\"url\":[\"/admin/monitor/loginlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:loginlog:view\"],\"orderNum\":[\"1\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572785878392, ''1''),(91, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"操作日志\"],\"url\":[\"/admin/monitor/operlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:operlog:view\"],\"orderNum\":[\"2\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572785932202, ''1''),(92, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"10\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"服务监控\"],\"url\":[\"/admin/monitor/sever\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:sever:list\"],\"orderNum\":[\"3\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572785942831, ''1''),(93, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 20, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"7\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"代码生成\"],\"url\":[\"/tool/gen\"],\"target\":[\"menuBlank\"],\"perms\":[\"\"],\"orderNum\":[\"1\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572787289667, ''1''),(94, ''删除LoginLog'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 22, ''com.fun.project.admin.monitor.controller.LoginLogController.deleteLoginLogByIds()'', ''{\"ids\":[\"210\"]}'', 1572787890398, ''1''),(95, ''清空登陆日志'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.monitor.controller.LoginLogController.clean()'', ''{}'', 1572787914881, ''1''),(96, ''新增菜单'', ''127.0.0.1'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"catering:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"fa fa-cube\"],\"visible\":[\"0\"]}'', 1572792351326, ''1''),(97, ''修改菜单'', ''127.0.0.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"catering:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572792377004, ''1''),(98, ''修改菜单'', ''127.0.0.1'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"fa fa-cube\"],\"visible\":[\"0\"]}'', 1572792474260, ''1''),(99, ''修改DictData信息'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 20, ''com.fun.project.admin.system.controller.DictDataController.updateDictData()'', ''{\"dictCode\":[\"27\"],\"dictLabel\":[\"成功\"],\"dictValue\":[\"1\"],\"dictType\":[\"sys_common_status\"],\"cssClass\":[\"\"],\"dictSort\":[\"1\"],\"listClass\":[\"primary\"],\"isDefault\":[\"N\"],\"status\":[\"1\"],\"remark\":[\"正常状态\"]}'', 1572834565471, ''1''),(100, ''修改DictData信息'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.DictDataController.updateDictData()'', ''{\"dictCode\":[\"28\"],\"dictLabel\":[\"失败\"],\"dictValue\":[\"0\"],\"dictType\":[\"sys_common_status\"],\"cssClass\":[\"\"],\"dictSort\":[\"2\"],\"listClass\":[\"danger\"],\"isDefault\":[\"N\"],\"status\":[\"1\"],\"remark\":[\"停用状态\"]}'', 1572834569728, ''1''),(101, ''修改用户'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 16, ''com.fun.project.admin.system.controller.AdminUserController.editSave()'', ''{\"userId\":[\"7\"],\"deptId\":[\"\"],\"username\":[\"测试人员01\"],\"dept.deptName\":[\"测试部门\"],\"telephone\":[\"18666666661\"],\"email\":[\"test01@qq.com\"],\"loginName\":[\"test01\"],\"sex\":[\"0\"],\"remark\":[\"测试人员01\"],\"status\":[\"1\"],\"roleIds\":[\"\"],\"postIds\":[\"\"]}'', 1572838814510, ''1''),(102, ''执行 Redis memoryInfo 命令'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.monitor.controller.RedisController.getMemoryInfo()'', ''{}'', 1572839857358, ''1''),(103, ''执行 Redis memoryInfo 命令'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 18, ''com.fun.project.admin.monitor.controller.RedisController.getMemoryInfo()'', ''{}'', 1572839930098, ''1''),(104, ''执行 Redis keys 命令'', ''10.127.106.2'', ''内网IP'', NULL, ''admin'', 13, ''com.fun.project.admin.monitor.controller.RedisController.keys()'', ''{\"arg\":[\"*\"]}'', 1572839959142, ''1''),(105, ''新增菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 22, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"1\"],\"menuType\":[\"C\"],\"menuName\":[\"在线用户\"],\"url\":[\"/admin/system/online\"],\"target\":[\"menuItem\"],\"perms\":[\"system:online:view\"],\"orderNum\":[\"1\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572848779814, ''1''),(106, ''修改菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 21, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572854647577, ''1''),(107, ''删除菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.deleteMenuById()'', ''{}'', 1572854668606, ''1''),(108, ''新增菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"在线用户\"],\"url\":[\"/admin/system/online\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:online:view\"],\"orderNum\":[\"1\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572854710359, ''1''),(109, ''修改菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"15\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"登录日志\"],\"url\":[\"/admin/monitor/loginlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:loginlog:view\"],\"orderNum\":[\"2\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572854723513, ''1''),(110, ''修改菜单'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 11, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"19\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"在线用户\"],\"url\":[\"/admin/monitor/online\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:online:view\"],\"orderNum\":[\"1\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572854770398, ''1''),(111, ''执行 Redis keys 命令'', ''10.127.105.188'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.monitor.controller.RedisController.keys()'', ''{\"arg\":[\"*\"]}'', 1572856316134, ''1''),(112, ''新增菜单'', ''171.211.69.12'', ''四川 德阳'', NULL, ''admin'', 165, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"Redis监控\"],\"url\":[\"/admin/monitor/redis\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:redis:view\"],\"orderNum\":[\"5\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572877806625, ''1''),(113, ''修改菜单'', ''171.211.69.12'', ''四川 德阳'', NULL, ''admin'', 101, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"16\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"操作日志\"],\"url\":[\"/admin/monitor/operlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:operlog:view\"],\"orderNum\":[\"3\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572877818469, ''1''),(114, ''修改菜单'', ''171.211.69.12'', ''四川 德阳'', NULL, ''admin'', 128, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"16\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"操作日志\"],\"url\":[\"/admin/monitor/operlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:operlog:view\"],\"orderNum\":[\"4\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1572877825164, ''1''),(115, ''修改菜单'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 136, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572960548283, ''1''),(116, ''修改菜单'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 109, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"fa fa-battery-quarter\"],\"visible\":[\"0\"]}'', 1572960600131, ''1''),(117, ''修改菜单'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 1026, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\" \"],\"visible\":[\"0\"]}'', 1572960608352, ''1''),(118, ''新增菜单'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 141, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"任务调度\"],\"url\":[\"/admin/monitor/job\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:job:view\"],\"orderNum\":[\"6\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1572960797962, ''1''),(119, ''修改DictData信息'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 175, ''com.fun.project.admin.system.controller.DictDataController.updateDictData()'', ''{\"dictCode\":[\"8\"],\"dictLabel\":[\"正常\"],\"dictValue\":[\"1\"],\"dictType\":[\"sys_job_status\"],\"cssClass\":[\"\"],\"dictSort\":[\"1\"],\"listClass\":[\"primary\"],\"isDefault\":[\"Y\"],\"status\":[\"1\"],\"remark\":[\"正常状态\"]}'', 1572960880557, ''1''),(120, ''修改DictData信息'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 61, ''com.fun.project.admin.system.controller.DictDataController.updateDictData()'', ''{\"dictCode\":[\"9\"],\"dictLabel\":[\"暂停\"],\"dictValue\":[\"0\"],\"dictType\":[\"sys_job_status\"],\"cssClass\":[\"\"],\"dictSort\":[\"2\"],\"listClass\":[\"danger\"],\"isDefault\":[\"N\"],\"status\":[\"1\"],\"remark\":[\"停用状态\"]}'', 1572960884411, ''1''),(121, ''修改任务状态'', ''61.188.24.166'', ''四川 德阳'', NULL, ''admin'', 148, ''com.fun.project.admin.monitor.controller.JobController.changeJobStatus()'', ''{\"jobId\":[\"1\"],\"jobGroup\":[\"DEFAULT\"],\"status\":[\"0\"]}'', 1572963203353, ''1''),(122, ''任务立即执行一次'', ''61.188.24.166'', ''四川 德阳'', ''The job (DEFAULT.TASK_CLASS_NAME1) referenced by the trigger does not exist.'', ''admin'', 154, ''com.fun.project.admin.monitor.controller.JobController.run()'', ''{\"jobId\":[\"1\"],\"jobGroup\":[\"DEFAULT\"]}'', 1572963236156, ''1''),(123, ''修改任务状态'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.monitor.controller.JobController.changeJobStatus()'', ''{\"jobId\":[\"1\"],\"jobGroup\":[\"DEFAULT\"],\"status\":[\"0\"]}'', 1573007479707, ''1''),(124, ''修改任务状态'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.monitor.controller.JobController.changeJobStatus()'', ''{\"jobId\":[\"2\"],\"jobGroup\":[\"DEFAULT\"],\"status\":[\"0\"]}'', 1573007481022, ''1''),(125, ''修改任务状态'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.monitor.controller.JobController.changeJobStatus()'', ''{\"jobId\":[\"3\"],\"jobGroup\":[\"DEFAULT\"],\"status\":[\"0\"]}'', 1573007482696, ''1''),(126, ''新增菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 18, ''com.fun.project.admin.system.controller.MenuController.insertMenu()'', ''{\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"数据监控\"],\"url\":[\"/admin/monitor/data\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:data:view\"],\"orderNum\":[\"7\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1573008427530, ''1''),(127, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 18, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1573008643093, ''1''),(128, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 18, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"17\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"接口文档\"],\"url\":[\"/tool/swagger\"],\"target\":[\"menuItem\"],\"perms\":[\"tool:swagger:view\"],\"orderNum\":[\"3\"],\"icon\":[\"\"],\"visible\":[\"0\"]}'', 1573009088000, ''1''),(129, ''修改菜单'', ''192.168.86.1'', ''内网IP'', ''nested exception is org.apache.ibatis.exceptions.PersistenceException: \r\n### Error updating database.  Cause: java.lang.NumberFormatException: For input string: \"#\"\r\n### Cause: java.lang.NumberFormatException: For input string: \"#\"'', ''admin'', 21, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"16\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"操作日志\"],\"url\":[\"/admin/monitor/operlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:operlog:view\"],\"orderNum\":[\"2\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1573037084561, ''1''),(130, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 20, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"16\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"操作日志\"],\"url\":[\"/admin/monitor/operlog\"],\"target\":[\"menuItem\"],\"perms\":[\"system:operlog:view\"],\"orderNum\":[\"3\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1573037367793, ''1''),(131, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 12, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"10\"],\"parentId\":[\"2\"],\"menuType\":[\"C\"],\"menuName\":[\"服务监控\"],\"url\":[\"/admin/monitor/server\"],\"target\":[\"menuItem\"],\"perms\":[\"monitor:sever:list\"],\"orderNum\":[\"4\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1573037380322, ''1''),(132, ''修改菜单'', ''192.168.86.1'', ''内网IP'', NULL, ''admin'', 17, ''com.fun.project.admin.system.controller.MenuController.updateMenu()'', ''{\"menuId\":[\"7\"],\"parentId\":[\"3\"],\"menuType\":[\"C\"],\"menuName\":[\"代码生成\"],\"url\":[\"/tool/gen\"],\"target\":[\"menuItem\"],\"perms\":[\"\"],\"orderNum\":[\"1\"],\"icon\":[\"#\"],\"visible\":[\"0\"]}'', 1573048878786, ''1'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_post` WRITE;
+DELETE FROM `fun_base`.`sys_post`;
+INSERT INTO `fun_base`.`sys_post` (`post_id`,`post_code`,`post_name`,`post_sort`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''ceo'', ''董事长'', 1, ''1'', ''admin'', 1572527286695, ''admin'', NULL, ''''),(2, ''se'', ''项目经理'', 2, ''1'', ''admin'', 1572527286695, ''admin'', NULL, ''''),(3, ''hr'', ''人力资源'', 3, ''1'', ''admin'', 1572527286695, ''admin'', NULL, ''''),(4, ''user'', ''普通员工'', 4, ''1'', ''admin'', 1572527286695, ''admin'', 1572784712081, ''''),(5, ''remote'', ''远程兼职'', 5, ''1'', ''admin'', 1572784688518, ''admin'', 1572784729452, ''临时远程兼职岗位'');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_role` WRITE;
 DELETE FROM `fun_base`.`sys_role`;
-INSERT INTO `fun_base`.`sys_role` (`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, '超级管理员', 'admin', 1, '1', '1', 'system', 1568439153, NULL, NULL, NULL),(2, '普通管理员', 'common', 2, '1', '1', 'system', 1568439153, NULL, NULL, NULL);
+INSERT INTO `fun_base`.`sys_role` (`role_id`,`role_name`,`role_key`,`role_sort`,`data_scope`,`status`,`del_flag`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, ''超级管理员'', ''admin'', 1, ''1'', ''1'', ''1'', ''system'', 1572690890413, NULL, NULL, NULL),(2, ''普通管理员'', ''common'', 2, ''1'', ''1'', ''1'', ''system'', 1572690890413, NULL, NULL, NULL);
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_role_dept` WRITE;
+DELETE FROM `fun_base`.`sys_role_dept`;
+INSERT INTO `fun_base`.`sys_role_dept` (`role_id`,`dept_id`) VALUES (2, 100),(2, 101),(2, 105);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
@@ -249,18 +553,30 @@ COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_user` WRITE;
 DELETE FROM `fun_base`.`sys_user`;
-INSERT INTO `fun_base`.`sys_user` (`user_id`,`login_name`,`username`,`email`,`telephone`,`sex`,`avatar`,`password`,`salt`,`status`,`del_flag`,`login_ip`,`login_date`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, 'admin', '超级管理员', 'mr.djun@qq.com', '18683827876', '0', '/profile/avatar/2019/09/06/11864680aedaf7e8dd08d52cdc816849.png', 'b35b89afc0e805106fdc6aeb0bc0f00f', '888888', '1', '1', '192.168.86.1', 1572411750086, 'system', 1570031706900, '', NULL, NULL),(2, 'mrdjun', '普通管理员', '903131009@qq.com', '15120016876', '0', '/profile/avatar/2019/09/06/11864680aedaf7e8dd08d52cdc816849.png', '164ee33c3f4182a185b4ccc0190f3dd6', '888888', '1', '1', '127.0.0.1', 1569919805952, 'system', 1570031706900, '', NULL, NULL);
+INSERT INTO `fun_base`.`sys_user` (`user_id`,`dept_id`,`login_name`,`username`,`email`,`telephone`,`sex`,`avatar`,`password`,`salt`,`status`,`del_flag`,`login_ip`,`login_date`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`) VALUES (1, 103, ''admin'', ''超级管理员'', ''mr.djun@qq.com'', ''18683827876'', ''0'', '''', ''b35b89afc0e805106fdc6aeb0bc0f00f'', ''888888'', ''1'', ''1'', ''10.127.106.2'', 1573097500024, ''system'', 1570031706900, ''system'', 1570031706900, ''管理员''),(2, 105, ''mrdjun'', ''普通管理员'', ''903131009@qq.com'', ''15120016876'', ''0'', '''', ''164ee33c3f4182a185b4ccc0190f3dd6'', ''888888'', ''1'', ''1'', ''10.127.105.188'', 1572857742676, ''system'', 1570031706900, ''system'', 1570031706900, ''''),(7, 105, ''test01'', ''测试人员01'', ''test01@qq.com'', ''18666666661'', ''0'', '''', ''4a82e4f1348a9806fd826d422fa75a9a'', ''970cb9'', ''1'', ''1'', ''10.127.105.188'', 1572857924751, ''admin'', 1572748421140, ''admin'', 1572838814465, ''测试人员01''),(8, 105, ''test02'', ''测试人员02'', ''test02@qq.com'', ''18666666662'', ''0'', '''', ''452bbca25445486988274f6592651dbd'', ''aa1d55'', ''0'', ''1'', '''', NULL, ''admin'', 1572776565175, ''admin'', 1572778717196, ''测试人员02''),(9, 105, ''test03'', ''测试人员03'', ''test03@qq.com'', ''18666666663'', ''0'', '''', ''7ba01784b204d7cd859a71d0ebe3478d'', ''2398bc'', ''1'', ''1'', ''10.127.105.174'', 1572855282863, ''admin'', 1572778805957, '''', NULL, ''测试人员03'');
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`sys_user_post` WRITE;
+DELETE FROM `fun_base`.`sys_user_post`;
+INSERT INTO `fun_base`.`sys_user_post` (`user_id`,`post_id`) VALUES (1, 1),(2, 2),(8, 4),(9, 4);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`sys_user_role` WRITE;
 DELETE FROM `fun_base`.`sys_user_role`;
-INSERT INTO `fun_base`.`sys_user_role` (`user_id`,`role_id`) VALUES (1, 1),(1, NULL);
+INSERT INTO `fun_base`.`sys_user_role` (`user_id`,`role_id`) VALUES (1, 1),(2, 2);
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `fun_base`.`ums_audio` WRITE;
+DELETE FROM `fun_base`.`ums_audio`;
+INSERT INTO `fun_base`.`ums_audio` (`audio_id`,`author`,`name`,`path`,`create_time`,`status`) VALUES (1, ''mrdjun'', ''java'', ''/2019/11/5/java.mp3'', NULL, ''1'');
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `fun_base`.`ums_user` WRITE;
 DELETE FROM `fun_base`.`ums_user`;
-INSERT INTO `fun_base`.`ums_user` (`user_id`,`login_name`,`username`,`u_account`,`user_type`,`user_level`,`email`,`sex`,`password`,`salt`,`avatar`,`telephone`,`del_flag`,`login_ip`,`login_date`,`open_id`,`is_lock`,`remark`,`honor`,`exp`,`fans_num`,`follow_num`,`oid`,`health`,`ban_time`,`update_time`,`create_time`,`is_verify`,`status`) VALUES (1, '123', '管理员', '888888', '1', 99, 'mr.djun@qq.com', '0', '123', NULL, NULL, '18683827876', '0', '', NULL, NULL, '0', NULL, 400, 0, 0, 0, '3', 100, NULL, NULL, 1567842558, '1', '1'),(2, 'test', NULL, NULL, NULL, NULL, '123456@qq.com', '0', 'test', NULL, NULL, '15120016876', '0', '', NULL, NULL, '0', NULL, 400, 0, 0, 0, '3', 100, NULL, NULL, 1567842558, '0', '1');
+INSERT INTO `fun_base`.`ums_user` (`user_id`,`login_name`,`username`,`u_account`,`user_type`,`user_level`,`email`,`sex`,`password`,`salt`,`avatar`,`telephone`,`del_flag`,`login_ip`,`login_date`,`open_id`,`is_lock`,`remark`,`honor`,`exp`,`fans_num`,`follow_num`,`oid`,`health`,`ban_time`,`update_time`,`create_time`,`is_verify`,`status`) VALUES (1, ''123'', ''管理员'', ''888888'', ''1'', 99, ''mr.djun@qq.com'', ''0'', ''123'', NULL, NULL, ''18683827876'', ''0'', '''', NULL, NULL, ''0'', NULL, 400, 0, 0, 0, ''3'', 100, NULL, NULL, 1567842558, ''1'', ''1''),(2, ''test'', NULL, NULL, NULL, NULL, ''123456@qq.com'', ''0'', ''test'', NULL, NULL, ''15120016876'', ''0'', '''', NULL, NULL, ''0'', NULL, 400, 0, 0, 0, ''3'', 100, NULL, NULL, 1567842558, ''0'', ''1'');
 UNLOCK TABLES;
 COMMIT;

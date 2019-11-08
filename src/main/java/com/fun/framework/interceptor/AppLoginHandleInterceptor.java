@@ -41,8 +41,7 @@ public class AppLoginHandleInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest,
                              HttpServletResponse httpServletResponse,
-                             Object object)
-            throws Exception {
+                             Object object){
 
         // 从 http 请求头中取出 token
         String token = httpServletRequest.getHeader("token");

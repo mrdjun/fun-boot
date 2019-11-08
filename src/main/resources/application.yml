@@ -9,7 +9,7 @@ server:
 
 spring:
   profiles:
-    active: test
+    active: dev
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

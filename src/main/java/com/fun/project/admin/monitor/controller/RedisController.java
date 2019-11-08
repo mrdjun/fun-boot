@@ -49,7 +49,6 @@ public class RedisController extends BaseController {
             log.error("Redis 连接异常");
         }
         mmap.put("infoList", infoList);
-        System.out.println(infoList);
         return view( "monitor/redis/redis");
     }
 

@@ -40,11 +40,12 @@
                                         <small class="text-muted">
                                             <textarea id="tableSql" placeholder="请输入表结构信息...">
 CREATE TABLE `ums_user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `username` varchar(255) NOT NULL COMMENT '用户名',
-  `create_time` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `create_time` bigint(15) DEFAULT NULL,
+  `status` char(1) DEFAULT '1' COMMENT '0-禁用1-正常',
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户信息';
                                             </textarea>
                                         </small>
                                     </li>
