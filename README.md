@@ -19,7 +19,7 @@
 
 | 名称     | 技术                                |
 |:------ |:--------------------------------- |
-| app端   | JWT（升级为Oauth0+JJWT） + Redis       |
+| app端   | JJWT + Redis            |
 | admin端 | Thymeleaf + LayUI + Shiro + Redis |
 
 | URI       | 名称        |
