@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * druid 配置属性
+ * @author DJun
  */
 @Configuration
 public class DruidProperties

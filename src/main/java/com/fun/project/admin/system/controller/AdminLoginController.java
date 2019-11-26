@@ -5,7 +5,7 @@ import com.fun.common.result.CommonResult;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotation.Limit;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -23,7 +23,7 @@ import javax.validation.constraints.NotBlank;
  * @author DJun
  * @date 2019/10/31
  */
-@Api(tags = {"管理员用户登录注册"})
+@Api(tags = {"admin用户登录注册"})
 @Controller
 @RequestMapping("/admin")
 public class AdminLoginController {
@@ -33,7 +33,7 @@ public class AdminLoginController {
         if (ServletUtils.isAjaxRequest(request)) {
             return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
         }
-        return BaseController.view("/login");
+        return AdminBaseController.view("/login");
     }
 
     @ApiOperation(value = "异步登录", notes = "如果是Ajax请求，返回Json字符串")

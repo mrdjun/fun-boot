@@ -4,7 +4,7 @@ import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.Post;
 import com.fun.project.admin.system.service.IPostService;
 import io.swagger.annotations.Api;
@@ -25,10 +25,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/11/3
  */
-@Api(tags = {"岗位信息"})
+@Api(tags = {"admin岗位信息"})
 @Controller
 @RequestMapping("/admin/system/post")
-public class PostController extends BaseController {
+public class PostController extends AdminBaseController {
     private String prefix = "system/post";
 
     @Autowired

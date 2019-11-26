@@ -4,14 +4,15 @@ import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;
 
 /**
- * created by DJun on 2019/9/7 15:35
- * desc: ums_user 实体类
+ * @author DJun
+ * @date 2019/9/7 15:35
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class AppUser extends BaseEntity {
+
     private Long userId;
 
     /** 登录账号 */
@@ -23,19 +24,16 @@ public class AppUser extends BaseEntity {
     /** u号 */
     private String uAccount;
 
-    /** 用户类型（00系统用户） */
-    private String userType;
-
     /** 用户等级 */
     private Integer userLevel;
 
-    /** 用户等级 */
+    /** 用户邮箱 */
     private String email;
 
     /** 用户性别（0男 1女 2未知） */
     private String sex;
 
-    /** 用户性别 */
+    /** 用户密码 */
     private String password;
 
     /** 加密盐 */
@@ -44,7 +42,7 @@ public class AppUser extends BaseEntity {
     /** 头像路径 */
     private String avatar;
 
-    /** 头像路径 */
+    /** 电话号码 */
     private String telephone;
 
     /** 删除标志（0代表存在 1代表删除） */
@@ -62,9 +60,6 @@ public class AppUser extends BaseEntity {
     /** 0-可修改u号1-不可修改 */
     private String isLock;
 
-    /** 0-禁用1-正常 */
-    private String status;
-
     /** 信誉度 */
     private Integer honor;
 
@@ -77,7 +72,7 @@ public class AppUser extends BaseEntity {
     /** 关注量 */
     private Long followNum;
 
-    /** 个人信息公开程度:0-自己可见，1-同班，2-同系，3-同校，4-全部 */
+    /** 个人信息公开程度 */
     private String oid;
 
     /** 健康度 */
@@ -88,4 +83,16 @@ public class AppUser extends BaseEntity {
 
     /** 1-已认证，0-未认证 */
     private String isVerify;
+
+    public AppUser(String loginName,String username,String password){
+        this.loginName = loginName;
+        this.username = username;
+        this.password = password;
+    }
+
+    /**
+     * 当前用户角色
+     */
+    private String roleKey;
+
 }

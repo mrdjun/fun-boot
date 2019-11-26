@@ -650,7 +650,8 @@ public class Convert {
 
     /**
      * 将对象转为字符串<br>
-     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组 2、对象数组会调用Arrays.toString方法
+     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组
+     * 2、对象数组会调用Arrays.toString方法
      *
      * @param obj         对象
      * @param charsetName 字符集
@@ -846,5 +847,23 @@ public class Convert {
             s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
         }
         return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+    }
+
+    /**
+     * 数组字符串转数组
+     * 如：["user:view","user:edit"] 转为数组
+     *
+     * @param arrStr 数组字符串
+     * @return String[]
+     */
+    public static String[] arrayStrToArr(String arrStr) {
+        if (StringUtils.isEmpty(arrStr) && arrStr.length() == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        String s = arrStr.trim().replace("\"", "")
+                .replaceFirst("\\[", "");
+        int len = s.length();
+        return Convert.toStrArray(s.substring(0, len - 1));
     }
 }

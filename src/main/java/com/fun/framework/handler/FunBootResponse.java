@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 /**
  * 处理拦截时的消息回复
+ *
  * @author DJun
  */
 public class FunBootResponse extends HashMap<String, Object> {

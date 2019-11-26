@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.framework.config.FunBootConfig;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.Menu;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IMenuService;
@@ -17,11 +17,12 @@ import java.util.List;
 
 /**
  * 公共页面跳转
+ *
  * @author MrDJun
  * @date 2019/9/29
  */
 @Controller
-public class ViewController extends BaseController {
+public class ViewController extends AdminBaseController {
     @Autowired
     private IMenuService menuService;
     @Autowired
@@ -86,24 +87,32 @@ public class ViewController extends BaseController {
      * ERROR:无权限
      */
     @GetMapping("/403")
-    public ModelAndView unauthorized() {
-        return new ModelAndView("/error/403");
+    public String unauthorized() {
+        return "/error/403";
     }
 
     /**
      * ERROR:无页面
      */
     @GetMapping("/404")
-    public ModelAndView error404() {
-        return new ModelAndView("/error/404");
+    public String error404() {
+        return "/error/404";
     }
 
     /**
      * ERROR:服务端错误
      */
     @GetMapping("/500")
-    public ModelAndView error500() {
-        return new ModelAndView("/error/500");
+    public String error500() {
+        return "/error/500";
+    }
+
+    /**
+     * ERROR:业务错误
+     */
+    @GetMapping("/business")
+    public String errorBusiness() {
+        return "/error/business";
     }
 
     /**

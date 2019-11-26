@@ -11,7 +11,7 @@
     <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
     <link th:href="@{/fun/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/fun/libs/contextMenu/jquery.contextMenu.min.css}" rel="stylesheet"/>
-    <link th:href="@{/fun/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/fun/font/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/fun-style.css}" rel="stylesheet"/>
     <link th:href="@{/fun/css/skins.css}" rel="stylesheet"/>
@@ -37,7 +37,7 @@
                             <div class="hide" th:text="个人中心"></div>
                             <div class="pull-left image">
                                 <img th:src="(${user.avatar} == '') ? @{/fun/img/avatar/default.gif} : @{${user.avatar}}"
-                                     class="img-circle" alt="头像">
+                                     class="img-circle img-lg" alt="User Image">
                             </div>
                         </a>
                         <div class="pull-left info">

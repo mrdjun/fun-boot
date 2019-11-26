@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
  * 用于App端登录后才能操作
  * 默认拦截 /app/** 的所有请求，所以在/app后的URI不用写该注解
  * 若需更改，参考 com.fun.framework.interceptor.InterceptorConfig.class
+ *
  * @author DJun
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

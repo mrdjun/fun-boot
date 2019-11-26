@@ -11,24 +11,34 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * created by DJun on 2019/9/10 18:05
- * desc: 线程池配置
+ * 线程池配置
+ *
+ * @author DJun
+ * @date 2019/9/10 18:05
  */
 @Configuration
 public class ThreadPoolConfig {
-    // 核心线程池大小
+    /**
+     * 核心线程池大小
+     */
     private int corePoolSize = 50;
 
-    // 最大可创建的线程数
+    /**
+     * 最大可创建的线程数
+     */
     private int maxPoolSize = 200;
 
-    // 队列最大长度
+    /**
+     * 队列最大长度
+     */
     private int queueCapacity = 1000;
 
-    // 线程池维护线程所允许的空闲时间
+    /**
+     * 线程池维护线程所允许的空闲时间
+     */
     private int keepAliveSeconds = 300;
 
-    @Bean(name = "threadPoolTaskExecutor")
+    @Bean(name = "threadPoolTaskExecutor" )
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setMaxPoolSize(maxPoolSize);
@@ -43,10 +53,10 @@ public class ThreadPoolConfig {
     /**
      * 执行周期性或定时任务
      */
-    @Bean(name = "scheduledExecutorService")
+    @Bean(name = "scheduledExecutorService" )
     protected ScheduledExecutorService scheduledExecutorService() {
         return new ScheduledThreadPoolExecutor(corePoolSize,
-                new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build()) {
+                new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d" ).daemon(true).build()) {
             @Override
             protected void afterExecute(Runnable r, Throwable t) {
                 super.afterExecute(r, t);

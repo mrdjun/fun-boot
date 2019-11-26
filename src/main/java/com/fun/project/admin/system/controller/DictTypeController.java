@@ -1,7 +1,8 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.common.utils.poi.ExcelUtil;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.framework.web.entity.Ztree;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author u-fun
  * @date 2019/10/30
  */
-@Api(tags = {"字典类型"})
+@Api(tags = {"admin字典类型"})
 @Controller
 @RequestMapping("/admin/system/dict")
-public class DictTypeController extends BaseController {
+public class DictTypeController extends AdminBaseController {
     private String prefix = "system/dict/type/";
 
     @Autowired
@@ -50,6 +51,16 @@ public class DictTypeController extends BaseController {
         return success(CommonPage.restPage(dictTypes));
     }
 
+    @Log("导出DictType列表" )
+    @ApiOperation(value = "导出DictType列表" )
+    @RequiresPermissions("system:dict:export" )
+    @PostMapping("/export" )
+    @ResponseBody
+    public CommonResult export(DictType dictType) {
+        List<DictType> list = dictTypeService.selectDictTypeList(dictType);
+        ExcelUtil<DictType> util = new ExcelUtil<>(DictType.class);
+        return util.exportExcel(list, "字典类型" );
+    }
 
     /**
      * 新增字典类型

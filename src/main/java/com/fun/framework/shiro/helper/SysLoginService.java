@@ -6,7 +6,7 @@ import com.fun.common.exception.user.UserBlockedException;
 import com.fun.common.exception.user.CaptchaException;
 import com.fun.common.exception.user.UserNotExistsException;
 import com.fun.common.exception.user.UserPasswordNotMatchException;
-import com.fun.common.utils.Md5Utils;
+import com.fun.common.utils.encrypt.Md5Utils;
 import com.fun.common.utils.MessageUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;

@@ -71,7 +71,6 @@ public class AsyncFactory {
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
 
-                // 输出到日志，提高性能不用String
                 StringBuilder s = new StringBuilder();
                 s.append(LogUtils.getBlock(ipAddr));
                 s.append(location);

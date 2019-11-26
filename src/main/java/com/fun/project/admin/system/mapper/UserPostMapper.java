@@ -5,7 +5,7 @@ import com.fun.project.admin.system.entity.user.UserPost;
 import java.util.List;
 
 /**
- * 用户与岗位 表 数据层
+ * admin用户与岗位 表 数据层
  *
  * @author fun
  */

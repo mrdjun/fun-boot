@@ -47,7 +47,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         AdminUser user = ShiroUtils.getSysUser();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        // 超级管理员拥有所有权限
+        // 超级管理员直接赋予全部权限
         if (user.isAdmin()) {
             info.addRole("admin");
             info.addStringPermission("*:*:*");
@@ -95,7 +95,7 @@ public class ShiroRealm extends AuthorizingRealm {
         } catch (UserBlockedException | RoleBlockedException e) {
             throw new LockedAccountException(e.getMessage(), e);
         } catch (Exception e) {
-            log.info("对用户[" + username + "]进行登录验证..验证未通过{}", e.getMessage());
+            log.info("对用户[" + username + "]进行登录验证.验证未通过{}", e.getMessage());
             throw new AuthenticationException(e.getMessage(), e);
         }
 

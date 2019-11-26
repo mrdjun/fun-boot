@@ -2,12 +2,12 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.result.CommonResult;
-import com.fun.common.utils.Md5Utils;
+import com.fun.common.utils.encrypt.Md5Utils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.file.FileUploadUtils;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.config.FunBootConfig;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
 import io.swagger.annotations.Api;
@@ -26,10 +26,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/11/4
  */
-@Api(tags = {"个人信息"})
+@Api(tags = {"admin个人信息"})
 @Controller
 @RequestMapping("/admin/system/user/profile")
-public class AdminProfileController extends BaseController {
+public class AdminProfileController extends AdminBaseController {
     private static final Logger log = LoggerFactory.getLogger(AdminProfileController.class);
     private String prefix = "system/user/profile";
     @Autowired

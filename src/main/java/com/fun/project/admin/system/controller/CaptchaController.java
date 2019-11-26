@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping("/captcha")
-@Api(tags = {"验证码接口"})
+@Api(tags = {"admin验证码接口"})
 public class CaptchaController {
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;

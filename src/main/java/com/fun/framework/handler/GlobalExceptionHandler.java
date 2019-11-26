@@ -1,12 +1,15 @@
 package com.fun.framework.handler;
 
+import com.fun.common.exception.base.BusinessException;
 import com.fun.common.exception.file.FileDownloadException;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.exception.LimitAccessException;
-import com.fun.common.exception.user.CaptchaException;
 import com.fun.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.fun.common.utils.PermissionUtils;
+import com.fun.common.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.core.Ordered;
@@ -14,10 +17,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -49,6 +55,30 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e) {
+        log.error(e.getMessage(), e);
+        if (ServletUtils.isAjaxRequest(request)) {
+            return new FunBootResponse().code(HttpStatus.FORBIDDEN).message(PermissionUtils.getMsg(e.getMessage()));
+        } else {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("/403");
+            return modelAndView;
+        }
+    }
+
+    /**
+     * 请求方式不支持
+     */
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    public FunBootResponse handleException(HttpRequestMethodNotSupportedException e) {
+        log.error(e.getMessage(), e);
+        return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("不支持' " + e.getMethod() + "'请求");
+    }
+
+    /**
      * 统一处理请求参数校验(实体对象传参)
      *
      * @param e BindException
@@ -63,6 +93,22 @@ public class GlobalExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         return new FunBootResponse().code(HttpStatus.BAD_REQUEST).message(message.toString());
+    }
+
+    /**
+     * 业务异常
+     */
+    @ExceptionHandler(BusinessException.class)
+    public Object businessException(HttpServletRequest request, BusinessException e) {
+        log.error(e.getMessage(), e);
+        if (ServletUtils.isAjaxRequest(request)) {
+            return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
+        } else {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("errorMessage", e.getMessage());
+            modelAndView.setViewName("error/business");
+            return modelAndView;
+        }
     }
 
     /**
@@ -109,13 +155,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 密码错误次数过多
+     * admin密码错误次数过多
      */
     @ExceptionHandler(value = UserPasswordRetryLimitExceedException.class)
     public FunBootResponse handleUserPasswordRetryLimitExceedException(UserPasswordRetryLimitExceedException e) {
-        log.error("密码错误次数过多，锁定10分钟", e);
         return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
     }
 
-
+    /**
+     * 拦截未知的运行时异常
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public FunBootResponse notFount(RuntimeException e) {
+        log.error("运行时异常:", e);
+        return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("运行时异常:" + e.getMessage());
+    }
 }

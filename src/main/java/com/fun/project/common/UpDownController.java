@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 通用上传下载
+ *
  * @author DJun
  */
 @RestController
@@ -37,31 +38,31 @@ public class UpDownController {
      * @param fileName 文件名称
      * @param delete   是否删除
      */
-    @GetMapping("/common/download")
+    @GetMapping("/common/download" )
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
         try {
             if (!FileUtils.isValidFilename(fileName)) {
-                CommonResult commonResult = CommonResult.failed(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
+                CommonResult commonResult = CommonResult.failed(StringUtils.format("文件名称({})非法，不允许下载。 " , fileName));
                 ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
             }
-            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_" ) + 1);
             String filePath = FunBootConfig.getDownloadPath() + "/" + fileName;
-            response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition",
+            response.setContentType("multipart/form-data" );
+            response.setHeader("Content-Disposition" ,
                     "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, realFileName));
             FileUtils.writeBytes(filePath, response.getOutputStream());
             if (delete) {
                 FileUtils.deleteFile(filePath);
             }
         } catch (Exception e) {
-            log.error("下载文件失败", e);
+            log.error("下载文件失败，Error:{}" , e.getMessage());
         }
     }
 
     /**
      * 通用上传请求
      */
-    @PostMapping("/common/upload")
+    @PostMapping("/common/upload" )
     @ResponseBody
     public CommonResult uploadFile(MultipartFile file) throws Exception {
         try {
@@ -71,8 +72,8 @@ public class UpDownController {
             String fileName = FileUploadUtils.upload(filePath, file);
             String url = serverConfig.getUrl() + fileName;
             JSONObject ajax = new JSONObject();
-            ajax.put("fileName", fileName);
-            ajax.put("url", url);
+            ajax.put("fileName" , fileName);
+            ajax.put("url" , url);
             return CommonResult.success(ajax);
         } catch (Exception e) {
             return CommonResult.failed(e.getMessage());

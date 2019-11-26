@@ -4,7 +4,7 @@ import com.fun.common.constant.Constants;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.framework.web.entity.Ztree;
 import com.fun.project.admin.system.entity.Dept;
 import com.fun.project.admin.system.entity.role.Role;
@@ -26,10 +26,10 @@ import static com.fun.common.result.CommonResult.*;
  * @author DJun
  * @date 2019/11/1
  */
-@Api(tags = {"部门信息"})
+@Api(tags = {"admin部门信息"})
 @Controller
 @RequestMapping("admin/system/dept")
-public class DeptController extends BaseController {
+public class DeptController extends AdminBaseController {
     private String prefix = "system/dept";
 
     @Autowired

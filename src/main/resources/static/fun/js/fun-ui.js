@@ -271,7 +271,7 @@
                     $.modal.loading("正在导出数据，请稍后...");
                     $.post($.table._option.exportUrl, $("#" + currentId).serializeArray(), function (result) {
                         if (result.code === web_status.SUCCESS) {
-                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.message) + "&delete=" + true;
+                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.data) + "&delete=" + true;
                         } else if (result.code === web_status.WARNING) {
                             $.modal.alertWarning(result.message)
                         } else {
@@ -285,7 +285,7 @@
             importTemplate: function () {
                 $.get($.table._option.importTemplateUrl, function (result) {
                     if (result.code === web_status.SUCCESS) {
-                        window.location.href = ctx + "common/download?fileName=" + encodeURI(result.message) + "&delete=" + true;
+                        window.location.href = ctx + "common/download?fileName=" + encodeURI(result.data) + "&delete=" + true;
                     } else if (result.code === web_status.WARNING) {
                         $.modal.alertWarning(result.message)
                     } else {
@@ -310,7 +310,7 @@
                     shadeClose: true,
                     btn1: function (index, layero) {
                         var file = layero.find('#file').val();
-                        if (file == '' || (!$.common.endWith(file, '.xls') && !$.common.endWith(file, '.xlsx'))) {
+                        if (file === '' || (!$.common.endWith(file, '.xls') && !$.common.endWith(file, '.xlsx'))) {
                             $.modal.msgWarning("请选择后缀为 “xls”或“xlsx”的文件。");
                             return false;
                         }

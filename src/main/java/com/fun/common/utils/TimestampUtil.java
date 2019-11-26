@@ -19,7 +19,7 @@ public class TimestampUtil {
     /**
      * 时间戳 转 日期 (13位毫秒级)
      */
-    public static String timestampToDate13(String timestamp) {
+    public static String timestampToDate13(Long timestamp) {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
     }
 
@@ -44,4 +44,7 @@ public class TimestampUtil {
         return System.currentTimeMillis();
     }
 
+    public static void main(String[] args) {
+        System.out.println(timestampToDate13(1574429467637L));
+    }
 }

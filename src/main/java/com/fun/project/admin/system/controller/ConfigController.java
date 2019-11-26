@@ -1,7 +1,8 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.common.utils.poi.ExcelUtil;
+import com.fun.framework.web.controller.AdminBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,10 +29,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author u-fun
  * @date 2019/10/30
  */
-@Api(tags = {"参数配置"})
+@Api(tags = {"admin参数配置"})
 @Controller
 @RequestMapping("/admin/system/config")
-public class ConfigController extends BaseController {
+public class ConfigController extends AdminBaseController {
     private String prefix = "system/config";
 
     @Autowired
@@ -52,6 +53,16 @@ public class ConfigController extends BaseController {
         startPage();
         List<Config> configs = configService.selectConfigList(config);
         return success(CommonPage.restPage(configs));
+    }
+
+    @Log("导出用户列表" )
+    @RequiresPermissions("system:user:export" )
+    @PostMapping("/export" )
+    @ResponseBody
+    public CommonResult export(Config config) {
+        List<Config> list = configService.selectConfigList(config);
+        ExcelUtil<Config> util = new ExcelUtil<>(Config.class);
+        return util.exportExcel(list, "系统配置参数" );
     }
 
     /**

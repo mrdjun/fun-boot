@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 用户角色表
+ * Admin用户角色表
+ *
  * @author DJun
  */
 public interface UserRoleMapper {

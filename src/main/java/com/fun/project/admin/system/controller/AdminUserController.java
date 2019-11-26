@@ -5,9 +5,10 @@ import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 
 import com.fun.common.utils.StringUtils;
+import com.fun.common.utils.poi.ExcelUtil;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.shiro.helper.ShiroUtils;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
 import com.fun.project.admin.system.service.IPostService;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,8 +33,8 @@ import static com.fun.common.result.CommonResult.*;
  */
 @Controller
 @RequestMapping("/admin/system/user")
-@Api(tags = {"管理员用户"})
-public class AdminUserController extends BaseController {
+@Api(tags = {"admin用户"})
+public class AdminUserController extends AdminBaseController {
     private final String prefix = "system/user";
 
     @Autowired
@@ -56,6 +58,37 @@ public class AdminUserController extends BaseController {
         startPage();
         List<AdminUser> list = adminUserService.selectAdminUserList(adminUser);
         return success(CommonPage.restPage(list));
+    }
+
+    @Log("导出用户列表")
+    @RequiresPermissions("system:user:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public CommonResult export(AdminUser user) {
+        List<AdminUser> list = adminUserService.selectAdminUserList(user);
+        ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
+        return util.exportExcel(list, "用户数据");
+    }
+
+    @Log("导入用户数据")
+    @RequiresPermissions("system:user:import")
+    @PostMapping("/importData")
+    @ResponseBody
+    public CommonResult importData(@RequestParam MultipartFile file,
+                                   @RequestParam(defaultValue = "false", required = false) boolean updateSupport)
+            throws Exception {
+        ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
+        List<AdminUser> userList = util.importExcel(file.getInputStream());
+        String message = adminUserService.importUser(userList, updateSupport);
+        return success(message);
+    }
+
+    @RequiresPermissions("system:user:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public CommonResult importTemplate() {
+        ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
+        return util.importTemplateExcel("用户数据");
     }
 
     /**

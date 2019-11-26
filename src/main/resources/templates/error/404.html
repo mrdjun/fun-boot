@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
-    <title>FUN-BOOT</title>
+    <title>SYS - 404</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -30,9 +30,9 @@
 <script src="layui/layui.js" th:src="@{/layui/layui.js}"></script>
 <script data-th-inline="javascript" type="text/javascript">
     layui.use(['jquery'], function () {
-        var $ = layui.jquery,
-            ctx = [[@{/}]],
-            $view = $('#fun-error-404');
+        var $ = layui.jquery;
+         var ctx = [[@{/}]];
+         var $view = $('#fun-error-404');
             $view.on('click', 'button', function () {
                 window.location.href = ctx + 'index';
             });

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 数据源切换处理
+ *
+ * @author DJun
  */
 public class DynamicDataSourceContextHolder {
     public static final Logger log = LoggerFactory.getLogger(DynamicDataSourceContextHolder.class);
@@ -19,7 +21,7 @@ public class DynamicDataSourceContextHolder {
      * 设置数据源的变量
      */
     public static void setDataSourceType(String dsType) {
-        log.info("切换到{}数据源", dsType);
+        log.info("切换到{}数据源" , dsType);
         CONTEXT_HOLDER.set(dsType);
     }
 

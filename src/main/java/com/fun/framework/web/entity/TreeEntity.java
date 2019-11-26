@@ -28,5 +28,4 @@ public class TreeEntity extends BaseEntity {
      * 显示顺序
      */
     private Integer orderNum;
-
 }

@@ -5,8 +5,9 @@ import java.io.*;
 import java.net.URLEncoder;
 
 /**
- * created by DJun on 2019/9/12 18:40
- * desc: 文件处理工具类
+ * 文件处理工具类
+ * @author DJun
+ * @date 2019/9/12 18:40
  */
 public class FileUtils {
 

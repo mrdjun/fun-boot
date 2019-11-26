@@ -3,6 +3,7 @@ package com.fun.framework.annotation.aspect;
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.constant.LoginType;
 import com.fun.common.utils.*;
+import com.fun.common.utils.app.TokenUtils;
 import com.fun.framework.annotation.enums.BusinessStatus;
 import com.fun.framework.config.FunBootConfig;
 import com.fun.framework.manager.AsyncFactory;
@@ -24,8 +25,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * created by DJun on 2019/9/9 19:49
- * desc: 操作日志记录处理
+ * 操作日志记录处理
+ * @author DJun
+ * @date 2019/9/9 19:49
  */
 @Aspect
 @Component
@@ -35,7 +37,9 @@ public class LogAspect {
     private FunBootConfig funBootConfig;
 
 
-    // 配置织入点
+    /**
+     * 配置织入点
+     */
     @Pointcut("@annotation(com.fun.framework.annotation.Log)")
     public void logPointCut() {
     }
@@ -61,7 +65,7 @@ public class LogAspect {
         handleLog(joinPoint, e);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e) {
+    private void handleLog(final JoinPoint joinPoint, final Exception e) {
         // 如果没开启日志记录则直接退出
         if (!funBootConfig.isOpenLog()) {
             return;
@@ -77,7 +81,7 @@ public class LogAspect {
             String currUserLoginName;
             // 获取当前app端用户登录账号
             if (currLoginType.equals(LoginType.App.getCode())) {
-                currUserLoginName = TokenUtil.getTokenLoginName();
+                currUserLoginName = TokenUtils.getTokenLoginName();
             }
             // 若当前用户为后台用户
             else {

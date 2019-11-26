@@ -29,7 +29,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 拦截验证 /app/ 接口
+        // 拦截验证 /app/* 接口
         registry.addInterceptor(authenticationInterceptor()).addPathPatterns("/app/**");
         // 防止表单重复提交拦截
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
@@ -55,16 +55,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
         /* 解决静态资源映射问题 */
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
-
-    /**
-     * 访问ip直接跳转页面
-     * 这里可以跳过 Shiro 认证访问页面
-     */
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        // 后面接模板页的地址，非controller地址
-//        registry.addViewController("").setViewName("/fun/views/index");
-//    }
 
     /**
      * 跨域

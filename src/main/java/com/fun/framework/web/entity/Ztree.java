@@ -56,4 +56,3 @@ public class Ztree implements Serializable {
      */
     private boolean nocheck = false;
 }
-

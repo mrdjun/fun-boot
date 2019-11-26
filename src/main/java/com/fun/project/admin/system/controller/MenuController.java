@@ -3,7 +3,7 @@ package com.fun.project.admin.system.controller;
 import com.fun.common.constant.Constants;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.framework.web.entity.Ztree;
 import com.fun.project.admin.system.entity.Menu;
 import com.fun.project.admin.system.entity.role.Role;
@@ -28,10 +28,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/9/23
  */
-@Api(tags = {"后台菜单"})
+@Api(tags = {"admin后台菜单"})
 @Controller
 @RequestMapping("/admin/system/menu")
-public class MenuController extends BaseController {
+public class MenuController extends AdminBaseController {
     private String prefix = "system/menu";
 
     @Autowired

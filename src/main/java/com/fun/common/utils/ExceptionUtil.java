@@ -8,7 +8,7 @@ import java.io.StringWriter;
 /**
  * 错误信息处理类。
  *
- * @author cqjava
+ * @author DJun
  */
 public class ExceptionUtil {
     /**
@@ -17,11 +17,10 @@ public class ExceptionUtil {
     public static String getExceptionMessage(Throwable e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw, true));
-        String str = sw.toString();
-        return str;
+        return sw.toString();
     }
 
-    public static String getRootErrorMseeage(Exception e) {
+    public static String getRootErrorMsg(Exception e) {
         Throwable root = ExceptionUtils.getRootCause(e);
         root = (root == null ? e : root);
         if (root == null) {

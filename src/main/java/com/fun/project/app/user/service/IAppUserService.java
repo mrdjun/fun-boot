@@ -1,12 +1,13 @@
 package com.fun.project.app.user.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fun.project.app.user.entity.AppUser;
 
 import java.util.List;
 
 /**
- * created by DJun on 2019/9/12 18:16
- * desc:
+ * @author DJun
+ * @date 2019/9/12 18:16
  */
 public interface IAppUserService {
     /**
@@ -23,7 +24,7 @@ public interface IAppUserService {
      * @param appUser 用户
      * @return 用户集合
      */
-    List<AppUser> selectUserList(AppUser appUser,int pageNum,int pageSize);
+    List<AppUser> selectUserList(AppUser appUser);
 
     /**
      * 新增用户
@@ -41,6 +42,12 @@ public interface IAppUserService {
      */
     int updateAppUser(AppUser appUser);
 
+    /**
+     * 通过账号更新用户信息
+     *
+     * @param appUser AppUser
+     * @return 结果
+     */
     int updateAppUserByLoginName(AppUser appUser);
 
     /**
@@ -59,6 +66,40 @@ public interface IAppUserService {
      */
     int deleteUserById(Long userId);
 
-    AppUser login(String loginName, String pwd);
+    /**
+     * 登录接口
+     *
+     * @param loginName 账号
+     * @param pwd       密码
+     * @return AppUser
+     */
+    JSONObject login(String loginName, String pwd);
 
+    /**
+     * 校验账号唯一
+     * @param loginName loginName
+     * @return 0/1
+     */
+    String checkLoginNameUnique(String loginName);
+
+    /**
+     * 校验uAccount唯一
+     * @param uAccount UAccount
+     * @return 0/1
+     */
+    String checkUAccountUnique(String uAccount);
+
+    /**
+     * 校验 telephone 唯一
+     * @param telephone telephone
+     * @return userId,email
+     */
+    String checkPhoneUnique(String telephone);
+
+    /**
+     * 校验 email 唯一
+     * @param email 邮箱
+     * @return userId,email
+     */
+    String checkEmailUnique(String email);
 }

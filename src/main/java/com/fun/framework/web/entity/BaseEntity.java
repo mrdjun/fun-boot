@@ -2,9 +2,6 @@ package com.fun.framework.web.entity;
 
 import com.google.common.collect.Maps;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Map;

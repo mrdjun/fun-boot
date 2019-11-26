@@ -7,74 +7,101 @@ package com.fun.common.constant;
  *
  * @author DJun
  */
-public class Constants {
+public interface Constants {
 
     /**
      * 通用成功、失败标识
      */
-    public static final String SUCCESS = "1";
-    public static final String FAIL = "0";
+    String SUCCESS = "1";
+    String FAIL = "0";
+
+    /**
+     * 通用status
+     */
+    String NORMAL = "1";
+    String FORBIDDEN = "0";
 
     /**
      * 登录状态
      */
-    public static final String LOGIN_SUCCESS = "登录成功";
-    public static final String LOGIN_FAIL = "登录失败";
-    public static final String LOGOUT = "注销成功";
+    String LOGIN_SUCCESS = "登录成功";
+    String LOGIN_FAIL = "登录失败，账号或密码错误";
+    String LOGOUT = "注销成功";
 
     /**
      * 前端页面路径前缀
      */
-    public static final String VIEW_PREFIX = "fun/views/";
+    String VIEW_PREFIX = "fun/views/";
 
     /**
      * 获取ip地区地址开关
      */
-    public static final boolean ADDRESS_ENABLED = true;
+    boolean ADDRESS_ENABLED = true;
 
     /**
      * 是否唯一的返回结果码
      */
-    public final static String UNIQUE = "0";
-    public final static String NOT_UNIQUE = "1";
+    String UNIQUE = "0";
+    String NOT_UNIQUE = "1";
 
     /**
      * 字典正常状态
      */
-    public static final String DICT_NORMAL = "1";
+    String DICT_NORMAL = "1";
 
     /**
      * 部门正常状态
      */
-    public static final String DEPT_NORMAL = "1";
+    String DEPT_NORMAL = "1";
 
     /**
      * 是否为系统默认（是）
      */
-    public static final String YES = "Y";
+    String YES = "Y";
 
     /**
      * 排序的方向 "desc" 或者 "asc"
      */
-    public static final String IS_ASC = "isAsc";
+    String IS_ASC = "isAsc";
 
     /**
      * 排序列
      */
-    public static final String ORDER_BY_COLUMN = "orderByColumn";
+    String ORDER_BY_COLUMN = "orderByColumn";
 
     /**
      * 当前记录起始索引
      */
-    public static final String PAGE_NUM = "pageNum";
+    String PAGE_NUM = "pageNum";
 
     /**
      * 每页显示记录数
      */
-    public static final String PAGE_SIZE = "pageSize";
+    String PAGE_SIZE = "pageSize";
 
     /**
      * 权限字符串
      */
-    public static final String PREMISSION_STRING = "perms[\"{0}\"]";
+    String PREMISSION_STRING = "perms[\"{0}\"]";
+
+    /**
+     * UTF-8 字符集
+     */
+    String UTF8 = "UTF-8";
+
+    /**
+     * Header头 token参数
+     */
+    String TOKEN = "token";
+
+    /**
+     * 为空
+     */
+    String EMPTY = "empty";
+
+    /**
+     * 管理员字段
+     */
+    String ADMIN = "admin";
+
 }

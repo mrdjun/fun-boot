@@ -1,84 +1,183 @@
 package com.fun.project.admin.tool.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
-import com.fun.common.utils.gen.CodeGeneratorTool;
-import com.fun.common.utils.gen.FreemarkerTool;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.common.utils.text.Convert;
+import com.fun.framework.annotation.Log;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.tool.entity.GenTable;
-import freemarker.template.TemplateException;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import com.fun.project.admin.tool.entity.GenTableColumn;
+import com.fun.project.admin.tool.service.IGenTableColumnService;
+import com.fun.project.admin.tool.service.IGenTableService;
+import org.apache.commons.io.IOUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.fun.common.result.CommonResult.success;
+
 /**
+ * 代码生成 操作处理
+ *
  * @author DJun
- * @date 2019/10/6
  */
 @Controller
-@Slf4j
 @RequestMapping("/tool/gen")
-public class GenController {
+public class GenController extends AdminBaseController {
+    private String prefix = "tool/gen";
 
     @Autowired
-    private FreemarkerTool freemarkerTool;
+    private IGenTableService genTableService;
 
-    @GetMapping("")
-    public String index() {
-        return BaseController.view("/tool/gen/index");
+    @Autowired
+    private IGenTableColumnService genTableColumnService;
+
+    @RequiresPermissions("tool:gen:view")
+    @GetMapping()
+    public String gen() {
+        return view(prefix + "/gen");
     }
 
-    @PostMapping("/codeGenerate")
+    /**
+     * 查询代码生成列表
+     */
+    @RequiresPermissions("tool:gen:list")
+    @PostMapping("/list")
     @ResponseBody
-    public CommonResult codeGenerate(String tableSql) {
-
-        if (StringUtils.isBlank(tableSql)) {
-            return CommonResult.failed("表结构信息不可为空");
-        }
-
-        try {
-            // parse table
-            GenTable genTable = CodeGeneratorTool.processTableIntoClassInfo(tableSql);
-
-            // code genarete
-            Map<String, Object> params = new HashMap<>();
-            params.put("classInfo", genTable);
-
-            // result
-            Map<String, String> result = new HashMap<>();
-
-            result.put("controller_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/controller.ftl", params));
-            result.put("service_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/service.ftl", params));
-            result.put("service_impl_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/service_impl.ftl", params));
-            result.put("dao_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/mapper.ftl", params));
-            result.put("mybatis_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/mybatis.ftl", params));
-            result.put("model_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/entity.ftl", params));
-            result.put("list_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/list.ftl", params));
-            result.put("edit_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/edit.ftl", params));
-            result.put("add_code", freemarkerTool.processString(Constants.VIEW_PREFIX + "tool/gen/xxl-code-generator/add.ftl", params));
-
-            // 计算生成代码行数
-            int lineNum = 0;
-            for (Map.Entry<String, String> item : result.entrySet()) {
-                if (item.getValue() != null) {
-                    lineNum += StringUtils.countMatches(item.getValue(), "\n");
-                }
-            }
-            log.info("生成代码行数：{}", lineNum);
-            return CommonResult.success(result);
-        } catch (IOException | TemplateException e) {
-            log.error(e.getMessage(), e);
-            return CommonResult.failed("表结构解析失败");
-        }
+    public CommonResult genList(GenTable genTable) {
+        startPage();
+        List<GenTable> list = genTableService.selectGenTableList(genTable);
+        return success(CommonPage.restPage(list));
     }
 
+    /**
+     * 查询数据库列表
+     */
+    @RequiresPermissions("tool:gen:list")
+    @PostMapping("/db/list")
+    @ResponseBody
+    public CommonResult dataList(GenTable genTable) {
+        startPage();
+        List<GenTable> list = genTableService.selectDbTableList(genTable);
+        return success(CommonPage.restPage(list));
+    }
+
+    /**
+     * 查询数据表字段列表
+     */
+    @RequiresPermissions("tool:gen:list")
+    @PostMapping("/column/list")
+    @ResponseBody
+    public CommonResult columnList(GenTableColumn genTableColumn) {
+        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn);
+        return success(CommonPage.restPage(list));
+    }
+
+    /**
+     * 导入表结构
+     */
+    @RequiresPermissions("tool:gen:list")
+    @GetMapping("/importTable")
+    public String importTable() {
+        return view(prefix + "/importTable");
+    }
+
+    /**
+     * 导入表结构（保存）
+     */
+    @RequiresPermissions("tool:gen:list")
+    @Log("代码生成")
+    @PostMapping("/importTable")
+    @ResponseBody
+    public CommonResult importTableSave(String tables) {
+        String[] tableNames = Convert.toStrArray(tables);
+        // 查询表信息
+        List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+        genTableService.importGenTable(tableList);
+        return success(Constants.SUCCESS);
+    }
+
+    /**
+     * 修改代码生成业务
+     */
+    @GetMapping("/edit/{tableId}")
+    public String edit(@PathVariable("tableId") Long tableId, ModelMap mmap) {
+        GenTable table = genTableService.selectGenTableById(tableId);
+        mmap.put("table", table);
+        return view(prefix + "/edit");
+    }
+
+    /**
+     * 修改保存代码生成业务
+     */
+    @RequiresPermissions("tool:gen:edit")
+    @PostMapping("/edit")
+    @ResponseBody
+    public CommonResult editSave(@Validated GenTable genTable) {
+        genTableService.validateEdit(genTable);
+        genTableService.updateGenTable(genTable);
+        return success(Constants.SUCCESS);
+    }
+
+    @RequiresPermissions("tool:gen:remove")
+    @PostMapping("/remove")
+    @ResponseBody
+    public CommonResult remove(String ids) {
+        genTableService.deleteGenTableByIds(ids);
+        return success(Constants.SUCCESS);
+    }
+
+    /**
+     * 预览代码
+     */
+    @RequiresPermissions("tool:gen:preview")
+    @GetMapping("/preview/{tableId}")
+    @ResponseBody
+    public CommonResult preview(@PathVariable("tableId") Long tableId) throws IOException {
+        Map<String, String> dataMap = genTableService.previewCode(tableId);
+        return success(dataMap);
+
+    }
+
+    /**
+     * 生成代码
+     */
+    @RequiresPermissions("tool:gen:code")
+    @GetMapping("/genCode/{tableName}")
+    public void genCode(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
+        byte[] data = genTableService.generatorCode(tableName);
+        genCode(response, data);
+    }
+
+    /**
+     * 批量生成代码
+     */
+    @RequiresPermissions("tool:gen:code")
+    @GetMapping("/batchGenCode")
+    @ResponseBody
+    public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
+        String[] tableNames = Convert.toStrArray(tables);
+        byte[] data = genTableService.generatorCode(tableNames);
+        genCode(response, data);
+    }
+
+    /**
+     * 生成zip文件
+     */
+    private void genCode(HttpServletResponse response, byte[] data) throws IOException {
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"fun-boot.zip\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/octet-stream; charset=UTF-8");
+        IOUtils.write(data, response.getOutputStream());
+    }
 }

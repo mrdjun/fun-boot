@@ -4,7 +4,7 @@ import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.web.controller.BaseController;
+import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.IAdminUserService;
@@ -27,10 +27,10 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/10/3
  */
-@Api(tags = {"角色信息"})
+@Api(tags = {"admin角色信息"})
 @Controller
 @RequestMapping("/admin/system/role")
-public class RoleController extends BaseController {
+public class RoleController extends AdminBaseController {
 
     private String prefix = "system/role/";
 

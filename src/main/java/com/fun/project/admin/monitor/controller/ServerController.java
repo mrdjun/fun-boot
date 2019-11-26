@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author DJun
  * @date 2019/11/4
  */
-@Api(tags = "服务器监控信息")
 @Controller
 public class ServerController {
 
