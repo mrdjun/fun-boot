@@ -7,6 +7,8 @@
 <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
 </p>
 
+# 最后一次大调整，预发布，敬请期待！
+
 # 简介
 
 > 一款基于现代化的脚手架项目，包含app端和admin端于一体。:beers:
