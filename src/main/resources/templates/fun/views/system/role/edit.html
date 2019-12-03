@@ -31,7 +31,7 @@
 				<label class="col-sm-3 control-label">状态：</label>
 				<div class="col-sm-8">
 					<label class="toggle-switch switch-solid">
-                        <input type="checkbox" id="status" th:checked="${role.status == '0' ? true : false}">
+                        <input type="checkbox" id="status" th:checked="${role.status == '1' ? true : false}">
                         <span></span>
                     </label>
 				</div>
@@ -123,7 +123,7 @@
 			var roleName = $("input[name='roleName']").val();
 			var roleKey = $("input[name='roleKey']").val();
 			var roleSort = $("input[name='roleSort']").val();
-			var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
+			var status = $("input[id='status']").is(':checked') === true ? 1 : 0;
 			var remark = $("input[name='remark']").val();
 			var menuIds = $.tree.getCheckedNodes();
 			$.ajax({

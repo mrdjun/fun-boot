@@ -1,7 +1,7 @@
 package com.fun.framework.shiro.helper;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.exception.user.UserBlockedException;
 import com.fun.common.exception.user.CaptchaException;
 import com.fun.common.exception.user.UserNotExistsException;

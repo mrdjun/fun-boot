@@ -1,6 +1,6 @@
 package com.fun.framework.manager;
 
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.utils.*;
 import com.fun.project.admin.monitor.entity.LoginLog;
 import com.fun.project.admin.monitor.entity.OperLog;
@@ -9,7 +9,7 @@ import com.fun.project.admin.monitor.service.impl.LoginLogServiceImpl;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.impl.AdminUserServiceImpl;
 import com.fun.project.app.user.entity.AppUser;
-import com.fun.project.app.user.service.AppUserServiceImpl;
+import com.fun.project.app.user.service.impl.AppUserServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

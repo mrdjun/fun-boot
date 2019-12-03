@@ -1,4 +1,4 @@
-package ${packageName}.${businessName}.service.impl;
+package ${packageName}.${moduleName}.service.impl;
 
 import java.util.List;
 #if($table.tree)
@@ -14,9 +14,9 @@ import com.fun.common.utils.TimestampUtil;
 #end
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ${packageName}.${businessName}.mapper.${ClassName}Mapper;
-import ${packageName}.${businessName}.domain.${ClassName};
-import ${packageName}.${businessName}.service.I${ClassName}Service;
+import ${packageName}.${moduleName}.mapper.${ClassName}Mapper;
+import ${packageName}.${moduleName}.entity.${ClassName};
+import ${packageName}.${moduleName}.service.I${ClassName}Service;
 import com.fun.common.utils.text.Convert;
 
 /**
@@ -101,6 +101,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @param ${pkColumn.javaField} ${functionName}ID
      * @return 结果
      */
+    @Override
     public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField}) {
         return ${className}Mapper.delete${ClassName}ById(${pkColumn.javaField});
     }

@@ -87,7 +87,7 @@
         var ${column.javaField}Datas = [[${@dict.getType('${column.dictType}')}]];
 #end
 #end
-        var prefix = ctx + "${moduleName}/${businessName}";
+        var prefix = ctx + "admin/${moduleName}/${businessName}";
 
         $(function() {
             var options = {

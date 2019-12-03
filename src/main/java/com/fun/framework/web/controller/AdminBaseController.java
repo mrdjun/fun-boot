@@ -15,7 +15,7 @@ import com.github.pagehelper.PageHelper;
  *
  * @author DJun
  */
-public class AdminBaseController {
+public class AdminBaseController extends AbstractBaseController{
 
     /**
      * 页面加前缀跳转
@@ -59,16 +59,5 @@ public class AdminBaseController {
         return getSysUser().getLoginName();
     }
 
-    /**
-     * 从 Servlet 中读取 pageNum 和 pageSize等分页信息
-     */
-    protected void startPage() {
-        CommonPage pageDomain = CommonPage.buildPageRequest();
-        Integer pageNum = pageDomain.getPageNum();
-        Integer pageSize = pageDomain.getPageSize();
-        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-            String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.startPage(pageNum, pageSize, orderBy);
-        }
-    }
+
 }

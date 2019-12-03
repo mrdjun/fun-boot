@@ -33,7 +33,7 @@ public class TokenService {
     /**
      * 生成 Token
      *
-     * @param userInfo      AppUser
+     * @param userInfo     AppUser
      * @param isRememberMe 是否记住登录，用 Redis 的 ttl 实现
      * @return token
      */
@@ -72,9 +72,10 @@ public class TokenService {
                     return null;
                 }
             }
-
+            String userInfo = redisService.get(loginName);
             // 替换Token
             redisService.set(appConfig.getUserPrefix() + loginName, token, expireTime);
+            redisService.set(loginName, userInfo, expireTime);
         } catch (RedisConnectException e) {
             logger.error("redis连接失败-[{}]", DateUtils.dateTime());
             return null;

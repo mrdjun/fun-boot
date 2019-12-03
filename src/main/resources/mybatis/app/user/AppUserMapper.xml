@@ -32,18 +32,19 @@
         <result property="banTime" column="ban_time"/>
         <result property="isVerify" column="is_verify"/>
         <result property="roleKey" column="role_key"/>
+        <result property="roleName" column="role_name"/>
     </resultMap>
 
-    <resultMap id="UserPermsResult"     type="UserPerms">
-        <result property="permsId"      column="perms_id"    />
-        <result property="perms"        column="perms"    />
-        <result property="permsName"    column="perms_name"    />
-        <result property="roleKey"      column="role_key"    />
-        <result property="status"       column="status"    />
-        <result property="createBy"     column="create_by"    />
-        <result property="createTime"   column="create_time"    />
-        <result property="updateBy"     column="update_by"    />
-        <result property="updateTime"   column="update_time"    />
+    <resultMap id="UserPermsResult" type="UserPerms">
+        <result property="permsId" column="perms_id"/>
+        <result property="perms" column="perms"/>
+        <result property="permsName" column="perms_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
 
@@ -57,17 +58,29 @@
          from ums_user
     </sql>
 
+    <sql id="selectUserRoleVo">
+        select
+            r.role_key,r.role_name,u.user_id, u.login_name, u.username, u.u_account,
+            u.user_level, u.email, u.sex, u.password, u.salt, u.avatar,
+            u.telephone, u.del_flag, u.login_ip, u.login_date, u.open_id,
+            u.is_lock, u.honor, u.exp, u.fans_num, u.follow_num, u.oid,
+            u.is_verify, u.health, u.ban_time, u.update_time, u.create_time,
+            u.remark, u.status
+        from ums_user u
+        left join ums_user_role ur on ur.user_id=u.user_id
+        left join ums_role r on r.role_id=ur.role_id
+    </sql>
+
     <select id="selectUserList" parameterType="AppUser" resultMap="AppUserResult">
         <include refid="selectUserVo"/>
-        <where>
-            <if test="loginName != null  and loginName != ''">and login_name like concat('%', #{loginName}, '%')</if>
-            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
-        </where>
+        where del_flag = '1'
+        <if test="loginName != null  and loginName != ''">and login_name like concat('%', #{loginName}, '%')</if>
+        <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
     </select>
 
     <select id="selectUserById" parameterType="Long" resultMap="AppUserResult">
-        <include refid="selectUserVo"/>
-        where user_id = #{userId}
+        <include refid="selectUserRoleVo"/>
+        where u.user_id=#{userId}
     </select>
 
     <insert id="insertUser" parameterType="AppUser" useGeneratedKeys="true" keyProperty="userId">
@@ -189,27 +202,18 @@
     </update>
 
     <update id="deleteUserById" parameterType="Long">
-        update ums_user set status = '0' where user_id = #{userId}
+        update ums_user set status = '0', del_flag='2' where user_id = #{userId}
     </update>
 
     <update id="deleteUserByIds" parameterType="String">
-        update ums_user set status = '0' where user_id in
+        update ums_user set status = '0', del_flag='2' where user_id in
         <foreach item="userId" collection="array" open="(" separator="," close=")">
             #{userId}
         </foreach>
     </update>
 
     <select id="login" resultMap="AppUserResult">
-        select
-            r.role_key,u.user_id, u.login_name, u.username, u.u_account,
-            u.user_level, u.email, u.sex, u.password, u.salt, u.avatar,
-            u.telephone, u.del_flag, u.login_ip, u.login_date, u.open_id,
-            u.is_lock, u.honor, u.exp, u.fans_num, u.follow_num, u.oid,
-            u.is_verify, u.health, u.ban_time, u.update_time, u.create_time,
-            u.remark, u.status
-        from ums_user u
-        left join ums_user_role ur on ur.user_id=u.user_id
-        left join ums_role r on r.role_id=ur.role_id
+        <include refid="selectUserRoleVo"/>
         where login_name=#{loginName} and password=#{password}
     </select>
 
@@ -223,20 +227,54 @@
         WHERE up.status='1' and u.user_id=#{userId}
     </select>
 
-    <select id="checkLoginNameUnique" parameterType="String" resultType="int">
-		select count(1) from ums_user where login_name=#{loginName}
+    <select id="checkLoginNameUnique" parameterType="String" resultMap="AppUserResult">
+		select user_id,login_name from ums_user where login_name=#{loginName}
 	</select>
 
-    <select id="checkUAccountUnique" parameterType="String" resultType="int">
-		select count(1) from ums_user where u_account=#{uAccount}
+    <select id="checkUAccountUnique" parameterType="String" resultMap="AppUserResult">
+		select user_id,u_account from ums_user where u_account=#{uAccount}
 	</select>
 
-    <select id="checkPhoneUnique" parameterType="String" resultType="int">
-		select count(1) from ums_user where telephone=#{telephone}
+    <select id="checkPhoneUnique" parameterType="String" resultMap="AppUserResult">
+		select user_id,telephone from ums_user where telephone=#{telephone}
 	</select>
 
-    <select id="checkEmailUnique" parameterType="String" resultType="int">
-		select count(1) from ums_user where email=#{email}
+    <select id="checkEmailUnique" parameterType="String" resultMap="AppUserResult">
+		select user_id,email from ums_user where email=#{email}
 	</select>
+
+    <select id="selectAllocatedList" parameterType="AppUser" resultMap="AppUserResult">
+        SELECT
+        u.user_id, u.login_name, u.username, u.email,
+        u.avatar, u.telephone,u.create_time, u.remark, u.status,r.role_key,r.role_name
+        FROM ums_user u
+        JOIN ums_user_role ur on u.user_id=ur.user_id
+        JOIN ums_role r ON ur.role_id=r.role_id
+        WHERE u.del_flag='1' AND r.role_id=#{roleId}
+        <if test="loginName != null and loginName != ''">
+            AND u.login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="telephone != null and telephone != ''">
+            AND u.telephone like concat('%', #{telephone}, '%')
+        </if>
+    </select>
+
+    <select id="selectUnallocatedList" parameterType="AppUser" resultMap="AppUserResult">
+        select
+            u.user_id, u.login_name, u.username, u.email,
+            u.avatar, u.telephone,u.create_time, u.remark, u.status,r.role_key,r.role_name
+        from ums_user u
+        left join ums_user_role ur on u.user_id = ur.user_id
+        left join ums_role r on r.role_id = ur.role_id
+        where u.del_flag = '1' and r.role_id IS NULL
+        and u.user_id not in (select u.user_id from ums_user u inner join ums_user_role ur on u.user_id = ur.user_id and
+        ur.role_id = #{roleId})
+        <if test="loginName != null and loginName != ''">
+            AND u.login_name like concat('%', #{loginName}, '%')
+        </if>
+        <if test="telephone != null and telephone != ''">
+            AND u.telephone like concat('%', #{telephone}, '%')
+        </if>
+    </select>
 
 </mapper>

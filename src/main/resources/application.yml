@@ -9,7 +9,7 @@ server:
 
 spring:
   profiles:
-    active: prod
+    active: dev
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -17,3 +17,21 @@ spring:
 
   thymeleaf:
     cache: false
+
+  # 映射freemarker获取静态资源的路径
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+
+  # freemarker生成工具
+  freemarker:
+    # 模板加载路径
+    templateLoaderPath: classpath:/templates/
+    # 后缀（可手动改为.html）
+    suffix: .ftl
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+    content-type: text/html

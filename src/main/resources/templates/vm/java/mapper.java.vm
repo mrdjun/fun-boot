@@ -1,6 +1,6 @@
-package ${packageName}.${businessName}.mapper;
+package ${packageName}.${moduleName}.mapper;
 
-import ${packageName}.${businessName}.entity.${ClassName};
+import ${packageName}.${moduleName}.entity.${ClassName};
 import java.util.List;
 
 /**

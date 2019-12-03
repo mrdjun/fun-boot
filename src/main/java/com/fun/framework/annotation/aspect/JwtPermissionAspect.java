@@ -14,9 +14,7 @@ import com.fun.framework.annotation.JwtPermission;
 import com.fun.framework.redis.IRedisService;
 import com.fun.framework.web.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -29,6 +27,7 @@ import java.lang.reflect.Method;
 
 
 /**
+ * APP端验证用户权限
  *
  * @author DJun
  * @date 2019/11/25
@@ -55,7 +54,7 @@ public class JwtPermissionAspect {
         // 替代 @NeedLoginToken 验证是否存在
         String token = TokenUtils.getToken();
         if (StringUtils.isNull(token) || !tokenService.isValidToken(token)) {
-            respUnAuth(response);
+            respForbidden(response);
         }
 
         String roleKey = TokenUtils.getTokenUserRole();
@@ -92,13 +91,13 @@ public class JwtPermissionAspect {
         if (flag) {
             return point.proceed();
         } else {
-            respUnAuth(response);
+            respForbidden(response);
         }
         return null;
     }
 
-    private void respUnAuth(HttpServletResponse response) {
-        CommonResult commonResult = CommonResult.unauthorized(false);
+    private void respForbidden(HttpServletResponse response) {
+        CommonResult commonResult = CommonResult.forbidden(false);
         ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
     }
 }

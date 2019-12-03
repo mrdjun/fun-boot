@@ -77,7 +77,8 @@
                         <label class="col-sm-4 control-label">岗位：</label>
                         <div class="col-sm-8">
                             <select id="post" class="form-control select2-multiple" multiple>
-								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:selected="${post.flag}" th:disabled="${post.status == '0'}"></option>
+								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}"
+                                        th:selected="${post.flag}" th:disabled="${post.status == '0'}"></option>
 							</select>
                         </div>
                     </div>
@@ -198,7 +199,7 @@
         /*用户管理-修改-选择部门树*/
         function selectDeptTree() {
         	var deptId = $.common.isEmpty($("#treeId").val()) ? "100" : $("#treeId").val();
-            var url = ctx + "system/dept/selectDeptTree/" + deptId;
+            var url = ctx + "admin/system/dept/selectDeptTree/" + deptId;
 		    var options = {
 				title: '选择部门',
 				width: "380",

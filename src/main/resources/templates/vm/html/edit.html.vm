@@ -112,7 +112,7 @@
 #end
 #end
     <script type="text/javascript">
-        var prefix = ctx + "${moduleName}/${businessName}";
+        var prefix = ctx + "admin/${moduleName}/${businessName}";
         $("#form-${businessName}-edit").validate({
             focusCleanup: true
         });

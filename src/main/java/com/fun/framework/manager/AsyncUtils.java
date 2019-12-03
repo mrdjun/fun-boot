@@ -1,6 +1,6 @@
 package com.fun.framework.manager;
 
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.utils.IpUtils;
 import com.fun.common.utils.TimestampUtil;
 import com.fun.project.admin.monitor.entity.LoginLog;

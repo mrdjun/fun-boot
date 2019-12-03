@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.service.impl;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.exception.FunBootException;
 import com.fun.common.exception.base.BusinessException;
 import com.fun.common.utils.SpringUtils;
 import com.fun.common.utils.StringUtils;
@@ -128,7 +129,7 @@ public class RoleServiceImpl implements IRoleService {
      * 批量删除角色信息
      *
      * @param ids 需要删除的数据ID
-     * @throws Exception
+     * @throws Exception ex
      */
     @Override
     public int deleteRoleByIds(String ids) throws BusinessException {
@@ -149,7 +150,7 @@ public class RoleServiceImpl implements IRoleService {
      * @return 结果
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = FunBootException.class)
     public int insertRole(Role role) {
         role.setCreateBy(ShiroUtils.getLoginName());
         role.setCreateTime(TimestampUtil.getCurrentTimestamp13());
@@ -165,7 +166,7 @@ public class RoleServiceImpl implements IRoleService {
      * @return 结果
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = FunBootException.class)
     public int updateRole(Role role) {
         role.setUpdateTime(TimestampUtil.getCurrentTimestamp13());
         role.setUpdateBy(ShiroUtils.getLoginName());
@@ -200,7 +201,7 @@ public class RoleServiceImpl implements IRoleService {
      *
      * @param role 角色对象
      */
-    public int insertRoleMenu(Role role) {
+    private int insertRoleMenu(Role role) {
         int rows = 1;
         // 新增用户与角色管理
         List<RoleMenu> list = new ArrayList<RoleMenu>();

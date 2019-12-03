@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.app.user.mapper.AppRoleMapper">
+
+    <resultMap type="AppRole" id="AppRoleResult">
+        <result property="roleId" column="role_id"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleName" column="role_name"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectAppRoleVo">
+        select role_id, role_key, role_name, status, create_by, create_time, update_by, update_time,remark
+        from ums_role where del_flag = '1'
+    </sql>
+
+    <sql id="selectAppRoleContactVo">
+        SELECT DISTINCT r.role_id, r.role_key, r.role_name, r.status, r.create_by,
+        r.create_time, r.update_by, r.update_time,r.remark
+        FROM ums_role r
+        JOIN ums_user_role ur on ur.role_id=r.role_id
+        JOIN ums_user u on u.user_id=ur.user_id
+        where r.del_flag ='1'
+    </sql>
+
+    <select id="selectAppRoleList" parameterType="AppRole" resultMap="AppRoleResult">
+        <include refid="selectAppRoleVo"/>
+        <if test="roleName != null and roleName != ''">
+            AND r.role_name like concat('%', #{roleName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND r.status = #{status}
+        </if>
+        <if test="roleKey != null and roleKey != ''">
+            AND r.role_key like concat('%', #{roleKey}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and create_time &gt;= UNIX_TIMESTAMP(#{params.beginTime})*1000
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and create_time &lt;= UNIX_TIMESTAMP(#{params.endTime})*1000
+        </if>
+    </select>
+
+    <select id="selectAppRoleById" parameterType="Long" resultMap="AppRoleResult">
+        <include refid="selectAppRoleVo"/>
+        and role_id = #{roleId}
+    </select>
+
+    <insert id="insertAppRole" parameterType="AppRole" useGeneratedKeys="true" keyProperty="roleId">
+        insert into ums_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleKey != null  and roleKey != ''">role_key,</if>
+            <if test="roleName != null  and roleName != ''">role_name,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="remark != null  and remark != ''">remark</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleKey != null  and roleKey != ''">#{roleKey},</if>
+            <if test="roleName != null  and roleName != ''">#{roleName},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="remark != null and remark != ''">#{remark}</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppRole" parameterType="AppRole">
+        update ums_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roleKey != null  and roleKey != ''">role_key = #{roleKey},</if>
+            <if test="roleName != null  and roleName != ''">role_name = #{roleName},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime}</if>
+        </trim>
+        where role_id = #{roleId}
+    </update>
+
+    <update id="deleteAppRoleById" parameterType="Long">
+        update ums_role set del_flag='2' where role_id = #{roleId}
+    </update>
+
+    <update id="deleteAppRoleByIds" parameterType="String">
+        update ums_role set del_flag='2' where role_id in
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </update>
+
+    <select id="selectRoleByUserId" parameterType="Long" resultMap="AppRoleResult">
+        <include refid="selectAppRoleContactVo"/>
+        and u.user_id=#{userId}
+    </select>
+
+    <select id="checkRoleKeyUnique" parameterType="String" resultMap="AppRoleResult">
+        select role_id,role_key from ums_role where role_key=#{roleKey}
+    </select>
+
+</mapper>

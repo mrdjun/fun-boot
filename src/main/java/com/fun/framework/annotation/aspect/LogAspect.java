@@ -1,7 +1,7 @@
 package com.fun.framework.annotation.aspect;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.utils.*;
 import com.fun.common.utils.app.TokenUtils;
 import com.fun.framework.annotation.enums.BusinessStatus;

@@ -128,14 +128,13 @@ public class MenuController extends AdminBaseController {
     public String checkMenuNameUnique(Menu menu) {
         return menuService.checkMenuNameUnique(menu);
     }
-
+    
     @ApiOperation("加载角色菜单列表树")
     @GetMapping("/roleMenuTreeData")
     @ResponseBody
     public List<Ztree> roleMenuTreeData(Role role) {
         return menuService.roleMenuTreeData(role);
     }
-
 
     @ApiOperation("加载所有菜单列表树")
     @GetMapping("/menuTreeData")

@@ -5,11 +5,17 @@ import lombok.Getter;
 import lombok.Setter;
 import com.fun.framework.web.entity.BaseEntity;
 
+import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
+import com.fun.framework.annotation.Excel;
+import com.fun.framework.web.entity.BaseEntity;
+
 /**
  * 权限
  *
- * @author MrDJun
- * @date 2019-11-24
+ * @author DJun
+ * @date 2019-11-27
  */
 @Getter
 @Setter
@@ -17,10 +23,17 @@ import com.fun.framework.web.entity.BaseEntity;
 public class AppPermission extends BaseEntity {
     private static final long serialVersionUID=1L;
 
-    private Long permsId;
+    /** 权限ID */
+    private Long permId;
 
-    private String perms;
+    /** 权限字符串 */
+    private String perm;
 
-    private String permsName;
+    /** 权限名称 */
+    private String permName;
 
+    /** 角色状态0-禁用1-正常 */
+    private String status;
+
+    private Long roleId;
 }

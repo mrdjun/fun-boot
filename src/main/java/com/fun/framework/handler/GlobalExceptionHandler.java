@@ -40,7 +40,7 @@ import java.util.Set;
 public class GlobalExceptionHandler {
 
     /**
-     * 系统异常
+     * 系统异常HttpRequestMethodNotSupportedException
      */
     @ExceptionHandler(value = Exception.class)
     public FunBootResponse handleException(Exception e) {
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
             return new FunBootResponse().code(HttpStatus.FORBIDDEN).message(PermissionUtils.getMsg(e.getMessage()));
         } else {
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("/403");
+            modelAndView.setViewName("/error/403");
             return modelAndView;
         }
     }

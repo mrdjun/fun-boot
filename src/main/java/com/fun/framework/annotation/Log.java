@@ -1,7 +1,7 @@
 package com.fun.framework.annotation;
 
 
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

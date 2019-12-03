@@ -92,7 +92,7 @@ public interface Constants {
     /**
      * Header头 token参数
      */
-    String TOKEN = "token";
+    String TOKEN = "Authorization";
 
     /**
      * 为空

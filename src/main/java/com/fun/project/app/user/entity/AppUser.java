@@ -1,5 +1,6 @@
 package com.fun.project.app.user.entity;
 
+import com.fun.framework.annotation.Excel;
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.*;
 
@@ -15,22 +16,22 @@ public class AppUser extends BaseEntity {
 
     private Long userId;
 
-    /** 登录账号 */
+    @Excel(name = "登录账号")
     private String loginName;
 
-    /** 用户名 */
+    @Excel(name = "用户名")
     private String username;
 
-    /** u号 */
+    @Excel(name = "u号")
     private String uAccount;
 
-    /** 用户等级 */
+    @Excel(name = "用户等级")
     private Integer userLevel;
 
-    /** 用户邮箱 */
+    @Excel(name = "用户邮箱")
     private String email;
 
-    /** 用户性别（0男 1女 2未知） */
+    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
     /** 用户密码 */
@@ -42,7 +43,7 @@ public class AppUser extends BaseEntity {
     /** 头像路径 */
     private String avatar;
 
-    /** 电话号码 */
+    @Excel(name = "电话号码")
     private String telephone;
 
     /** 删除标志（0代表存在 1代表删除） */
@@ -60,16 +61,16 @@ public class AppUser extends BaseEntity {
     /** 0-可修改u号1-不可修改 */
     private String isLock;
 
-    /** 信誉度 */
+    @Excel(name = "信誉度")
     private Integer honor;
 
     /** 经验 */
     private Integer exp;
 
-    /** 粉丝量 */
+    @Excel(name = "粉丝量")
     private Long fansNum;
 
-    /** 关注量 */
+    @Excel(name = "关注量")
     private Long followNum;
 
     /** 个人信息公开程度 */
@@ -81,7 +82,7 @@ public class AppUser extends BaseEntity {
     /** 禁用账号到期时间 */
     private Long banTime;
 
-    /** 1-已认证，0-未认证 */
+    @Excel(name = "是否认证", readConverterExp = "0=未认证,1=已认证")
     private String isVerify;
 
     public AppUser(String loginName,String username,String password){
@@ -91,8 +92,15 @@ public class AppUser extends BaseEntity {
     }
 
     /**
+     * 角色ID
+     */
+    private Long roleId;
+    /**
      * 当前用户角色
      */
     private String roleKey;
-
+    /**
+     * 当前用户角色名称
+     */
+    private String roleName;
 }

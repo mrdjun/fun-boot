@@ -128,7 +128,7 @@ public class MenuServiceImpl implements IMenuService {
      * @param menuList 菜单列表
      * @return 树结构列表
      */
-    public List<Ztree> initZtree(List<Menu> menuList) {
+    private List<Ztree> initZtree(List<Menu> menuList) {
         return initZtree(menuList, null, false);
     }
 
@@ -140,7 +140,7 @@ public class MenuServiceImpl implements IMenuService {
      * @param permsFlag    是否需要显示权限标识
      * @return 树结构列表
      */
-    public List<Ztree> initZtree(List<Menu> menuList, List<String> roleMenuList, boolean permsFlag) {
+    private List<Ztree> initZtree(List<Menu> menuList, List<String> roleMenuList, boolean permsFlag) {
         List<Ztree> ztrees = new ArrayList<>();
         boolean isCheck = StringUtils.isNotNull(roleMenuList);
         for (Menu menu : menuList) {
@@ -157,7 +157,7 @@ public class MenuServiceImpl implements IMenuService {
         return ztrees;
     }
 
-    public String transMenuName(Menu menu, boolean permsFlag) {
+    private String transMenuName(Menu menu, boolean permsFlag) {
         StringBuilder sb = new StringBuilder();
         sb.append(menu.getMenuName());
         if (permsFlag) {

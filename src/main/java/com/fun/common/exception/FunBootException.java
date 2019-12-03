@@ -2,6 +2,7 @@ package com.fun.common.exception;
 
 /**
  * 系统异常
+ *
  * @author DJun
  */
 public class FunBootException extends Exception {

@@ -92,3 +92,9 @@ mybatis:
   mapperLocations: classpath:mybatis/**/*Mapper.xml
   # 加载全局的配置文件
   configLocation: classpath:mybatis/mybatis-config.xml
+
+# 日志配置
+logging:
+  level:
+    com.fun: debug
+    org.springframework: warn

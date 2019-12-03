@@ -31,7 +31,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  */
 @Controller
-@RequestMapping("/tool/gen")
+@RequestMapping("/admin/tool/gen")
 public class GenController extends AdminBaseController {
     private String prefix = "tool/gen";
 

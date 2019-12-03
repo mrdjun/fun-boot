@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改角色权限')" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-perm-edit" th:object="${appPerm}">
+        <input name="permId" th:field="*{permId}" type="hidden">
+        <h4 class="form-header h4">基本信息</h4>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>权限名称：</label>
+                    <div class="col-sm-8">
+                        <input name="permName" id="permName" class="form-control" type="text"
+                               placeholder="请输入权限名称" th:field="*{permName}" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>权限字符：</label>
+                    <div class="col-sm-8">
+                        <input name="perm" id="perm" class="form-control" type="text"
+                               placeholder="请输入权限字符" th:field="*{perm}" required/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4">其他信息</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">备注：</label>
+                    <div class="col-xs-10">
+                        <textarea name="remark" maxlength="500" class="form-control" rows="3">[[*{remark}]]</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<script type="text/javascript">
+    var prefix = ctx + "admin/app/perm";
+    $("#form-perm-edit").validate({
+        rules: {
+            perm: {
+                remote: {
+                    url: prefix + "/checkPermUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "permId": function () {
+                            return $("#permId").val();
+                        },
+                        "perm": function () {
+                            return $.common.trim($("#perm").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            }
+        },
+        messages: {
+            "perm": {
+                remote: "当前权限字符已存在"
+            }
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var data = $("#form-perm-edit").serializeArray();
+            var roleId = $.form.selectSelects("role");
+            data.push({"name": "roleId", "value": roleId});
+            $.operate.save(prefix + "/edit", data);
+        }
+    }
+</script>
+</body>
+</html>

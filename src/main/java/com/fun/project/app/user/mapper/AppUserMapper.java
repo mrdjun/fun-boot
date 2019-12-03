@@ -1,6 +1,6 @@
 package com.fun.project.app.user.mapper;
 
-import com.fun.project.app.user.dto.UserPerms;
+import com.fun.project.app.user.dto.UserDto;
 import com.fun.project.app.user.entity.AppUser;
 
 import java.util.List;
@@ -64,8 +64,7 @@ public interface AppUserMapper {
      * @param userIds 需要删除的数据ID
      * @return 结果
      */
-    int deleteUserByIds(String userIds);
-
+    int deleteUserByIds(String[] userIds);
 
     /**
      * 登录接口
@@ -86,31 +85,49 @@ public interface AppUserMapper {
 
     /**
      * 校验账号唯一
+     *
      * @param loginName loginName
      * @return 0/1
      */
-    int checkLoginNameUnique(String loginName);
+    AppUser checkLoginNameUnique(String loginName);
 
     /**
      * 校验uAccount唯一
+     *
      * @param uAccount UAccount
      * @return 0/1
      */
-    int checkUAccountUnique(String uAccount);
+    AppUser checkUAccountUnique(String uAccount);
 
     /**
      * 校验 telephone 唯一
+     *
      * @param telephone telephone
-     * @return userId,email
+     * @return userId, email
      */
-    int checkPhoneUnique(String telephone);
+    AppUser checkPhoneUnique(String telephone);
 
     /**
      * 校验 email 唯一
+     *
      * @param email 邮箱
-     * @return userId,email
+     * @return userId, email
      */
-    int checkEmailUnique(String email);
+    AppUser checkEmailUnique(String email);
 
+    /**
+     * 根据条件分页查询已分配用户角色列表
+     *
+     * @param appUser 用户信息
+     * @return 用户信息集合信息
+     */
+    List<AppUser> selectAllocatedList(AppUser appUser);
 
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param appUser 用户信息
+     * @return 用户信息集合信息
+     */
+    List<AppUser> selectUnallocatedList(AppUser appUser);
 }

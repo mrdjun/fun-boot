@@ -1,7 +1,9 @@
-package ${packageName}.${businessName}.controller;
+package ${packageName}.${moduleName}.controller;
 
 import java.util.List;
 
+import com.fun.common.pagehelper.CommonPage;
+import com.fun.common.utils.poi.ExcelUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fun.framework.annotation.Log;
-import ${packageName}.${businessName}.entity.${ClassName};
-import ${packageName}.${businessName}.service.I${ClassName}Service;
+import ${packageName}.${moduleName}.entity.${ClassName};
+import ${packageName}.${moduleName}.service.I${ClassName}Service;
 import com.fun.common.result.CommonResult;
 import com.fun.framework.web.controller.AdminBaseController;
-import com.fun.common.pagehelper.CommonPage;
 #if($table.crud)
 #elseif($table.tree)
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.web.entity.Ztree;
 #end
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 import static com.fun.common.result.CommonResult.*;
 
@@ -34,7 +34,7 @@ import static com.fun.common.result.CommonResult.*;
  */
 @Api(tags = {"${functionName}"})
 @Controller
-@RequestMapping("/${moduleName}/${businessName}" )
+@RequestMapping("/admin/${moduleName}/${businessName}" )
 public class ${ClassName}Controller extends AdminBaseController {
     private String prefix = "${moduleName}/${businessName}" ;
 
@@ -64,7 +64,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     public CommonResult list(${ClassName} ${className}) {
         startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return success(list);
+        return success(CommonPage.restPage(list));
     }
 #end
 
@@ -131,7 +131,7 @@ public class ${ClassName}Controller extends AdminBaseController {
 
     @ApiOperation("删除${functionName}" )
     @RequiresPermissions("${permissionPrefix}:remove" )
-    @Log(title = "删除${functionName}" )
+    @Log("删除${functionName}" )
     @PostMapping("/remove" )
     @ResponseBody
     public CommonResult remove(String ids) {

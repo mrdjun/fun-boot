@@ -2,16 +2,16 @@ package com.fun.project.app.user.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.constant.Constants;
-import com.fun.common.constant.LoginType;
+import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.result.CommonResult;
 import com.fun.common.utils.*;
 import com.fun.common.utils.app.AppRandomUtils;
 import com.fun.common.utils.app.TokenUtils;
 import com.fun.framework.annotation.Limit;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.annotation.NeedLoginToken;
 import com.fun.framework.annotation.PassToken;
 import com.fun.framework.annotation.enums.LimitType;
+import com.fun.framework.web.controller.AppBaseController;
 import com.fun.framework.web.service.TokenService;
 import com.fun.project.app.user.dto.UserDto;
 import com.fun.project.app.user.entity.AppUser;
@@ -36,7 +36,7 @@ import static com.fun.framework.manager.AsyncUtils.excRecordLoginLog;
 @Api(tags = "app用户登录注册", position = 40, produces = "http")
 @RestController
 @RequestMapping("/app")
-public class AppLoginController {
+public class AppLoginController{
     @Autowired
     private IAppUserService appUserService;
     @Autowired
@@ -65,11 +65,13 @@ public class AppLoginController {
             excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.App, Constants.LOGIN_FAIL);
             return failed(Constants.LOGIN_FAIL);
         }
+
         String token = tokenService.getToken(data, rememberMe);
 
         if (StringUtils.isEmpty(token)) {
             return failed(Constants.LOGIN_FAIL);
         }
+
         data.put("token", token);
         excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.SUCCESS, LoginType.App, Constants.LOGIN_SUCCESS);
         return success(data, Constants.LOGIN_SUCCESS);
@@ -88,19 +90,19 @@ public class AppLoginController {
     public CommonResult register(@Valid UserDto user) {
         AppUser appUser = new AppUser();
         // 校验登录账号
-        if (Constants.NOT_UNIQUE.equals(appUserService.checkLoginNameUnique(user.getLoginName().toLowerCase()))) {
+        if (Constants.NOT_UNIQUE.equals(appUserService.checkLoginNameUnique(user))) {
             return warn("注册失败，登录账号：'" + user.getLoginName() + "'，已存在");
         }
         // 校验邮箱
         if (StringUtils.isNotEmpty(user.getEmail())) {
-            if (Constants.NOT_UNIQUE.equals(appUserService.checkEmailUnique(user.getEmail().toLowerCase()))) {
+            if (Constants.NOT_UNIQUE.equals(appUserService.checkEmailUnique(user))) {
                 return warn("注册失败，邮箱：'" + user.getEmail() + "'，已存在");
             }
             appUser.setEmail(user.getEmail().toLowerCase());
         }
         // 校验电话号码
         if (StringUtils.isNotEmpty(user.getTelephone())) {
-            if (Constants.NOT_UNIQUE.equals(appUserService.checkEmailUnique(user.getTelephone()))) {
+            if (Constants.NOT_UNIQUE.equals(appUserService.checkEmailUnique(user))) {
                 return warn("注册失败，手机号：'" + user.getTelephone() + "'，已存在");
             }
             appUser.setTelephone(user.getTelephone());
@@ -120,7 +122,6 @@ public class AppLoginController {
     }
 
     @ApiOperation(value = "退出登录", notes = "操作成功跳转到登录页面", produces = "application/json, application/xml", consumes = "application/json, application/xml")
-    @NeedLoginToken
     @Log(value = "退出登录", type = LoginType.App)
     @GetMapping("/logout")
     public CommonResult logout() {
@@ -135,7 +136,6 @@ public class AppLoginController {
 
     @ApiOperation(value = "刷新token", notes = "刷新成功后，之前的token会立即失效")
     @Log(value = "刷新token", type = LoginType.App)
-    @NeedLoginToken
     @PostMapping("/refreshToken")
     public CommonResult refreshToken(HttpServletRequest request,
                                      @RequestParam(defaultValue = "false", required = false) Boolean rememberMe) {
@@ -145,5 +145,7 @@ public class AppLoginController {
         }
         return success(newToken);
     }
+
+
 
 }

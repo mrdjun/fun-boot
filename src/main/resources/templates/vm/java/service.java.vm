@@ -1,6 +1,6 @@
-package ${packageName}.${businessName}.service;
+package ${packageName}.${moduleName}.service;
 
-import ${packageName}.${businessName}.entity.${ClassName};
+import ${packageName}.${moduleName}.entity.${ClassName};
 import java.util.List;
 #if($table.tree)
 import com.fun.framework.web.entity.Ztree;

@@ -3,15 +3,16 @@
     <!-- 日志存放路径 -->
 	<property name="log.path" value="/var/log/fun" />
 
-    <!-- 彩色 -->
+    <!-- 彩色日志输出模式 -->
     <property name="log.colorPattern" value="%d{yyyy-MM-dd HH:mm:ss} | %highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n"/>
 
-    <!-- 日志输出格式 -->
-	<property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <!-- 黑灰日志输出模式 -->
+	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
 
 	<!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
+            <!-- 日志模式 -->
 			<pattern>${log.colorPattern}</pattern>
 		</encoder>
 	</appender>

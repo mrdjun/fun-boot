@@ -77,9 +77,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var addFlag = [[${@permission.hasPermi('${permissionPrefix}:add')}]];
-        var editFlag = [[${@permission.hasPermi('${permissionPrefix}:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('${permissionPrefix}:remove')}]];
+        var addFlag = [[${@appPermission.hasPermi('${permissionPrefix}:add')}]];
+        var editFlag = [[${@appPermission.hasPermi('${permissionPrefix}:edit')}]];
+        var removeFlag = [[${@appPermission.hasPermi('${permissionPrefix}:remove')}]];
 #foreach($column in $columns)
 #if(${column.dictType} != '')
         var ${column.javaField}Datas = [[${@dict.getType('${column.dictType}')}]];

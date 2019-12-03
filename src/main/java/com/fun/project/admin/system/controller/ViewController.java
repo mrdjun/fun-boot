@@ -41,7 +41,7 @@ public class ViewController extends AdminBaseController {
      */
     @GetMapping("/index")
     public String indexRedirectIndex() {
-        return redirect("redirect:/admin/index");
+        return redirect("/admin/index");
     }
 
     /**

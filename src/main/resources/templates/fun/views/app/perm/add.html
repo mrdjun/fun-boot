@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增角色权限')" />
+    <th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-perm-add">
+        <input name="permId" type="hidden" id="treeId"/>
+        <h4 class="form-header h4">基本信息</h4>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>权限名称：</label>
+                    <div class="col-sm-8">
+                        <input name="permName" placeholder="请输入权限名称" class="form-control" type="text" maxlength="30" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>权限字符：</label>
+                    <div class="col-sm-8">
+                        <input name="perm" id="perm" placeholder="请输入权限字符" class="form-control" type="text" maxlength="30" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">分配给角色：</label>
+                    <div class="col-sm-8">
+                        <select id="role" class="form-control select2-single">
+                            <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}" th:disabled="${role.status == '0'}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">权限状态：</label>
+                    <div class="col-sm-8">
+                        <label class="toggle-switch switch-solid">
+                            <input type="checkbox" id="status" checked>
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="form-header h4">其他信息</h4>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">备注：</label>
+                    <div class="col-xs-10">
+                        <textarea name="remark" maxlength="300" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: select2-js" />
+<script type="text/javascript">
+    var prefix = ctx + "admin/app/perm";
+    $("#form-perm-add").validate({
+        onkeyup: false,
+        rules: {
+            perm: {
+                remote: {
+                    url: prefix + "/checkPermUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "perm": function () {
+                            return $.common.trim($("#perm").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            }
+        },
+        messages: {
+            "perm": {
+                remote: "当前权限字符已存在"
+            }
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            var data = $("#form-perm-add").serializeArray();
+            var status = $("input[id='status']").is(':checked') === true ? 1 : 0;
+            var roleId = $.form.selectSelects("role");
+            data.push({"name": "status", "value": status});
+            data.push({"name": "roleId", "value": roleId});
+            $.operate.save(prefix + "/add", data);
+        }
+    }
+</script>
+</body>
+</html>

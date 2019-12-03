@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fun.project.app.user.mapper.AppPermissionMapper">
+
+    <resultMap type="AppPermission"    id="AppPermissionResult">
+        <result property="permId"      column="perm_id"    />
+        <result property="roleId"      column="role_id"    />
+        <result property="perm"        column="perm"    />
+        <result property="permName"    column="perm_name"    />
+        <result property="status"      column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"  column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"  column="update_time"    />
+        <result property="remark"      column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppPermissionVo">
+        select
+          perm_id, perm, perm_name, status, create_by, create_time, update_by, update_time, remark
+        FROM ums_permission
+
+    </sql>
+
+    <select id="selectAppPermissionList" parameterType="AppPermission" resultMap="AppPermissionResult">
+        <include refid="selectAppPermissionVo"/>
+        <where>
+            <if test="permName !=null and permName != ''">
+                AND p.perm_name like concat('%', #{permName}, '%')
+            </if>
+            <if test="permName !=null and permName != ''">
+                AND p.perm like concat('%', #{perm}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAppPermissionById" parameterType="Long" resultMap="AppPermissionResult">
+        select distinct p.perm,p.perm_id, p.perm_name, p.status, p.create_by,
+            p.create_time, p.update_by, p.update_time, p.remark
+        FROM ums_permission p
+        LEFT JOIN ums_role_perm rp ON rp.perm_id=p.perm_id
+        where p.perm_id = #{permId}
+    </select>
+
+    <insert id="insertAppPermission" parameterType="AppPermission" useGeneratedKeys="true" keyProperty="permId">
+        insert into ums_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="perm != null  and perm != ''">perm,</if>
+            <if test="permName != null  and permName != ''">perm_name,</if>
+            <if test="status != null  and status != ''">status,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="perm != null  and perm != ''">#{perm},</if>
+            <if test="permName != null  and permName != ''">#{permName},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppPermission" parameterType="AppPermission">
+        update ums_permission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="perm != null  and perm != ''">perm = #{perm},</if>
+            <if test="permName != null  and permName != ''">perm_name = #{permName},</if>
+            <if test="status != null  and status != ''">status = #{status},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where perm_id = #{permId}
+    </update>
+
+    <delete id="deleteAppPermissionById" parameterType="Long">
+        delete from ums_permission where perm_id = #{permId}
+    </delete>
+
+    <delete id="deleteAppPermissionByIds" parameterType="String">
+        delete from ums_permission where perm_id in
+        <foreach item="permId" collection="array" open="(" separator="," close=")">
+            #{permId}
+        </foreach>
+    </delete>
+
+    <select id="checkPermUnique" parameterType="AppPermission" resultMap="AppPermissionResult">
+        select perm_id,perm from ums_permission where perm=#{perm}
+    </select>
+
+    <select id="selectAppPermsTree" parameterType="Long" resultType="String">
+        SELECT CONCAT(p.perm_id,IFNULL(p.perm,'')) AS perms
+        FROM ums_permission p
+        LEFT JOIN ums_role_perm rp ON rp.perm_id = p.perm_id
+        WHERE rp.role_id = #{roleId}
+        ORDER BY p.perm_id
+    </select>
+</mapper>

@@ -10,7 +10,7 @@ import java.util.Set;
  * @author DJun
  * @date 2019/9/14 17:07
  */
-public interface IRoleService {
+public interface IRoleService{
     /**
      * 根据条件分页查询角色数据
      *

@@ -1,6 +1,8 @@
 package com.fun.project.app.user.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fun.framework.web.service.IAuthUserService;
+import com.fun.project.app.user.dto.UserDto;
 import com.fun.project.app.user.entity.AppUser;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * @author DJun
  * @date 2019/9/12 18:16
  */
-public interface IAppUserService {
+public interface IAppUserService{
     /**
      * 查询用户
      *
@@ -27,7 +29,7 @@ public interface IAppUserService {
     List<AppUser> selectUserList(AppUser appUser);
 
     /**
-     * 新增用户
+     * 新增用户 -> 注册用户
      *
      * @param appUser 用户
      * @return 结果
@@ -77,29 +79,33 @@ public interface IAppUserService {
 
     /**
      * 校验账号唯一
-     * @param loginName loginName
+     *
+     * @param user userId,loginName
      * @return 0/1
      */
-    String checkLoginNameUnique(String loginName);
-
-    /**
-     * 校验uAccount唯一
-     * @param uAccount UAccount
-     * @return 0/1
-     */
-    String checkUAccountUnique(String uAccount);
+    String checkLoginNameUnique(UserDto user);
 
     /**
      * 校验 telephone 唯一
-     * @param telephone telephone
-     * @return userId,email
+     *
+     * @param user telephone
+     * @return userId, email
      */
-    String checkPhoneUnique(String telephone);
+    String checkPhoneUnique(UserDto user);
 
     /**
      * 校验 email 唯一
-     * @param email 邮箱
-     * @return userId,email
+     *
+     * @param user 邮箱
+     * @return userId, email
      */
-    String checkEmailUnique(String email);
+    String checkEmailUnique(UserDto user);
+
+    /**
+     * 校验 uAccount 是否唯一
+     *
+     * @param user user
+     * @return UNIQUE or NOT
+     */
+    String checkUAccountUnique(UserDto user);
 }

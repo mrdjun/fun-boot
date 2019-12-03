@@ -1,6 +1,7 @@
 package com.fun.framework.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+
 import com.fun.framework.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import static com.fun.common.utils.encrypt.RsaUtils.getPrivateKey;
  * @author DJun
  * @date 2019/11/16
  */
-public class AppBaseController {
+public class AppBaseController extends AbstractBaseController{
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private AppConfig appConfig;
@@ -73,6 +74,5 @@ public class AppBaseController {
             return false;
         }
     }
-
 
 }

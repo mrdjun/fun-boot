@@ -18,7 +18,7 @@ $(function() {
 		$(".check-box:not(.noicheck),.radio-box:not(.noicheck)").each(function() {
             $(this).iCheck({
                 checkboxClass: 'icheckbox-blue',
-                radioClass: 'iradio-blue',
+                radioClass: 'iradio-blue'
             })
         })
 	}

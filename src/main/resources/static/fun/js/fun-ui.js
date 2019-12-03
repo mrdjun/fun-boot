@@ -1068,8 +1068,8 @@
                         nameIsHTML: true           // 设置 name 属性是否支持 HTML 脚本
                     },
                     check: {
-                        enable: false,             // 置 zTree 的节点上是否显示 checkbox / radio
-                        nocheckInherit: true      // 设置子节点是否自动继承
+                        enable: false,             // 设置 zTree 的节点上是否显示 checkbox / radio
+                        nocheckInherit: true       // 设置子节点是否自动继承
                     },
                     data: {
                         key: {
