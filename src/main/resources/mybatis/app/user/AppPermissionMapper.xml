@@ -28,10 +28,10 @@
         <include refid="selectAppPermissionVo"/>
         <where>
             <if test="permName !=null and permName != ''">
-                AND p.perm_name like concat('%', #{permName}, '%')
+                AND perm_name like concat('%', #{permName}, '%')
             </if>
-            <if test="permName !=null and permName != ''">
-                AND p.perm like concat('%', #{perm}, '%')
+            <if test="perm !=null and perm != ''">
+                AND perm like concat('%', #{perm}, '%')
             </if>
         </where>
     </select>
