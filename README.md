@@ -24,7 +24,7 @@
 
 ## 🎨 App端与Admin端技术概要
 
-| 端名   | 技术                                |
+| 端名    | 技术                                  |
 |:----- |:----------------------------------- |
 | app   | JJWT + Redis                        |
 | admin | Shiro + Redis+Thymeleaf + Bootstrap |
