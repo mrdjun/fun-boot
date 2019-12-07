@@ -31,7 +31,7 @@
 
 ## 🚀 快速使用
 
-**在使用之前，请务必阅读并同意 [License](https://mrdjun.github.io/generic/LICENSE.md) 文件中的条款，否则请勿安装使用本脚手架。**
+**在使用之前，请务必阅读并同意 [License](https://mrdjun.github.io/#/generic/LICENSE.md) 文件中的条款，否则请勿安装使用本脚手架。**
 
 ## 📝 讨论区
 
