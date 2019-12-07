@@ -60,7 +60,7 @@ spring:
       max-file-size: 2GB
       # 总上传数据大小
       max-request-size: 1GB
-      #开启
+      # 开启
       enabled: true
   redis:
     # Redis数据库索引（默认为 0）

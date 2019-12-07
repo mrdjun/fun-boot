@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义 jwt 权限校验注解
- * 使用该注解后可省略使用 @NeedLoginToken
+ * 自定义 JWT 权限校验注解
  *
  * @author DJun
  * @date 2019/11/25

@@ -1,9 +1,9 @@
 package com.fun.common.constant;
 
 /**
- * 代码生成通用常量
+ * Admin代码生成通用常量
  *
- * @author fun
+ * @author DJun
  */
 public class GenConstants {
     /**

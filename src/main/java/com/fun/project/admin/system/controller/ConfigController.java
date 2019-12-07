@@ -26,7 +26,7 @@ import static com.fun.common.result.CommonResult.failed;
 import static com.fun.common.result.CommonResult.success;
 
 /**
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 @Api(tags = {"admin参数配置"})

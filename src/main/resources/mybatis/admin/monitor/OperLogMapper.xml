@@ -4,36 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.monitor.mapper.OperLogMapper">
 
-    <resultMap type="OperLog"           id="OperLogResult">
-        <result property="operId"       column="oper_id"/>
-        <result property="operName"     column="oper_name"/>
-        <result property="operIp"       column="oper_ip"/>
-        <result property="operLocation" column="oper_location"/>
-        <result property="errorMsg"     column="error_msg"/>
-        <result property="loginName"    column="login_name"/>
-        <result property="time"         column="time"/>
-        <result property="method"       column="method"/>
-        <result property="operParam"    column="oper_param"/>
-        <result property="createTime"   column="create_time"/>
-        <result property="status"       column="status"/>
+    <resultMap  type="OperLog"           id="OperLogResult"     >
+        <result property="operId"       column="oper_id"        />
+        <result property="operName"     column="oper_name"      />
+        <result property="operIp"       column="oper_ip"        />
+        <result property="operLocation" column="oper_location"  />
+        <result property="errorMsg"     column="error_msg"      />
+        <result property="loginName"    column="login_name"     />
+        <result property="time"         column="time"           />
+        <result property="method"       column="method"         />
+        <result property="operParam"    column="oper_param"     />
+        <result property="createTime"   column="create_time"    />
+        <result property="status"       column="status"         />
     </resultMap>
 
     <sql id="selectOperLogVo">
-		select
-		 oper_id, oper_name,oper_ip,oper_location, error_msg,
-		 login_name,`time`,method,oper_param,create_time,status
-		from sys_oper_log
+		select oper_id, oper_name,oper_ip,oper_location, error_msg, login_name, time,method,oper_param,create_time,status from sys_oper_log
     </sql>
 
     <insert id="insertOperlog" parameterType="OperLog">
-		insert into sys_oper_log(
-		 oper_name,oper_ip,oper_location,error_msg,
-		 login_name,`time`,method,oper_param,create_time
-		)
-        values (
-         #{operName},#{operIp},#{operLocation},#{errorMsg},
-         #{loginName},#{time},#{method},#{operParam},#{createTime}
-        )
+		insert into sys_oper_log(oper_name,oper_ip,oper_location,error_msg,login_name,`time`,method,oper_param,create_time)
+        values (#{operName},#{operIp},#{operLocation},#{errorMsg},#{loginName},#{time},#{method},#{operParam},#{createTime})
 	</insert>
 
     <select id="selectOperLogList" parameterType="OperLog" resultMap="OperLogResult">

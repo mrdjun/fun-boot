@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.app.user.mapper.AppRolePermMapper">
 
-    <resultMap type="AppRolePerm" id="AppRolePermResult">
-        <result property="roleId" column="role_id"/>
-        <result property="permId" column="perm_id"/>
+    <resultMap  type="AppRolePerm" id="AppRolePermResult">
+        <result property="roleId"  column="role_id"/>
+        <result property="permId"  column="perm_id"/>
     </resultMap>
 
     <sql id="selectAppRolePermVo">

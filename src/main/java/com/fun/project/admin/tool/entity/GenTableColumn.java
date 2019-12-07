@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * 代码生成业务字段表 gen_table_column
+ * 代码生成业务字段表
  *
  * @author DJun
  */

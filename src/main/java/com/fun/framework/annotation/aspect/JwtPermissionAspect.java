@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
  * APP端验证用户权限
  *
  * @author DJun
- * @date 2019/11/25
+ * @date 2019/11/25 11:20
  */
 @Aspect
 @Slf4j
@@ -69,6 +69,11 @@ public class JwtPermissionAspect {
         Method method = signature.getMethod();
         JwtPermission permAnnotation = method.getAnnotation(JwtPermission.class);
         String currPerm = permAnnotation.value();
+
+        if (StringUtils.isEmpty(currPerm)){
+            return point.proceed();
+        }
+
         String userInfoStr = null;
         try {
             userInfoStr = redisService.get(loginName);

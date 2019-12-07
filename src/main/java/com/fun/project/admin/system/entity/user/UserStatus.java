@@ -4,21 +4,19 @@ import lombok.Getter;
 
 /**
  *  用户状态
+ *
  * @author DJun
  */
 @Getter
 public enum UserStatus {
-    /**
-     * 正常
-     */
-    OK("1", "正常"),
-    /**
-     * 禁用
-     */
+
+    /** 禁用 */
     DISABLE("0", "禁用"),
-    /**
-     * 删除
-     */
+
+    /** 正常 */
+    OK("1", "正常"),
+
+    /** 删除 */
     DELETED("2", "删除");
 
     private final String code;

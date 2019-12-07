@@ -5,6 +5,7 @@ import com.fun.common.constant.Constants;
 import com.fun.common.exception.FunBootException;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.TimestampUtil;
+import com.fun.common.utils.app.AppRandomUtils;
 import com.fun.common.utils.text.Convert;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.fun.project.app.user.dto.UserDto;
@@ -47,14 +48,24 @@ public class AppUserServiceImpl implements IAppUserService {
     @Override
     @Transactional(rollbackFor = FunBootException.class)
     public int insertUser(AppUser appUser) {
+        appUser.setUAccount(AppRandomUtils.getStr16());
         appUser.setOpenId(getStr18());
         appUser.setCreateTime(TimestampUtil.getCurrentTimestamp13());
         AppUserRole userRole = new AppUserRole();
+        if (StringUtils.isEmpty(appUser.getUsername())){
+            appUser.setUsername(AppRandomUtils.getUsername());
+        }
+        if (StringUtils.isEmpty(appUser.getAvatar())){
+            appUser.setAvatar(AppRandomUtils.getHead());
+        }
         int res = appUserMapper.insertUser(appUser);
         if (res > 0) {
-            userRole.setUserId(appUser.getUserId());
-            // 默认用户为注册用户
-            userRole.setRoleId(3L);
+            if (StringUtils.isNotNull(appUser.getRoleId())){
+                userRole.setUserId(appUser.getUserId());
+                // 默认用户为注册用户
+                userRole.setRoleId(3L);
+            }
+            userRole.setRoleId(appUser.getRoleId());
             return userRoleMapper.insertAppUserRole(userRole);
         }
         return res;
@@ -145,6 +156,11 @@ public class AppUserServiceImpl implements IAppUserService {
             return Constants.NOT_UNIQUE;
         }
         return Constants.UNIQUE;
+    }
+
+    @Override
+    public AppUser selectAppUserByLoginName(String loginName) {
+        return appUserMapper.selectAppUserByLoginName(loginName);
     }
 
     private String[] stringListToArray(List<String> stringList) {

@@ -10,8 +10,9 @@ import redis.clients.jedis.JedisPool;
 import java.util.*;
 
 /**
- * Redis 工具类，只封装了几个常用的 redis 命令，
- * 可根据实际需要按类似的方式扩展即可。
+ * Redis 工具类
+ * 只封装了几个常用的 redis 命令，可根据实际需要按类似的方式扩展即可。
+ *
  * @author DJun
  */
 @Service

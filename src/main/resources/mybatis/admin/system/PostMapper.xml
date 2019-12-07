@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.system.mapper.PostMapper">
 
-	<resultMap type="Post" id="PostResult">
+	<resultMap 	type="Post" 			 id="PostResult">
 		<id     property="postId"        column="post_id"       />
 		<result property="postCode"      column="post_code"     />
 		<result property="postName"      column="post_name"     />
@@ -18,8 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<sql id="selectPostVo">
-        select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark 
-		from sys_post
+        select post_id, post_code, post_name, post_sort, status, create_by, create_time, remark from sys_post
     </sql>
 	
 	<select id="selectPostList" parameterType="Post" resultMap="PostResult">

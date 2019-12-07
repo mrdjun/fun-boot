@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
  * 使用 Nginx等反向代理软件， 则不能通过 request.getRemoteAddr()获取 IP地址
  * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，
  * X-Forwarded-For中第一个非 unknown的有效IP字符串，则为真实IP地址
+ *
+ * @author DJun
  */
 public class IpUtils {
     public static String getIpAddr(HttpServletRequest request) {

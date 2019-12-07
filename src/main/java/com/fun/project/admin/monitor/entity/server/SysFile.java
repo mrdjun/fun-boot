@@ -1,13 +1,16 @@
 package com.fun.project.admin.monitor.entity.server;
 
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 系统文件相关信息
  *
  * @author u-fun
  */
-@Data
+@Getter
+@Setter
 public class SysFile {
     /**
      * 盘符路径

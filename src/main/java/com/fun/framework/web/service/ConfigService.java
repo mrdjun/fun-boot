@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * html调用 thymeleaf 实现参数管理
- *
+ * thymeleaf 实现调用参数
+ * 
  * @author DJun
  * @date 2019/10/30
  */

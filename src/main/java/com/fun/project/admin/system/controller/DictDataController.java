@@ -23,7 +23,7 @@ import java.util.List;
 import static com.fun.common.result.CommonResult.success;
 
 /**
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 @Api(tags = {"admin字典数据"})

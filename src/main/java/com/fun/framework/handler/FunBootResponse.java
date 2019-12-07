@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 
 /**
- * 处理拦截时的消息回复
+ * 处理全局异常拦截时的消息回复
  *
  * @author DJun
  */

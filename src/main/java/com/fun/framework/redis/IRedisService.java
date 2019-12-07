@@ -15,7 +15,8 @@ public interface IRedisService {
     /**
      * 获取 redis 的详细信息
      *
-     * @return List
+     * @return List<RedisInfo>
+     * @throws RedisConnectException exception
      */
     List<RedisInfo> getRedisInfo() throws RedisConnectException;
 

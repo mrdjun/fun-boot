@@ -4,6 +4,8 @@ import com.fun.framework.shiro.ShiroRealm;
 import org.apache.shiro.authz.AuthorizationInfo;
 
 /**
+ * Shiro 常用方法
+ *
  * @author DJun
  */
 public class ShiroHelper extends ShiroRealm {

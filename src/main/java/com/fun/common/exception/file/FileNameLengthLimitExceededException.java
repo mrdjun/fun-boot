@@ -1,8 +1,10 @@
 package com.fun.common.exception.file;
 
 /**
- * created by DJun on 2019/9/12 18:51
- * desc: 文件名称超长限制异常类
+ * 文件名称超长限制异常类
+ *
+ * @author DJun
+ * @date 2019/9/12 18:51
  */
 public class FileNameLengthLimitExceededException extends FileException {
     private static final long serialVersionUID = 1L;

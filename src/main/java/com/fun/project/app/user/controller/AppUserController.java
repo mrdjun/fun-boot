@@ -34,7 +34,7 @@ import static com.fun.common.result.CommonResult.*;
  * @author DJun
  * @date 2019-11-27
  */
-@Api(tags = {"app用户管理"})
+@Api(tags = {"管理端app用户管理"})
 @Controller
 @RequestMapping("/admin/app/user")
 public class AppUserController extends AdminBaseController {

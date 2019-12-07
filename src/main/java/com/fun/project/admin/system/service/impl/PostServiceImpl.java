@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 岗位信息 服务层处理
+ * 岗位信息
  *
  * @author fun
  */

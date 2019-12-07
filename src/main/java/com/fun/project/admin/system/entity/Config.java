@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 /**
  * 参数配置表
  *
- * @author MrDJun
+ * @author DJun
  * @date 2019/10/30
  */
 @Getter

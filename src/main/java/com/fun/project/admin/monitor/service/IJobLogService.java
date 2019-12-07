@@ -5,7 +5,7 @@ import com.fun.project.admin.monitor.entity.JobLog;
 import java.util.List;
 
 /**
- * 定时任务调度日志信息信息 服务层
+ * 定时任务调度日志
  *
  * @author DJun
  */

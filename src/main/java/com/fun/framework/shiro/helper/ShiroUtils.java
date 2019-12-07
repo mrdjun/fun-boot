@@ -18,30 +18,22 @@ import org.apache.shiro.subject.Subject;
  */
 public class ShiroUtils {
 
-    /**
-     * 获取主体
-     */
+    /**  获取 Subject */
     public static Subject getSubject() {
         return SecurityUtils.getSubject();
     }
 
-    /**
-     * 获取Session
-     */
+    /** 获取 Session */
     public static Session getSession() {
         return SecurityUtils.getSubject().getSession();
     }
 
-    /**
-     * 退出登录
-     */
+    /** 退出登录 */
     public static void logout() {
         getSubject().logout();
     }
 
-    /**
-     * 获取当前用户
-     */
+    /** 获取当前用户 */
     public static AdminUser getSysUser() {
         AdminUser user = null;
         Object obj = getSubject().getPrincipal();
@@ -52,9 +44,7 @@ public class ShiroUtils {
         return user;
     }
 
-    /**
-     * 设置当前用户
-     */
+    /** 设置当前用户 */
     public static void setSysUser(AdminUser user) {
         Subject subject = getSubject();
         PrincipalCollection principalCollection = subject.getPrincipals();
@@ -64,9 +54,7 @@ public class ShiroUtils {
         subject.runAs(newPrincipalCollection);
     }
 
-    /**
-     * 清理授权缓存
-     */
+    /** 清理授权缓存 */
     public static void clearCachedAuthorizationInfo() {
         RealmSecurityManager rsm = (RealmSecurityManager) SecurityUtils.getSecurityManager();
         ShiroRealm realm = (ShiroRealm) rsm.getRealms().iterator().next();
@@ -88,6 +76,4 @@ public class ShiroUtils {
     public static String getSessionId() {
         return String.valueOf(getSubject().getSession().getId());
     }
-
-
 }

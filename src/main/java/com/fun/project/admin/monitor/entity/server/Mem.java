@@ -5,7 +5,7 @@ import com.fun.common.utils.Arith;
 /**
  * 內存相关信息
  * 
- * @author fun
+ * @author DJun
  */
 public class Mem
 {

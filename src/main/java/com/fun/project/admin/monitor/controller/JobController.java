@@ -26,14 +26,16 @@ import static com.fun.common.result.CommonResult.failed;
 import static com.fun.common.result.CommonResult.success;
 
 /**
+ * 任务调度
+ *
  * @author DJun
  * @date 2019/11/5
  */
 @Api(tags = {"admin任务调度信息操作处理"})
 @Controller
 @RequestMapping("/admin/monitor/job")
-public class JobControllerAdmin extends AdminBaseController {
-    private Logger logger = LoggerFactory.getLogger(JobControllerAdmin.class);
+public class JobController extends AdminBaseController {
+    private Logger logger = LoggerFactory.getLogger(JobController.class);
     private String prefix = "monitor/job";
 
     @Autowired

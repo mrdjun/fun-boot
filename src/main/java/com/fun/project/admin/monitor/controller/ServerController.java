@@ -8,6 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
+ * 服务器监控
+ *
  * @author DJun
  * @date 2019/11/4
  */

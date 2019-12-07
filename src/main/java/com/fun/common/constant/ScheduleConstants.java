@@ -6,41 +6,28 @@ package com.fun.common.constant;
  * @author DJun
  */
 public interface ScheduleConstants {
+    /** 执行名称 */
     String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
-    /**
-     * 执行目标key
-     */
+    /** 执行目标key */
     String TASK_PROPERTIES = "TASK_PROPERTIES";
 
-    /**
-     * 默认
-     */
+    /** 默认 */
     String MISFIRE_DEFAULT = "0";
 
-    /**
-     * 立即触发执行
-     */
+    /** 立即触发执行 */
     String MISFIRE_IGNORE_MISFIRES = "1";
 
-    /**
-     * 触发一次执行
-     */
+    /** 触发一次执行 */
     String MISFIRE_FIRE_AND_PROCEED = "2";
 
-    /**
-     * 不触发立即执行
-     */
+    /** 不触发立即执行 */
     String MISFIRE_DO_NOTHING = "3";
 
     enum Status {
-        /**
-         * 正常
-         */
+        /** 正常 */
         NORMAL("1"),
-        /**
-         * 暂停
-         */
+        /** 暂停 */
         PAUSE("0");
 
         private String value;

@@ -12,6 +12,8 @@ import java.io.IOException;
 
 /**
  * 客户端工具类
+ * 通用请求体、响应体操作
+ *
  * @author DJun
  */
 public class ServletUtils {

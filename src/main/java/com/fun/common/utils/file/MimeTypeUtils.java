@@ -2,6 +2,8 @@ package com.fun.common.utils.file;
 
 /**
  * 媒体类型工具类
+ *
+ * @author DJun
  */
 public class MimeTypeUtils {
     public static final String IMAGE_PNG = "image/png";

@@ -5,6 +5,8 @@ import com.fun.project.admin.system.entity.role.Role;
 import java.util.List;
 
 /**
+ * 角色
+ *
  * @author DJun
  * @date 2019/9/14 13:22
  */

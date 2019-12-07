@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 管理员用户
+ *
  * @author DJun
  */
 @Service

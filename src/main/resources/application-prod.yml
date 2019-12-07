@@ -8,10 +8,10 @@ spring:
         username: ENC(cmPWzYFwbJDxBhHyjV5Uiw==)
         password: ENC(E9cC9ckyFzMvvSF4UMy6Vw==)
       slave:
-        enabled: false
-        url:
-        username:
-        password:
+        enabled: true
+        url: jdbc:mysql://localhost:3306/fun_prod?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: ENC(QJfMvdDbMiVQc8OqewSUQw==)
+        password: ENC(2+pgvPF9DJQx9fOIlH5hvA==)
       initialSize: 5
       minIdle: 10
       maxActive: 20

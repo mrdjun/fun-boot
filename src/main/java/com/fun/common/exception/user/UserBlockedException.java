@@ -2,6 +2,7 @@ package com.fun.common.exception.user;
 
 /**
  * 用户锁定异常类
+ *
  * @author DJun
  */
 public class UserBlockedException extends UserException {

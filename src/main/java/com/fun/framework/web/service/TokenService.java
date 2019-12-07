@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.fun.common.exception.RedisConnectException;
 import com.fun.common.utils.DateUtils;
 import com.fun.framework.config.AppConfig;
+import com.fun.framework.manager.AsyncFactory;
+import com.fun.framework.manager.AsyncManager;
 import com.fun.framework.redis.IRedisService;
 import com.fun.project.app.user.entity.AppUser;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import static com.fun.common.utils.app.TokenUtils.*;
 
 /**
+ * JWT 相关服务
+ *
  * @author DJun
  * @date 2019/11/15
  */
@@ -72,10 +76,10 @@ public class TokenService {
                     return null;
                 }
             }
-            String userInfo = redisService.get(loginName);
+
             // 替换Token
             redisService.set(appConfig.getUserPrefix() + loginName, token, expireTime);
-            redisService.set(loginName, userInfo, expireTime);
+            AsyncManager.me().execute(AsyncFactory.getAppUserInfoToCache(loginName,expireTime));
         } catch (RedisConnectException e) {
             logger.error("redis连接失败-[{}]", DateUtils.dateTime());
             return null;
@@ -94,6 +98,7 @@ public class TokenService {
                 return;
             }
             redisService.del(appConfig.getUserPrefix() + loginName);
+            redisService.del(loginName);
         } catch (RedisConnectException e) {
             logger.error("redis连接失败-[{}]", DateUtils.dateTime());
         }

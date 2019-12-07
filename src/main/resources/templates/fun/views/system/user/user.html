@@ -235,7 +235,7 @@
 
     /* 用户状态显示 */
     function statusTools(row) {
-        if (row.status === 0) {
+        if (row.status === '0') {
             return '<i class=\"fa fa-toggle-off text-info fa-2x\" onclick="enable(\'' + row.userId + '\')"></i> ';
         } else {
             return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';

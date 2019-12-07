@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * Admin用户角色表
+ * 用户角色
  *
  * @author DJun
  */

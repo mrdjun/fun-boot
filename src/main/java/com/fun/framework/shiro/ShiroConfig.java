@@ -29,6 +29,7 @@ import java.util.*;
 
 /**
  * Shiro 配置类
+ *
  * @author DJun
  */
 @Configuration
@@ -90,7 +91,7 @@ public class ShiroConfig {
 
         // 设置免认证 url
         String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(funBootShiroProperties.getAnonUrl(), ",");
-       for (String url : anonUrls) {
+        for (String url : anonUrls) {
             filterChainDefinitionMap.put(url, "anon");
         }
 

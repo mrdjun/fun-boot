@@ -8,9 +8,9 @@ import com.fun.project.admin.system.entity.role.Role;
 import java.util.List;
 
 /**
- * 部门管理 服务层
+ * 部门管理
  *
- * @author fun
+ * @author DJun
  */
 public interface IDeptService {
     /**

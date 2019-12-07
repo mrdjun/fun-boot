@@ -4,7 +4,7 @@ import com.fun.common.utils.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
- * 定时任务调度测试
+ * 定时任务调度测试方法
  *
  * @author DJun
  */

@@ -6,7 +6,7 @@ import com.fun.project.admin.tool.entity.GenTableColumn;
 import java.util.List;
 
 /**
- * 业务字段 数据层
+ * 业务字段
  *
  * @author DJun
  */

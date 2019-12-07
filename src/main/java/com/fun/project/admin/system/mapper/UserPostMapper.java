@@ -5,9 +5,9 @@ import com.fun.project.admin.system.entity.user.UserPost;
 import java.util.List;
 
 /**
- * admin用户与岗位 表 数据层
+ * 用户与岗位
  *
- * @author fun
+ * @author DJun
  */
 public interface UserPostMapper {
     /**

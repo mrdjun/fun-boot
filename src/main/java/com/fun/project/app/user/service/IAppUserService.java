@@ -11,7 +11,7 @@ import java.util.List;
  * @author DJun
  * @date 2019/9/12 18:16
  */
-public interface IAppUserService{
+public interface IAppUserService {
     /**
      * 查询用户
      *
@@ -108,4 +108,12 @@ public interface IAppUserService{
      * @return UNIQUE or NOT
      */
     String checkUAccountUnique(UserDto user);
+
+    /**
+     * 通过登录账号获取用户信息
+     *
+     * @param loginName 登录账号
+     * @return AppUser
+     */
+    AppUser selectAppUserByLoginName(String loginName);
 }

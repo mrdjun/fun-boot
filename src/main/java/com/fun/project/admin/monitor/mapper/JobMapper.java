@@ -6,9 +6,9 @@ import com.fun.project.admin.monitor.entity.Job;
 import java.util.List;
 
 /**
- * 调度任务信息 数据层
+ * 调度任务信息
  *
- * @author cqjava
+ * @author DJun
  */
 public interface JobMapper {
     /**

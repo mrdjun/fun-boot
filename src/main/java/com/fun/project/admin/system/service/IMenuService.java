@@ -11,6 +11,8 @@ import java.util.Set;
 
 
 /**
+ * 菜单
+ *
  * @author DJun
  */
 public interface IMenuService {

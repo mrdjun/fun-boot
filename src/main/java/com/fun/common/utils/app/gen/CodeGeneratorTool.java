@@ -11,6 +11,7 @@ import java.io.IOException;
  * @author DJun
  */
 public class CodeGeneratorTool {
+
     /**
      * process Table Into GenTable
      *

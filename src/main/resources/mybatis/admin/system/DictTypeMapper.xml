@@ -3,22 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.system.mapper.DictTypeMapper">
 
-    <resultMap id="DictTypeResult" type="DictType">
-        <result column="dict_id" property="dictId"/>
-        <result column="dict_name" property="dictName"/>
-        <result column="dict_type" property="dictType"/>
-        <result column="status" property="status"/>
-        <result column="create_by" property="createBy"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_by" property="updateBy"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="remark" property="remark"/>
+    <resultMap  id="DictTypeResult"     type="DictType"          >
+        <result column="dict_id"        property="dictId"       />
+        <result column="dict_name"      property="dictName"     />
+        <result column="dict_type"      property="dictType"     />
+        <result column="status"         property="status"       />
+        <result column="create_by"      property="createBy"     />
+        <result column="create_time"    property="createTime"   />
+        <result column="update_by"      property="updateBy"     />
+        <result column="update_time"    property="updateTime"   />
+        <result column="remark"         property="remark"       />
     </resultMap>
 
     <sql id="DictTypeResultVo">
-        select
-        dict_id,dict_name,dict_type,status,create_by,create_time,update_by,update_time,remark
-        from sys_dict_type
+        select dict_id,dict_name,dict_type,status,create_by,create_time,update_by,update_time,remark from sys_dict_type
     </sql>
 
     <select id="selectDictTypeById" parameterType="Long" resultMap="DictTypeResult">

@@ -3,7 +3,6 @@ package com.fun.project.admin.monitor.entity;
 import com.fun.framework.web.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 登录日志实体类
@@ -12,7 +11,6 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
 public class LoginLog extends BaseEntity {
     /** 主键 */
     private Long infoId;

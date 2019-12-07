@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * html调用 thymeleaf 实现字典读取
+ * thymeleaf 调字典读取
  *
  * @author DJun
  * @date 2019/10/30

@@ -5,13 +5,9 @@ package com.fun.framework.annotation.enums;
  * @author DJun
  */
 public enum DataSourceType {
-    /**
-     * 主库
-     */
+    /**  主库 */
     MASTER,
 
-    /**
-     * 从库
-     */
+    /**  从库 */
     SLAVE
 }

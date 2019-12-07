@@ -3,7 +3,8 @@ package com.fun.project.admin.system.entity.user;
 import lombok.Data;
 
 /**
- * 用户和角色关联 sys_user_role
+ * 用户角色
+ *
  * @author DJun
  */
 @Data

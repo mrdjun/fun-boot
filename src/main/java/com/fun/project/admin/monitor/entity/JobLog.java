@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 定时任务调度日志表 sys_job_log
+ * 定时任务调度日志表
  *
  * @author DJun
  */
@@ -16,9 +16,6 @@ import java.util.Date;
 public class JobLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
     private Long jobLogId;
 
     /**

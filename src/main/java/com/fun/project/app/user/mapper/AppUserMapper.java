@@ -1,6 +1,5 @@
 package com.fun.project.app.user.mapper;
 
-import com.fun.project.app.user.dto.UserDto;
 import com.fun.project.app.user.entity.AppUser;
 
 import java.util.List;
@@ -17,6 +16,14 @@ public interface AppUserMapper {
      * @return 用户信息
      */
     AppUser selectUserById(Long userId);
+
+    /**
+     * 查询用户信息
+     *
+     * @param loginName 登录账号
+     * @return 用户信息
+     */
+    AppUser selectAppUserByLoginName(String loginName);
 
     /**
      * 查询用户信息列表

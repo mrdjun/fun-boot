@@ -7,22 +7,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * App端的properties
+ * App端的 properties
  *
  * @author DJun
- * @date 2019/11/19
+ * @date 2019/11/19 8:05
  */
 @Data
 @Component
 @PropertySource(value = {"classpath:fun-boot.properties"})
 @SpringBootConfiguration
 public class AppConfig {
-
-    @Value("${rsa.publicKey}")
-    private String publicKey;
-
-    @Value("${rsa.privateKey}")
-    private String privateKey;
 
     @Value("${rsa.signature}")
     private String signature;
@@ -35,6 +29,5 @@ public class AppConfig {
 
     @Value("${jwt.userPrefix}")
     private String userPrefix;
-
 
 }

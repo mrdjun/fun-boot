@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * cron表达式工具类
  *
- * @author cqjava
+ * @author DJun
  */
 public class CronUtils {
     /**

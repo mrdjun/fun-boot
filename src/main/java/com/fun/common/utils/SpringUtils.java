@@ -8,7 +8,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * spring工具类 方便在非spring管理环境中获取bean
+ * spring工具类
+ * 方便在非spring管理环境中获取bean
  *
  * @author DJun
  */
@@ -27,7 +28,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
     /**
      * 获取对象
      *
-     * @param name
+     * @param name BeanName
      * @return Object 一个以所给名字注册的bean的实例
      * @throws BeansException
      */
@@ -39,13 +40,11 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
     /**
      * 获取类型为requiredType的对象
      *
-     * @param clz
-     * @return
-     * @throws BeansException
+     * @param clz Class
+     * @return Bean
      */
     public static <T> T getBean(Class<T> clz) throws BeansException {
-        T result = (T) beanFactory.getBean(clz);
-        return result;
+        return (T) beanFactory.getBean(clz);
     }
 
     /**
@@ -70,20 +69,17 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
     }
 
     /**
-     * @param name
+     * @param name 注册对象名称
      * @return Class 注册对象的类型
-     * @throws NoSuchBeanDefinitionException
      */
     public static Class<?> getType(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getType(name);
     }
 
     /**
-     * 如果给定的bean名字在bean定义中有别名，则返回这些别名
+     * 如果给定的 bean 名字在 bean 定义中有别名，则返回这些别名
      *
-     * @param name
-     * @return
-     * @throws NoSuchBeanDefinitionException
+     * @param name BeanName
      */
     public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getAliases(name);
@@ -92,8 +88,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
     /**
      * 获取aop代理对象
      *
-     * @param invoker
-     * @return
+     * @param invoker 代理对象
      */
     @SuppressWarnings("unchecked")
     public static <T> T getAopProxy(T invoker) {

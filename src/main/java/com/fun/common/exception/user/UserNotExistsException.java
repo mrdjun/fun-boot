@@ -2,6 +2,7 @@ package com.fun.common.exception.user;
 
 /**
  * 用户不存在异常类
+ *
  * @author DJun
  * @date 2019/9/14 21:28
  */

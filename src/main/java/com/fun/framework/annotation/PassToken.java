@@ -6,12 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用来跳过验证的 PassToken
+ * 跳过 JWT 验证
+ *
  * @author DJun
  * @date 2019/9/8 14:49
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PassToken {
-    boolean required() default true;
-}
+public @interface PassToken {}

@@ -1,6 +1,7 @@
 package com.fun.framework.shiro.helper;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.constant.ShiroConstants;
 import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.exception.user.UserBlockedException;
 import com.fun.common.exception.user.CaptchaException;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 
 
 /**
+ * Admin登录处理
+ *
  * @author DJun
  */
 @Component
@@ -28,7 +31,6 @@ public class SysLoginService {
     private IAdminUserService adminUserService;
 
     public AdminUser login(String loginName, String password) {
-        // 为了提高性能,尽量避免查询数据库，所以先对非查询类操作进行验证
 
         // 1、验证验证码
         if (!StringUtils.isNull(ServletUtils.getRequest().getAttribute(ShiroConstants.CURRENT_CAPTCHA))) {
@@ -55,18 +57,18 @@ public class SysLoginService {
             throw new UserNotExistsException();
         }
         // 4、验证用户状态是否异常
-        if (UserStatus.DELETED.getCode().equals(user.getDelFlag())){
+        if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.admin, MessageUtils.message("user.password.delete"));
             throw new UserBlockedException();
         }
 
-        if (UserStatus.DISABLE.getCode().equals(user.getStatus())){
+        if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
             AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.admin, MessageUtils.message("user.blocked"));
             throw new UserBlockedException();
         }
 
         // 5、验证密码
-        if (!Md5Utils.validatePwd(user,password)){
+        if (!Md5Utils.validatePwd(user, password)) {
             AsyncUtils.excRecordLoginLog(ServletUtils.getRequest(), loginName, Constants.FAIL, LoginType.admin, MessageUtils.message("user.password.not.match"));
             throw new UserPasswordNotMatchException();
         }

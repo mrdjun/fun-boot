@@ -1,6 +1,8 @@
 package com.fun.common.exception.jwt;
 
 /**
+ * JWT验证异常
+ *
  * @author DJun
  * @date 2019/11/16
  */

@@ -10,34 +10,22 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2019/11/25
  */
 public class PermissionUtils {
-    /**
-     * 查看数据的权限
-     */
+    /** 查看数据的权限 */
     public static final String VIEW_PERMISSION = "no.view.permission";
 
-    /**
-     * 创建数据的权限
-     */
+    /** 创建数据的权限 */
     public static final String CREATE_PERMISSION = "no.create.permission";
 
-    /**
-     * 修改数据的权限
-     */
+    /** 修改数据的权限 */
     public static final String UPDATE_PERMISSION = "no.update.permission";
 
-    /**
-     * 删除数据的权限
-     */
+    /** 删除数据的权限 */
     public static final String DELETE_PERMISSION = "no.delete.permission";
 
-    /**
-     * 导出数据的权限
-     */
+    /** 导出数据的权限 */
     public static final String EXPORT_PERMISSION = "no.export.permission";
 
-    /**
-     * 其他数据的权限
-     */
+    /** 其他数据的权限 */
     public static final String PERMISSION = "no.permission";
 
     /**

@@ -10,7 +10,7 @@ import java.util.Properties;
 import static com.google.code.kaptcha.Constants.*;
 
 /**
- * 验证码配置
+ * Captcha验证码相关配置
  *
  * @author DJun
  */

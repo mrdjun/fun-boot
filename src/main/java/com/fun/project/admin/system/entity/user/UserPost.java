@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 用户岗位
+ *
  * @author DJun
  * @date 2019/10/31
  */

@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 菜单权限数据处理
+ * 菜单权限数据（菜单树）处理
+ *
+ *
  * @author DJun
  */
 public class TreeUtils {

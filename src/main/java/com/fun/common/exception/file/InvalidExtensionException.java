@@ -5,8 +5,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import java.util.Arrays;
 
 /**
- * created by DJun on 2019/9/12 18:51
- * desc: 文件上传错误误异常类
+ * 文件上传错误误异常类
+ * @date 2019/9/12 18:51
  */
 public class InvalidExtensionException extends FileUploadException {
     private static final long serialVersionUID = 1L;

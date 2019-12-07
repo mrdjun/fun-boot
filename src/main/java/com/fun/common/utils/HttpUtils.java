@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
- * 通用http发送方法
+ * 通用 http 发送方法工具类
  *
  * @author DJun
  */

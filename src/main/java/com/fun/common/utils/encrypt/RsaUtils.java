@@ -18,6 +18,8 @@ import java.util.Map;
 
 
 /**
+ * RSA 工具类
+ *
  * @author DJun
  * @date 2019/11/14
  */
@@ -186,7 +188,6 @@ public class RsaUtils {
         Signature signature = Signature.getInstance(MD5_WITH_RSA);
         signature.initSign(pKey);
         signature.update(signStr.getBytes());
-
         byte[] result = signature.sign();
         return java.util.Base64.getEncoder().encodeToString(result);
     }

@@ -5,9 +5,10 @@ import com.fun.common.utils.Arith;
 /**
  * CPU相关信息
  *
- * @author fun
+ * @author DJun
  */
 public class Cpu {
+
     /**
      * 核心数
      */

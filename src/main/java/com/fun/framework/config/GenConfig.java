@@ -5,8 +5,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
+ * Admin代码生成工具相关信息
+ *
  * @author DJun
- * @date 2019/11/23
+ * @date 2019/11/23 10:55
  */
 @Component
 @ConfigurationProperties(prefix = "gen")

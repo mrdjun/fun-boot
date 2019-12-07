@@ -19,52 +19,39 @@ import java.lang.reflect.Method;
 /**
  * 数据过滤处理
  *
- * @author fun
+ * @author DJun
  */
 @Aspect
 @Component
 public class DataScopeAspect {
-    /**
-     * 全部数据权限
-     */
+    /** 全部数据权限 */
     public static final String DATA_SCOPE_ALL = "1";
 
-    /**
-     * 自定数据权限
-     */
+    /** 自定数据权限 */
     public static final String DATA_SCOPE_CUSTOM = "2";
 
-    /**
-     * 部门数据权限
-     */
+    /** 部门数据权限 */
     public static final String DATA_SCOPE_DEPT = "3";
 
-    /**
-     * 部门及以下数据权限
-     */
+    /** 部门及以下数据权限 */
     public static final String DATA_SCOPE_DEPT_AND_CHILD = "4";
 
-    /**
-     * 仅本人数据权限
-     */
+    /** 仅本人数据权限 */
     public static final String DATA_SCOPE_SELF = "5";
 
-    /**
-     * 数据权限过滤关键字
-     */
+    /** 数据权限过滤关键字 */
     public static final String DATA_SCOPE = "dataScope";
 
     /** 配置织入点 */
     @Pointcut("@annotation(com.fun.framework.annotation.DataScope)")
-    public void dataScopePointCut() {
-    }
+    public void dataScopePointCut() {}
 
     @Before("dataScopePointCut()")
     public void doBefore(JoinPoint point) throws Throwable {
         handleDataScope(point);
     }
 
-    protected void handleDataScope(final JoinPoint joinPoint) {
+    private void handleDataScope(final JoinPoint joinPoint) {
         // 获得注解
         DataScope controllerDataScope = getAnnotationLog(joinPoint);
         if (controllerDataScope == null) {
@@ -88,7 +75,7 @@ public class DataScopeAspect {
      * @param user      用户
      * @param deptAlias 系部别名
      */
-    public static void dataScopeFilter(JoinPoint joinPoint, AdminUser user, String deptAlias, String userAlias) {
+    private static void dataScopeFilter(JoinPoint joinPoint, AdminUser user, String deptAlias, String userAlias) {
         StringBuilder sqlString = new StringBuilder();
 
         for (Role role : user.getRoles()) {
@@ -122,9 +109,6 @@ public class DataScopeAspect {
         }
     }
 
-    /**
-     * 是否存在注解，如果存在就获取
-     */
     private DataScope getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;

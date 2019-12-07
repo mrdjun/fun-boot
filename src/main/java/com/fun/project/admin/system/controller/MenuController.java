@@ -23,12 +23,10 @@ import static com.fun.common.result.CommonResult.failed;
 import static com.fun.common.result.CommonResult.success;
 
 /**
- * 菜单
- *
  * @author DJun
  * @date 2019/9/23
  */
-@Api(tags = {"admin后台菜单"})
+@Api(tags = {"管理员后台菜单"})
 @Controller
 @RequestMapping("/admin/system/menu")
 public class MenuController extends AdminBaseController {

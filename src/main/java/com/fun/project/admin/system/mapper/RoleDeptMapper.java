@@ -6,7 +6,7 @@ import com.fun.project.admin.system.entity.role.RoleDept;
 import java.util.List;
 
 /**
- * 角色与部门关联表 数据层
+ * 角色与部门
  *
  * @author DJun
  */

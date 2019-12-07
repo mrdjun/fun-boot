@@ -9,7 +9,7 @@ import org.quartz.*;
 /**
  * 定时任务工具类
  *
- * @author cqjava
+ * @author DJun
  */
 public class ScheduleUtils {
     /**
@@ -51,7 +51,7 @@ public class ScheduleUtils {
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
-        // 按新的cronExpression表达式构建一个新的trigger
+        // 按新的 cronExpression 表达式构建一个新的trigger
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
                 .withSchedule(cronScheduleBuilder).build();
 

@@ -26,7 +26,7 @@ import java.util.Map;
 import static com.fun.common.result.CommonResult.success;
 
 /**
- * 代码生成 操作处理
+ * 代码生成
  *
  * @author DJun
  */

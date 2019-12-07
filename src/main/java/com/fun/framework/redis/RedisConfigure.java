@@ -2,6 +2,7 @@ package com.fun.framework.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fun.common.constant.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -29,12 +30,15 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Arrays;
 
 /**
- * created by DJun on 2019/9/7 17:38
- * desc: Redis 相关配置
+ * Redis 相关配置
+ *
+ * @author DJun
+ * @date 2019/9/7 17:38
  */
 @Configuration
 public class RedisConfigure extends CachingConfigurerSupport {
@@ -141,7 +145,7 @@ public class RedisConfigure extends CachingConfigurerSupport {
 }
 
 class JacksonRedisSerializer<T> implements RedisSerializer<T> {
-    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     private Class<T> clazz;
     private ObjectMapper mapper;
 

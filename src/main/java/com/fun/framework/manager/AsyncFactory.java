@@ -1,7 +1,10 @@
 package com.fun.framework.manager;
 
+import com.alibaba.fastjson.JSON;
+import com.fun.common.exception.RedisConnectException;
 import com.fun.framework.annotation.enums.LoginType;
 import com.fun.common.utils.*;
+import com.fun.framework.redis.RedisServiceImpl;
 import com.fun.project.admin.monitor.entity.LoginLog;
 import com.fun.project.admin.monitor.entity.OperLog;
 import com.fun.project.admin.monitor.service.IOperLogService;
@@ -20,7 +23,9 @@ import java.util.TimerTask;
 /**
  * 异步工厂 （产生任务用）
  * 异步操作任务调度线程池
+ *
  * @author DJun
+ * @date 2019/04/10 15:20
  */
 @Slf4j
 public class AsyncFactory {
@@ -84,13 +89,13 @@ public class AsyncFactory {
                 loginLog.setBrowser(browser);
 
                 // 更新APP用户最后一次登录信息
-                if (loginType == LoginType.App){
+                if (loginType == LoginType.App) {
                     AppUser appUser = new AppUser();
                     appUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
                     appUser.setLoginName(loginLog.getLoginName());
                     appUser.setLoginIp(ipAddr);
                     SpringUtils.getBean(AppUserServiceImpl.class).updateAppUserByLoginName(appUser);
-                } else{
+                } else {
                     // 更新Admin用户最后一次登录信息
                     AdminUser adminUser = new AdminUser();
                     adminUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
@@ -103,5 +108,27 @@ public class AsyncFactory {
             }
         };
     }
+
+    /**
+     * 异步通过账号保存用户个人信息到缓存
+     *
+     * @param loginName   账号
+     * @param milliscends 保存时间（ms）
+     * @return task
+     */
+    public static TimerTask getAppUserInfoToCache(final String loginName,final Long milliscends) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                AppUser userInfo = SpringUtils.getBean(AppUserServiceImpl.class).selectAppUserByLoginName(loginName);
+                try {
+                    SpringUtils.getBean(RedisServiceImpl.class).set(loginName, JSON.toJSONString(userInfo),milliscends);
+                } catch (RedisConnectException e) {
+                    log.error("redis 连接失败-{}",DateUtils.getNowDate());
+                }
+            }
+        };
+    }
+
 
 }

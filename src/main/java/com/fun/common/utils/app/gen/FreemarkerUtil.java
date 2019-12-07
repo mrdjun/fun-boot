@@ -18,6 +18,7 @@ import java.util.Map;
  * @date 2019/8/10 23:34
  */
 public class FreemarkerUtil {
+
     private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorTool.class);
 
     /**

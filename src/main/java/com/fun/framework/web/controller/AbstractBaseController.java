@@ -6,15 +6,14 @@ import com.fun.common.utils.StringUtils;
 import com.github.pagehelper.PageHelper;
 
 /**
- * APP 与 admin 通用部分
+ * APP 与 admin 控制器通用抽象方法
  *
  * @author DJun
- * @date 2019/11/27
+ * @date 2019/11/27 14:50
  */
 public abstract class AbstractBaseController {
-    /**
-     * 从 Servlet 中读取 pageNum 和 pageSize等分页信息
-     */
+
+    /** 从 Servlet 中读取 pageNum 和 pageSize等分页信息 */
     protected void startPage() {
         CommonPage pageDomain = CommonPage.buildPageRequest();
         Integer pageNum = pageDomain.getPageNum();

@@ -5,7 +5,7 @@ import com.fun.project.admin.system.entity.role.RoleMenu;
 import java.util.List;
 
 /**
- * 角色与菜单关联表
+ * 角色与菜单
  *
  * @author DJun
  * @date 2019/9/14 13:24

@@ -53,14 +53,11 @@ public class AppLoginHandleInterceptor implements HandlerInterceptor {
             }
         }
 
-        // 检查 @PassToken ，有则跳过认证
+        // 存在 @PassToken 则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {
-            PassToken passToken = method.getAnnotation(PassToken.class);
-            return passToken.required();
-        } else {
-            return isLogin(token, httpServletResponse);
+            return true;
         }
-
+        return isLogin(token, httpServletResponse);
     }
 
     /**
@@ -90,7 +87,7 @@ public class AppLoginHandleInterceptor implements HandlerInterceptor {
      * @return 已登录-true
      */
     private boolean isLogin(final String token, HttpServletResponse response) {
-        // token 无效退出
+        // token 无效或解码异常退出
         try {
             if (StringUtils.isNull(token) || !tokenService.isValidToken(token)) {
                 return respUnAuth(response);

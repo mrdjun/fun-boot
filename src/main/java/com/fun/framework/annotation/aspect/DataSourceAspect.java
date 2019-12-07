@@ -26,11 +26,8 @@ import java.lang.reflect.Method;
 public class DataSourceAspect {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(com.fun.framework.annotation.DataSource)"
-            + "|| @within(com.fun.framework.annotation.DataSource)" )
-    public void dsPointCut() {
-
-    }
+    @Pointcut("@annotation(com.fun.framework.annotation.DataSource) || @within(com.fun.framework.annotation.DataSource)" )
+    public void dsPointCut() {}
 
     @Around("dsPointCut()" )
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -43,7 +40,7 @@ public class DataSourceAspect {
         try {
             return point.proceed();
         } finally {
-            // 销毁数据源 在执行方法之后
+            // 在执行方法之后销毁数据源
             DynamicDataSourceContextHolder.clearDataSourceType();
         }
     }
@@ -51,7 +48,7 @@ public class DataSourceAspect {
     /**
      * 获取需要切换的数据源
      */
-    public DataSource getDataSource(ProceedingJoinPoint point) {
+    private DataSource getDataSource(ProceedingJoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Class<?> targetClass = point.getTarget().getClass();
         DataSource targetDataSource = targetClass.getAnnotation(DataSource.class);

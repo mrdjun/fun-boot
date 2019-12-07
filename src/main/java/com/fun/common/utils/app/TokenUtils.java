@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * APP端 JWT 工具类
+ *
  * @author DJun
  * @date 2019/11/14
  */
@@ -40,7 +42,7 @@ public class TokenUtils {
     public static String createToken(String userId,
                                      String loginName,
                                      String roleKey) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(1);
         map.put(ROLE_CLAIMS, roleKey);
         return Jwts.builder()
                 .signWith(secretKey)
@@ -79,7 +81,7 @@ public class TokenUtils {
      */
     public static Long getTokenUserId() {
         try {
-            return Long.getLong(tokenBody(Objects.requireNonNull(getRequest()).getHeader(Constants.TOKEN)).getAudience());
+            return Long.getLong(getTokenUserId(getToken()));
         } catch (JWTDecodeException e) {
             throw new JWTVerificationException(MessageUtils.message("jwt.not.valid"));
         }

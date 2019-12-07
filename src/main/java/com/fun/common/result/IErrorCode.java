@@ -1,6 +1,7 @@
 package com.fun.common.result;
 
 /**
+ *
  * @author DJun
  * @date 2019/07/19 11:58
  */

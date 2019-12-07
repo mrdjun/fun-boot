@@ -7,6 +7,7 @@ import java.util.concurrent.*;
 
 /**
  * 线程相关工具类.
+ *
  * @author DJun
  */
 public class Threads {

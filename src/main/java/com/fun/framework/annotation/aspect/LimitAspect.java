@@ -45,9 +45,7 @@ public class LimitAspect {
     }
 
     @Pointcut("@annotation(com.fun.framework.annotation.Limit)")
-    public void pointcut() {
-        // do nothing
-    }
+    public void pointcut() {}
 
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -84,7 +82,6 @@ public class LimitAspect {
         } else {
             CommonResult commonResult = CommonResult.failed("系统繁忙，请稍后后重试");
             ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
-//            throw new LimitAccessException("接口流量超出了限制");
         }
         return null;
     }

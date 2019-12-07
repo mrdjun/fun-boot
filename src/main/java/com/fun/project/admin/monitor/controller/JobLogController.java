@@ -20,13 +20,15 @@ import java.util.List;
 import static com.fun.common.result.CommonResult.success;
 
 /**
+ * 任务调度日志
+ *
  * @author DJun
  * @date 2019/11/5
  */
 @Api(tags = {"admin任务调度日志"})
 @Controller
 @RequestMapping("/admin/monitor/jobLog")
-public class JobLogControllerAdmin extends AdminBaseController {
+public class JobLogController extends AdminBaseController {
     private String prefix = "monitor/job";
 
     @Autowired

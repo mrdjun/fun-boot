@@ -6,16 +6,16 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 /**
- * 验证码文本生成器
+ * Captcha验证码文本生成器
  *
  * @author DJun
  */
-public class KaptchaTextCreator extends DefaultTextCreator {
+public class CaptchaTextCreator extends DefaultTextCreator {
     private static final String[] CNUMBERS = "0,1,2,3,4,5,6,7,8,9,10".split(",");
 
     @Override
     public String getText() {
-        Integer result = 0;
+        int result = 0;
         Random random = new SecureRandom();
         int x = random.nextInt(10);
         int y = random.nextInt(10);

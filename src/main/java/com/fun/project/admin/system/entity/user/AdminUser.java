@@ -47,16 +47,15 @@ public class AdminUser extends BaseEntity {
 
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
-    /**
-     * 头像地址
-     */
+
+    /** 头像地址 */
     private String avatar;
 
     private String password;
-    /**
-     * 盐
-     */
+
+    /** 加密盐 */
     private String salt;
+
     /**
      * 删除标志（0代表存在 2代表删除）
      */

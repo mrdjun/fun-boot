@@ -22,7 +22,7 @@ import java.io.IOException;
 public class FileUploadUtils {
     /**
      * 默认大小 50M -> 50 * 1024 * 1024
-     * 考虑到视频上传，我这里设置为 2GB
+     * 考虑到视频上传d额业务，我这里设置为 2GB
      */
     public static final long DEFAULT_MAX_SIZE = 2048L * 1024 * 1024;
 

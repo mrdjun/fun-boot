@@ -1,8 +1,9 @@
 package com.fun.common.result;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -14,7 +15,8 @@ import java.io.Serializable;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class CommonResult<T> implements Serializable {
     private int code;
     private String message;
@@ -60,8 +62,6 @@ public class CommonResult<T> implements Serializable {
     /**
      * 失败
      * 自定义提示信息
-     *
-     * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<>(ResultCode.FAILED.getCode(), message, null);
@@ -77,8 +77,6 @@ public class CommonResult<T> implements Serializable {
     /**
      * 参数验证失败 300
      * 自定义提示信息
-     *
-     * @param message 提示信息
      */
     public static <T> CommonResult<T> validateFailed(String message) {
         return new CommonResult<>(ResultCode.VALIDATE_FAILED.getCode(), message, null);

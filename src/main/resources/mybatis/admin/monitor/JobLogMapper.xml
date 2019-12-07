@@ -16,8 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<sql id="selectJobLogVo">
-        select job_log_id, job_name, job_group, invoke_target, job_message, status, exception_info, create_time 
-		from sys_job_log
+        select job_log_id, job_name, job_group, invoke_target, job_message, status, exception_info, create_time from sys_job_log
     </sql>
 	
 	<select id="selectJobLogList" parameterType="JobLog" resultMap="JobLogResult">

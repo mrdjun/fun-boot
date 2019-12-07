@@ -11,8 +11,10 @@ import java.io.StringWriter;
 import java.util.Map;
 
 /**
- * created by DJun on 2019/9/13 13:22
- * desc: 处理并记录日志文件
+ * 处理并记录日志文件
+ *
+ * @author DJun
+ * @date 2019/9/13 13:22
  */
 public class LogUtils {
     public static final Logger ERROR_LOG = LoggerFactory.getLogger("sys-error");
@@ -21,7 +23,7 @@ public class LogUtils {
     /**
      * 记录访问日志 [username][jsessionid][ip][accept][UserAgent][url][params][Referer]
      *
-     * @param request
+     * @param request HttpServletRequest
      */
     public static void logAccess(HttpServletRequest request) {
         String username = getUsername();
@@ -109,7 +111,7 @@ public class LogUtils {
     }
 
     // admin获取用户名,app在TokenUtil获取
-    protected static String getUsername(){
+    protected static String getUsername() {
         return (String) SecurityUtils.getSubject().getPrincipal();
     }
 

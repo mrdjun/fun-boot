@@ -5,9 +5,9 @@ import com.fun.project.admin.system.entity.Post;
 import java.util.List;
 
 /**
- * 岗位信息 数据层
+ * 岗位
  *
- * @author fun
+ * @author DJun
  */
 public interface PostMapper {
     /**

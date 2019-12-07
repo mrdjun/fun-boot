@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 统一拦截器配置
+ * 全局拦截器配置
  *
  * @author DJun
  */
@@ -61,8 +61,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        // 默认全站跨域
-        registry.addMapping("/*")
+        // 默认仅APP跨域
+        registry.addMapping("/app/*")
                 .allowedOrigins("*")
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")

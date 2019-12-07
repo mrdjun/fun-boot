@@ -30,8 +30,9 @@ import javax.validation.Path;
 import java.util.List;
 import java.util.Set;
 
-/***
+/**
  * 捕获全项目异常处理
+ *
  * @author DJun
  */
 @Slf4j
@@ -39,9 +40,7 @@ import java.util.Set;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
-    /**
-     * 系统异常HttpRequestMethodNotSupportedException
-     */
+    /** 系统异常HttpRequestMethodNotSupportedException */
     @ExceptionHandler(value = Exception.class)
     public FunBootResponse handleException(Exception e) {
         log.error("系统内部异常，异常信息", e);
@@ -54,9 +53,7 @@ public class GlobalExceptionHandler {
         return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
     }
 
-    /**
-     * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面
-     */
+    /** 权限校验失败 如果请求为ajax返回json，普通请求跳转页面 */
     @ExceptionHandler(AuthorizationException.class)
     public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e) {
         log.error(e.getMessage(), e);
@@ -69,9 +66,7 @@ public class GlobalExceptionHandler {
         }
     }
 
-    /**
-     * 请求方式不支持
-     */
+    /** 请求方式不支持 */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public FunBootResponse handleException(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
@@ -95,9 +90,7 @@ public class GlobalExceptionHandler {
         return new FunBootResponse().code(HttpStatus.BAD_REQUEST).message(message.toString());
     }
 
-    /**
-     * 业务异常
-     */
+    /** 业务异常 */
     @ExceptionHandler(BusinessException.class)
     public Object businessException(HttpServletRequest request, BusinessException e) {
         log.error(e.getMessage(), e);
@@ -154,17 +147,13 @@ public class GlobalExceptionHandler {
         log.error("FileDownloadException", e);
     }
 
-    /**
-     * admin密码错误次数过多
-     */
+    /** admin密码错误次数过多 */
     @ExceptionHandler(value = UserPasswordRetryLimitExceedException.class)
     public FunBootResponse handleUserPasswordRetryLimitExceedException(UserPasswordRetryLimitExceedException e) {
         return new FunBootResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message(e.getMessage());
     }
 
-    /**
-     * 拦截未知的运行时异常
-     */
+    /** 拦截未知的运行时异常 */
     @ExceptionHandler(RuntimeException.class)
     public FunBootResponse notFount(RuntimeException e) {
         log.error("运行时异常:", e);

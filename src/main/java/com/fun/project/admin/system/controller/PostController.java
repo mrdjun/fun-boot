@@ -25,7 +25,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/11/3
  */
-@Api(tags = {"admin岗位信息"})
+@Api(tags = {"管理员岗位信息"})
 @Controller
 @RequestMapping("/admin/system/post")
 public class PostController extends AdminBaseController {

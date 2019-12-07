@@ -134,7 +134,7 @@ public class AppRoleController extends AdminBaseController {
     }
 
     @ApiOperation("查询已分配用户角色列表")
-    @RequiresPermissions("system:role:list")
+    @RequiresPermissions("app:role:edit")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
     public CommonResult allocatedList(AppUser user) {
@@ -144,7 +144,7 @@ public class AppRoleController extends AdminBaseController {
     }
 
     @ApiOperation("查询未分配用户角色列表")
-    @RequiresPermissions("app:role:list")
+    @RequiresPermissions("app:role:edit")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
     public CommonResult unallocatedList(AppUser user) {
@@ -155,6 +155,7 @@ public class AppRoleController extends AdminBaseController {
 
     @ApiOperation("批量选择用户授权")
     @Log("批量选择用户授权")
+    @RequiresPermissions("app:role:edit")
     @PostMapping("/authUser/selectAll")
     @ResponseBody
     public CommonResult selectAuthUserAll(Long roleId, String userIds) {
@@ -163,6 +164,7 @@ public class AppRoleController extends AdminBaseController {
 
     @ApiOperation("取消单个授权")
     @Log("取消单个授权")
+    @RequiresPermissions("app:role:edit")
     @PostMapping("/authUser/cancel")
     @ResponseBody
     public CommonResult cancelAuthUser(Long roleId, Long userId) {
@@ -171,6 +173,7 @@ public class AppRoleController extends AdminBaseController {
 
     @ApiOperation("批量取消授权")
     @Log("批量取消授权")
+    @RequiresPermissions("app:role:edit")
     @PostMapping("/authUser/cancelAll")
     @ResponseBody
     public CommonResult cancelAuthUserAll(Long roleId, String userIds) {

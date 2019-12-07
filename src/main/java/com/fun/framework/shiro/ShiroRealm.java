@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
- * 处理登录、权限
+ * 处理登录认证、权限授权
  *
  * @author DJun
  */

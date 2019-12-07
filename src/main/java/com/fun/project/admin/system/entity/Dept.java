@@ -10,9 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * 部门表 sys_dept
+ * 部门表
  *
- * @author fun
+ * @author DJun
  */
 @Setter
 @Getter

@@ -36,7 +36,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * 业务 服务层实现
+ * 业务字段
  *
  * @author DJun
  */

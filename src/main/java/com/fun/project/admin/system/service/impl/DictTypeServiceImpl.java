@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 字典类型表 业务实现类
+ * 字典类型
  *
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 @Service

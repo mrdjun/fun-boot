@@ -1,13 +1,15 @@
 package com.fun.project.admin.monitor.entity.server;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 系统相关信息
  *
- * @author fun
+ * @author DJun
  */
-@Data
+@Getter
+@Setter
 public class Sys {
     /**
      * 服务器名称

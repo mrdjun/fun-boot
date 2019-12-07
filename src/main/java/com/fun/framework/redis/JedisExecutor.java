@@ -8,5 +8,9 @@ import com.fun.common.exception.RedisConnectException;
  */
 @FunctionalInterface
 public interface JedisExecutor<T, R> {
+
+    /**
+     * Jedis 执行器
+     */
     R excute(T t) throws RedisConnectException;
 }

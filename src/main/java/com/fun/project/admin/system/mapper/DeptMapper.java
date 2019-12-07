@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 部门管理 数据层
+ * 部门管理
  *
- * @author fun
+ * @author DJun
  */
 public interface DeptMapper {
     /**

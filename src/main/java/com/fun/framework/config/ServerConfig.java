@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 服务相关配置
+ *
  * @author DJun
  */
 @Component
@@ -24,7 +25,7 @@ public class ServerConfig {
     /***
      * 获取请求地址
      */
-    public static String getDomain(HttpServletRequest request) {
+    private static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String contextPath = request.getServletContext().getContextPath();
         return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();

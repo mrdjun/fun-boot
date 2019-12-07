@@ -13,9 +13,9 @@ import com.fun.project.admin.system.entity.dict.DictData;
 import java.util.List;
 
 /**
- * 字典数据表 业务实现类
+ * 字典数据
  *
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 @Service

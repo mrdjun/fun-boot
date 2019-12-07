@@ -7,14 +7,10 @@ package com.fun.common.utils.app;
  * @date 2019/11/25
  */
 public class SnowflakeIdUtils {
-    /**
-     * 开始时间截 (2015-01-01)
-     */
+    /** 开始时间截 (2015-01-01) */
     private final long twepoch = 1420041600000L;
 
-    /**
-     * 机器id所占的位数
-     */
+    /** 机器id所占的位数 */
     private final long workerIdBits = 5L;
 
     /**

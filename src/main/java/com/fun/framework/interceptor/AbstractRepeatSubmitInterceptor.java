@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 /**
  * 防止表单重复提交抽象类
+ *
  * @author DJun
  */
 @Component
@@ -42,7 +43,8 @@ public abstract class AbstractRepeatSubmitInterceptor extends HandlerInterceptor
     /**
      * 验证是否重复提交由子类实现具体的防重复提交的规则
      *
-     * @param request request
+     * @param request HttpServletRequest
+     * @return boolean
      */
     public abstract boolean isRepeatSubmit(HttpServletRequest request);
 }

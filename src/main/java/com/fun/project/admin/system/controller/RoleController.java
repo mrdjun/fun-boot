@@ -7,6 +7,7 @@ import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.role.Role;
 import com.fun.project.admin.system.entity.user.AdminUser;
+import com.fun.project.admin.system.entity.user.UserRole;
 import com.fun.project.admin.system.service.IAdminUserService;
 import com.fun.project.admin.system.service.IRoleService;
 import io.swagger.annotations.Api;
@@ -27,7 +28,7 @@ import static com.fun.common.result.CommonResult.success;
  * @author DJun
  * @date 2019/10/3
  */
-@Api(tags = {"admin角色信息"})
+@Api(tags = {"管理员角色信息"})
 @Controller
 @RequestMapping("/admin/system/role")
 public class RoleController extends AdminBaseController {
@@ -189,6 +190,15 @@ public class RoleController extends AdminBaseController {
         startPage();
         List<AdminUser> list = userService.selectAllocatedList(user);
         return success(CommonPage.restPage(list));
+    }
+
+
+    @ApiOperation("单个取消授权")
+    @Log("单个取消授权")
+    @PostMapping("/authUser/cancel")
+    @ResponseBody
+    public CommonResult cancelAuthUser(UserRole userRole) {
+        return success(roleService.deleteAuthUser(userRole));
     }
 
     @ApiOperation("批量取消授权")

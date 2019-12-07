@@ -7,6 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
+ * FUN-BOOT Shiro相关配置参数
+ *
  * @author DJun
  */
 @Data

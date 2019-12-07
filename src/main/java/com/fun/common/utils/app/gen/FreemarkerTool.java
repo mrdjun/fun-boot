@@ -17,7 +17,6 @@ import java.util.Map;
  */
 @Component
 public class FreemarkerTool {
-//    private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorTool.class);
 
     @Autowired
     private Configuration configuration;

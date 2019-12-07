@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * 操作日志记录处理
+ *
  * @author DJun
  * @date 2019/9/9 19:49
  */
@@ -41,8 +42,7 @@ public class LogAspect {
      * 配置织入点
      */
     @Pointcut("@annotation(com.fun.framework.annotation.Log)")
-    public void logPointCut() {
-    }
+    public void logPointCut() {}
 
     /**
      * 处理完请求后执行
@@ -126,7 +126,6 @@ public class LogAspect {
             log.error("异常信息:{}", exp.getMessage());
             exp.printStackTrace();
         }
-
     }
 
     /**
@@ -149,7 +148,7 @@ public class LogAspect {
      * @param operLog 操作日志
      * @throws Exception e
      */
-    public void getControllerMethodDescription(Log log, OperLog operLog)
+    private void getControllerMethodDescription(Log log, OperLog operLog)
             throws Exception {
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {

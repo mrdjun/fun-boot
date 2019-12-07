@@ -107,6 +107,7 @@ public class AppPermissionController extends AdminBaseController {
     }
 
     @ApiOperation("加载角色权限列表树")
+    @RequiresPermissions("app:perm:list")
     @GetMapping("/rolePermTreeData")
     @ResponseBody
     public List<Ztree> rolePermTreeData(AppPermission perm) {
@@ -114,6 +115,7 @@ public class AppPermissionController extends AdminBaseController {
     }
 
     @ApiOperation("加载所有权限列表树")
+    @RequiresPermissions("app:perm:list")
     @GetMapping("/permTreeData")
     @ResponseBody
     public List<Ztree> permTreeData() {

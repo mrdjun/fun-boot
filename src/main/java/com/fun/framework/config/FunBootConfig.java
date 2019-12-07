@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * 系统信息
+ * FUN-BOOT系统相关信息
  *
  * @author DJun
  */

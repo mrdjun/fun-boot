@@ -5,9 +5,9 @@ import com.fun.project.admin.system.entity.dict.DictType;
 import java.util.List;
 
 /**
- * 字典类型表
+ * 字典类型
  *
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 public interface DictTypeMapper {

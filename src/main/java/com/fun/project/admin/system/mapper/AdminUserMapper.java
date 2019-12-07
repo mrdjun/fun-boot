@@ -5,6 +5,8 @@ import com.fun.project.admin.system.entity.user.AdminUser;
 import java.util.List;
 
 /**
+ * 管理员用户
+ *
  * @author DJun
  * @date 2019/9/14 9:42
  */

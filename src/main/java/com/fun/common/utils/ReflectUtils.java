@@ -11,17 +11,19 @@ import java.lang.reflect.*;
 import java.util.Date;
 
 /**
- * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
+ * 反射工具类
+ * 提供调用getter/setter方法, 访问私有变量, 调用私有方法,
+ * 获取泛型类型Class, 被AOP过的真实类等工具函数.
  *
- * @author cqjava
+ * @author DJun
  */
-@SuppressWarnings("rawtypes" )
+@SuppressWarnings("rawtypes")
 public class ReflectUtils {
-    private static final String SETTER_PREFIX = "set" ;
+    private static final String SETTER_PREFIX = "set";
 
-    private static final String GETTER_PREFIX = "get" ;
+    private static final String GETTER_PREFIX = "get";
 
-    private static final String CGLIB_CLASS_SEPARATOR = "$$" ;
+    private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
     private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 
@@ -29,10 +31,10 @@ public class ReflectUtils {
      * 调用Getter方法.
      * 支持多级，如：对象名.对象名.方法
      */
-    @SuppressWarnings("unchecked" )
+    @SuppressWarnings("unchecked")
     public static <E> E invokeGetter(Object obj, String propertyName) {
         Object object = obj;
-        for (String name : StringUtils.split(propertyName, "." )) {
+        for (String name : StringUtils.split(propertyName, ".")) {
             String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(name);
             object = invokeMethod(object, getterMethodName, new Class[]{}, new Object[]{});
         }
@@ -45,7 +47,7 @@ public class ReflectUtils {
      */
     public static <E> void invokeSetter(Object obj, String propertyName, E value) {
         Object object = obj;
-        String[] names = StringUtils.split(propertyName, "." );
+        String[] names = StringUtils.split(propertyName, ".");
         for (int i = 0; i < names.length; i++) {
             if (i < names.length - 1) {
                 String getterMethodName = GETTER_PREFIX + StringUtils.capitalize(names[i]);
@@ -60,18 +62,18 @@ public class ReflectUtils {
     /**
      * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
      */
-    @SuppressWarnings("unchecked" )
+    @SuppressWarnings("unchecked")
     public static <E> E getFieldValue(final Object obj, final String fieldName) {
         Field field = getAccessibleField(obj, fieldName);
         if (field == null) {
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 " );
+            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
             return null;
         }
         E result = null;
         try {
             result = (E) field.get(obj);
         } catch (IllegalAccessException e) {
-            logger.error("不可能抛出的异常{}" , e.getMessage());
+            logger.error("不可能抛出的异常{}", e.getMessage());
         }
         return result;
     }
@@ -83,13 +85,13 @@ public class ReflectUtils {
         Field field = getAccessibleField(obj, fieldName);
         if (field == null) {
             // throw new IllegalArgumentException("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 " );
+            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + fieldName + "] 字段 ");
             return;
         }
         try {
             field.set(obj, value);
         } catch (IllegalAccessException e) {
-            logger.error("不可能抛出的异常: {}" , e.getMessage());
+            logger.error("不可能抛出的异常: {}", e.getMessage());
         }
     }
 
@@ -98,7 +100,7 @@ public class ReflectUtils {
      * 用于一次性调用的情况，否则应使用getAccessibleMethod()函数获得Method后反复调用.
      * 同时匹配方法名+参数类型，
      */
-    @SuppressWarnings("unchecked" )
+    @SuppressWarnings("unchecked")
     public static <E> E invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes,
                                      final Object[] args) {
         if (obj == null || methodName == null) {
@@ -106,13 +108,13 @@ public class ReflectUtils {
         }
         Method method = getAccessibleMethod(obj, methodName, parameterTypes);
         if (method == null) {
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 " );
+            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
             return null;
         }
         try {
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "" ;
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -122,12 +124,12 @@ public class ReflectUtils {
      * 用于一次性调用的情况，否则应使用getAccessibleMethodByName()函数获得Method后反复调用.
      * 只匹配函数名，如果有多个同名函数调用第一个。
      */
-    @SuppressWarnings("unchecked" )
+    @SuppressWarnings("unchecked")
     public static <E> E invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
         Method method = getAccessibleMethodByName(obj, methodName, args.length);
         if (method == null) {
             // 如果为空不报错，直接返回空。
-            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 " );
+            logger.debug("在 [" + obj.getClass() + "] 中，没有找到 [" + methodName + "] 方法 ");
             return null;
         }
         try {
@@ -137,8 +139,8 @@ public class ReflectUtils {
                 if (args[i] != null && !args[i].getClass().equals(cs[i])) {
                     if (cs[i] == String.class) {
                         args[i] = Convert.toStr(args[i]);
-                        if (StringUtils.endsWith((String) args[i], ".0" )) {
-                            args[i] = StringUtils.substringBefore((String) args[i], ".0" );
+                        if (StringUtils.endsWith((String) args[i], ".0")) {
+                            args[i] = StringUtils.substringBefore((String) args[i], ".0");
                         }
                     } else if (cs[i] == Integer.class) {
                         args[i] = Convert.toInt(args[i]);
@@ -159,7 +161,7 @@ public class ReflectUtils {
             }
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "" ;
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -173,7 +175,7 @@ public class ReflectUtils {
         if (obj == null) {
             return null;
         }
-        Validate.notBlank(fieldName, "fieldName can't be blank" );
+        Validate.notBlank(fieldName, "fieldName can't be blank");
         for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass.getSuperclass()) {
             try {
                 Field field = superClass.getDeclaredField(fieldName);
@@ -198,7 +200,7 @@ public class ReflectUtils {
         if (obj == null) {
             return null;
         }
-        Validate.notBlank(methodName, "methodName can't be blank" );
+        Validate.notBlank(methodName, "methodName can't be blank");
         for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
             try {
                 Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
@@ -222,7 +224,7 @@ public class ReflectUtils {
         if (obj == null) {
             return null;
         }
-        Validate.notBlank(methodName, "methodName can't be blank" );
+        Validate.notBlank(methodName, "methodName can't be blank");
         for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
             Method[] methods = searchType.getDeclaredMethods();
             for (Method method : methods) {
@@ -259,7 +261,7 @@ public class ReflectUtils {
      * 通过反射, 获得Class定义中声明的泛型参数的类型, 注意泛型必须定义在父类处
      * 如无法找到, 返回Object.class.
      */
-    @SuppressWarnings("unchecked" )
+    @SuppressWarnings("unchecked")
     public static <T> Class<T> getClassGenricType(final Class clazz) {
         return getClassGenricType(clazz, 0);
     }
@@ -272,7 +274,7 @@ public class ReflectUtils {
         Type genType = clazz.getGenericSuperclass();
 
         if (!(genType instanceof ParameterizedType)) {
-            logger.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType" );
+            logger.debug(clazz.getSimpleName() + "'s superclass not ParameterizedType");
             return Object.class;
         }
 
@@ -284,7 +286,7 @@ public class ReflectUtils {
             return Object.class;
         }
         if (!(params[index] instanceof Class)) {
-            logger.debug(clazz.getSimpleName() + " not set the actual class on superclass generic parameter" );
+            logger.debug(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
             return Object.class;
         }
 
@@ -293,7 +295,7 @@ public class ReflectUtils {
 
     public static Class<?> getUserClass(Object instance) {
         if (instance == null) {
-            throw new RuntimeException("Instance must not be null" );
+            throw new RuntimeException("Instance must not be null");
         }
         Class clazz = instance.getClass();
         if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {

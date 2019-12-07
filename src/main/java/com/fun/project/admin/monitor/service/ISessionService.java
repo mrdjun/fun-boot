@@ -6,6 +6,8 @@ import com.fun.project.admin.monitor.entity.OnlineUser;
 import java.util.List;
 
 /**
+ * Session 操作
+ *
  * @author DJun
  * @date 2019/9/15 22:58
  */

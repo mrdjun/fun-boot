@@ -30,10 +30,11 @@ import static com.fun.common.result.CommonResult.*;
 
 /**
  * @author DJun
+ * @date 2019/08/05 23:47
  */
 @Controller
 @RequestMapping("/admin/system/user")
-@Api(tags = {"admin用户"})
+@Api(tags = {"管理员用户"})
 public class AdminUserController extends AdminBaseController {
     private final String prefix = "system/user";
 

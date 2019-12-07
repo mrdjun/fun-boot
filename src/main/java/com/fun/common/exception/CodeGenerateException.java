@@ -2,6 +2,7 @@ package com.fun.common.exception;
 
 /**
  * 代码生成异常
+ *
  * @author DJun
  */
 public class CodeGenerateException extends RuntimeException {

@@ -5,7 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 角色的菜单
+ * 角色菜单
+ *
  * @author DJun
  * @date 2019/9/14 12:52
  */

@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 
 /**
+ * 登录注册
+ * 目前后台用户不允许注册，账号由超级管理员新增
+ *
  * @author DJun
  * @date 2019/10/31
  */

@@ -1,7 +1,7 @@
 package com.fun.framework.shiro;
 
 import com.fun.common.utils.StringUtils;
-import com.fun.framework.shiro.helper.ShiroConstants;
+import com.fun.common.constant.ShiroConstants;
 import com.fun.framework.shiro.helper.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import lombok.Getter;

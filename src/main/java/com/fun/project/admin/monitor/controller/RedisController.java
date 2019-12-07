@@ -26,13 +26,15 @@ import static com.fun.common.result.CommonResult.success;
 
 
 /**
+ * Redis
+ *
  * @author DJun
  */
 @Api(tags = {"Redis接口"})
 @Controller
 @RequestMapping("/admin/monitor/redis")
 @Slf4j
-public class RedisControllerAdmin extends AdminBaseController {
+public class RedisController extends AdminBaseController {
 
     private static final String INTEGER_PREFIX = "(integer) ";
 
@@ -49,7 +51,7 @@ public class RedisControllerAdmin extends AdminBaseController {
             log.error("Redis 连接异常");
         }
         mmap.put("infoList", infoList);
-        return view( "monitor/redis/redis");
+        return view("monitor/redis/redis");
     }
 
     @ApiOperation("执行 Redis keysSize 命令")
@@ -71,7 +73,7 @@ public class RedisControllerAdmin extends AdminBaseController {
     @Log("执行 Redis memoryInfo 命令")
     @GetMapping("/memoryInfo")
     @ResponseBody
-    public Map<String, Object> getMemoryInfo(){
+    public Map<String, Object> getMemoryInfo() {
         try {
             return redisService.getMemoryInfo();
         } catch (RedisConnectException e) {
@@ -183,7 +185,7 @@ public class RedisControllerAdmin extends AdminBaseController {
         }
         return failed();
     }
-    
+
     @ApiOperation("执行Redis pexpire命令")
     @RequiresPermissions("monitor:redis:edit")
     @Log("执行Redis pexpire命令")

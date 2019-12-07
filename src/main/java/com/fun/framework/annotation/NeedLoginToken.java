@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  * 若需更改，参考 com.fun.framework.interceptor.InterceptorConfig.class
  *
  * @author DJun
+ * @date 2019/11/11 7:30
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

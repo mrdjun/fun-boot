@@ -4,6 +4,7 @@ import com.fun.common.utils.MessageUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 异常基类
  *
  * @author DJun
  */

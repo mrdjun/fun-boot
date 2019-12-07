@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * 时间戳工具类
+ *
  * @author DJun
  */
 public class TimestampUtil {

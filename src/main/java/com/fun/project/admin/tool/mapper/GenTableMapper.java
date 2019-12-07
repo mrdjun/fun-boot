@@ -6,9 +6,9 @@ import com.fun.project.admin.tool.entity.GenTable;
 import java.util.List;
 
 /**
- * 业务 数据层
+ * 业务
  *
- * @author cqjava
+ * @author DJun
  */
 public interface GenTableMapper {
     /**

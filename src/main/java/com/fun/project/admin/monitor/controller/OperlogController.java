@@ -3,7 +3,9 @@ package com.fun.project.admin.monitor.controller;
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
 import com.fun.common.result.CommonResult;
+import com.fun.framework.annotation.DataSource;
 import com.fun.framework.annotation.Log;
+import com.fun.framework.annotation.enums.DataSourceType;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.OperLog;
 import com.fun.project.admin.monitor.service.IOperLogService;
@@ -27,8 +29,7 @@ import static com.fun.common.result.CommonResult.success;
 @Api(tags = "操作日志")
 @Controller
 @RequestMapping("/admin/monitor/operlog")
-public class OperlogControllerAdmin extends AdminBaseController {
-
+public class OperlogController extends AdminBaseController {
 
     @Autowired
     private IOperLogService operLogService;

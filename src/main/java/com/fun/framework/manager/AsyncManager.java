@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 异步任务管理器
+ *
  * @author DJun
  */
 public class AsyncManager {
@@ -22,9 +23,7 @@ public class AsyncManager {
      */
     private ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
 
-    /**
-     * 单例模式
-     */
+    /** 单例模式 */
     private AsyncManager() {}
 
     private static AsyncManager me = new AsyncManager();

@@ -32,7 +32,7 @@ import static com.fun.common.result.CommonResult.success;
 /**
  * Excel相关处理
  *
- * @author cqjava
+ * @author DJun
  */
 public class ExcelUtil<T> {
     private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);

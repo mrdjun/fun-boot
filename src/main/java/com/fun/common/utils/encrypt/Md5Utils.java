@@ -11,6 +11,7 @@ import java.util.Objects;
 
 /**
  * Md5加密方法
+ *
  * @author DJun
  */
 public class Md5Utils {
@@ -50,7 +51,7 @@ public class Md5Utils {
         try {
             return new String(Objects.requireNonNull(toHex(md5(s))).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            log.error("not supported charset...{}", e);
+            log.error("not supported charset...{}", e.getMessage());
             return s;
         }
     }

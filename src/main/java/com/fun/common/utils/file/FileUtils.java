@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 
 /**
  * 文件处理工具类
+ *
  * @author DJun
  * @date 2019/9/12 18:40
  */
@@ -18,7 +19,6 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      * @param os       输出流
-     * @return
      */
     public static void writeBytes(String filePath, OutputStream os) throws IOException {
         FileInputStream fis = null;

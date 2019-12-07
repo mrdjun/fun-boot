@@ -11,7 +11,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
 /**
- * js 调用 thymeleaf 实现按钮权限可见性
+ * thymeleaf 实现按钮权限可见性
  *
  * @author DJun
  * @date 2019/10/30

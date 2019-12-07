@@ -9,9 +9,9 @@ import com.fun.project.admin.tool.entity.GenTableColumn;
 import java.util.Arrays;
 
 /**
- * 代码生成器 工具类
+ * 代码生成器工具类
  *
- * @author cqjava
+ * @author DJun
  */
 public class GenUtils {
     /**

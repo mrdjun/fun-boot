@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * druid 配置多数据源
+ * druid 多数据源配置
  *
  * @author DJun
  */

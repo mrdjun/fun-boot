@@ -2,6 +2,7 @@ package com.fun.common.exception.base;
 
 /**
  * 业务发生异常
+ *
  * @author DJun
  */
 public class BusinessException extends RuntimeException {

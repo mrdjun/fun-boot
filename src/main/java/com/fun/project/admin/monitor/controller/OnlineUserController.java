@@ -24,7 +24,7 @@ import static com.fun.common.result.CommonResult.success;
 @Api(tags = {"在线用户"})
 @Controller
 @RequestMapping("/admin/monitor/online")
-public class OnlineUserControllerAdmin extends AdminBaseController {
+public class OnlineUserController extends AdminBaseController {
     private static String prefix = "monitor/online";
 
     @Autowired

@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 import java.util.Map;
 
 /**
- * 动态数据源
+ * 动态数据源配置
  *
  * @author DJun
  */

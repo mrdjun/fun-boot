@@ -5,6 +5,8 @@ import com.fun.project.admin.monitor.entity.LoginLog;
 import java.util.List;
 
 /**
+ * 登录日志
+ *
  * @author DJun
  * @date 2019/9/13 12:41
  */

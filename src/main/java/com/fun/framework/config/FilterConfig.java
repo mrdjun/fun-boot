@@ -13,7 +13,7 @@ import javax.servlet.DispatcherType;
 import java.util.Map;
 
 /**
- * Filter配置
+ * XSSFilter配置
  *
  * @author DJun
  */

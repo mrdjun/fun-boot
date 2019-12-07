@@ -5,9 +5,9 @@ import com.fun.project.admin.system.entity.Config;
 import java.util.List;
 
 /**
- * 参数配置表
+ * 参数配置
  *
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 public interface IConfigService {

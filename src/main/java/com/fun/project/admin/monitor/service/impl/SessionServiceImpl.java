@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ *
  * @author DJun
  * @date 2019/11/4
  */
@@ -42,7 +43,7 @@ public class SessionServiceImpl implements ISessionService {
     public List<OnlineUser> list(String loginName) {
         String currentSessionId = ShiroUtils.getSessionId();
         List<OnlineUser> list = new ArrayList<>();
-        InetAddress inetAddress = null;
+        InetAddress inetAddress;
         Collection<Session> sessions = sessionDAO.getActiveSessions();
         for (Session session : sessions) {
             OnlineUser onlineUser = new OnlineUser();

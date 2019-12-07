@@ -23,6 +23,7 @@ import static com.fun.common.result.CommonResult.failed;
 import static com.fun.common.result.CommonResult.success;
 
 /**
+ *
  * @author DJun
  * @date 2019/11/4
  */

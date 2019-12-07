@@ -11,7 +11,6 @@ import com.fun.framework.annotation.Limit;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.annotation.PassToken;
 import com.fun.framework.annotation.enums.LimitType;
-import com.fun.framework.web.controller.AppBaseController;
 import com.fun.framework.web.service.TokenService;
 import com.fun.project.app.user.dto.UserDto;
 import com.fun.project.app.user.entity.AppUser;
@@ -115,9 +114,6 @@ public class AppLoginController{
         }
         appUser.setLoginName(user.getLoginName());
         appUser.setPassword(user.getPassword());
-        appUser.setSalt(user.getSalt());
-        appUser.setUAccount(AppRandomUtils.getStr16());
-
         return success(appUserService.insertUser(appUser));
     }
 
@@ -145,7 +141,5 @@ public class AppLoginController{
         }
         return success(newToken);
     }
-
-
 
 }

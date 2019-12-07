@@ -5,6 +5,8 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.n3r.idworker.Sid;
 
 /**
+ * APP 随机生成封装类
+ *
  * @author DJun
  * @date 2019/11/25
  */

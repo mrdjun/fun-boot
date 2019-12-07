@@ -4,7 +4,8 @@ import com.fun.common.constant.Constants;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.github.pagehelper.PageInfo;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -14,24 +15,20 @@ import java.util.List;
  *
  * @author DJun
  */
-@Data
+@Getter
+@Setter
 public class CommonPage<T> {
 
-    /**
-     * 页数
-     */
+    /** 页数 */
     private Integer pageNum;
 
-    /**
-     * 每一页显示数据数
-     */
+    /** 每一页显示数据数 */
     private Integer pageSize;
 
-    /**
-     * 总页数
-     */
+    /** 总页数 */
     private Integer totalPage;
     private Long total;
+    /** 数据列表 */
     private List<T> list;
 
     /**  排序列 */

@@ -1,7 +1,7 @@
 package com.fun.framework.redis;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +9,8 @@ import java.util.Map;
 /**
  * @author DJun
  */
-@Data
-@ToString
+@Getter
+@Setter
 public class RedisInfo {
 
     private static Map<String, String> map = new HashMap<>();

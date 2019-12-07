@@ -1,6 +1,5 @@
 package com.fun.project.admin.tool.service;
 
-import com.fun.common.utils.TimestampUtil;
 import com.fun.common.utils.text.Convert;
 import com.fun.project.admin.tool.entity.GenTableColumn;
 import com.fun.project.admin.tool.mapper.GenTableColumnMapper;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 业务字段 服务层实现
+ * 业务字段
  *
  * @author DJun
  */

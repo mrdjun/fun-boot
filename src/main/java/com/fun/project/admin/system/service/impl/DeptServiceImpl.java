@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 部门管理 服务实现
+ * 部门管理
  *
- * @author fun
+ * @author DJun
  */
 @Service
 public class DeptServiceImpl implements IDeptService {
@@ -61,7 +61,7 @@ public class DeptServiceImpl implements IDeptService {
     @Override
     public List<Ztree> roleDeptTreeData(Role role) {
         Long roleId = role.getRoleId();
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees;
         List<Dept> deptList = selectDeptList(new Dept());
         if (StringUtils.isNotNull(roleId)) {
             List<String> roleDeptList = deptMapper.selectRoleDeptTree(roleId);

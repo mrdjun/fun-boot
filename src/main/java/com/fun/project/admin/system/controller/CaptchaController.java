@@ -19,12 +19,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * 支持算术和字符串验证两种方案，在 fun-boot.properties 切换
+ * 支持算术和字符串验证两种方案
+ * 在 fun-boot.properties 中配置切换
+ *
  * @author DJun
+ * @date 2019/08/05 22:10
  */
 @Controller
 @RequestMapping("/captcha")
-@Api(tags = {"admin验证码接口"})
+@Api(tags = {"管理员验证码接口"})
 public class CaptchaController {
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;

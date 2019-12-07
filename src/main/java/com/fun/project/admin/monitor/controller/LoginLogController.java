@@ -25,7 +25,7 @@ import static com.fun.common.result.CommonResult.success;
 @Api(tags = {"登录日志"})
 @Controller
 @RequestMapping("/admin/monitor/loginlog")
-public class LoginLogControllerAdmin extends AdminBaseController {
+public class LoginLogController extends AdminBaseController {
     @Autowired
     private ILoginLogService loginLogService;
 

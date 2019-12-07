@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 /**
  * 字典类型表
  *
- * @author u-fun
+ * @author DJun
  * @date 2019/10/30
  */
 @Getter

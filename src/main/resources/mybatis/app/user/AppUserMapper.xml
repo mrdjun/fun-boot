@@ -52,9 +52,9 @@
         select
             user_id, login_name, username, u_account,
             user_level, email, sex, password, salt, avatar, telephone,
-             del_flag, login_ip, login_date, open_id, is_lock, create_time,
-             update_time, status, remark, honor, exp, fans_num, follow_num,
-             oid, health, ban_time, is_verify
+            del_flag, login_ip, login_date, open_id, is_lock, create_time,
+            update_time, status, remark, honor, exp, fans_num, follow_num,
+            oid, health, ban_time, is_verify
          from ums_user
     </sql>
 
@@ -218,12 +218,12 @@
     </select>
 
     <select id="selectUserPermsByUserId" resultType="String" parameterType="Long">
-        SELECT up.perms
+        SELECT up.perm
         FROM ums_user u
         LEFT JOIN ums_user_role ur ON ur.user_id=u.user_id
         LEFT JOIN ums_role r ON r.role_id=ur.role_id
         LEFT JOIN ums_role_perm rp ON rp.role_id=r.role_id
-        LEFT JOIN ums_permission up ON up.perms_id=rp.perms_id
+        LEFT JOIN ums_permission up ON up.perm_id=rp.perm_id
         WHERE up.status='1' and u.user_id=#{userId}
     </select>
 
@@ -276,5 +276,9 @@
             AND u.telephone like concat('%', #{telephone}, '%')
         </if>
     </select>
-
+    <select id="selectAppUserByLoginName" parameterType="String" resultMap="AppUserResult">
+        <include refid="selectUserRoleVo"/>
+        where u.login_name=#{loginName}
+    </select>
+    
 </mapper>

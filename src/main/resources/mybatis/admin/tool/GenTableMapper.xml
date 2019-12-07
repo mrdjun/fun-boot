@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fun.project.admin.tool.mapper.GenTableMapper">
 
-	<resultMap type="GenTable" id="GenTableResult">
+	<resultMap  type="GenTable" 		  id="GenTableResult"		>
 		<id     property="tableId"        column="table_id"        />
 		<result property="tableName"      column="table_name"      />
 		<result property="tableComment"   column="table_comment"   />

@@ -3,7 +3,7 @@ package com.fun.framework.web.service;
 import java.util.List;
 
 /**
- * 通用授权用户接口
+ * Admin 和 App 端通用授权用户接口
  *
  * @author DJun
  * @date 2019/12/2
@@ -45,7 +45,7 @@ public interface IAuthUserService<T> {
     int deleteAuthUsers(Long roleId, String userIds);
 
     /**
-     * 取消单个用户授权
+     * 取消单个用户的授权
      *
      * @param roleId roleId
      * @param userId userId
