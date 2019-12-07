@@ -10,7 +10,7 @@
 
 ### ✨ 简介
 
-> FunBoot是一款带有管理后台和App端让您快速开发的脚手架项目 🏠[文档](https://mrdjun.github.io/) ⬇️[下载](https://github.com/mrdjun/fun-boot) 📚[English Document](https://github.com/chaitin/xray/tree/master/docs/en-us/generic)
+> FunBoot是一款带有管理后台和App端让您快速开发的脚手架项目 🏠[文档](https://mrdjun.github.io/) ⬇️[下载](https://github.com/mrdjun/fun-boot) 📚[English Document](https://mrdjun.github.io/#/en-us/generic/README)
 > 
 > FunBoot采用全新的Java Web框架——Spring Boot 2.1.1，省去了如往日的SSH项目中的大量繁琐的XML配置，使得二次开发更加简便。在数据持久层方面选择的是MyBatis开源框架与PageHelper插件，可以快速的实现对单表的增删改查。为什么不选择MyBatisPlus或JPA省去写SQL？原因有二：其一，控制性能。其二，学习SQL性能优化。缓存采用的是性能出众的Redis。
 > 
