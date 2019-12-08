@@ -35,7 +35,7 @@
 
 ## 📝 讨论区
 
-提交BUG或需求等等请务必先阅读 [https://mrdjun.github.io/mrdjun/fun-boot/doc/feedback](guide/feedback.md)
+提交BUG或需求等等请务必先阅读 [https://mrdjun.github.io/#/guide/feedback](https://mrdjun.github.io/#/guide/feedback.md)
 
 如有问题可以在 GitHub 提 issue, 也可在下方的讨论组里
 
