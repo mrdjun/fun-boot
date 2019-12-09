@@ -52,23 +52,22 @@ public class AppUserServiceImpl implements IAppUserService {
         appUser.setOpenId(getStr18());
         appUser.setCreateTime(TimestampUtil.getCurrentTimestamp13());
         AppUserRole userRole = new AppUserRole();
-        if (StringUtils.isEmpty(appUser.getUsername())){
+        if (StringUtils.isEmpty(appUser.getUsername())) {
             appUser.setUsername(AppRandomUtils.getUsername());
         }
-        if (StringUtils.isEmpty(appUser.getAvatar())){
+        if (StringUtils.isEmpty(appUser.getAvatar())) {
             appUser.setAvatar(AppRandomUtils.getHead());
         }
-        int res = appUserMapper.insertUser(appUser);
-        if (res > 0) {
-            if (StringUtils.isNotNull(appUser.getRoleId())){
-                userRole.setUserId(appUser.getUserId());
-                // 默认用户为注册用户
-                userRole.setRoleId(3L);
-            }
+        appUserMapper.insertUser(appUser);
+        userRole.setUserId(appUser.getUserId());
+        if (StringUtils.isNull(appUser.getRoleId())) {
+            // 默认用户为注册用户
+            userRole.setRoleId(3L);
+        } else {
             userRole.setRoleId(appUser.getRoleId());
-            return userRoleMapper.insertAppUserRole(userRole);
         }
-        return res;
+
+        return userRoleMapper.insertAppUserRole(userRole);
     }
 
     @Override
@@ -121,7 +120,7 @@ public class AppUserServiceImpl implements IAppUserService {
     @Override
     public String checkLoginNameUnique(UserDto user) {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        AppUser info  = appUserMapper.checkLoginNameUnique(user.getLoginName());
+        AppUser info = appUserMapper.checkLoginNameUnique(user.getLoginName());
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
             return Constants.NOT_UNIQUE;
         }
