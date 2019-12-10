@@ -8,6 +8,14 @@
 <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" /></a>
 </p>
 
+### 🎉预览
+
+预览地址：[点击跳转直通车](http://116.62.152.80/)
+
+账号：mrdjun
+
+密码：123456
+
 ### ✨ 简介
 
 > FunBoot是一款带有管理后台和App端让您快速开发的脚手架项目 🏠[文档](https://mrdjun.github.io/) ⬇️[下载](https://github.com/mrdjun/fun-boot) 📚[English Document](https://mrdjun.github.io/#/en-us/generic/README)
