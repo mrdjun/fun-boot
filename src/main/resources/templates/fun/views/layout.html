@@ -161,11 +161,11 @@
 <script th:src="@{/fun/js/index.js}"></script>
 <script th:src="@{/fun/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script th:inline="javascript">
-    var ctx = [[@{ /}]];
+    var ctx = [[@{/}]];
 
     /*用户管理-重置密码*/
     function resetPwd() {
-        var url = ctx + 'system/user/profile/resetPwd';
+        var url = ctx + 'admin/system/user/profile/resetPwd';
         $.modal.open("重置密码", url, '800', '500');
     }
 </script>
