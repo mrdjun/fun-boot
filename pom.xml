@@ -6,7 +6,7 @@
 
     <groupId>com.fun</groupId>
     <artifactId>fun-boot</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0.0</version>
 
     <developers>
@@ -20,7 +20,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.1.RELEASE</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <properties>
@@ -347,8 +347,23 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!-- IP定位插件 -->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>1.7</version>
+        </dependency>
     </dependencies>
 
+    <!-- 将配置文件写入Jar包 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
