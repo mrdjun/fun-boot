@@ -2,8 +2,19 @@ package com.fun.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fun.common.constant.Constants;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.lionsoul.ip2region.DataBlock;
+import org.lionsoul.ip2region.DbConfig;
+import org.lionsoul.ip2region.DbSearcher;
+import org.lionsoul.ip2region.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
 
 
 /**
@@ -16,7 +27,15 @@ public class AddressUtils {
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
     private static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
 
-    public static String getRealAddressByIP(String ip) {
+    /**
+     * 方案一：
+     * 淘宝IP查询地区接口实现
+     * 此方法不可靠，经常出问题
+     *
+     * @param ip ip
+     * @return 地区+成实
+     */
+    public static String getCityInfo(String ip) {
         // 关闭查询后，记录地区内容为 XX XX
         String address = "XX XX";
 
@@ -42,5 +61,52 @@ public class AddressUtils {
             address = region + " " + city;
         }
         return address;
+    }
+
+    /**
+     * 方案二：
+     * ip2region实现
+     *
+     * @param ip ip
+     * @return 详细地址
+     */
+    public static String getRealAddressByIP(String ip) {
+        DbSearcher searcher = null;
+        try {
+            String dbPath = AddressUtils.class.getResource("/ip2region/ip2region.db").getPath();
+            File file = new File(dbPath);
+            if (!file.exists()) {
+                String tmpDir = System.getProperties().getProperty("java.io.tmpdir");
+                dbPath = tmpDir + File.separator + "ip.db";
+                file = new File(dbPath);
+                InputStream resourceAsStream = AddressUtils.class.getClassLoader().getResourceAsStream("classpath:ip2region/ip2region.db");
+                if (resourceAsStream != null) {
+                    FileUtils.copyInputStreamToFile(resourceAsStream, file);
+                }
+            }
+            DbConfig config = new DbConfig();
+            searcher = new DbSearcher(config, file.getPath());
+            Method method = searcher.getClass().getMethod("btreeSearch", String.class);
+            if (!Util.isIpAddress(ip)) {
+                log.error("Error: Invalid ip address");
+            }
+            DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
+            return dataBlock.getRegion();
+        } catch (Exception e) {
+            log.error("获取地址信息异常，{}", e.getMessage());
+            return StringUtils.EMPTY;
+        } finally {
+            if (searcher != null) {
+                try {
+                    searcher.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getRealAddressByIP("116.62.152.80"));
     }
 }
