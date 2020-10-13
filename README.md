@@ -8,6 +8,8 @@
 <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" /></a>
 </p>
 
+# 全新 FUN-BOOT 正在升级，有此提示出现切勿下载！感谢您对此项目的关注！
+
 ### 🎉预览
 
 文档地址：[点击跳转直通车](http://mrdjun.github.io/)
