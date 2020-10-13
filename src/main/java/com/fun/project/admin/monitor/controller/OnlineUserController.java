@@ -2,7 +2,7 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.OnlineUser;
 import com.fun.project.admin.monitor.service.ISessionService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -40,7 +40,7 @@ public class OnlineUserController extends AdminBaseController {
     @PostMapping("/list")
     @RequiresPermissions("monitor:online:list")
     @ResponseBody
-    public CommonResult selectOnlineUserList(String loginName) {
+    public R selectOnlineUserList(String loginName) {
         startPage();
         List<OnlineUser> list = sessionService.list(loginName);
         return success(CommonPage.restPage(list));
@@ -50,7 +50,7 @@ public class OnlineUserController extends AdminBaseController {
     @PostMapping("/remove")
     @RequiresPermissions("monitor:online:remove")
     @ResponseBody
-    public CommonResult kickOutOnlineUser(String ids) {
+    public R kickOutOnlineUser(String ids) {
         sessionService.forceLogout(ids);
         return success(Constants.SUCCESS);
     }

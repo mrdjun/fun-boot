@@ -3,7 +3,7 @@ package com.fun.project.admin.monitor.controller;
 import com.fun.common.constant.Constants;
 import com.fun.common.exception.TaskException;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.Job;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  * 任务调度
@@ -51,7 +51,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult<CommonPage> selectJobList(Job job) {
+    public R<CommonPage<Job>> selectJobList(Job job) {
         startPage();
         List<Job> list = jobService.selectJobList(job);
         return success(CommonPage.restPage(list));
@@ -62,7 +62,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteJobByIds(String ids) throws SchedulerException {
+    public R deleteJobByIds(String ids) throws SchedulerException {
         jobService.deleteJobByIds(ids);
         return success(Constants.SUCCESS);
     }
@@ -80,7 +80,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public CommonResult changeJobStatus(Job job) throws SchedulerException {
+    public R changeJobStatus(Job job) throws SchedulerException {
         Job newJob = jobService.selectJobById(job.getJobId());
         newJob.setStatus(job.getStatus());
         return success(jobService.changeStatus(newJob));
@@ -91,7 +91,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:changeStatus")
     @PostMapping("/run")
     @ResponseBody
-    public CommonResult run(Job job) throws SchedulerException {
+    public R run(Job job) throws SchedulerException {
         jobService.run(job);
         return success(Constants.SUCCESS);
     }
@@ -109,7 +109,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:add")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult insertJobSave(@Validated Job job) {
+    public R insertJobSave(@Validated Job job) {
         int res = 0;
         try {
             res = jobService.insertJob(job);
@@ -136,7 +136,7 @@ public class JobController extends AdminBaseController {
     @RequiresPermissions("monitor:job:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated Job job) {
+    public R editSave(@Validated Job job) {
         int res = 0;
         try {
             res = jobService.updateJob(job);

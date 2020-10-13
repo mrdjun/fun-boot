@@ -2,7 +2,7 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.JobLog;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * 任务调度日志
@@ -44,7 +44,7 @@ public class JobLogController extends AdminBaseController {
     @RequiresPermissions("monitor:job:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult<CommonPage> selectJobList(JobLog job) {
+    public R<CommonPage> selectJobList(JobLog job) {
         startPage();
         List<JobLog> list = jobLogService.selectJobLogList(job);
         return success(CommonPage.restPage(list));
@@ -55,7 +55,7 @@ public class JobLogController extends AdminBaseController {
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult remove(String ids) {
+    public R remove(String ids) {
         return success(jobLogService.deleteJobLogByIds(ids));
     }
 
@@ -72,7 +72,7 @@ public class JobLogController extends AdminBaseController {
     @RequiresPermissions("monitor:job:remove")
     @PostMapping("/clean")
     @ResponseBody
-    public CommonResult clean() {
+    public R clean() {
         jobLogService.cleanJobLog();
         return success(Constants.SUCCESS);
     }

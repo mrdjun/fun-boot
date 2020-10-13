@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.result.R;
 import com.fun.common.utils.poi.ExcelUtil;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.framework.web.entity.Ztree;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
-import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.IDictTypeService;
 import com.fun.project.admin.system.entity.dict.DictType;
@@ -21,7 +21,7 @@ import com.fun.common.pagehelper.CommonPage;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -45,7 +45,7 @@ public class DictTypeController extends AdminBaseController {
     @ApiOperation(value = "分页查询DictType列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult selectDictTypeList(DictType dictType) {
+    public R selectDictTypeList(DictType dictType) {
         startPage();
         List<DictType> dictTypes = dictTypeService.selectDictTypeList(dictType);
         return success(CommonPage.restPage(dictTypes));
@@ -56,7 +56,7 @@ public class DictTypeController extends AdminBaseController {
     @RequiresPermissions("system:dict:export" )
     @PostMapping("/export" )
     @ResponseBody
-    public CommonResult export(DictType dictType) {
+    public R export(DictType dictType) {
         List<DictType> list = dictTypeService.selectDictTypeList(dictType);
         ExcelUtil<DictType> util = new ExcelUtil<>(DictType.class);
         return util.exportExcel(list, "字典类型" );
@@ -74,9 +74,9 @@ public class DictTypeController extends AdminBaseController {
     @Log("新增DictType")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult insertDictType(DictType dictType) {
+    public R insertDictType(DictType dictType) {
         if (Constants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dictType))) {
-            return CommonResult.failed("新增字典'" + dictType.getDictName() + "'失败，字典类型已存在");
+            return R.failed("新增字典'" + dictType.getDictName() + "'失败，字典类型已存在");
         }
         return success(dictTypeService.insertDictType(dictType));
     }
@@ -95,7 +95,7 @@ public class DictTypeController extends AdminBaseController {
     @Log("修改DictType信息")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult updateDictType(DictType dictType) {
+    public R updateDictType(DictType dictType) {
         return success(dictTypeService.updateDictType(dictType));
     }
 
@@ -104,7 +104,7 @@ public class DictTypeController extends AdminBaseController {
     @Log("通过ids批量删除DictType")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteDictTypeByIds(String ids) {
+    public R deleteDictTypeByIds(String ids) {
         return success(dictTypeService.deleteDictTypeByIds(ids));
     }
 

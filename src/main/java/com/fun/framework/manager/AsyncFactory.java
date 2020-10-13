@@ -11,8 +11,6 @@ import com.fun.project.admin.monitor.service.IOperLogService;
 import com.fun.project.admin.monitor.service.impl.LoginLogServiceImpl;
 import com.fun.project.admin.system.entity.user.AdminUser;
 import com.fun.project.admin.system.service.impl.AdminUserServiceImpl;
-import com.fun.project.app.user.entity.AppUser;
-import com.fun.project.app.user.service.impl.AppUserServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -90,11 +88,7 @@ public class AsyncFactory {
 
                 // 更新APP用户最后一次登录信息
                 if (loginType == LoginType.App) {
-                    AppUser appUser = new AppUser();
-                    appUser.setLoginDate(TimestampUtil.getCurrentTimestamp13());
-                    appUser.setLoginName(loginLog.getLoginName());
-                    appUser.setLoginIp(ipAddr);
-                    SpringUtils.getBean(AppUserServiceImpl.class).updateAppUserByLoginName(appUser);
+
                 } else {
                     // 更新Admin用户最后一次登录信息
                     AdminUser adminUser = new AdminUser();
@@ -120,12 +114,12 @@ public class AsyncFactory {
         return new TimerTask() {
             @Override
             public void run() {
-                AppUser userInfo = SpringUtils.getBean(AppUserServiceImpl.class).selectAppUserByLoginName(loginName);
-                try {
-                    SpringUtils.getBean(RedisServiceImpl.class).set(loginName, JSON.toJSONString(userInfo),milliscends);
-                } catch (RedisConnectException e) {
-                    log.error("redis 连接失败-{}",DateUtils.getNowDate());
-                }
+//                AppUser userInfo = SpringUtils.getBean(AppUserServiceImpl.class).selectAppUserByLoginName(loginName);
+//                try {
+//                    SpringUtils.getBean(RedisServiceImpl.class).set(loginName, JSON.toJSONString(userInfo),milliscends);
+//                } catch (RedisConnectException e) {
+//                    log.error("redis 连接失败-{}",DateUtils.getNowDate());
+//                }
             }
         };
     }

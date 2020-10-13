@@ -2,7 +2,7 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.role.Role;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -51,7 +51,7 @@ public class RoleController extends AdminBaseController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult list(Role role) {
+    public R list(Role role) {
         startPage();
         List<Role> list = roleService.selectRoleList(role);
         return success(CommonPage.restPage(list));
@@ -70,7 +70,7 @@ public class RoleController extends AdminBaseController {
     @Log("新增角色")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult addSave(@Validated Role role) {
+    public R addSave(@Validated Role role) {
         if (Constants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
             return failed("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (Constants.NOT_UNIQUE.equals(roleService.checkRoleKeyUnique(role))) {
@@ -93,7 +93,7 @@ public class RoleController extends AdminBaseController {
     @Log("修改角色")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated Role role) {
+    public R editSave(@Validated Role role) {
         if (Constants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
             return failed("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
         } else if (Constants.NOT_UNIQUE.equals(roleService.checkRoleKeyUnique(role))) {
@@ -116,7 +116,7 @@ public class RoleController extends AdminBaseController {
     @Log("保存角色分配数据权限")
     @PostMapping("/authDataScope")
     @ResponseBody
-    public CommonResult authDataScopeSave(Role role) {
+    public R authDataScopeSave(Role role) {
         if (roleService.authDataScope(role) > 0) {
             setSysUser(userService.selectAdminUserById(getSysUser().getUserId()));
             return success(Constants.SUCCESS);
@@ -129,7 +129,7 @@ public class RoleController extends AdminBaseController {
     @Log("批量删除角色")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult remove(String ids) {
+    public R remove(String ids) {
         try {
             return success(roleService.deleteRoleByIds(ids));
         } catch (Exception e) {
@@ -168,7 +168,7 @@ public class RoleController extends AdminBaseController {
     @RequiresPermissions("system:role:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public CommonResult changeStatus(Role role) {
+    public R changeStatus(Role role) {
         return success(roleService.changeStatus(role));
     }
 
@@ -186,7 +186,7 @@ public class RoleController extends AdminBaseController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/allocatedList")
     @ResponseBody
-    public CommonResult allocatedList(AdminUser user) {
+    public R allocatedList(AdminUser user) {
         startPage();
         List<AdminUser> list = userService.selectAllocatedList(user);
         return success(CommonPage.restPage(list));
@@ -197,7 +197,7 @@ public class RoleController extends AdminBaseController {
     @Log("单个取消授权")
     @PostMapping("/authUser/cancel")
     @ResponseBody
-    public CommonResult cancelAuthUser(UserRole userRole) {
+    public R cancelAuthUser(UserRole userRole) {
         return success(roleService.deleteAuthUser(userRole));
     }
 
@@ -205,7 +205,7 @@ public class RoleController extends AdminBaseController {
     @Log("批量取消授权")
     @PostMapping("/authUser/cancelAll")
     @ResponseBody
-    public CommonResult cancelAuthUserAll(Long roleId, String userIds) {
+    public R cancelAuthUserAll(Long roleId, String userIds) {
         return success(roleService.deleteAuthUsers(roleId, userIds));
     }
 
@@ -222,7 +222,7 @@ public class RoleController extends AdminBaseController {
     @RequiresPermissions("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     @ResponseBody
-    public CommonResult unallocatedList(AdminUser user) {
+    public R unallocatedList(AdminUser user) {
         startPage();
         List<AdminUser> list = userService.selectUnallocatedList(user);
         return success(CommonPage.restPage(list));
@@ -232,7 +232,7 @@ public class RoleController extends AdminBaseController {
     @Log("批量选择用户授权")
     @PostMapping("/authUser/selectAll")
     @ResponseBody
-    public CommonResult selectAuthUserAll(Long roleId, String userIds) {
+    public R selectAuthUserAll(Long roleId, String userIds) {
         return success(roleService.insertAuthUsers(roleId, userIds));
     }
 

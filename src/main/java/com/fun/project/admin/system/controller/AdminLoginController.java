@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotation.Limit;
@@ -43,9 +43,9 @@ public class AdminLoginController {
     @PostMapping("/login")
     @Limit(key = "login", period = 60, count = 5, name = "后台登录接口", prefix = "limit")
     @ResponseBody
-    public CommonResult loginAsync(@NotBlank(message = "{required}") String loginName,
-                                   @NotBlank(message = "{required}") String password,
-                                   @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe) {
+    public R loginAsync(@NotBlank(message = "{required}") String loginName,
+                        @NotBlank(message = "{required}") String password,
+                        @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe) {
         UsernamePasswordToken token = new UsernamePasswordToken(loginName, password, rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -55,10 +55,10 @@ public class AdminLoginController {
             if (StringUtils.isNotEmpty(e.getMessage())){
                 msg = e.getMessage();
             }
-            return CommonResult.failed(msg);
+            return R.failed(msg);
         }
 
-        return CommonResult.success(Constants.LOGIN_SUCCESS);
+        return R.success(Constants.LOGIN_SUCCESS);
     }
 
 }

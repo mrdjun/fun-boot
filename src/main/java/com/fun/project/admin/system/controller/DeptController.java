@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.StringUtils;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.*;
+import static com.fun.common.result.R.*;
 
 /**
  * @author DJun
@@ -63,7 +63,7 @@ public class DeptController extends AdminBaseController {
     @RequiresPermissions("system:dept:add")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult addSave(@Validated Dept dept) {
+    public R addSave(@Validated Dept dept) {
         if (Constants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
             return failed("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
@@ -88,7 +88,7 @@ public class DeptController extends AdminBaseController {
     @RequiresPermissions("system:dept:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated Dept dept) {
+    public R editSave(@Validated Dept dept) {
         if (Constants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
             return failed("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(dept.getDeptId())) {
@@ -103,7 +103,7 @@ public class DeptController extends AdminBaseController {
     @RequiresPermissions("system:dept:remove")
     @GetMapping("/remove/{deptId}")
     @ResponseBody
-    public CommonResult remove(@PathVariable("deptId") Long deptId) {
+    public R remove(@PathVariable("deptId") Long deptId) {
         if (deptService.selectDeptCount(deptId) > 0) {
             return warn("存在下级部门,不允许删除");
         }

@@ -2,7 +2,7 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.LoginLog;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -39,7 +39,7 @@ public class LoginLogController extends AdminBaseController {
     @ApiOperation(value = "分页查询LoginLog列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult selectLoginLogList(LoginLog loginLog) {
+    public R selectLoginLogList(LoginLog loginLog) {
         startPage();
         List<LoginLog> loginLogList = loginLogService.selectLoginLogList(loginLog);
         return success(CommonPage.restPage(loginLogList));
@@ -51,7 +51,7 @@ public class LoginLogController extends AdminBaseController {
     @Log("删除LoginLog")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteLoginLogByIds(String ids) {
+    public R deleteLoginLogByIds(String ids) {
         return success(loginLogService.deleteLoginLogByIds(ids));
     }
 
@@ -59,7 +59,7 @@ public class LoginLogController extends AdminBaseController {
     @Log("清空登陆日志")
     @PostMapping("/clean")
     @ResponseBody
-    public CommonResult clean() {
+    public R clean() {
         loginLogService.cleanLoginLog();
         return success(Constants.SUCCESS);
     }

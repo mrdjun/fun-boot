@@ -2,7 +2,7 @@ package com.fun.project.admin.tool.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.text.Convert;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * 代码生成
@@ -53,7 +53,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult genList(GenTable genTable) {
+    public R genList(GenTable genTable) {
         startPage();
         List<GenTable> list = genTableService.selectGenTableList(genTable);
         return success(CommonPage.restPage(list));
@@ -65,7 +65,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/db/list")
     @ResponseBody
-    public CommonResult dataList(GenTable genTable) {
+    public R dataList(GenTable genTable) {
         startPage();
         List<GenTable> list = genTableService.selectDbTableList(genTable);
         return success(CommonPage.restPage(list));
@@ -77,7 +77,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:list")
     @PostMapping("/column/list")
     @ResponseBody
-    public CommonResult columnList(GenTableColumn genTableColumn) {
+    public R columnList(GenTableColumn genTableColumn) {
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(genTableColumn);
         return success(CommonPage.restPage(list));
     }
@@ -98,7 +98,7 @@ public class GenController extends AdminBaseController {
     @Log("代码生成")
     @PostMapping("/importTable")
     @ResponseBody
-    public CommonResult importTableSave(String tables) {
+    public R importTableSave(String tables) {
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
@@ -122,7 +122,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated GenTable genTable) {
+    public R editSave(@Validated GenTable genTable) {
         genTableService.validateEdit(genTable);
         genTableService.updateGenTable(genTable);
         return success(Constants.SUCCESS);
@@ -131,7 +131,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult remove(String ids) {
+    public R remove(String ids) {
         genTableService.deleteGenTableByIds(ids);
         return success(Constants.SUCCESS);
     }
@@ -142,7 +142,7 @@ public class GenController extends AdminBaseController {
     @RequiresPermissions("tool:gen:preview")
     @GetMapping("/preview/{tableId}")
     @ResponseBody
-    public CommonResult preview(@PathVariable("tableId") Long tableId) throws IOException {
+    public R preview(@PathVariable("tableId") Long tableId) throws IOException {
         Map<String, String> dataMap = genTableService.previewCode(tableId);
         return success(dataMap);
 

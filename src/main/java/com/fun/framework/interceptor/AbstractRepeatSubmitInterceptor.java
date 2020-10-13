@@ -1,7 +1,8 @@
 package com.fun.framework.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
+import com.fun.common.utils.MessageUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotation.RepeatSubmit;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,8 @@ public abstract class AbstractRepeatSubmitInterceptor extends HandlerInterceptor
             RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
             if (annotation != null) {
                 if (this.isRepeatSubmit(request)) {
-                    CommonResult commonResult = CommonResult.failed("系统繁忙，请稍后再试！");
-                    ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
+                    R<String> r = R.failed(MessageUtils.message("sys.busy"));
+                    ServletUtils.renderString(response, JSONObject.toJSONString(r));
                     return false;
                 }
             }

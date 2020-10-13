@@ -1,7 +1,7 @@
 package com.fun.project.common;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.ServletUtils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.file.FileUploadUtils;
@@ -42,8 +42,8 @@ public class UpDownController {
     public void fileDownload(String fileName, Boolean delete, HttpServletResponse response, HttpServletRequest request) {
         try {
             if (!FileUtils.isValidFilename(fileName)) {
-                CommonResult commonResult = CommonResult.failed(StringUtils.format("文件名称({})非法，不允许下载。 " , fileName));
-                ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
+                R r = R.failed(StringUtils.format("文件名称({})非法，不允许下载。 " , fileName));
+                ServletUtils.renderString(response, JSONObject.toJSONString(r));
             }
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_" ) + 1);
             String filePath = FunBootConfig.getDownloadPath() + "/" + fileName;
@@ -64,7 +64,7 @@ public class UpDownController {
      */
     @PostMapping("/common/upload" )
     @ResponseBody
-    public CommonResult uploadFile(MultipartFile file) throws Exception {
+    public R uploadFile(MultipartFile file) throws Exception {
         try {
             // 上传文件路径
             String filePath = FunBootConfig.getUploadPath();
@@ -74,9 +74,9 @@ public class UpDownController {
             JSONObject ajax = new JSONObject();
             ajax.put("fileName" , fileName);
             ajax.put("url" , url);
-            return CommonResult.success(ajax);
+            return R.success(ajax);
         } catch (Exception e) {
-            return CommonResult.failed(e.getMessage());
+            return R.failed(e.getMessage());
         }
     }
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.enums.LoginType;
 import com.fun.framework.web.controller.AppBaseController;
 import com.fun.framework.annotation.Log;
@@ -15,8 +15,8 @@ import com.fun.project.app.business.service.I${classInfo.className}Service;
 import com.fun.project.app.business.entity.${classInfo.className};
 import com.fun.common.pagehelper.CommonPage;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 import java.util.List;
 

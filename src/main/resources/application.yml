@@ -1,5 +1,6 @@
 server:
   port: 8886
+
   tomcat:
     uri-encoding: utf-8
   # HTTP请求和响应头的最大量，以字节为单位，默认值为4096字节,超过此长度的部分不予处理,一般8K。
@@ -9,12 +10,14 @@ server:
 
 spring:
   profiles:
+    # 启用模式
     active: dev
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  # 线上环境建议开启 thymeleaf 的缓存
   thymeleaf:
     cache: false
 

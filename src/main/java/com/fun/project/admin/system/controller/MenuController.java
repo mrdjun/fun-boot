@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.framework.web.entity.Ztree;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -69,7 +69,7 @@ public class MenuController extends AdminBaseController {
     @PostMapping("/add")
     @ResponseBody
     @RequiresPermissions("system:menu:add")
-    public CommonResult insertMenu(@Validated Menu menu) {
+    public R insertMenu(@Validated Menu menu) {
         if (Constants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return failed("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         }
@@ -81,7 +81,7 @@ public class MenuController extends AdminBaseController {
     @GetMapping("/remove/{menuId}")
     @ResponseBody
     @RequiresPermissions("system:menu:remove")
-    public CommonResult deleteMenuById(@PathVariable("menuId") Long menuId) {
+    public R deleteMenuById(@PathVariable("menuId") Long menuId) {
         if (menuService.selectCountMenuByParentId(menuId) > 0) {
             return failed("存在子菜单，不允许删除");
         }
@@ -105,7 +105,7 @@ public class MenuController extends AdminBaseController {
     @RequiresPermissions("system:menu:edit")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult updateMenu(@Validated Menu menu) {
+    public R updateMenu(@Validated Menu menu) {
         if (Constants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return failed("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         }

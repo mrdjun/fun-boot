@@ -1,7 +1,7 @@
 package com.fun.common.utils.poi;
 
 import com.fun.common.exception.base.BusinessException;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.DateUtils;
 import com.fun.common.utils.ReflectUtils;
 import com.fun.common.utils.StringUtils;
@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * Excel相关处理
@@ -222,7 +222,7 @@ public class ExcelUtil<T> {
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public CommonResult exportExcel(List<T> list, String sheetName) {
+    public R exportExcel(List<T> list, String sheetName) {
         this.init(list, sheetName, Type.EXPORT);
         return exportExcel();
     }
@@ -233,7 +233,7 @@ public class ExcelUtil<T> {
      * @param sheetName 工作表的名称
      * @return 结果
      */
-    public CommonResult importTemplateExcel(String sheetName) {
+    public R importTemplateExcel(String sheetName) {
         this.init(null, sheetName, Type.IMPORT);
         return exportExcel();
     }
@@ -243,7 +243,7 @@ public class ExcelUtil<T> {
      *
      * @return 结果
      */
-    public CommonResult exportExcel() {
+    public R exportExcel() {
         OutputStream out = null;
         try {
             // 取出一共有多少个sheet.

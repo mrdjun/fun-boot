@@ -2,10 +2,8 @@ package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
-import com.fun.framework.annotation.DataSource;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
-import com.fun.framework.annotation.enums.DataSourceType;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.monitor.entity.OperLog;
 import com.fun.project.admin.monitor.service.IOperLogService;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 
 /**
@@ -42,7 +40,7 @@ public class OperlogController extends AdminBaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult<CommonPage<OperLog>> operList(OperLog operLog) {
+    public R<CommonPage<OperLog>> operList(OperLog operLog) {
         startPage();
         List<OperLog> list = operLogService.selectOperLogList(operLog);
         return success(CommonPage.restPage(list));
@@ -59,14 +57,14 @@ public class OperlogController extends AdminBaseController {
     @Log("删除操作日志")
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/remove")
-    public CommonResult remove(String ids) {
+    public R remove(String ids) {
         return success(operLogService.deleteOperLogByIds(ids));
     }
 
     @RequiresPermissions("monitor:operlog:remove")
     @ApiOperation("清空操作日志")
     @PostMapping("/clean")
-    public CommonResult clean() {
+    public R clean() {
         operLogService.cleanOperLog();
         return success(Constants.SUCCESS);
     }

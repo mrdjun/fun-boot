@@ -1,7 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.encrypt.Md5Utils;
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.file.FileUploadUtils;
@@ -19,8 +19,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  *
@@ -65,7 +65,7 @@ public class AdminProfileController extends AdminBaseController {
     @Log("重置密码")
     @PostMapping("/resetPwd")
     @ResponseBody
-    public CommonResult resetPwd(String oldPassword, String newPassword) {
+    public R resetPwd(String oldPassword, String newPassword) {
         AdminUser user = getSysUser();
         if (StringUtils.isNotEmpty(newPassword) && matches(user, oldPassword)) {
             user.setPassword(newPassword);
@@ -103,7 +103,7 @@ public class AdminProfileController extends AdminBaseController {
     @Log("修改个人信息")
     @PostMapping("/update")
     @ResponseBody
-    public CommonResult update(AdminUser user) {
+    public R update(AdminUser user) {
         AdminUser currentUser = getSysUser();
         currentUser.setUsername(user.getUsername());
         currentUser.setEmail(user.getEmail());
@@ -119,7 +119,7 @@ public class AdminProfileController extends AdminBaseController {
     @Log("修改头像")
     @PostMapping("/updateAvatar")
     @ResponseBody
-    public CommonResult updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
+    public R updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
         AdminUser currentUser = getSysUser();
         try {
             if (!file.isEmpty()) {

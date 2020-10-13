@@ -1,5 +1,6 @@
 package com.fun.project.admin.system.controller;
 
+import com.fun.common.result.R;
 import com.fun.common.utils.poi.ExcelUtil;
 import com.fun.framework.web.controller.AdminBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
-import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.IDictDataService;
 import com.fun.project.admin.system.entity.dict.DictData;
@@ -20,7 +20,7 @@ import com.fun.common.pagehelper.CommonPage;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -39,7 +39,7 @@ public class DictDataController extends AdminBaseController {
     @ApiOperation(value = "分页查询DictData列表" )
     @PostMapping("/list" )
     @ResponseBody
-    public CommonResult selectDictDataList(DictData dictData) {
+    public R selectDictDataList(DictData dictData) {
         startPage();
         List<DictData> dictDataList = dictDataService.selectDictDataList(dictData);
         return success(CommonPage.restPage(dictDataList));
@@ -50,7 +50,7 @@ public class DictDataController extends AdminBaseController {
     @RequiresPermissions("system:dict:export" )
     @PostMapping("/export" )
     @ResponseBody
-    public CommonResult export(DictData dictData) {
+    public R export(DictData dictData) {
         List<DictData> list = dictDataService.selectDictDataList(dictData);
         ExcelUtil<DictData> util = new ExcelUtil<>(DictData.class);
         return util.exportExcel(list, "字典数据" );
@@ -79,7 +79,7 @@ public class DictDataController extends AdminBaseController {
     @Log("新增DictData" )
     @PostMapping("/add" )
     @ResponseBody
-    public CommonResult insertDictData(@Validated DictData dictData) {
+    public R insertDictData(@Validated DictData dictData) {
         return success(dictDataService.insertDictData(dictData));
     }
 
@@ -89,7 +89,7 @@ public class DictDataController extends AdminBaseController {
     @Log("修改DictData信息" )
     @PostMapping("/edit" )
     @ResponseBody
-    public CommonResult updateDictData(@Validated DictData dictData) {
+    public R updateDictData(@Validated DictData dictData) {
         return success(dictDataService.updateDictData(dictData));
     }
 
@@ -98,7 +98,7 @@ public class DictDataController extends AdminBaseController {
     @Log("通过id批量删除DictData" )
     @PostMapping("/remove" )
     @ResponseBody
-    public CommonResult deleteDictDataByIds(String ids) {
+    public R deleteDictDataByIds(String ids) {
         return success(dictDataService.deleteDictDataByIds(ids));
     }
 }

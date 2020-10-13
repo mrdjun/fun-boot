@@ -2,7 +2,7 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.web.controller.AdminBaseController;
 import com.fun.project.admin.system.entity.Post;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -44,7 +44,7 @@ public class PostController extends AdminBaseController {
     @RequiresPermissions("system:post:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult list(Post post) {
+    public R list(Post post) {
         startPage();
         List<Post> list = postService.selectPostList(post);
         return success(CommonPage.restPage(list));
@@ -63,7 +63,7 @@ public class PostController extends AdminBaseController {
     @Log("新增岗位")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult addSave(@Validated Post post) {
+    public R addSave(@Validated Post post) {
         if (Constants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post))) {
             return failed("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
         } else if (Constants.NOT_UNIQUE.equals(postService.checkPostCodeUnique(post))) {
@@ -86,7 +86,7 @@ public class PostController extends AdminBaseController {
     @Log("修改岗位信息")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated Post post) {
+    public R editSave(@Validated Post post) {
         if (Constants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post))) {
             return failed("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
         } else if (Constants.NOT_UNIQUE.equals(postService.checkPostCodeUnique(post))) {

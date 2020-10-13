@@ -1,6 +1,6 @@
 package com.fun.project.app.tool.controller;
 
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.app.gen.CodeGeneratorTool;
 import com.fun.common.utils.app.gen.FreemarkerTool;
 import com.fun.project.app.tool.entity.AppGenTable;
@@ -41,10 +41,10 @@ public class AppGenController {
 
     @PostMapping("/codeGenerate")
     @ResponseBody
-    public CommonResult codeGenerate(String tableSql) {
+    public R codeGenerate(String tableSql) {
 
         if (StringUtils.isBlank(tableSql)) {
-            return CommonResult.failed("表结构信息不可为空");
+            return R.failed("表结构信息不可为空");
         }
 
         try {
@@ -73,10 +73,10 @@ public class AppGenController {
                 }
             }
             log.info("生成代码行数：{}", lineNum);
-            return CommonResult.success(result);
+            return R.success(result);
         } catch (IOException | TemplateException e) {
             log.error(e.getMessage(), e);
-            return CommonResult.failed("表结构解析失败");
+            return R.failed("表结构解析失败");
         }
     }
 

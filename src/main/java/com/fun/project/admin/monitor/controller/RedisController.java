@@ -1,7 +1,7 @@
 package com.fun.project.admin.monitor.controller;
 
 import com.fun.common.exception.RedisConnectException;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.framework.annotation.Log;
 import com.fun.framework.redis.IRedisService;
 import com.fun.framework.redis.RedisInfo;
@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 
 /**
@@ -87,7 +87,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行 Redis keys 命令")
     @GetMapping("/keys")
     @ResponseBody
-    public CommonResult keys(String arg) {
+    public R keys(String arg) {
 
         Set<String> set = null;
         try {
@@ -104,7 +104,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis get命令")
     @GetMapping("/get")
     @ResponseBody
-    public CommonResult get(String arg) {
+    public R get(String arg) {
 
         String result = null;
         try {
@@ -120,7 +120,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis set命令")
     @GetMapping("/set")
     @ResponseBody
-    public CommonResult set(String arg) {
+    public R set(String arg) {
         String[] args = arg.split(",");
         if (args.length == 1) {
             return failed("(error) ERR wrong number of arguments for 'set' command");
@@ -141,7 +141,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis del命令")
     @GetMapping("/del")
     @ResponseBody
-    public CommonResult del(String arg) {
+    public R del(String arg) {
         String[] args = arg.split(",");
         Long result = null;
         try {
@@ -157,7 +157,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis exists命令")
     @GetMapping("/exists")
     @ResponseBody
-    public CommonResult exists(String arg) {
+    public R exists(String arg) {
         int count = 0;
         String[] arr = arg.split(",");
         for (String key : arr) {
@@ -177,7 +177,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis pttl命令")
     @GetMapping("/pttl")
     @ResponseBody
-    public CommonResult pttl(String arg) {
+    public R pttl(String arg) {
         try {
             return success(INTEGER_PREFIX + this.redisService.pttl(arg));
         } catch (RedisConnectException e) {
@@ -191,7 +191,7 @@ public class RedisController extends AdminBaseController {
     @Log("执行Redis pexpire命令")
     @GetMapping("/pexpire")
     @ResponseBody
-    public CommonResult pexpire(String arg) {
+    public R pexpire(String arg) {
         String[] arr = arg.split(",");
         if (arr.length != 2 || !isValidLong(arr[1])) {
             return failed("(error) ERR wrong number of arguments for 'pexpire' command");

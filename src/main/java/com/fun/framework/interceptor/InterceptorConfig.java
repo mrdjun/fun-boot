@@ -29,18 +29,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 拦截验证 /app/* 接口
-        registry.addInterceptor(authenticationInterceptor()).addPathPatterns("/app/**");
-        // 防止表单重复提交拦截
+       // 防止表单重复提交拦截
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
-    }
-
-    /**
-     * App端登录拦截
-     */
-    @Bean
-    public AppLoginHandleInterceptor authenticationInterceptor() {
-        return new AppLoginHandleInterceptor();
     }
 
     /**

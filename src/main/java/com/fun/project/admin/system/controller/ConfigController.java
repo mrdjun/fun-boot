@@ -1,6 +1,7 @@
 package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
+import com.fun.common.result.R;
 import com.fun.common.utils.poi.ExcelUtil;
 import com.fun.framework.web.controller.AdminBaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Api;
 
-import com.fun.common.result.CommonResult;
 import com.fun.framework.annotation.Log;
 import com.fun.project.admin.system.service.IConfigService;
 import com.fun.project.admin.system.entity.Config;
@@ -22,8 +22,8 @@ import com.fun.common.pagehelper.CommonPage;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.failed;
-import static com.fun.common.result.CommonResult.success;
+import static com.fun.common.result.R.failed;
+import static com.fun.common.result.R.success;
 
 /**
  * @author DJun
@@ -49,7 +49,7 @@ public class ConfigController extends AdminBaseController {
     @ApiOperation("分页查询Config列表")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult selectConfigList(Config config) {
+    public R selectConfigList(Config config) {
         startPage();
         List<Config> configs = configService.selectConfigList(config);
         return success(CommonPage.restPage(configs));
@@ -59,7 +59,7 @@ public class ConfigController extends AdminBaseController {
     @RequiresPermissions("system:user:export" )
     @PostMapping("/export" )
     @ResponseBody
-    public CommonResult export(Config config) {
+    public R export(Config config) {
         List<Config> list = configService.selectConfigList(config);
         ExcelUtil<Config> util = new ExcelUtil<>(Config.class);
         return util.exportExcel(list, "系统配置参数" );
@@ -78,7 +78,7 @@ public class ConfigController extends AdminBaseController {
     @Log("新增Config")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult insertConfig(@Validated Config config) {
+    public R insertConfig(@Validated Config config) {
         if (Constants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return failed("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
@@ -99,7 +99,7 @@ public class ConfigController extends AdminBaseController {
     @Log("修改Config信息")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult updateConfig(@Validated Config config) {
+    public R updateConfig(@Validated Config config) {
         return success(configService.updateConfig(config));
     }
 
@@ -108,7 +108,7 @@ public class ConfigController extends AdminBaseController {
     @Log("删除Config")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult deleteConfigByIds(String ids) {
+    public R deleteConfigByIds(String ids) {
         return success(configService.deleteConfigByIds(ids));
     }
 

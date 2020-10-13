@@ -2,7 +2,7 @@ package com.fun.project.admin.system.controller;
 
 import com.fun.common.constant.Constants;
 import com.fun.common.pagehelper.CommonPage;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 
 import com.fun.common.utils.StringUtils;
 import com.fun.common.utils.poi.ExcelUtil;
@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.fun.common.result.CommonResult.*;
+import static com.fun.common.result.R.*;
 
 /**
  * @author DJun
@@ -55,7 +55,7 @@ public class AdminUserController extends AdminBaseController {
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
-    public CommonResult getAdminUserList(AdminUser adminUser) {
+    public R getAdminUserList(AdminUser adminUser) {
         startPage();
         List<AdminUser> list = adminUserService.selectAdminUserList(adminUser);
         return success(CommonPage.restPage(list));
@@ -65,7 +65,7 @@ public class AdminUserController extends AdminBaseController {
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
-    public CommonResult export(AdminUser user) {
+    public R export(AdminUser user) {
         List<AdminUser> list = adminUserService.selectAdminUserList(user);
         ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
         return util.exportExcel(list, "用户数据");
@@ -75,8 +75,8 @@ public class AdminUserController extends AdminBaseController {
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     @ResponseBody
-    public CommonResult importData(@RequestParam MultipartFile file,
-                                   @RequestParam(defaultValue = "false", required = false) boolean updateSupport)
+    public R importData(@RequestParam MultipartFile file,
+                        @RequestParam(defaultValue = "false", required = false) boolean updateSupport)
             throws Exception {
         ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
         List<AdminUser> userList = util.importExcel(file.getInputStream());
@@ -87,7 +87,7 @@ public class AdminUserController extends AdminBaseController {
     @RequiresPermissions("system:user:view")
     @GetMapping("/importTemplate")
     @ResponseBody
-    public CommonResult importTemplate() {
+    public R importTemplate() {
         ExcelUtil<AdminUser> util = new ExcelUtil<>(AdminUser.class);
         return util.importTemplateExcel("用户数据");
     }
@@ -107,7 +107,7 @@ public class AdminUserController extends AdminBaseController {
     @Log("新增用户")
     @PostMapping("/add")
     @ResponseBody
-    public CommonResult addUser(@Validated AdminUser user) {
+    public R addUser(@Validated AdminUser user) {
         if (Constants.NOT_UNIQUE.equals(adminUserService.checkLoginNameUnique(user.getLoginName()))) {
             return warn("新增用户'" + user.getLoginName() + "'失败，登录账号已存在");
         } else if (Constants.NOT_UNIQUE.equals(adminUserService.checkPhoneUnique(user))) {
@@ -134,7 +134,7 @@ public class AdminUserController extends AdminBaseController {
     @Log("修改用户")
     @PostMapping("/edit")
     @ResponseBody
-    public CommonResult editSave(@Validated AdminUser user) {
+    public R editSave(@Validated AdminUser user) {
         if (StringUtils.isNotNull(user.getUserId()) && AdminUser.isAdmin(user.getUserId())) {
             return failed("不允许修改超级管理员用户");
         } else if (Constants.NOT_UNIQUE.equals(adminUserService.checkPhoneUnique(user))) {
@@ -158,7 +158,7 @@ public class AdminUserController extends AdminBaseController {
     @Log("重置密码")
     @PostMapping("/resetPwd")
     @ResponseBody
-    public CommonResult resetPwdSave(AdminUser user) {
+    public R resetPwdSave(AdminUser user) {
         if (adminUserService.resetUserPwd(user) > 0) {
             if (ShiroUtils.getUserId().equals(user.getUserId())) {
                 setSysUser(adminUserService.selectAdminUserById(user.getUserId()));
@@ -172,7 +172,7 @@ public class AdminUserController extends AdminBaseController {
     @Log("删除用户")
     @PostMapping("/remove")
     @ResponseBody
-    public CommonResult remove(String ids) {
+    public R remove(String ids) {
         try {
             return success(adminUserService.deleteAdminUserByIds(ids));
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class AdminUserController extends AdminBaseController {
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
-    public CommonResult changeStatus(AdminUser user) {
+    public R changeStatus(AdminUser user) {
         return success(adminUserService.changeStatus(user));
     }
 

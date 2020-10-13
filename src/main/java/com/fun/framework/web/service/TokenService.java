@@ -8,7 +8,6 @@ import com.fun.framework.config.AppConfig;
 import com.fun.framework.manager.AsyncFactory;
 import com.fun.framework.manager.AsyncManager;
 import com.fun.framework.redis.IRedisService;
-import com.fun.project.app.user.entity.AppUser;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,19 +41,19 @@ public class TokenService {
      * @return token
      */
     public String getToken(JSONObject userInfo, boolean isRememberMe) {
-        long expireTime = isRememberMe ? appConfig.getExpirationRemember() : appConfig.getExpiration();
-        AppUser appUser = (AppUser) userInfo.get("user");
-        String token = createToken(appUser.getUserId().toString(),
-                appUser.getLoginName(), appUser.getRoleKey());
-        try {
-            redisService.set(appConfig.getUserPrefix() + appUser.getLoginName(), token, expireTime);
-            redisService.set(appUser.getLoginName(), JSON.toJSONString(userInfo), expireTime);
-        } catch (RedisConnectException e) {
-            logger.error("redis连接失败-[{}]", DateUtils.dateTime());
-            return null;
-        }
+//        long expireTime = isRememberMe ? appConfig.getExpirationRemember() : appConfig.getExpiration();
+//        AppUser appUser = (AppUser) userInfo.get("user");
+//        String token = createToken(appUser.getUserId().toString(),
+//                appUser.getLoginName(), appUser.getRoleKey());
+//        try {
+//            redisService.set(appConfig.getUserPrefix() + appUser.getLoginName(), token, expireTime);
+//            redisService.set(appUser.getLoginName(), JSON.toJSONString(userInfo), expireTime);
+//        } catch (RedisConnectException e) {
+//            logger.error("redis连接失败-[{}]", DateUtils.dateTime());
+//            return null;
+//        }
 
-        return token;
+        return null;
     }
 
     /**

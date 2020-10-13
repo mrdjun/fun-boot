@@ -2,7 +2,7 @@ package com.fun.framework.annotation.aspect;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.fun.common.result.CommonResult;
+import com.fun.common.result.R;
 import com.fun.common.utils.IpUtils;
 import com.fun.common.utils.ServletUtils;
 import com.fun.framework.annotation.Limit;
@@ -80,8 +80,8 @@ public class LimitAspect {
         if (count != null && count.intValue() <= limitCount) {
             return point.proceed();
         } else {
-            CommonResult commonResult = CommonResult.failed("系统繁忙，请稍后后重试");
-            ServletUtils.renderString(response, JSONObject.toJSONString(commonResult));
+            R r = R.failed("系统繁忙，请稍后后重试");
+            ServletUtils.renderString(response, JSONObject.toJSONString(r));
         }
         return null;
     }
