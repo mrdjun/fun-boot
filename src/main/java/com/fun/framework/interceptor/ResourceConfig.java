@@ -22,7 +22,7 @@ import java.util.List;
  * @author DJun
  */
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer {
+public class ResourceConfig implements WebMvcConfigurer {
 
     @Autowired
     private AbstractRepeatSubmitInterceptor repeatSubmitInterceptor;
