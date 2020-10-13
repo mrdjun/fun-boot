@@ -48,6 +48,8 @@ public class DictData extends BaseEntity {
     @Excel(name = "是否默认", readConverterExp = "Y=是,N=否")
     private String isDefault;
 
+    private String status;
+
     public boolean getDefault() {
         return Constants.YES.equals(this.isDefault);
     }
@@ -93,6 +95,5 @@ public class DictData extends BaseEntity {
     {
         return cssClass;
     }
-
 
 }

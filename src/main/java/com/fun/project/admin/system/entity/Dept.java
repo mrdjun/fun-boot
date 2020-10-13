@@ -53,7 +53,6 @@ public class Dept extends BaseEntity {
     /** 父部门名称 */
     private String parentName;
 
-
     @NotBlank(message = "部门名称不能为空")
     @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
     public String getDeptName()

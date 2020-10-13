@@ -32,6 +32,8 @@ public class DictType extends BaseEntity {
     @Excel(name = "字典类型 " )
     private String dictType;
 
+    private String status;
+
     @NotBlank(message = "字典名称不能为空" )
     @Size(min = 0, max = 100, message = "字典类型名称长度不能超过100个字符" )
     public String getDictName() {

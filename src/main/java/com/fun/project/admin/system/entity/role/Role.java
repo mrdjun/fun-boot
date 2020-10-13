@@ -43,4 +43,6 @@ public class Role extends BaseEntity {
 
     /** 部门组（数据权限） */
     private Long[] deptIds;
+
+    private String status;
 }
