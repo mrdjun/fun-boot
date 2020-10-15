@@ -6,23 +6,21 @@ import com.fun.project.system.config.service.IConfigService;
 
 /**
  * html调用 thymeleaf 实现参数管理
- * 
+ *
  * @author fun
  */
 @Service("config")
-public class ConfigService
-{
+public class ConfigService {
     @Autowired
     private IConfigService configService;
 
     /**
      * 根据键名查询参数配置信息
-     * 
+     *
      * @param configKey 参数键名
      * @return 参数键值
      */
-    public String getKey(String configKey)
-    {
+    public String getKey(String configKey) {
         return configService.selectConfigByKey(configKey);
     }
 
