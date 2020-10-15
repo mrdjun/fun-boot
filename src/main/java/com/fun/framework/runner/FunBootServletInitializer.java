@@ -1,5 +1,6 @@
-package com.fun;
+package com.fun.framework.runner;
 
+import com.fun.FunBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
