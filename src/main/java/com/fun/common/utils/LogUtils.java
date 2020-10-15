@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -12,25 +11,26 @@ import java.util.Map;
 
 /**
  * 处理并记录日志文件
- *
- * @author DJun
- * @date 2019/9/13 13:22
+ * 
+ * @author fun
  */
-public class LogUtils {
+public class LogUtils
+{
     public static final Logger ERROR_LOG = LoggerFactory.getLogger("sys-error");
     public static final Logger ACCESS_LOG = LoggerFactory.getLogger("sys-access");
 
     /**
      * 记录访问日志 [username][jsessionid][ip][accept][UserAgent][url][params][Referer]
      *
-     * @param request HttpServletRequest
+     * @param request
      */
-    public static void logAccess(HttpServletRequest request) {
+    public static void logAccess(HttpServletRequest request)
+    {
         String username = getUsername();
         String jsessionId = request.getRequestedSessionId();
         String ip = IpUtils.getIpAddr(request);
         String accept = request.getHeader("accept");
-        String userAgent = request.getHeader("AppUser-Agent");
+        String userAgent = request.getHeader("User-Agent");
         String url = request.getRequestURI();
         String params = getParams(request);
 
@@ -52,7 +52,8 @@ public class LogUtils {
      * @param message
      * @param e
      */
-    public static void logError(String message, Throwable e) {
+    public static void logError(String message, Throwable e)
+    {
         String username = getUsername();
         StringBuilder s = new StringBuilder();
         s.append(getBlock("exception"));
@@ -66,7 +67,8 @@ public class LogUtils {
      *
      * @param request
      */
-    public static void logPageError(HttpServletRequest request) {
+    public static void logPageError(HttpServletRequest request)
+    {
         String username = getUsername();
 
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
@@ -74,7 +76,8 @@ public class LogUtils {
         String uri = (String) request.getAttribute("javax.servlet.error.request_uri");
         Throwable t = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
-        if (statusCode == null) {
+        if (statusCode == null)
+        {
             statusCode = 0;
         }
 
@@ -89,7 +92,8 @@ public class LogUtils {
         s.append(getBlock(request.getHeader("Referer")));
         StringWriter sw = new StringWriter();
 
-        while (t != null) {
+        while (t != null)
+        {
             t.printStackTrace(new PrintWriter(sw));
             t = t.getCause();
         }
@@ -98,29 +102,33 @@ public class LogUtils {
 
     }
 
-    public static String getBlock(Object msg) {
-        if (msg == null) {
+    public static String getBlock(Object msg)
+    {
+        if (msg == null)
+        {
             msg = "";
         }
         return "[" + msg.toString() + "]";
     }
 
-    protected static String getParams(HttpServletRequest request) {
+    protected static String getParams(HttpServletRequest request)
+    {
         Map<String, String[]> params = request.getParameterMap();
         return JSON.toJSONString(params);
     }
 
-    // admin获取用户名,app在TokenUtil获取
-    protected static String getUsername() {
+    protected static String getUsername()
+    {
         return (String) SecurityUtils.getSubject().getPrincipal();
     }
 
-    public static Logger getAccessLog() {
+    public static Logger getAccessLog()
+    {
         return ACCESS_LOG;
     }
 
-    public static Logger getErrorLog() {
+    public static Logger getErrorLog()
+    {
         return ERROR_LOG;
     }
-
 }

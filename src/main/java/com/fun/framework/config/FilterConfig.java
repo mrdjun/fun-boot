@@ -1,24 +1,22 @@
 package com.fun.framework.config;
 
-import com.fun.common.utils.StringUtils;
-import com.fun.framework.xss.XssFilter;
-import com.google.common.collect.Maps;
+import java.util.Map;
+import javax.servlet.DispatcherType;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-
-import javax.servlet.DispatcherType;
-import java.util.Map;
+import com.google.common.collect.Maps;
+import com.fun.common.utils.StringUtils;
+import com.fun.common.xss.XssFilter;
 
 /**
- * XSSFilter配置
+ * Filter配置
  *
- * @author DJun
+ * @author fun
  */
 @Configuration
-@PropertySource(value = {"classpath:fun-boot.properties"})
 public class FilterConfig {
     @Value("${xss.enabled}")
     private String enabled;

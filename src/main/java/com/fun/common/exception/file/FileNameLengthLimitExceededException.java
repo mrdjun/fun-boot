@@ -2,14 +2,15 @@ package com.fun.common.exception.file;
 
 /**
  * 文件名称超长限制异常类
- *
- * @author DJun
- * @date 2019/9/12 18:51
+ * 
+ * @author fun
  */
-public class FileNameLengthLimitExceededException extends FileException {
+public class FileNameLengthLimitExceededException extends FileException
+{
     private static final long serialVersionUID = 1L;
 
-    public FileNameLengthLimitExceededException(int defaultFileNameLength) {
-        super("upload.filename.exceed.length", new Object[]{defaultFileNameLength});
+    public FileNameLengthLimitExceededException(int defaultFileNameLength)
+    {
+        super("upload.filename.exceed.length", new Object[] { defaultFileNameLength });
     }
 }

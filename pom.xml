@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fun</groupId>
-    <artifactId>fun-boot</artifactId>
+    <artifactId>fun</artifactId>
+    <version>4.4.0</version>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
 
-    <developers>
-        <developer>
-            <name>Mr.DJun</name>
-            <email>mr.djun@qq.com</email>
-        </developer>
-    </developers>
+    <name>fun-boot</name>
+    <url>http://mrdjun.github.io</url>
+    <description>FUN-BOOT管理系统</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
         <shiro.version>1.6.0</shiro.version>
-        <shiro-redis.version>3.2.2</shiro-redis.version>
-        <jedis.version>2.9.1</jedis.version>
         <thymeleaf.extras.shiro.version>2.0.0</thymeleaf.extras.shiro.version>
-        <mybatis.spring.boot.starter.version>1.3.2</mybatis.spring.boot.starter.version>
+        <mybatis.spring.boot.starter.version>2.1.3</mybatis.spring.boot.starter.version>
         <pagehelper.spring.boot.starter.version>1.3.0</pagehelper.spring.boot.starter.version>
-        <fastjson.version>1.2.47</fastjson.version>
-        <druid.version>1.1.14</druid.version>
+        <fastjson.version>1.2.74</fastjson.version>
+        <druid.version>1.2.1</druid.version>
         <commons.io.version>2.5</commons.io.version>
         <commons.fileupload.version>1.3.3</commons.fileupload.version>
         <bitwalker.version>1.19</bitwalker.version>
         <lombok.version>1.16.18</lombok.version>
+        <velocity.version>1.7</velocity.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <swagger.version>2.9.2</swagger.version>
-        <jsoup.version>1.11.3</jsoup.version>
         <poi.version>3.17</poi.version>
         <oshi.version>5.2.5</oshi.version>
-        <velocity.version>1.7</velocity.version>
+        <jna.version>5.5.0</jna.version>
     </properties>
 
     <dependencies>
@@ -53,14 +48,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <!--
-             <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-             -->
         </dependency>
 
         <!-- SpringBoot 测试 -->
@@ -70,7 +57,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- SpringBoot Aop -->
+        <!-- SpringBoot 拦截器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -88,17 +75,11 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- SpringBoot Redis -->
+        <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <!-- Jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递 -->
         </dependency>
 
         <!-- Mysql驱动包 -->
@@ -114,7 +95,7 @@
             <version>${mybatis.spring.boot.starter.version}</version>
         </dependency>
 
-        <!-- PageHelper 分页插件 -->
+        <!-- pagehelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -155,18 +136,18 @@
             <version>${shiro.version}</version>
         </dependency>
 
-        <!-- Shiro使用Srping框架 -->
+        <!-- Shiro使用Spring框架 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
 
-        <!-- Shiro使用Redis缓存框架 -->
+        <!-- Shiro使用EhCache缓存框架 -->
         <dependency>
-            <groupId>org.crazycake</groupId>
-            <artifactId>shiro-redis</artifactId>
-            <version>${shiro-redis.version}</version>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
         </dependency>
 
         <!-- thymeleaf模板引擎和shiro框架的整合 -->
@@ -208,6 +189,13 @@
             </exclusions>
         </dependency>
 
+        <!--velocity代码生成使用模板 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+
         <!--验证码 -->
         <dependency>
             <groupId>com.github.penggle</groupId>
@@ -244,13 +232,13 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.21</version>
         </dependency>
-
-        <dependency>
+        
+         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>1.5.21</version>
         </dependency>
-
+        
         <!-- swagger2-UI-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -265,23 +253,6 @@
             <version>${oshi.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-platform</artifactId>
-        </dependency>
-
-        <!-- HTML解析器 -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
-        </dependency>
-
         <!-- excel工具 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -289,78 +260,17 @@
             <version>${poi.version}</version>
         </dependency>
 
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.10.7</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.10.7</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>0.10.7</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- Uncomment this next dependency if you want to use RSASSA-PSS (PS256, PS384, PS512) algorithms:
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.60</version>
-            <scope>runtime</scope>
-        </dependency>
-        -->
-        <!--velocity代码生成使用模板 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>${velocity.version}</version>
-        </dependency>
-
-        <!--a client of idworker to generate global unique id-->
-        <dependency>
-            <groupId>com.github.bingoohuang</groupId>
-            <artifactId>idworker-client</artifactId>
-            <version>0.0.8</version>
-        </dependency>
-
-        <!-- 数据库加密 -->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-
-        <!-- freemarker模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
-        <!-- IP定位插件 -->
-        <dependency>
-            <groupId>org.lionsoul</groupId>
-            <artifactId>ip2region</artifactId>
-            <version>1.7</version>
-        </dependency>
     </dependencies>
 
-    <!-- 将配置文件写入Jar包 -->
     <build>
+    <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -391,4 +301,3 @@
     </pluginRepositories>
 
 </project>
-

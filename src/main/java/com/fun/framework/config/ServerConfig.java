@@ -1,14 +1,14 @@
 package com.fun.framework.config;
 
-import com.fun.common.utils.ServletUtils;
-import org.springframework.stereotype.Component;
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Component;
+import com.fun.common.utils.ServletUtils;
 
 /**
  * 服务相关配置
  *
- * @author DJun
+ * @author fun
  */
 @Component
 public class ServerConfig {
@@ -22,10 +22,7 @@ public class ServerConfig {
         return getDomain(request);
     }
 
-    /***
-     * 获取请求地址
-     */
-    private static String getDomain(HttpServletRequest request) {
+    public static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String contextPath = request.getServletContext().getContextPath();
         return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();

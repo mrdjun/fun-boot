@@ -1,75 +1,73 @@
 package com.fun.common.constant;
 
-
 /**
- * Shiro常量配置
+ * Shiro通用常量
  *
- * @author DJun
+ * @author fun
  */
-public interface ShiroConstants {
-
+public class ShiroConstants {
     /**
      * 当前登录的用户
      */
-    String CURRENT_USER = "currentUser";
+    public static final String CURRENT_USER = "currentUser";
 
     /**
      * 用户名
      */
-    String CURRENT_USERNAME = "username";
+    public static final String CURRENT_USERNAME = "username";
 
     /**
      * 消息key
      */
-    String MESSAGE = "message";
+    public static final String MESSAGE = "message";
 
     /**
      * 错误key
      */
-    String ERROR = "errorMsg";
+    public static final String ERROR = "errorMsg";
 
     /**
      * 编码格式
      */
-    String ENCODING = "UTF-8";
+    public static final String ENCODING = "UTF-8";
 
     /**
      * 当前在线会话
      */
-    String ONLINE_SESSION = "online_session";
+    public static final String ONLINE_SESSION = "online_session";
 
     /**
      * 验证码key
      */
-    String CURRENT_CAPTCHA = "captcha";
+    public static final String CURRENT_CAPTCHA = "captcha";
 
     /**
      * 验证码开关
      */
-    String CURRENT_ENABLED = "captchaEnabled";
+    public static final String CURRENT_ENABLED = "captchaEnabled";
 
     /**
      * 验证码类型
      */
-    String CURRENT_TYPE = "captchaType";
+    public static final String CURRENT_TYPE = "captchaType";
 
     /**
      * 验证码
      */
-    String CURRENT_VALIDATECODE = "validateCode";
+    public static final String CURRENT_VALIDATECODE = "validateCode";
 
     /**
      * 验证码错误
      */
-    String CAPTCHA_ERROR = "captchaError";
+    public static final String CAPTCHA_ERROR = "captchaError";
 
     /**
      * 登录记录缓存
      */
-    String LOGINRECORDCACHE = "loginRecordCache";
+    public static final String LOGINRECORDCACHE = "loginRecordCache";
 
     /**
      * 系统活跃用户缓存
      */
-    String SYS_USERCACHE = "sys-userCache";
+    public static final String SYS_USERCACHE = "sys-userCache";
 }

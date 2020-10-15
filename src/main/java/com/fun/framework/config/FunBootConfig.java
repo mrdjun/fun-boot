@@ -1,18 +1,15 @@
 package com.fun.framework.config;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * FUN-BOOT系统相关信息
+ * 读取项目相关配置
  *
- * @author DJun
+ * @author fun
  */
 @Component
-@ConfigurationProperties(prefix = "fun" )
-@PropertySource("classpath:fun-boot.properties" )
+@ConfigurationProperties(prefix = "fun")
 public class FunBootConfig {
     /**
      * 项目名称
@@ -43,16 +40,6 @@ public class FunBootConfig {
      * 获取地址开关
      */
     private static boolean addressEnabled;
-
-    private boolean openLog;
-
-    public boolean isOpenLog() {
-        return openLog;
-    }
-
-    public void setOpenLog(boolean openLog) {
-        this.openLog = openLog;
-    }
 
     public String getName() {
         return name;
@@ -106,20 +93,20 @@ public class FunBootConfig {
      * 获取头像上传路径
      */
     public static String getAvatarPath() {
-        return getProfile() + "/avatar" ;
+        return getProfile() + "/avatar";
     }
 
     /**
      * 获取下载路径
      */
     public static String getDownloadPath() {
-        return getProfile() + "/download" ;
+        return getProfile() + "/download/";
     }
 
     /**
      * 获取上传路径
      */
     public static String getUploadPath() {
-        return getProfile() + "/upload" ;
+        return getProfile() + "/upload";
     }
 }

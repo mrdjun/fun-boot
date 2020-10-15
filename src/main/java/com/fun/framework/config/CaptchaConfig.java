@@ -1,18 +1,18 @@
 package com.fun.framework.config;
 
-import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.google.code.kaptcha.util.Config;
+import java.util.Properties;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Properties;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 
 import static com.google.code.kaptcha.Constants.*;
 
 /**
- * Captcha验证码相关配置
+ * 验证码配置
  *
- * @author DJun
+ * @author fun
  */
 @Configuration
 public class CaptchaConfig {
@@ -62,7 +62,7 @@ public class CaptchaConfig {
         // KAPTCHA_SESSION_KEY
         properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCodeMath");
         // 验证码文本生成器
-        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.fun.framework.shiro.helper.KaptchaTextCreator");
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.fun.framework.config.KaptchaTextCreator");
         // 验证码文本字符间距 默认为2
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
         // 验证码文本字符长度 默认为5
@@ -79,6 +79,4 @@ public class CaptchaConfig {
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
     }
-
-
 }

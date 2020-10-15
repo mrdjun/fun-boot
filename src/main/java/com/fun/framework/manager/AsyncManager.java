@@ -1,16 +1,16 @@
 package com.fun.framework.manager;
 
-import com.fun.common.utils.Threads;
-import com.fun.common.utils.SpringUtils;
-
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.fun.common.utils.Threads;
+import com.fun.common.utils.spring.SpringUtils;
+
 /**
  * 异步任务管理器
  *
- * @author DJun
+ * @author MrDJun
  */
 public class AsyncManager {
     /**
@@ -23,8 +23,11 @@ public class AsyncManager {
      */
     private ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
 
-    /** 单例模式 */
-    private AsyncManager() {}
+    /**
+     * 单例模式
+     */
+    private AsyncManager() {
+    }
 
     private static AsyncManager me = new AsyncManager();
 
