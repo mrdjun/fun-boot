@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fun</groupId>
     <artifactId>fun</artifactId>
     <version>4.4.0</version>
-    <packaging>jar</packaging>
+    <!--    <packaging>jar</packaging>-->
 
     <name>fun-boot</name>
     <url>http://mrdjun.github.io</url>
@@ -16,7 +16,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <properties>
@@ -40,6 +40,7 @@
         <poi.version>3.17</poi.version>
         <oshi.version>5.2.5</oshi.version>
         <jna.version>5.5.0</jna.version>
+        <ip2region.version>1.7.2</ip2region.version>
     </properties>
 
     <dependencies>
@@ -232,13 +233,13 @@
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.21</version>
         </dependency>
-        
-         <dependency>
+
+        <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>1.5.21</version>
         </dependency>
-        
+
         <!-- swagger2-UI-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -260,10 +261,16 @@
             <version>${poi.version}</version>
         </dependency>
 
+        <!-- ip2region -->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>${ip2region.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
-    <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
